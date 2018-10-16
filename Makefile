@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
+#    By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2018/10/16 16:15:18 by mrandou          ###   ########.fr        #
+#    Updated: 2018/10/16 16:19:10 by dideryck         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJ = $(addprefix $(OBJ_PATH)/,$(OBJ_NAME))
 
 CPPFLAGS = -Iincludes
 LDFLAGS = -Llibft -Llibsh
-LDLIBS = -lft -lms
+LDLIBS = -lft -lsh
 CC = gcc
 CFLAGS = -Werror -Wextra -Wall
 
