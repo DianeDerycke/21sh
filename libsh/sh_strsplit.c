@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh21.h                                             :+:      :+:    :+:   */
+/*   sh_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:05:44 by dideryck          #+#    #+#             */
-/*   Updated: 2018/10/16 15:55:06 by dideryck         ###   ########.fr       */
+/*   Created: 2018/10/16 15:59:03 by dideryck          #+#    #+#             */
+/*   Updated: 2018/10/16 15:59:23 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef SH21_H
-# define SH21_H
+#include "libsh.h"
 
-#include "../libft/libft.h"
-#include "../libsh/libsh.h"
-
-char    **sh_strsplit(const char *str);
-
-# endif SH21_H
+char    **sh_strsplit(const char *str)
+{
+    (void)str;
+    return (NULL);
+}

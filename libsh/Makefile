@@ -6,13 +6,13 @@
 #    By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/23 13:11:33 by DERYCKE           #+#    #+#              #
-#    Updated: 2018/10/16 14:46:43 by dideryck         ###   ########.fr        #
+#    Updated: 2018/10/16 15:57:30 by dideryck         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libsh.a
 
-FILES = 
+FILES = sh_strsplit
 
 SRC = $(addsuffix .c, $(FILES))
 OBJ = $(addsuffix .o, $(FILES))
