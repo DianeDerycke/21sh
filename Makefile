@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+         #
+#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2018/10/16 15:38:28 by dideryck         ###   ########.fr        #
+#    Updated: 2018/10/16 16:15:18 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME = 21sh
 LIBFT = ./libft/
 LIBSH = ./libsh/
 LIBNAME = ./libft/libft.a ./libsh/libsh.a

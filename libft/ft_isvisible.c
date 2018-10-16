@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_isvisible.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:45:14 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/16 15:48:32 by mrandou          ###   ########.fr       */
+/*   Created: 2018/09/04 11:55:13 by mrandou           #+#    #+#             */
+/*   Updated: 2018/10/16 15:55:30 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "sh21.h"
+#include "libft.h"
 
-int main(int argc, char **argv, char **env)
+size_t		ft_isvisible(char *str)
 {
-	(void)argc;
-	(void)argv;
-	(void)env;
+	size_t i;
 
-	ft_putnbr(ft_isvisible(" "));
-
+	i = 0;
+	if (!str || !str[0])
+		return (0);
+	while (str[i])
+	{
+		if (ft_isprint(str[i]))
+			return (1);
+		i++;
+	}
 	return (0);
 }
