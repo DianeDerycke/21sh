@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   sh_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:59:03 by dideryck          #+#    #+#             */
-/*   Updated: 2018/10/16 16:43:05 by dideryck         ###   ########.fr       */
+/*   Updated: 2018/10/16 16:51:39 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libsh.h"
+
 static int		ft_count_words(char const *s, int(*ft)(char))
 {
 	int		i;

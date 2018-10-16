@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+         #
+#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2018/10/16 16:19:10 by dideryck         ###   ########.fr        #
+#    Updated: 2018/10/16 16:57:00 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LIBSH = ./libsh/
 LIBNAME = ./libft/libft.a ./libsh/libsh.a
 
 SRC_PATH = ./src
-SRC_NAME = main.c
+SRC_NAME = main.c read.c
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 
 OBJ_PATH = ./obj
