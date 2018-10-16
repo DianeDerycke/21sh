@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 11:55:13 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/16 15:55:30 by mrandou          ###   ########.fr       */
+/*   Updated: 2018/10/16 16:38:42 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ size_t		ft_isvisible(char *str)
 		return (0);
 	while (str[i])
 	{
-		if (ft_isprint(str[i]))
+		if (ft_isprint(str[i]) && str[i] != ' ')
 			return (1);
 		i++;
 	}
