@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+         #
+#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/23 13:11:33 by DERYCKE           #+#    #+#              #
-#    Updated: 2018/10/16 15:57:30 by dideryck         ###   ########.fr        #
+#    Updated: 2018/10/17 12:18:30 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libsh.a
 
-FILES = sh_strsplit
+FILES = sh_strsplit sh_strfpos
 
 SRC = $(addsuffix .c, $(FILES))
 OBJ = $(addsuffix .o, $(FILES))

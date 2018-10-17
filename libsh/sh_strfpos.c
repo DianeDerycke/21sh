@@ -1,25 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   libsh.h                                            :+:      :+:    :+:   */
+/*   sh_strfpos.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2018/10/17 12:18:04 by mrandou          ###   ########.fr       */
+/*   Created: 2018/02/26 14:55:22 by mrandou           #+#    #+#             */
+/*   Updated: 2018/10/17 12:17:40 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIBSH_H
-# define LIBSH_H
+#include "libsh.h"
 
-#include "../libft/libft.h"
+int	sh_strfpos(char *str, char oc)
+{
+	int i;
 
-# ifndef PROMPT
-#  define PROMPT "\033[1m\033[32m∴ ➢ \033[0m"
-# endif
-
-int		sh_strfpos(char *str, char oc);
-char	**sh_strsplit(const char *s, int(*ft)(char));
-
-#endif
+	i = 0;
+	if ((!str) || (!oc))
+		return (0);
+	while (str[i])
+		if (str[i++] == oc)
+			return (i);
+	return (0);
+}
