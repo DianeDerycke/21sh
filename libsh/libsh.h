@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libsh.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2018/10/17 15:10:29 by mrandou          ###   ########.fr       */
+/*   Updated: 2018/10/17 16:18:17 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define SH21 "21sh"
 # define SUCCESS 0
 # define ERROR 1
+# define BUFF_SIZE 4096
 
 typedef struct		s_env
 {
@@ -30,6 +31,7 @@ typedef struct		s_env
 	char			*value;
 	struct s_env	*next;
 }					t_env;
+
 
 int		sh_strfpos(char *str, char oc);
 char	**sh_strsplit(const char *s, int(*ft)(char));
