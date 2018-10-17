@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 16:42:46 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/16 16:56:31 by mrandou          ###   ########.fr       */
+/*   Updated: 2018/10/17 14:58:56 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ t_list	*read_input(void)
 	return (list);
 }
 
-void	read_loop(char **env)
+void	read_loop(t_env *env)
 {
-	(void)env;
 	t_list	*list;
 	t_list	*historic;
 	int		i;
 
+	(void)env;
 	i = 0;
 	list = NULL;
 	historic = NULL;

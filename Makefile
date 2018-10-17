@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2018/10/16 16:57:00 by mrandou          ###   ########.fr        #
+#    Updated: 2018/10/17 13:11:26 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ LIBSH = ./libsh/
 LIBNAME = ./libft/libft.a ./libsh/libsh.a
 
 SRC_PATH = ./src
-SRC_NAME = main.c read.c
+SRC_NAME = main.c read.c environ.c
 SRC = $(addprefix $(SRC_PATH)/,$(SRC_NAME))
 
 OBJ_PATH = ./obj

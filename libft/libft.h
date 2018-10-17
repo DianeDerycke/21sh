@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 03:09:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2018/10/17 13:08:42 by mrandou          ###   ########.fr       */
+/*   Updated: 2018/10/17 14:40:11 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ size_t				ft_strlen_array(char **tab);
 char				*ft_strndup(const char *s, size_t len);
 void				ft_sort_integer_table(int *tab, int size);
 char				**ft_copy_array(char **src, size_t len);
-void				ft_malloc_error(void);
+void				ft_malloc_error(char *str);
 ssize_t				ft_find_char(char *str, char c, size_t *index);
 void				ft_replace(char *str, char c, char new_c);
 char				**ft_trim_array(char **array);

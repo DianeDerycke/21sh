@@ -1,20 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_malloc_error.c                                  :+:      :+:    :+:   */
+/*   sh_create_elem.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/17 12:52:16 by DERYCKE           #+#    #+#             */
-/*   Updated: 2018/10/17 14:40:14 by mrandou          ###   ########.fr       */
+/*   Created: 2018/10/17 14:43:26 by mrandou           #+#    #+#             */
+/*   Updated: 2018/10/17 14:46:36 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "libsh.h"
 
-void	ft_malloc_error(char *str)
+t_env		*sh_create_elem(void)
 {
-	ft_putstr(str);
-	ft_putendl_fd("Malloc error", 2);
-	exit(1);
+	t_env		*new;
+	if (!(new = malloc(sizeof(t_env))))
+		ft_malloc_error("21sh");
+	new->key = NULL;
+	new->value = NULL;
+	return (new);
 }

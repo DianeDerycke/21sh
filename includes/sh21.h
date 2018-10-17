@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:05:44 by dideryck          #+#    #+#             */
-/*   Updated: 2018/10/16 17:08:57 by mrandou          ###   ########.fr       */
+/*   Updated: 2018/10/17 14:59:24 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <fcntl.h>
 
 t_list	*read_input(void);
-void	read_loop(char **env);
+void	read_loop(t_env *env);
+
+t_env	*env_fill_list(char **env);
+void	env_display(t_env *env);
 
 #endif
