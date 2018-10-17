@@ -1,29 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sh_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:45:14 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/17 16:40:42 by mrandou          ###   ########.fr       */
+/*   Created: 2018/10/17 16:19:14 by mrandou           #+#    #+#             */
+/*   Updated: 2018/10/17 16:52:41 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "libsh.h"
 
-int main(int argc, char **argv, char **env)
+void	sh_display_prompt(t_env *env)
 {
-	(void)argc;
-	(void)argv;
-	t_env 	*l_env;
-	char	buff[BUFF_SIZE];
+	char	*pwd;
+	char	*home;
 
-	l_env = env_fill_list(env);
-	while (42)
+	pwd = sh_getvalue(env, "PWD");
+	home = sh_getvalue(env, "HOME");
+	if (!pwd)
+		ft_putstr(PROMPT);
+	else
 	{
-		sh_display_prompt(l_env);
-		read_input(buff);
+		ft_putstr(GREEN);
+		ft_putstr(pwd);
+		ft_putstr(RESET);
+		ft_putchar(' ');
+		ft_putstr(PROMPT);
 	}
-	return (SUCCESS);
 }

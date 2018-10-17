@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/17 12:07:36 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/17 15:07:41 by mrandou          ###   ########.fr       */
+/*   Updated: 2018/10/17 16:46:22 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ t_env		*env_fill_list(char **env)
 	head = environ_struct;
 	while (env[i])
 	{
-		oc = sh_strfpos(env[i], C_EQUAL);
+		if (!(oc = sh_strfpos(env[i], C_EQUAL)))
+			return (NULL);
 		if (!(environ_struct->key = ft_strndup(env[i], oc - 1)))
 			ft_malloc_error(SH21);
 		if (!(environ_struct->value = ft_strdup(env[i] + oc)))
@@ -36,7 +37,6 @@ t_env		*env_fill_list(char **env)
 		environ_struct = environ_struct->next;
 		i++;
 	}
-	env_display(head);
 	return (head);
 }
 

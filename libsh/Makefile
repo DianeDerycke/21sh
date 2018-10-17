@@ -6,13 +6,13 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/23 13:11:33 by DERYCKE           #+#    #+#              #
-#    Updated: 2018/10/17 14:46:55 by mrandou          ###   ########.fr        #
+#    Updated: 2018/10/17 16:38:25 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libsh.a
 
-FILES = sh_strsplit sh_strfpos sh_create_elem
+FILES = sh_strsplit sh_strfpos sh_create_elem sh_prompt sh_getvalue
 
 SRC = $(addsuffix .c, $(FILES))
 OBJ = $(addsuffix .o, $(FILES))

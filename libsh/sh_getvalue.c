@@ -1,29 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sh_getvalue.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:45:14 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/17 16:40:42 by mrandou          ###   ########.fr       */
+/*   Created: 2018/10/17 16:25:09 by mrandou           #+#    #+#             */
+/*   Updated: 2018/10/17 16:27:23 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "libsh.h"
 
-int main(int argc, char **argv, char **env)
+char	*sh_getvalue(t_env *env, char *key)
 {
-	(void)argc;
-	(void)argv;
-	t_env 	*l_env;
-	char	buff[BUFF_SIZE];
-
-	l_env = env_fill_list(env);
-	while (42)
+	while (env)
 	{
-		sh_display_prompt(l_env);
-		read_input(buff);
+		if (!ft_strcmp(key, env->key))
+			return (env->value);
+		env = env->next;
 	}
-	return (SUCCESS);
+	return (NULL);
 }

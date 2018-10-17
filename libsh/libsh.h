@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libsh.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2018/10/17 16:18:17 by dideryck         ###   ########.fr       */
+/*   Updated: 2018/10/17 16:44:48 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,14 @@ typedef struct		s_env
 	struct s_env	*next;
 }					t_env;
 
-
-int		sh_strfpos(char *str, char oc);
-char	**sh_strsplit(const char *s, int(*ft)(char));
-
 /*
 ** list functions
 */
+
 t_env		*sh_create_elem(void);
+int			sh_strfpos(char *str, char oc);
+char		**sh_strsplit(const char *s, int(*ft)(char));
+void		sh_display_prompt(t_env *env);
+char		*sh_getvalue(t_env *env, char *key);
+
 #endif
