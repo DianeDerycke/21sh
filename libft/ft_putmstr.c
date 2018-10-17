@@ -1,29 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putmstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:45:14 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/17 17:18:02 by mrandou          ###   ########.fr       */
+/*   Created: 2018/10/17 17:11:10 by mrandou           #+#    #+#             */
+/*   Updated: 2018/10/17 17:12:57 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "libft.h"
 
-int main(int argc, char **argv, char **env)
+void	ft_putmstr(char *s1, char *s2, char *s3, char *s4)
 {
-	(void)argc;
-	(void)argv;
-	t_env 	*l_env;
-	char	buff[BUFF_SIZE];
-
-	l_env = env_fill_list(env);
-	while (42)
-	{
-		sh_display_prompt(l_env);
-		read_input(buff);
-	}
-	return (SUCCESS);
+	if (s1)
+		ft_putstr(s1);
+	if (s2)
+		ft_putstr(s2);
+	if (s3)
+		ft_putstr(s3);
+	if (s4)
+		ft_putstr(s4);
 }
