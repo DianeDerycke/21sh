@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2018/10/17 16:44:48 by mrandou          ###   ########.fr       */
+/*   Updated: 2018/10/23 16:39:21 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,7 @@ int			sh_strfpos(char *str, char oc);
 char		**sh_strsplit(const char *s, int(*ft)(char));
 void		sh_display_prompt(t_env *env);
 char		*sh_getvalue(t_env *env, char *key);
+char		*sh_get_env_value(char **env, char *key);
+char		**sh_add_field_array(char **tab, char *newfield);
 
 #endif

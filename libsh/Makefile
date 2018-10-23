@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+         #
+#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/23 13:11:33 by DERYCKE           #+#    #+#              #
-#    Updated: 2018/10/17 17:22:08 by dideryck         ###   ########.fr        #
+#    Updated: 2018/10/23 16:39:37 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libsh.a
 
-FILES = sh_strsplit sh_strfpos sh_create_elem sh_display_prompt sh_getvalue
+FILES = sh_strsplit sh_strfpos sh_create_elem sh_display_prompt sh_getvalue \
+		sh_get_env_value sh_add_field_array
 
 SRC = $(addsuffix .c, $(FILES))
 OBJ = $(addsuffix .o, $(FILES))

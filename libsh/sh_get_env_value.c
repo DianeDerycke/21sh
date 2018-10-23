@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sh_get_env_value.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:45:14 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/23 16:57:21 by mrandou          ###   ########.fr       */
+/*   Created: 2018/10/23 15:38:09 by mrandou           #+#    #+#             */
+/*   Updated: 2018/10/23 16:15:34 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "libsh.h"
 
-int main(int argc, char **argv, char **env)
+char	*sh_get_env_value(char **env, char *key)
 {
-	(void)argc;
-	(void)argv;
-	t_env 	*l_env;
-	// char	**env_copy;
-	char	buff[BUFF_SIZE];
+	int	i;
+	int	len;
 
-	l_env = env_fill_list(env);
-	// if (!(env_copy = ft_copy_array(env, ft_strlen_array(env))))
-	// 	ft_malloc_error(SH21);
-	while (42)
+	i = 0;
+	len = ft_strlen(key);
+	if (!key || !env || !env[0])
+		return (NULL);
+	while (env[i])
 	{
-		sh_display_prompt(l_env);
-		read_input(buff);
+		if (!ft_strncmp(key, env[i], len))
+			return (env[i] + (len + 1));
+		i++;
 	}
-	return (SUCCESS);
+	return (NULL);
 }

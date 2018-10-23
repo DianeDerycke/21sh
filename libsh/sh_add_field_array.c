@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sh_add_field_array.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:45:14 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/23 16:57:21 by mrandou          ###   ########.fr       */
+/*   Created: 2018/10/23 16:31:51 by mrandou           #+#    #+#             */
+/*   Updated: 2018/10/23 16:45:04 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "libsh.h"
 
-int main(int argc, char **argv, char **env)
+char	**sh_add_field_array(char **tab, char *newfield)
 {
-	(void)argc;
-	(void)argv;
-	t_env 	*l_env;
-	// char	**env_copy;
-	char	buff[BUFF_SIZE];
+	char	**new;
+	int		len;
 
-	l_env = env_fill_list(env);
-	// if (!(env_copy = ft_copy_array(env, ft_strlen_array(env))))
-	// 	ft_malloc_error(SH21);
-	while (42)
-	{
-		sh_display_prompt(l_env);
-		read_input(buff);
-	}
-	return (SUCCESS);
+	len = (ft_strlen_array(tab)) + 1;
+	if (!(new = ft_copy_array(tab, len)))
+		ft_malloc_error(SH21);
+	ft_free_array(tab);
+	if (!(new[len - 1] = ft_strdup(newfield)))
+		ft_malloc_error(SH21);
+	return (new);
 }
