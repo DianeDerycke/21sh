@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sh_remove_field_array.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:45:14 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/23 18:01:00 by mrandou          ###   ########.fr       */
+/*   Created: 2018/10/23 17:46:17 by mrandou           #+#    #+#             */
+/*   Updated: 2018/10/23 18:06:07 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "libsh.h"
 
-int main(int argc, char **argv, char **env)
+void	sh_remove_field_array(char **tab, int field)
 {
-	(void)argc;
-	(void)argv;
-	t_env 	*l_env;
-	// char	**env_copy;
-	char	buff[BUFF_SIZE];
+	int	i;
 
-	l_env = env_fill_list(env);
-	// if (!(env_copy = ft_copy_array(env, ft_strlen_array(env))))
-	// 	ft_malloc_error(SH21);
-	while (42)
+	i = 0;
+	if (!tab || !tab[0] || field < 0 || field > (int)ft_strlen_array(tab))
+		return ;
+	if (tab[field][0] && tab[field])
+		ft_strdel(&tab[field]);
+	while (tab[field + 1])
 	{
-		sh_display_prompt(l_env);
-		read_input(buff);
+		tab[field] = tab[field + 1];
+		field++;
 	}
-	return (SUCCESS);
+	tab[field] = NULL;	
 }
