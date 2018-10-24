@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sh_find_env_key.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:45:14 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/24 14:20:38 by mrandou          ###   ########.fr       */
+/*   Created: 2018/10/24 13:51:48 by mrandou           #+#    #+#             */
+/*   Updated: 2018/10/24 13:54:02 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "libsh.h"
 
-int main(int argc, char **argv, char **env)
+int		sh_find_env_key(char **env, char *key)
 {
-	(void)argc;
-	(void)argv;
-	t_env 	*l_env;
-	char	**env_copy;
-	char	buff[BUFF_SIZE];
+	int	i;
+	int	len;
 
-	l_env = env_fill_list(env);
-	if (!(env_copy = ft_copy_array(env, ft_strlen_array(env))))
-		ft_malloc_error(SH21);
-	while (42)
+	i = 0;
+	len = ft_strlen(key);
+	while (env[i])
 	{
-		sh_display_prompt(l_env);
-		read_input(buff);
+		if (!ft_strncmp(key, env[i], len))
+			return (i);
+		i++;
 	}
-	return (SUCCESS);
+	return (-1);
 }

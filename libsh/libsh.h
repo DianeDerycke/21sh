@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2018/10/23 17:53:51 by mrandou          ###   ########.fr       */
+/*   Updated: 2018/10/24 14:18:12 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ char		*sh_getvalue(t_env *env, char *key);
 char		*sh_get_env_value(char **env, char *key);
 char		**sh_add_field_array(char **tab, char *newfield);
 void		sh_remove_field_array(char **tab, int field);
+int			sh_find_env_key(char **env, char *key);
+void		sh_append_env_value(char **env, char *key, char *newvalue);
 
 #endif

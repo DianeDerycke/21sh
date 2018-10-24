@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sh_append_env_value.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:45:14 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/24 14:20:38 by mrandou          ###   ########.fr       */
+/*   Created: 2018/10/24 13:58:15 by mrandou           #+#    #+#             */
+/*   Updated: 2018/10/24 14:17:32 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "libsh.h"
 
-int main(int argc, char **argv, char **env)
+void	sh_append_env_value(char **env, char *key, char *newvalue)
 {
-	(void)argc;
-	(void)argv;
-	t_env 	*l_env;
-	char	**env_copy;
-	char	buff[BUFF_SIZE];
+	int		nfield;
+	char	*tmp;
 
-	l_env = env_fill_list(env);
-	if (!(env_copy = ft_copy_array(env, ft_strlen_array(env))))
+	nfield = sh_find_env_key(env, key);
+	tmp = NULL;
+	if (!env || !env[0] || !key || !newvalue || (nfield == -1))
+		return ;
+	if (!(tmp = ft_strdup(env[nfield])))
 		ft_malloc_error(SH21);
-	while (42)
-	{
-		sh_display_prompt(l_env);
-		read_input(buff);
-	}
-	return (SUCCESS);
+	ft_strdel(&env[nfield]);
+	if (!(env[nfield] = ft_strmjoin(tmp, ":", newvalue)))
+		ft_malloc_error(SH21);
+	ft_strdel(&tmp);
 }
