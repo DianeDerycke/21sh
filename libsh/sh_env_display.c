@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sh_env_display.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:45:14 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/24 16:30:04 by mrandou          ###   ########.fr       */
+/*   Created: 2018/10/24 16:00:16 by mrandou           #+#    #+#             */
+/*   Updated: 2018/10/24 16:28:53 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "libsh.h"
 
-int main(int argc, char **argv, char **env)
+void	sh_env_display(char **env)
 {
-	(void)argc;
-	(void)argv;
-	t_env 	*l_env;
-	// char	**env_copy;
-	char	buff[BUFF_SIZE];
+	int		i;
+	char	*tmp;
 
-	l_env = env_fill_list(env);
-	// if (!(env_copy = ft_copy_array(env, ft_strlen_array(env))))
-	// 	ft_malloc_error(SH21);
-	while (42)
+	i = 0;
+	tmp = NULL;
+	while (env[i])
 	{
-		sh_display_prompt(l_env);
-		read_input(buff);
+		tmp = sh_get_env_key(env, i);
+		ft_putmstr(GREEN, tmp, D_GRAY, "=");
+		ft_putstr(RESET);
+		ft_putmstr(L_GRAY, sh_get_env_value(env, tmp), "\n", RESET);
+		i++;
 	}
-	return (SUCCESS);
 }

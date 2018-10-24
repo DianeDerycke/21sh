@@ -1,32 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   sh_get_env_key.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:45:14 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/24 16:30:04 by mrandou          ###   ########.fr       */
+/*   Created: 2018/10/24 14:29:20 by mrandou           #+#    #+#             */
+/*   Updated: 2018/10/24 15:35:05 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "libsh.h"
 
-int main(int argc, char **argv, char **env)
+char	*sh_get_env_key(char **env, int field)
 {
-	(void)argc;
-	(void)argv;
-	t_env 	*l_env;
-	// char	**env_copy;
-	char	buff[BUFF_SIZE];
+	char	*tmp;
+	int		i;
 
-	l_env = env_fill_list(env);
-	// if (!(env_copy = ft_copy_array(env, ft_strlen_array(env))))
-	// 	ft_malloc_error(SH21);
-	while (42)
-	{
-		sh_display_prompt(l_env);
-		read_input(buff);
-	}
-	return (SUCCESS);
+	if (!env || !env[0] || field < 0 || !env[field])
+		return (NULL);
+	tmp = env[field];
+	i = sh_strfpos(env[field], '=') - 1;
+	tmp[i] = '\0';
+	return (tmp);
 }

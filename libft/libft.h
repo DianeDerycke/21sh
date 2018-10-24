@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 03:09:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2018/10/24 14:15:49 by mrandou          ###   ########.fr       */
+/*   Updated: 2018/10/24 16:15:32 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@
 # define CYAN   "\x1B[96m"
 # define WHITE   "\x1B[37m"
 # define RESET "\x1B[0m"
+# define D_GRAY "\x1B[90m"
+# define L_GRAY "\x1B[87m"
 
 typedef struct		s_elem
 {
