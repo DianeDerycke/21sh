@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/24 16:00:16 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/24 16:28:53 by mrandou          ###   ########.fr       */
+/*   Updated: 2018/11/07 13:58:27 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ void	sh_env_display(char **env)
 		ft_putstr(RESET);
 		ft_putmstr(L_GRAY, sh_get_env_value(env, tmp), "\n", RESET);
 		i++;
+		tmp[ft_strlen(tmp)] = '=';
 	}
 }
