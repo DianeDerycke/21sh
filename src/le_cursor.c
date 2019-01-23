@@ -6,11 +6,11 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:37:17 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/15 12:56:45 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/23 16:12:19 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/lineedition.h"
+#include "../includes/lineedition.h"
 
 int		le_cursor_motion(struct s_le *le_struct, int motion)
 {

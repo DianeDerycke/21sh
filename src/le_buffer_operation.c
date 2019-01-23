@@ -6,11 +6,11 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/22 18:00:40 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/23 16:12:15 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/lineedition.h"
+#include "../includes/lineedition.h"
 
 int		le_buff_remove(struct s_le *le_struct, int i)
 {

@@ -6,11 +6,11 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/23 13:43:47 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/23 16:12:11 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/lineedition.h"
+#include "../includes/lineedition.h"
 
 
 void	dlst_push(t_dlist **history, char *content)

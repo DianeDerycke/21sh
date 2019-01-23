@@ -2,7 +2,6 @@
 #define LEXER_H
 
 #include "../libft/libft.h"
-#include "../libms/libms.h"
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -10,6 +9,7 @@
 #define SUCCESS 0
 #define FAILURE 1
 #define ERROR -1
+#define DOLLAR '$'
 #define LEX_DQUOTE '\"'
 #define LEX_SQUOTE '\''
 #define BACKSLASH '\\'

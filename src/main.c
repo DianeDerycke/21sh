@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/18 00:50:58 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/01/23 17:23:58 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lexer.h"
+#include "../includes/sh21.h"
 
 int(*def_type[ARRAY_SIZE])(int) = {
     &ft_is_whitespace,
@@ -66,18 +66,18 @@ static int     loop_input(t_param *param)
     if (!(param = malloc(sizeof(t_param))))
         return (FAILURE);
     init_param(&param);
-    while (ms_read_input(&(param->input)) != FAILURE)
+    while ((param->input = line_edition()))
     {
-        if (param->input && ft_strcmp(param->input, "exit") == SUCCESS) // Just a shortcut to exit program
-            return (SUCCESS);
+		if (ft_strcmp(param->input, "exit") == SUCCESS)
+			exit(0);
         while ((ret = valid_quotes(param->input)))
         {
             if (ret == 1)
                 ft_putstr("quote>");
             if (ret == 2)
                 ft_putstr("dquote>");
-            ms_read_input(&tmp);
-            param->input = ft_strjoin(param->input, "\n");
+            tmp = line_edition();
+            param->input = ft_strjoin_free(param->input, "\n");
             param->input = ft_strjoin(param->input, tmp);
             ft_strdel(&tmp);
         }

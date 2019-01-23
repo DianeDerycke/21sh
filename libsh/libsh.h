@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/01/23 15:21:35 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/23 17:18:01 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,6 @@
 # endif
 
 # define C_EQUAL '='
-# define SH21 "21sh"
-# define SUCCESS 0
-# define ERROR 1
 # define BUFF_SIZE 4096
 
 typedef struct		s_env

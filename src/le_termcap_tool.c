@@ -6,11 +6,11 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:37:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/11 12:24:32 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/23 16:12:30 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/lineedition.h"
+#include "../includes/lineedition.h"
 
 int		le_termcap_print(char *str, int nb)
 {

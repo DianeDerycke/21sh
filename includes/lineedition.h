@@ -6,14 +6,14 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/23 13:45:18 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/23 17:02:13 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LINEEDITION_H
 # define LINEEDITION_H
 
-# include "../libft/incs/libft.h"
+# include "../libft/libft.h"
 # include <term.h>
 # include <termios.h>
 # include <stdlib.h>
@@ -22,6 +22,7 @@
 # include <sys/wait.h>
 # include <sys/stat.h>
 # include <fcntl.h>
+# include <limits.h>
 
 # define LE_SUCCESS			0
 # define LE_FAILURE 		1

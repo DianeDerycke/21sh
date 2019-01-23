@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   line_edition.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/22 18:24:21 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/23 17:13:09 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incs/lineedition.h"
+#include "../includes/lineedition.h"
 
 
 int		le_read_and_exec(struct termios backup, struct s_le *le_struct)
@@ -76,25 +76,4 @@ char	*line_edition(void)
 **	le_ = line_edition
 **	It's this function that will have to be called for line edition
 **	Set the attribute for the shell and launch the read/execute function
-*/
-
-
-int		main(void)
-{
-	char	*result;
-	
-	if (!(result = line_edition()))
-	{
-		ft_strdel(&result);
-		// dlst_free(history);
-		return (LE_FAILURE);
-	}
-	history_write(result);
-	ft_strdel(&result);
-	// dlst_free(history);
-	return (LE_SUCCESS);
-}
-
-/* 
-**	Main for test, for call the line_edition
 */

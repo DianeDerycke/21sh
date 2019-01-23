@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:05:44 by dideryck          #+#    #+#             */
-/*   Updated: 2018/10/23 14:24:03 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/23 17:16:09 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "../libft/libft.h"
 # include "../libsh/libsh.h"
+# include "lexer.h"
+# include "lineedition.h"
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
