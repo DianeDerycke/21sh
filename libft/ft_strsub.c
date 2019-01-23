@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/16 21:31:36 by dideryck          #+#    #+#             */
-/*   Updated: 2018/10/17 16:43:26 by mrandou          ###   ########.fr       */
+/*   Updated: 2018/08/17 12:58:39 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	if (s == NULL)
 		return (NULL);
 	if (!(str = (char*)malloc(sizeof(char) * (len + 1))))
-		return (NULL);
+		ft_malloc_error();
 	while (i < len)
 	{
 		str[i] = s[start];

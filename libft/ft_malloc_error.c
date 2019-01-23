@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   ft_malloc_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 12:52:16 by DERYCKE           #+#    #+#             */
-/*   Updated: 2018/10/17 14:40:14 by mrandou          ###   ########.fr       */
+/*   Updated: 2018/09/24 20:10:59 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_malloc_error(char *str)
+void	ft_malloc_error(void)
 {
-	ft_putstr(str);
 	ft_putendl_fd("Malloc error", 2);
 	exit(1);
 }

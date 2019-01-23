@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putmstr.c                                       :+:      :+:    :+:   */
+/*   free_lst.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/17 17:11:10 by mrandou           #+#    #+#             */
-/*   Updated: 2018/10/17 17:12:57 by mrandou          ###   ########.fr       */
+/*   Created: 2019/01/09 13:13:29 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/01/09 13:38:19 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putmstr(char *s1, char *s2, char *s3, char *s4)
+void    free_lst(t_list *lst)
 {
-	if (s1)
-		ft_putstr(s1);
-	if (s2)
-		ft_putstr(s2);
-	if (s3)
-		ft_putstr(s3);
-	if (s4)
-		ft_putstr(s4);
+    t_list *tmp;
+
+    while (lst)
+    {
+        tmp = lst;
+        lst = lst->next;
+        // free(tmp->content);
+        tmp->content_size = 0;
+        free(tmp);
+        tmp = lst;
+    }
 }

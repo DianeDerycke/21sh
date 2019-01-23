@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 03:09:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2018/10/24 16:15:32 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/23 15:20:57 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@
 # define CYAN   "\x1B[96m"
 # define WHITE   "\x1B[37m"
 # define RESET "\x1B[0m"
-# define D_GRAY "\x1B[90m"
-# define L_GRAY "\x1B[87m"
 
 typedef struct		s_elem
 {
@@ -58,7 +56,6 @@ int					ft_isprint(int c);
 int					ft_toupper(int c);
 int					ft_tolower(int c);
 int					ft_isascii(int c);
-size_t				ft_isvisible(char *str);
 
 int					ft_atoi(const char *str);
 char				*ft_itoa(long int n);
@@ -73,8 +70,6 @@ void				ft_putstr_fd(char const *s, int fd);
 void				ft_putendl(char const *s);
 void				ft_putendl_fd(char const *s, int fd);
 void				ft_print_array(char **array);
-void				ft_putlst(t_list *list);
-void				ft_putmstr(char *s1, char *s2, char *s3, char *s4);
 
 size_t				ft_strlen(const char *s);
 int					ft_strcmp(const char *s1, const char *s2);
@@ -101,7 +96,6 @@ int					ft_strequ(char const *s1, char const *s2);
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char *s1, char *s2);
-char				*ft_strmjoin(char const *s, char const *s2, char const *s3);
 char				*ft_strjoin_free(char *s1, char *s2);
 char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
@@ -119,6 +113,7 @@ void				ft_bzero(void *s, size_t n);
 t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
+void    			free_lst(t_list *lst);
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
@@ -126,6 +121,7 @@ void				ft_push_back(t_dblist *lst, char *str);
 void				ft_init_dblist(t_dblist *lst);
 void				ft_sort_lst(t_dblist *lst);
 void				ft_clear_lst(t_dblist *lst);
+
 
 void				ft_pause(void);
 int					ft_is_space(char c);
@@ -135,13 +131,13 @@ size_t				ft_strlen_array(char **tab);
 char				*ft_strndup(const char *s, size_t len);
 void				ft_sort_integer_table(int *tab, int size);
 char				**ft_copy_array(char **src, size_t len);
-void				ft_malloc_error(char *str);
+void				ft_malloc_error(void);
 ssize_t				ft_find_char(char *str, char c, size_t *index);
 void				ft_replace(char *str, char c, char new_c);
 char				**ft_trim_array(char **array);
-int					ft_is_whitespace(char c);
+int					ft_is_whitespace(int c);
 void				ft_replace_whitespaces(char *str, char c);
 char				*ft_dup_until(char *str, char c);
 void				ft_clear_screen(void);
-
+char				*ft_strmjoin(char const *s, char const *s2, char const *s3);
 #endif
