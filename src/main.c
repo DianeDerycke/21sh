@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/23 17:23:58 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/23 17:32:48 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ static int     loop_input(t_param *param)
             param->input = ft_strjoin(param->input, tmp);
             ft_strdel(&tmp);
         }
+		history_write(param->input);
         if (lex_input(param)== FAILURE) //Display error if something went wrong on the lexer
         {
             printf("ERROR LEX\n");
