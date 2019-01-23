@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/23 16:12:11 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/23 18:06:37 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ void	dlst_free(t_dlist *dlist)
 	tmp = NULL;
 	while (dlist)
 	{
-		tmp = dlist;
+		tmp = dlist->next;
 		if (dlist->content)
 			free(dlist->content);
-		free(tmp);
-		dlist = dlist->next;
+		free(dlist);
+		dlist = tmp;
 	}
 }
 
