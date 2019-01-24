@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/01/24 12:34:09 by mrandou          ###   ########.fr        #
+#    Updated: 2019/01/24 13:42:26 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,6 +56,7 @@ LDLIBS = -lft -lsh
 CC = gcc
 CFLAGS = -Werror -Wextra -Wall
 TFLAGS = -ltermcap
+
 all: compile
 
 $(OBJ):
@@ -74,7 +75,7 @@ $(OBJ_LINE_EDITION_PATH)%.o: $(LINE_EDITION_PATH)%.c
 	$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
 
 $(NAME): $(OBJ) $(LINE_EDITION_OBJ) $(HISTORY_OBJ) $(LEX_PARSE_OBJ)
-	$(CC) $(CFLAGS) -o $@ $(LINE_EDITION_OBJ) $(HISTORY_OBJ) $(LEX_PARSE_OBJ)
+	$(CC) $(CFLAGS) -o $@ $(LINE_EDITION_OBJ) $(HISTORY_OBJ) $(LEX_PARSE_OBJ) \
 	$(LIBNAME) $(TFLAGS)
 
 compile: 
