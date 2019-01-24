@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_init.c                                         :+:      :+:    :+:   */
+/*   history.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/17 00:15:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/24 14:40:11 by mrandou          ###   ########.fr       */
+/*   Created: 2019/01/24 14:27:08 by mrandou           #+#    #+#             */
+/*   Updated: 2019/01/24 14:29:42 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
+#ifndef HISTORY_H
+# define HISTORY_H
 
-void    init_param(t_param **param)
-{
-    (*param)->input = NULL;
-    (*param)->index = 0;
-    (*param)->token = 0;
-    (*param)->ft = NULL;
-    (*param)->l_tokens = NULL;
-}
+# include "sh21.h"
+
+int		hy_history_fill_list(struct s_le *le_struct);
+int		hy_history_write(char *command);
+void	hy_dlst_push(t_dlist **history, char *content);
+void	hy_dlst_free(t_dlist *dlist);
+
+#endif

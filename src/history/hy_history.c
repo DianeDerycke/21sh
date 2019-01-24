@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_history.c                                       :+:      :+:    :+:   */
+/*   hy_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/23 18:06:37 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/24 14:34:22 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lineedition.h"
+#include "../../includes/sh21.h"
 
 
-void	dlst_push(t_dlist **history, char *content)
+void	hy_dlst_push(t_dlist **history, char *content)
 {
 	t_dlist *newlist;
 
@@ -28,7 +28,7 @@ void	dlst_push(t_dlist **history, char *content)
 	*history = newlist;
 }
 
-void	dlst_free(t_dlist *dlist)
+void	hy_dlst_free(t_dlist *dlist)
 {
 	t_dlist	*tmp;
 
@@ -43,7 +43,7 @@ void	dlst_free(t_dlist *dlist)
 	}
 }
 
-int		history_fill_list(struct s_le *le_struct)
+int		hy_history_fill_list(struct s_le *le_struct)
 {
 	int		fd;
 	int		ret;
@@ -59,7 +59,7 @@ int		history_fill_list(struct s_le *le_struct)
 		ret = get_next_line(fd, &line);
 		if (ret == -1)
 			return (2);
-		dlst_push(&le_struct->history, line);
+		hy_dlst_push(&le_struct->history, line);
 		ft_strdel(&line);
 	}
 	if (close(fd) == -1)
@@ -67,7 +67,7 @@ int		history_fill_list(struct s_le *le_struct)
 	return (0);
 }
 
-int		history_write(char *command)
+int		hy_history_write(char *command)
 {
 	int	fd;
 

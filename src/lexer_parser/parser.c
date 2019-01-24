@@ -6,11 +6,11 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:23:45 by dideryck          #+#    #+#             */
-/*   Updated: 2019/01/23 14:38:17 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/24 14:40:11 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lexer.h"
+#include "../../includes/lexer.h"
 
 static t_token     *find_priority_token(t_token *start, t_token *end)
 {

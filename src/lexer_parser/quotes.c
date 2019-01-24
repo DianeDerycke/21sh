@@ -6,11 +6,11 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/23 14:13:48 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/24 14:40:11 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lexer.h"
+#include "../../includes/lexer.h"
 
 // int    push_lst(char c, t_list **current_node)
 // {

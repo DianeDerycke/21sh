@@ -1,5 +1,7 @@
 {
 	"files.associations": {
-		"libsh.h": "c"
+		"libsh.h": "c",
+		"lineedition.h": "c",
+		"sh21.h": "c"
 	}
 }

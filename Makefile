@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/01/24 13:42:26 by mrandou          ###   ########.fr        #
+#    Updated: 2019/01/24 14:23:12 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LINE_EDITION_NAME = line_edition.c \
 					le_cursor.c \
 					le_init.c
 
-HISTORY_NAME =		sh_history.c
+HISTORY_NAME =		hy_history.c
 
 LEX_PARSE_NAME =	main.c \
 					lex_utils.c \

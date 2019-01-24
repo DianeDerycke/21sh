@@ -6,14 +6,14 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/23 17:02:13 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/24 14:29:39 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LINEEDITION_H
 # define LINEEDITION_H
 
-# include "../libft/libft.h"
+# include "sh21.h"
 # include <term.h>
 # include <termios.h>
 # include <stdlib.h>
@@ -117,7 +117,7 @@ typedef struct		s_le
 **	main.c
 */
 
-int		le_read_and_exec(struct termios backup, struct s_le *le_struct);
+int		le_read_and_exec(struct s_le *le_struct);
 char	*line_edition(void);
 
 /*
@@ -128,7 +128,7 @@ int		le_init(struct s_le *le_struct);
 int		le_init_struct(struct s_le *le_struct);
 void	le_init_calcul(struct s_le *le_struct);
 int		le_set_attribute(struct termios *backup);
-int		le_exit(struct termios *backup, struct s_le *le_struct, int ret);
+int		le_exit(struct s_le *le_struct, int ret);
 int		le_window_check(struct s_le *le_struct);
 int		le_clear(struct s_le *le_struct);
 
@@ -179,15 +179,6 @@ int		le_cursor_down(struct s_le *le_struct);
 */
 
 void	le_debug_fct(struct s_le *le_strucr);
-void    motion_calcul(int expected, int current, int col, int fd);
-
-/*
-**	sh_history.c
-*/
-
-int		history_fill_list(struct s_le *le_struct);
-int		history_write(char *command);
-void	dlst_push(t_dlist **history, char *content);
-void	dlst_free(t_dlist *dlist);
+void	motion_calcul(int expected, int current, int col, int fd);
 
 #endif

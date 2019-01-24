@@ -6,11 +6,11 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 18:35:30 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/23 16:11:55 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/24 14:34:22 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lineedition.h"
+#include "../../includes/sh21.h"
 
 int		le_termcap_check(char tmp[])
 {

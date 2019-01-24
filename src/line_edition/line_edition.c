@@ -6,14 +6,14 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/23 17:13:09 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/24 14:34:22 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lineedition.h"
+#include "../../includes/sh21.h"
 
 
-int		le_read_and_exec(struct termios backup, struct s_le *le_struct)
+int		le_read_and_exec(struct s_le *le_struct)
 {
 	int	ret;
 
@@ -28,7 +28,7 @@ int		le_read_and_exec(struct termios backup, struct s_le *le_struct)
 	{
 		if (le_window_check(le_struct))
 			return (LE_FAILURE);
-		if ((ret = le_exit(&backup, le_struct, le_init(le_struct))) == LE_EXIT)
+		if ((ret = le_exit(le_struct, le_init(le_struct))) == LE_EXIT)
 			return (LE_SUCCESS);
 		else if (ret == LE_FAILURE)
 			return (LE_FAILURE);
@@ -56,8 +56,10 @@ char	*line_edition(void)
 
 	if (le_set_attribute(&backup))
 		return (NULL);
-	if (le_read_and_exec(backup, &le_struct))
+	if (le_read_and_exec(&le_struct))
 	{
+		if (tcsetattr(STDIN_FILENO, 0, &backup))
+			return (NULL);
 		if (le_struct.buff)
 			ft_strdel(&le_struct.buff);
 		return (NULL);

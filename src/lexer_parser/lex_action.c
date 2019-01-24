@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lex_action.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 23:48:24 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/18 02:35:23 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/01/24 14:40:11 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lexer.h"
+#include "../../includes/lexer.h"
 
 int(*condition[SIZE_CONDITION])(int c) = {
     &ft_is_whitespace,

@@ -6,11 +6,11 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 17:19:32 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/23 16:12:35 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/24 14:34:22 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lineedition.h"
+#include "../../includes/sh21.h"
 
 /*					/!\ DELETE THIS FILE AT THE END /!\						  */
 /*					/!\   DEBUG FUNCTIONS FOR TEST  /!\						  */

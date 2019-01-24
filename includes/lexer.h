@@ -17,54 +17,54 @@
 #define ARRAY_SIZE 6
 
 static char     operators[20][20] = {
-    {";"},
-    {"|"},
-    ("\n"),
-    {"\n"},
-    {"\n"},
-    {">"},
-    {">>"},
-    {"<"},
-    {"<<"},
-    {"&"},
-    {"<&"},
-    {">&"},
-    {"\0"}
+	{";"},
+	{"|"},
+	("\n"),
+	{"\n"},
+	{"\n"},
+	{">"},
+	{">>"},
+	{"<"},
+	{"<<"},
+	{"&"},
+	{"<&"},
+	{">&"},
+	{"\0"}
 };
 
 typedef enum    e_ope{
-    SEPARATOR, //   ;
-    PIPE,      //   |
-    NEWLINE,   //   \n
-    WORD,      //   [aA-zZ.. 0..9]
-    GREAT,     //   >
-    DGREAT,    //   >>
-    LESS,      //   <
-    DLESS,     //   <<
-    AND,       //   &
-    LESSAND,   //   <&
-    GREATAND,  //   >&
-    IO_NUMBER,  //   [0,1,2...] Digit with '<' or '>' as delimiter
-    DIGIT,      // [0..9]
-    DQUOTE = '\"', 
-    SQUOTE = '\'',
-    C_DOLLAR = '$'
+	SEPARATOR, //   ;
+	PIPE,      //   |
+	NEWLINE,   //   \n
+	WORD,      //   [aA-zZ.. 0..9]
+	GREAT,     //   >
+	DGREAT,    //   >>
+	LESS,      //   <
+	DLESS,     //   <<
+	AND,       //   &
+	LESSAND,   //   <&
+	GREATAND,  //   >&
+	IO_NUMBER,  //   [0,1,2...] Digit with '<' or '>' as delimiter
+	DIGIT,      // [0..9]
+	DQUOTE = '\"', 
+	SQUOTE = '\'',
+	C_DOLLAR = '$'
 }               t_ope;
 
 typedef struct      s_param {
-    char            *input;
-    int             index;
-    int           token;
-    int(*ft)(int);
-    struct s_token  *l_tokens;
+	char            *input;
+	int             index;
+	int           token;
+	int(*ft)(int);
+	struct s_token  *l_tokens;
 }                   t_param;
 
 typedef struct      s_token {
-    char            *value;
-    t_ope            token;
-    struct s_token  *next;
-    struct s_token  *right;
-    struct s_token  *left;
+	char            *value;
+	t_ope            token;
+	struct s_token  *next;
+	struct s_token  *right;
+	struct s_token  *left;
 }                   t_token;
 
 //def type char function

@@ -6,11 +6,11 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/23 16:12:25 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/24 14:35:00 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lineedition.h"
+#include "../../includes/sh21.h"
 
 int		le_init(struct s_le *le_struct)
 {
@@ -51,7 +51,7 @@ int		le_init_struct(struct s_le *le_struct)
 	le_struct->buffer_size = LE_BUFF_SIZE;
 	le_struct->history_activ = 0;
 	ft_bzero(le_struct->tmp, LE_TMP_BUFF_SIZE);
-	if (history_fill_list(le_struct))
+	if (hy_history_fill_list(le_struct))
 		return (LE_FAILURE);
 	return (LE_SUCCESS);
 }
@@ -143,18 +143,16 @@ int		le_window_check(struct s_le *le_struct)
 **	Restore cursor position
 */
 
-int		le_exit(struct termios *backup, struct s_le *le_struct, int ret)
+int		le_exit(struct s_le *le_struct, int ret)
 {
 	if (ret == LE_ENDL)
 	{
-		tcsetattr(STDIN_FILENO, 0, backup);
-		dlst_free(le_struct->history);
+		hy_dlst_free(le_struct->history);
 		return (LE_EXIT);
 	}
 	if (ret == LE_FAILURE)
 	{
-		tcsetattr(STDIN_FILENO, 0, backup);
-		dlst_free(le_struct->history);
+		hy_dlst_free(le_struct->history);
 		return (LE_FAILURE);
 	}
 	// if (*le_struct->buff == LE_EXIT)
