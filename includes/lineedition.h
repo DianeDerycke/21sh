@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/24 14:29:39 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/27 17:18:36 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 
 # define LE_SUCCESS			0
 # define LE_FAILURE 		1
-
 # define LE_BUFF_SIZE		2048
 # define LE_TMP_BUFF_SIZE	16
 # define LE_PROMPT 			"\033[1m\033[32m$> \033[0m"
@@ -41,6 +40,11 @@
 # define LE_LEFT			"D"
 # define LE_MOVE			"G"
 # define LE_START			-1
+# define LE_TERM			"xterm-256color"
+
+/*
+**	Termcaps DEFINE
+*/
 
 # define TC_INSERT_ON		"im"
 # define TC_INSERT_OFF		"ei"
@@ -99,11 +103,13 @@ typedef struct		s_le
 	t_dlist	*history;
 	char	*buff;
 	char	tmp[LE_TMP_BUFF_SIZE];
+	int		*empty_area;
 	int		buffer_size;
 	int		cursor_x;
 	int		cursor_y;
 	int		cursor_real;
 	int		nb_char;
+	int		nb_empty_char;
 	int		nb_line;
 	int		w_line;
 	int		w_col;
@@ -157,6 +163,7 @@ int		le_buff_remove(struct s_le *le_struct, int i);
 int		le_buff_add(struct s_le *le_struct, int i, char c);
 int		le_buff_append(struct s_le *le_struct, char c);
 char	*le_buff_realloc(struct s_le *le_struct);
+int		le_buff_check_space(struct s_le *le_struc, int size);
 int		le_buff_history(struct s_le *le_struct);
 
 /*
@@ -173,6 +180,13 @@ int		le_cursor_word_backward(struct s_le *le_struct);
 int		le_cursor_home_end(struct s_le *le_struct, int direction);
 int		le_cursor_up(struct s_le *le_struct);
 int		le_cursor_down(struct s_le *le_struct);
+
+/*
+**	le_cursor_tool.c
+*/
+
+int		le_cursor_calcul_empty_area(struct s_le *le_struct);
+int		*le_tab_add_value(int *tab_old, int value);
 
 /*
 **	le_debug.c /!\ DELETE THIS FILE AT THE END /!\

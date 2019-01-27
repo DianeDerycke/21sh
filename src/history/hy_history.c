@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/24 14:34:22 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/24 16:39:58 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,34 @@ int		hy_history_fill_list(struct s_le *le_struct)
 	int		fd;
 	int		ret;
 	char	*line;
+	char	*tmp;
 
 	ret = 1;
 	line = NULL;
+	tmp = NULL;
+	if (!le_struct)
+		return (FAILURE);
 	le_struct->history = NULL;
 	if ((fd = open(".21sh_history", O_RDONLY | O_CREAT, S_IRWXU)) == -1)
-		return (1);
+		return (FAILURE);
 	while (ret != -1 && ret)
 	{
-		ret = get_next_line(fd, &line);
-		if (ret == -1)
-			return (2);
+		if ((ret = get_next_line(fd, &line)) == -1)
+			return (FAILURE);
+		while (ret != -1 && ret && valid_quotes(line))
+		{
+			if ((ret = get_next_line(fd, &tmp)) == -1)
+				return (FAILURE);
+			if (!(line = ft_strmjoin(line, "\n", tmp)))
+				return (FAILURE);
+			ft_strdel(&tmp);
+		}
 		hy_dlst_push(&le_struct->history, line);
 		ft_strdel(&line);
 	}
 	if (close(fd) == -1)
-		return (1);
-	return (0);
+		return (FAILURE);
+	return (SUCCESS);
 }
 
 int		hy_history_write(char *command)

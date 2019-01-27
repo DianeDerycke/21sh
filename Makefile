@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/01/24 14:23:12 by mrandou          ###   ########.fr        #
+#    Updated: 2019/01/27 15:55:08 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ LINE_EDITION_NAME = line_edition.c \
 					le_termcap_tool.c \
 					le_buffer_operation.c \
 					le_cursor.c \
-					le_init.c
+					le_init.c \
+					le_cursor_tool.c
 
 HISTORY_NAME =		hy_history.c
 

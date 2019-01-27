@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/24 14:34:22 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/24 15:16:06 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,17 @@ char		*le_buff_realloc(struct s_le *le_struct)
 **	Realloc the buffer if the command line is over than LE_BUFF_SIZE
 */
 
+int		le_buff_check_space(struct s_le *le_struct, int size)
+{
+	if (le_struct->nb_char + size > le_struct->buffer_size)
+		return (0);
+	return (1);
+}
+
+/*
+**	Return 1 if there is space on the buffer for add new chars or 0 if it's full
+*/
+
 int		le_buff_history(struct s_le *le_struct)
 {
 	if (!le_struct->history_activ)
@@ -153,3 +164,7 @@ int		le_buff_history(struct s_le *le_struct)
 	}
 	return (LE_SUCCESS);
 }
+
+/*
+**	Browse the historic whit up/down arrows
+*/

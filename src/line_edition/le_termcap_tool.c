@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:37:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/24 14:34:22 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/24 15:51:19 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ int		le_termcap_print(char *str, int nb)
 
 int		le_ansi_print(int nb, char *s)
 {
-	if (!nb || !s)
+	if (!s)
 		return (LE_FAILURE);
 	ft_putstr(LE_ESCAPEBRK);
-	ft_putnbr(nb);
+	if (nb)
+		ft_putnbr(nb);
 	ft_putstr(s);
 	return (LE_SUCCESS);
 }
@@ -54,7 +55,7 @@ int		le_termcap_init(void)
 
 	term = getenv("TERM");
 	if (!term)
-		return (LE_FAILURE);
+		term = LE_TERM;
 	if (tgetent(NULL, term) != 1)
 		return (LE_FAILURE);
 	return (LE_SUCCESS);

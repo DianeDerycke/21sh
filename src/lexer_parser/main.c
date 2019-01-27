@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/24 14:37:43 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/24 16:38:33 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,12 @@ static int     loop_input(t_param *param)
 			printf("ERROR LEX\n");
 			return (FAILURE);
 		}
-		// else
-		// 	display_list(param->l_tokens);
+		else
+			display_list(param->l_tokens);
 		if (!(ast = parser_input(param->l_tokens, NULL)))
 			return (FAILURE);
-		// else
-		// 	display_tree(ast, 0, 0);
+		else
+			display_tree(ast, 0, 0);
 		ft_strdel(&param->input);
 		free(param);
 		if (!(param = malloc(sizeof(t_param))))
