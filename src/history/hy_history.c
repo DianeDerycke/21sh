@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/24 16:39:58 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/28 18:34:36 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		hy_history_fill_list(struct s_le *le_struct)
 		{
 			if ((ret = get_next_line(fd, &tmp)) == -1)
 				return (FAILURE);
-			if (!(line = ft_strmjoin(line, "\n", tmp)))
+			if (!(line = ft_strmjoin(line, " ", tmp)))
 				return (FAILURE);
 			ft_strdel(&tmp);
 		}
@@ -85,9 +85,15 @@ int		hy_history_write(char *command)
 	if ((fd = open(".21sh_history", O_WRONLY | O_APPEND)) == -1)
 		return (1);
 	if ((write(fd, command, ft_strlen(command))) == -1)
+	{
+		close(fd);
 		return (1);
+	}
 	if ((write(fd, "\n", 1)) == -1)
+	{
+		close(fd);
 		return (1);
+	}
 	if (close(fd) == -1)
 		return (1);
 	return (0);

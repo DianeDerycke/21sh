@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/24 14:34:22 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/28 18:27:39 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,12 @@ int		le_read_and_exec(struct s_le *le_struct)
 **	Else add the char to the buffer
 */
 
-char	*line_edition(void)
+char	*line_edition(int prompt)
 {
 	struct termios	backup;
 	struct s_le		le_struct;
 
+	le_struct.prompt_type = prompt;
 	if (le_set_attribute(&backup))
 		return (NULL);
 	if (le_read_and_exec(&le_struct))

@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/24 15:16:06 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/28 18:45:14 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ int		le_buff_history(struct s_le *le_struct)
 	if (le_struct->term == LE_ARROW_UP && (!le_struct->nb_char || le_struct->history_activ))
 	{
 		ft_bzero(le_struct->buff, le_struct->nb_char);
+		// if (le_buff_check_space(le_struct, ft_strlen(le_struct->history->content)))
+		// 	if (le_buff_realloc())
 		ft_strcpy(le_struct->buff, le_struct->history->content);
 		le_struct->nb_char = ft_strlen(le_struct->history->content);
 		if (le_clear(le_struct))

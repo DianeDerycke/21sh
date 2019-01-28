@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/27 17:18:36 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/28 18:27:28 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define LE_BUFF_SIZE		2048
 # define LE_TMP_BUFF_SIZE	16
 # define LE_PROMPT 			"\033[1m\033[32m$> \033[0m"
+# define LE_PROMPT_MIN		"\033[1m\033[30m>\\ \033[0m"
 # define LE_PROMPT_SIZE		3
 # define LE_ESCAPE			'\033'
 # define LE_ESCAPEBRK		"\033["
@@ -116,6 +117,7 @@ typedef struct		s_le
 	int		last_line;
 	int		term;
 	int		prompt_size;
+	int		prompt_type;
 	int		history_activ;
 }					t_le;
 
@@ -124,7 +126,7 @@ typedef struct		s_le
 */
 
 int		le_read_and_exec(struct s_le *le_struct);
-char	*line_edition(void);
+char	*line_edition(int prompt);
 
 /*
 **	le_init.c

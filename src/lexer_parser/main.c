@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/24 16:38:33 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/28 18:26:37 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,17 @@ static int     loop_input(t_param *param)
 	init_param(&param);
 	while (21)
 	{
-		if (!(param->input = line_edition()))
+		if (!(param->input = line_edition(0)))
 			continue ;
 		if (ft_strcmp(param->input, "exit") == SUCCESS)
 			exit(0);
 		while ((ret = valid_quotes(param->input)))
 		{
-			if (ret == 1)
-				ft_putstr("quote>");
-			if (ret == 2)
-				ft_putstr("dquote>");
-			tmp = line_edition();
+			// if (ret == 1)
+			// 	ft_putstr("quote>");
+			// if (ret == 2)
+			// 	ft_putstr("dquote>");
+			tmp = line_edition(ret);
 			param->input = ft_strjoin_free(param->input, "\n");
 			param->input = ft_strjoin(param->input, tmp);
 			ft_strdel(&tmp);
