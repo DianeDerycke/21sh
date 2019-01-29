@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/29 10:55:31 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/29 19:31:04 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ typedef struct		s_le
 	t_dlist	*history;
 	char	*buff;
 	char	tmp[LE_TMP_BUFF_SIZE];
-	int		*empty_area;
 	int		buffer_size;
 	int		cursor_x;
 	int		cursor_y;
@@ -187,9 +186,8 @@ int		le_cursor_down(struct s_le *le_struct);
 **	le_cursor_tool.c
 */
 
-int		le_cursor_calcul_empty_area(struct s_le *le_struct);
-int		*le_tab_add_value(int *tab_old, int value);
-
+int		le_cursor_endl(struct s_le *le_struct);
+void	le_cursor_calcul_empty_char(struct s_le *le_struct, int max);
 /*
 **	le_debug.c /!\ DELETE THIS FILE AT THE END /!\
 */

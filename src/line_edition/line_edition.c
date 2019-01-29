@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/29 14:03:08 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/29 21:25:19 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ int		le_read_and_exec(struct s_le *le_struct)
 		return (LE_FAILURE);
 	if (le_termcap_window_size(&le_struct->w_col, &le_struct->w_line))
 		return (LE_FAILURE);
-	if (!(le_struct->buff = (char *)malloc(sizeof(char *) * LE_BUFF_SIZE)))
-		return (LE_FAILURE);
-	ft_bzero(le_struct->buff, LE_BUFF_SIZE);
 	while (21)
 	{
 		if (le_window_check(le_struct))

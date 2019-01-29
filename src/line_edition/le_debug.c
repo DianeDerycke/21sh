@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 17:19:32 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/24 14:34:22 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/29 16:20:45 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	le_debug_fct(struct s_le *le_struct)
 {
 	int	fd;
 
-	if ((fd = open("test.txt", O_WRONLY | O_CREAT | S_IRWXU)) == -1)
+	if ((fd = open("test.txt", O_WRONLY | O_CREAT, S_IRWXU)) == -1)
 		return ;
 	if ((write(fd, "\033[94mLINE EDITION TEST\n\n", ft_strlen("\033[94mLINE EDITION TEST\n\n"))) == -1)
 		return ;

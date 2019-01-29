@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/29 14:19:35 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/29 21:34:16 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,9 @@ int		le_init_struct(struct s_le *le_struct)
 void	le_init_calcul(struct s_le *le_struct)
 {
 	ft_strclr(le_struct->tmp);
+	le_cursor_calcul_empty_char(le_struct, le_struct->cursor_x);
 	le_struct->cursor_real = le_struct->cursor_x - le_struct->prompt_size;
+	// le_struct->cursor_real += le_struct->nb_empty_char;
 	le_struct->cursor_y = ((le_struct->cursor_x - 1) / le_struct->w_col) + 1;
 	if	(!le_struct->cursor_y)
 		le_struct->cursor_y++;
