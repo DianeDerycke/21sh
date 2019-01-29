@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/28 18:27:39 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/29 14:03:08 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,15 @@ int		le_read_and_exec(struct s_le *le_struct)
 			return (LE_FAILURE);
 		if ((le_struct->term = le_termcap_check(le_struct->tmp)) != LE_FAILURE\
 		 && le_struct->term)
-			le_termcap_exec(le_struct);
+		 {
+			if (le_termcap_exec(le_struct))
+				return (LE_FAILURE);
+		 }
 		else if (!le_struct->term && ft_isprint(le_struct->tmp[0]))
-			le_buff_append(le_struct, le_struct->tmp[0]);
+		{
+			if (le_buff_append(le_struct, le_struct->tmp[0]))
+				return (LE_FAILURE);
+		}
 	}
 	return (LE_FAILURE);
 }

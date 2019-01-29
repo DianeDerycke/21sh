@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 18:35:30 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/24 14:34:22 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/29 14:20:38 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,12 +92,13 @@ int		le_termcap_exec(struct s_le *le_struct)
 	if (le_struct->term == LE_SHIFT_UP || le_struct->term == LE_SHIFT_DOWN)
 		if (le_cursor_motion(le_struct, le_struct->term))
 			return (LE_FAILURE);
-	if (le_struct->term == LE_ARROW_UP || le_struct->term == LE_ARROW_DOWN)
+	if (le_struct->history_activ != -1 && \
+	(le_struct->term == LE_ARROW_UP || le_struct->term == LE_ARROW_DOWN))
 	{
 		if (le_buff_history(le_struct))
 			return (LE_FAILURE);
 	}
-	else
+	else if (le_struct->history_activ != -1)
 		le_struct->history_activ = 0;	
 	return (LE_SUCCESS);
 }

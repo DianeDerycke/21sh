@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/28 18:29:42 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/29 14:19:35 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		le_init(struct s_le *le_struct)
 {
 	if (le_struct->nb_char >= le_struct->buffer_size - 1)
-		if (!(le_struct->buff = le_buff_realloc(le_struct)) ||\
+		if (!(le_struct->buff = le_buff_realloc(le_struct, LE_BUFF_SIZE)) ||\
 		 (le_struct->nb_char >= INT_MAX - 1))
 			return (LE_FAILURE);
 	if (le_struct->nb_char == LE_START)
@@ -59,8 +59,8 @@ int		le_init_struct(struct s_le *le_struct)
 	le_struct->buffer_size = LE_BUFF_SIZE;
 	le_struct->history_activ = 0;
 	ft_bzero(le_struct->tmp, LE_TMP_BUFF_SIZE);
-	if (hy_history_fill_list(le_struct))
-		return (LE_FAILURE);
+	if (hy_history_fill_list(le_struct) || !le_struct->history)
+		le_struct->history_activ = -1;
 	return (LE_SUCCESS);
 }
 

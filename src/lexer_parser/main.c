@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/28 18:26:37 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/29 15:26:55 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,14 @@ static int     loop_input(t_param *param)
 			continue ;
 		if (ft_strcmp(param->input, "exit") == SUCCESS)
 			exit(0);
-		while ((ret = valid_quotes(param->input)))
+		while (!tmp && (ret = valid_quotes(param->input)))
 		{
 			// if (ret == 1)
 			// 	ft_putstr("quote>");
 			// if (ret == 2)
 			// 	ft_putstr("dquote>");
-			tmp = line_edition(ret);
+			if (!(tmp = line_edition(ret)))
+				continue;
 			param->input = ft_strjoin_free(param->input, "\n");
 			param->input = ft_strjoin(param->input, tmp);
 			ft_strdel(&tmp);
@@ -89,12 +90,12 @@ static int     loop_input(t_param *param)
 			printf("ERROR LEX\n");
 			return (FAILURE);
 		}
-		else
-			display_list(param->l_tokens);
+		// else
+		// 	display_list(param->l_tokens);
 		if (!(ast = parser_input(param->l_tokens, NULL)))
 			return (FAILURE);
-		else
-			display_tree(ast, 0, 0);
+		// else
+		// 	display_tree(ast, 0, 0);
 		ft_strdel(&param->input);
 		free(param);
 		if (!(param = malloc(sizeof(t_param))))

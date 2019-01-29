@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/28 18:27:28 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/29 10:55:31 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define LE_BUFF_SIZE		2048
 # define LE_TMP_BUFF_SIZE	16
 # define LE_PROMPT 			"\033[1m\033[32m$> \033[0m"
-# define LE_PROMPT_MIN		"\033[1m\033[30m>\\ \033[0m"
+# define LE_PROMPT_MIN		"\033[1m\033[30m\\> \033[0m"
 # define LE_PROMPT_SIZE		3
 # define LE_ESCAPE			'\033'
 # define LE_ESCAPEBRK		"\033["
@@ -164,7 +164,7 @@ int		le_termcap_window_size(int *col, int *line);
 int		le_buff_remove(struct s_le *le_struct, int i);
 int		le_buff_add(struct s_le *le_struct, int i, char c);
 int		le_buff_append(struct s_le *le_struct, char c);
-char	*le_buff_realloc(struct s_le *le_struct);
+char	*le_buff_realloc(struct s_le *le_struct, int size);
 int		le_buff_check_space(struct s_le *le_struc, int size);
 int		le_buff_history(struct s_le *le_struct);
 
