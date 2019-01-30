@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/30 17:42:05 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/30 18:50:00 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,5 +189,21 @@ int		le_clear(struct s_le *le_struct)
 	if (le_termcap_print(TC_CLEAR_NEXT, 1))
 		return (LE_FAILURE);
 	ft_putstr(le_struct->buff);
+	return (LE_SUCCESS);
+}
+
+int		le_clear_restore(struct s_le *le_struct)
+{
+	if (le_cursor_beggin(le_struct, le_struct->cursor_x - 1))
+		return (LE_FAILURE);
+	if (le_termcap_print(TC_CLEAR_NEXT, 1))
+		return (LE_FAILURE);
+	ft_putstr(LE_PROMPT);
+	ft_putstr(le_struct->buff);
+	if (le_cursor_beggin(le_struct, le_struct->nb_char \
+	+ le_struct->prompt_size - 1))
+		return (LE_FAILURE);
+	if (le_cursor_restore(le_struct))
+		return (LE_FAILURE);
 	return (LE_SUCCESS);
 }

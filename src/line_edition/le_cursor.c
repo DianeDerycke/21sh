@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:37:17 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/30 17:42:52 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/30 18:40:07 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,11 @@ int		le_cursor_goto(int expected, int current, struct s_le *le_struct)
 	return (LE_SUCCESS);
 }
 
-void	le_cursor_restore(struct s_le *le_struct)
+/*
+**	Move to current position at expected
+*/
+
+int		le_cursor_restore(struct s_le *le_struct)
 {
 	int line;
 	int col;
@@ -123,10 +127,16 @@ void	le_cursor_restore(struct s_le *le_struct)
 	line = (le_struct->cursor_x - 1) / le_struct->w_col;
 	col = (le_struct->cursor_x - 1) % le_struct->w_col;
 	if (line)
-		le_termcap_print(TC_GO_DOWN, line);
+		if (le_termcap_print(TC_GO_DOWN, line))
+			return (LE_FAILURE);
 	if (col)
 		le_ansi_print(col, LE_RIGHT);
+	return (LE_SUCCESS);
 }
+
+/*
+**	Restore the cursor, the cursor must be at the beginning of the line command
+*/
 
 int		le_cursor_beggin(struct s_le *le_struct, int current)
 {
@@ -149,18 +159,18 @@ int		le_cursor_word_forward(struct s_le *le_struct)
 	int	i;
 
 	i = le_struct->cursor_real;
-	if (le_struct->buff[i] == ' ')
-		while (le_struct->nb_char && le_struct->buff[i] == ' ' &&\
-		 i <= le_struct->nb_char)
+	if (le_struct->buff && le_struct->buff[i] == ' ')
+		while (le_struct->buff && le_struct->nb_char && \
+		le_struct->buff[i] == ' ' && i <= le_struct->nb_char)
 			i++;
 	else
-		while (le_struct->nb_char && le_struct->buff[i] != ' ' &&\
-		 i <= le_struct->nb_char)
+		while (le_struct->buff && le_struct->nb_char && \
+		le_struct->buff[i] != ' ' && i <= le_struct->nb_char)
 			i++;
-		while (le_struct->nb_char && le_struct->buff[i] == ' ' &&\
-		 i <= le_struct->nb_char)
+		while (le_struct->buff && le_struct->nb_char && \
+		le_struct->buff[i] == ' ' && i <= le_struct->nb_char)
 			i++;
-	if (le_struct->buff[i])
+	if (le_struct->buff && le_struct->buff[i])
 	{
 		if (le_cursor_goto(i + le_struct->prompt_size,\
 		 le_struct->cursor_x, le_struct))
@@ -180,15 +190,15 @@ int		le_cursor_word_backward(struct s_le *le_struct)
 
 	i = le_struct->cursor_real;
 	if (le_struct->buff[i] == ' ')
-		while (le_struct->nb_char && le_struct->buff[i] == ' ' &&\
-		i <= le_struct->nb_char && i >= le_struct->prompt_size)
+		while (le_struct->buff && le_struct->nb_char && le_struct->buff[i]\
+		 == ' ' && i <= le_struct->nb_char && i >= le_struct->prompt_size)
 			i--;
 	else
-		while (le_struct->nb_char && le_struct->buff[i] != ' ' &&\
-		 i <= le_struct->nb_char)
+		while (le_struct->buff && le_struct->nb_char && \
+		le_struct->buff[i] != ' ' && i <= le_struct->nb_char)
 			i--;
-		while (le_struct->nb_char && le_struct->buff[i] == ' ' &&\
-		 i <= le_struct->nb_char)
+		while (le_struct->buff && le_struct->nb_char && \
+		le_struct->buff[i] == ' ' && i <= le_struct->nb_char)
 			i--;
 	if (i >= 0)
 	{
@@ -256,6 +266,10 @@ int		le_cursor_up(struct s_le *le_struct)
 	return (LE_SUCCESS);
 }
 
+/*
+**	Move the cursor to up
+*/
+
 int		le_cursor_down(struct s_le *le_struct)
 {
 	if (le_struct->cursor_y + 1 < le_struct->nb_line)
@@ -282,3 +296,7 @@ int		le_cursor_down(struct s_le *le_struct)
 	}
 	return (LE_SUCCESS);
 }
+
+/*
+**	Move the cursor to down
+*/

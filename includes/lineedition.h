@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/30 17:42:51 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/30 18:50:24 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ int		le_set_attribute(struct termios *backup);
 int		le_exit(struct s_le *le_struct, int ret);
 int		le_window_check(struct s_le *le_struct);
 int		le_clear(struct s_le *le_struct);
+int		le_clear_restore(struct s_le *le_struct);
 
 /*
 ** le_termcap.c
@@ -175,7 +176,7 @@ int		le_cursor_motion(struct s_le *le_struct, int motion);
 int		le_cursor_right(struct s_le *le_struct);
 int		le_cursor_left(struct s_le *le_struct);
 int		le_cursor_goto(int expected, int current, struct s_le *le_struct);
-void	le_cursor_restore(struct s_le *le_struct);
+int		le_cursor_restore(struct s_le *le_struct);
 int		le_cursor_beggin(struct s_le *le_struct, int current);
 int		le_cursor_word_forward(struct s_le *le_struct);
 int		le_cursor_word_backward(struct s_le *le_struct);

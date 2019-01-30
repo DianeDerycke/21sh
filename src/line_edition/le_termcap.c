@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 18:35:30 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/30 14:24:22 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/30 18:53:19 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ int		le_termcap_exec(struct s_le *le_struct)
 		if (le_termcap_print(TC_DELETE_CHAR, 1))
 			return (LE_FAILURE);
 		le_struct->nb_char -= 1;
+		if (le_clear_restore(le_struct))
+			return (LE_FAILURE);
 	}
 	if (le_struct->term == LE_DEL && le_struct->cursor_x >\
 	 le_struct->prompt_size && le_struct->nb_char)
