@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/29 21:34:16 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/30 17:42:05 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int		le_init(struct s_le *le_struct)
 	}
 	if (le_struct->tmp[0] == LE_ENDL)
 	{
-		le_cursor_restore(le_struct->nb_char, 1, le_struct);
+		le_cursor_goto(le_struct->nb_char, 1, le_struct);
 		ft_putchar('\n');
 		le_struct->buff[le_struct->nb_char] = '\0';
 		return (LE_ENDL);
@@ -135,13 +135,12 @@ int		le_window_check(struct s_le *le_struct)
 	{
 		le_struct->w_col = col_new;
 		le_struct->w_line = line_new;
-		le_cursor_beggin(le_struct->cursor_x, col_new);
-		le_cursor_restore(1, le_struct->cursor_x, le_struct);
+		le_cursor_beggin(le_struct, le_struct->cursor_real);
 		le_termcap_print(TC_CLEAR_NEXT, 1);
 		ft_putstr(LE_PROMPT);
 		if (le_struct->nb_char)
 			ft_putstr(le_struct->buff);
-		if (le_cursor_restore(le_struct->cursor_x,\
+		if (le_cursor_goto(le_struct->cursor_x,\
 		 (le_struct->nb_char + le_struct->prompt_size), le_struct))
 		 	return (LE_FAILURE);
 	}
@@ -184,7 +183,7 @@ int		le_exit(struct s_le *le_struct, int ret)
 
 int		le_clear(struct s_le *le_struct)
 {
-	if (le_cursor_restore(le_struct->prompt_size, le_struct->cursor_x,\
+	if (le_cursor_goto(le_struct->prompt_size, le_struct->cursor_x,\
 	 le_struct))
 		return (LE_FAILURE);
 	if (le_termcap_print(TC_CLEAR_NEXT, 1))

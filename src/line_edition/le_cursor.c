@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:37:17 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/29 19:42:08 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/30 17:42:52 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int		le_cursor_left(struct s_le *le_struct)
 **	Move the cursor to left, but if it's edge of the shell, go up
 */
 
-int		le_cursor_restore(int expected, int current, struct s_le *le_struct)
+int		le_cursor_goto(int expected, int current, struct s_le *le_struct)
 {
 	int	diff;
 
@@ -115,14 +115,28 @@ int		le_cursor_restore(int expected, int current, struct s_le *le_struct)
 	return (LE_SUCCESS);
 }
 
-int		le_cursor_beggin(int cursor, int col)
+void	le_cursor_restore(struct s_le *le_struct)
 {
-	int	cursor_y;
+	int line;
+	int col;
 
-	cursor_y =  ((cursor - 1) / col) + 1;
-	if (le_termcap_print(TC_GO_DOWN, 1))
+	line = (le_struct->cursor_x - 1) / le_struct->w_col;
+	col = (le_struct->cursor_x - 1) % le_struct->w_col;
+	if (line)
+		le_termcap_print(TC_GO_DOWN, line);
+	if (col)
+		le_ansi_print(col, LE_RIGHT);
+}
+
+int		le_cursor_beggin(struct s_le *le_struct, int current)
+{
+	int y;
+
+	y = ((current - 1) / le_struct->w_col);
+	if (le_termcap_print(TC_GO_BEGIN, 1))
 		return (LE_FAILURE);
-	le_ansi_print(cursor_y , LE_UP);
+	if (y)
+		le_ansi_print(y, LE_UP);
 	return (LE_SUCCESS);
 }
 
@@ -148,7 +162,7 @@ int		le_cursor_word_forward(struct s_le *le_struct)
 			i++;
 	if (le_struct->buff[i])
 	{
-		if (le_cursor_restore(i + le_struct->prompt_size,\
+		if (le_cursor_goto(i + le_struct->prompt_size,\
 		 le_struct->cursor_x, le_struct))
 			return (LE_FAILURE);
 		le_struct->cursor_x = i + le_struct->prompt_size;
@@ -178,7 +192,7 @@ int		le_cursor_word_backward(struct s_le *le_struct)
 			i--;
 	if (i >= 0)
 	{
-		if (le_cursor_restore(i + le_struct->prompt_size,\
+		if (le_cursor_goto(i + le_struct->prompt_size,\
 		 le_struct->cursor_x, le_struct))
 			return (LE_FAILURE);
 		le_struct->cursor_x = i + le_struct->prompt_size;
@@ -194,14 +208,14 @@ int		le_cursor_home_end(struct s_le *le_struct, int direction)
 {
 	if (direction == LE_HOME)
 	{
-		if (le_cursor_restore(le_struct->prompt_size, \
+		if (le_cursor_goto(le_struct->prompt_size, \
 		 le_struct->cursor_x, le_struct))
 			return (LE_FAILURE);
 		le_struct->cursor_x = le_struct->prompt_size;
 	}
 	if (direction == LE_END && le_struct->cursor_x < le_struct->nb_char)
 	{
-		if (le_cursor_restore(le_struct->nb_char + le_struct->prompt_size,\
+		if (le_cursor_goto(le_struct->nb_char + le_struct->prompt_size,\
 		 le_struct->cursor_x, le_struct))
 			return (LE_FAILURE);
 		le_struct->cursor_x = le_struct->nb_char + le_struct->prompt_size;
@@ -217,7 +231,7 @@ int		le_cursor_up(struct s_le *le_struct)
 {
 	if (le_struct->cursor_y > 2)
 	{
-		if (le_cursor_restore(le_struct->cursor_x - le_struct->w_col,\
+		if (le_cursor_goto(le_struct->cursor_x - le_struct->w_col,\
 		 le_struct->cursor_x, le_struct))
 			return (LE_FAILURE);
 		le_struct->cursor_x -= le_struct->w_col;
@@ -226,14 +240,14 @@ int		le_cursor_up(struct s_le *le_struct)
 	{
 		if (le_struct->cursor_x - le_struct->w_col - le_struct->prompt_size > 0)
 		{
-			if (le_cursor_restore(le_struct->cursor_x - le_struct->w_col,\
+			if (le_cursor_goto(le_struct->cursor_x - le_struct->w_col,\
 			 le_struct->cursor_x, le_struct))
 				return (LE_FAILURE);
 			le_struct->cursor_x -= le_struct->w_col;
 		}
 		else if (le_struct->cursor_y)
 		{
-			if (le_cursor_restore(le_struct->prompt_size,\
+			if (le_cursor_goto(le_struct->prompt_size,\
 			 le_struct->cursor_x, le_struct))
 				return (LE_FAILURE);
 			le_struct->cursor_x = le_struct->prompt_size;
@@ -246,7 +260,7 @@ int		le_cursor_down(struct s_le *le_struct)
 {
 	if (le_struct->cursor_y + 1 < le_struct->nb_line)
 	{
-		if (le_cursor_restore(le_struct->cursor_x + le_struct->w_col,\
+		if (le_cursor_goto(le_struct->cursor_x + le_struct->w_col,\
 		 le_struct->cursor_x, le_struct))
 			return (LE_FAILURE);
 		le_struct->cursor_x += le_struct->w_col;
@@ -255,13 +269,13 @@ int		le_cursor_down(struct s_le *le_struct)
 	{
 		if (le_struct->cursor_x / le_struct->cursor_y > le_struct->last_line)
 		{
-			if (le_cursor_restore(le_struct->nb_char + le_struct->prompt_size,\
+			if (le_cursor_goto(le_struct->nb_char + le_struct->prompt_size,\
 			 le_struct->cursor_x, le_struct))
 		 		return (LE_FAILURE);
 			le_struct->cursor_x = le_struct->nb_char + le_struct->prompt_size;
 			return (LE_SUCCESS);
 		}
-		if (le_cursor_restore(le_struct->cursor_x + le_struct->w_col,\
+		if (le_cursor_goto(le_struct->cursor_x + le_struct->w_col,\
 		 le_struct->cursor_x, le_struct))
 				return (LE_FAILURE);
 		le_struct->cursor_x += le_struct->w_col;

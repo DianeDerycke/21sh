@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/24 14:40:12 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/30 13:58:18 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int         lex_is_special_char(int c)
 
 int         ft_isallowedsymb(int c)
 {
-    if (c > 32 && c < 49 && c != DQUOTE && c != SQUOTE)
+    if (((c > 32 && c < 49) || (c > 90 && c < 97) || (c > 123 && c < 127)) 
+            && c != DQUOTE && c != SQUOTE)
         return (1);
     return (0);
 }

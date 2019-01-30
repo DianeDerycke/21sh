@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/29 19:31:04 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/30 17:42:51 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 # define TC_GO_RIGHT		"nd"
 # define TC_GO_UP			"up"
 # define TC_GO_DOWN			"do"
-# define TC_GO_BEGIN		"ll"
+# define TC_GO_BEGIN		"cr"
 # define TC_CLEAR			"cl"
 # define TC_CLEAR_NEXT		"cd"
 # define TC_DELETE_CHAR		"dc"
@@ -174,8 +174,9 @@ int		le_buff_history(struct s_le *le_struct);
 int		le_cursor_motion(struct s_le *le_struct, int motion);
 int		le_cursor_right(struct s_le *le_struct);
 int		le_cursor_left(struct s_le *le_struct);
-int		le_cursor_restore(int expected, int current, struct s_le *le_struct);
-int		le_cursor_beggin(int cursor, int col);
+int		le_cursor_goto(int expected, int current, struct s_le *le_struct);
+void	le_cursor_restore(struct s_le *le_struct);
+int		le_cursor_beggin(struct s_le *le_struct, int current);
 int		le_cursor_word_forward(struct s_le *le_struct);
 int		le_cursor_word_backward(struct s_le *le_struct);
 int		le_cursor_home_end(struct s_le *le_struct, int direction);

@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/29 10:55:10 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/30 17:42:51 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,20 @@ int		le_buff_append(struct s_le *le_struct, char c)
 	if (c != LE_ENDL)
 		if (le_buff_add(le_struct, le_struct->cursor_real, c))
 			return (LE_FAILURE);
-	if (le_struct->cursor_real != le_struct->nb_char)
+	le_struct->cursor_x += 1;
+	le_struct->nb_char += 1;
+	if (le_struct->cursor_real != le_struct->nb_char - 1)
 	{
+		le_cursor_beggin(le_struct, le_struct->cursor_x - 1);
 		if (le_termcap_print(TC_CLEAR_NEXT, 1))
 			return (LE_FAILURE);
-		ft_putstr(&le_struct->buff[le_struct->cursor_real]);
-		// le_debug_fct(le_struct);
-		if (le_cursor_restore(le_struct->cursor_real, le_struct->nb_char, le_struct))
-			return (LE_FAILURE);
+		ft_putstr(LE_PROMPT);
+		ft_putstr(le_struct->buff);
+		le_cursor_beggin(le_struct, le_struct->nb_char + le_struct->prompt_size - 1);
+		le_cursor_restore(le_struct);
 	}
 	else
 		ft_putchar(c);
-	// if (*cursor == col_window * nbline)
-	// 	if (le_termcap_print(TC_GO_DOWN, 1))
-	// 		return (LE_FAILURE);
-	le_struct->nb_char += 1;
-	le_struct->cursor_x += 1;
 	le_struct->history_activ = 0;
 	return (LE_SUCCESS);
 }
