@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   le_buffer_operation.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 10:39:00 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/01/31 13:21:45 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,11 +71,11 @@ int		le_buff_add(struct s_le *le_struct, int i, char c)
 int		le_buff_append(struct s_le *le_struct, char c)
 {
 	if (c != LE_ENDL)
-		if (le_buff_add(le_struct, le_struct->cursor_real, c))
+		if (le_buff_add(le_struct, le_struct->cursor_buff, c))
 			return (LE_FAILURE);
 	le_struct->cursor_x += 1;
 	le_struct->nb_char += 1;
-	if (le_struct->cursor_real != le_struct->nb_char - 1)
+	if (le_struct->cursor_buff != le_struct->nb_char - 1)
 	{
 		if (le_clear_restore(le_struct))
 			return (LE_FAILURE);

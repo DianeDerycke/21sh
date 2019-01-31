@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 12:14:18 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/31 19:18:36 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,10 @@
 # define LE_MOVE			"G"
 # define LE_START			-1
 # define LE_TERM			"xterm-256color"
+# define LE_CUT				21
+# define LE_PASTE			16
+# define LE_COPY			25
+
 
 /*
 **	Termcaps DEFINE
@@ -103,11 +107,12 @@ typedef struct		s_le
 {
 	t_dlist	*history;
 	char	*buff;
+	char	*clipboard;
 	char	tmp[LE_TMP_BUFF_SIZE];
 	int		buffer_size;
 	int		cursor_x;
 	int		cursor_y;
-	int		cursor_real;
+	int		cursor_buff;
 	int		nb_char;
 	int		nb_empty_char;
 	int		nb_line;
@@ -118,6 +123,8 @@ typedef struct		s_le
 	int		prompt_size;
 	int		prompt_type;
 	int		history_activ;
+	int		copy_on;
+	int		copy_off;
 }					t_le;
 
 /*
@@ -191,6 +198,17 @@ int		le_cursor_down(struct s_le *le_struct);
 
 int		le_cursor_endl(struct s_le *le_struct);
 void	le_cursor_calcul_empty_char(struct s_le *le_struct, int max);
+
+/*	
+**	le_clipboard.c
+*/
+
+int		le_clipboard(struct s_le *le_struct);
+int		le_clipboard_copy(struct s_le *le_struct);
+int		le_clipboard_paste(struct s_le *le_struct);
+int		le_clipboard_cut(struct s_le *le_struct);
+char	*ft_strpcat(char *dst, char *src, int pos);
+
 /*
 **	le_debug.c /!\ DELETE THIS FILE AT THE END /!\
 */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   le_termcap.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 18:35:30 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 10:39:00 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/01/31 19:19:37 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 
 int		le_termcap_check(char tmp[])
 {
+	if (tmp[0] == LE_COPY)
+		return (LE_COPY);
+	if (tmp[0] == LE_PASTE)
+		return (LE_PASTE);
+	if (tmp[0] == LE_CUT)
+		return (LE_CUT);
 	if (tmp[0] == TC_DEL)
 		return (LE_DEL);
 	if (tmp[0] == LE_ESCAPE)
@@ -55,15 +61,15 @@ int		le_termcap_check(char tmp[])
 
 int		le_termcap_exec(struct s_le *le_struct)
 {
-	if (le_struct->term == LE_ARROW_RIGHT && le_struct->cursor_real < le_struct->nb_char)
+	if (le_struct->term == LE_ARROW_RIGHT && le_struct->cursor_buff < le_struct->nb_char)
 		if (le_cursor_motion(le_struct, LE_ARROW_RIGHT))
 			return (LE_FAILURE);
 	if (le_struct->term == LE_ARROW_LEFT && le_struct->cursor_x > le_struct->prompt_size)
 		if (le_cursor_motion(le_struct, LE_ARROW_LEFT))
 			return (LE_FAILURE);
-	if (le_struct->term == LE_DELFRONT && le_struct->cursor_real < le_struct->nb_char)
+	if (le_struct->term == LE_DELFRONT && le_struct->cursor_buff < le_struct->nb_char)
 	{
-		if (le_buff_remove(le_struct, le_struct->cursor_real))
+		if (le_buff_remove(le_struct, le_struct->cursor_buff))
 			return (LE_FAILURE);
 		if (le_termcap_print(TC_DELETE_CHAR, 1))
 			return (LE_FAILURE);
@@ -76,7 +82,7 @@ int		le_termcap_exec(struct s_le *le_struct)
 	{
 		if (le_cursor_motion(le_struct, LE_ARROW_LEFT))
 			return (LE_FAILURE);
-		if (le_buff_remove(le_struct, le_struct->cursor_real))
+		if (le_buff_remove(le_struct, le_struct->cursor_buff))
 			return (LE_FAILURE);
 		if (le_termcap_print(TC_DELETE_CHAR, 1))
 			return (LE_FAILURE);
@@ -93,6 +99,9 @@ int		le_termcap_exec(struct s_le *le_struct)
 			return (LE_FAILURE);
 	if (le_struct->term == LE_SHIFT_UP || le_struct->term == LE_SHIFT_DOWN)
 		if (le_cursor_motion(le_struct, le_struct->term))
+			return (LE_FAILURE);
+	if (le_struct->term == LE_COPY || le_struct->term == LE_CUT || le_struct->term == LE_PASTE)
+		if (le_clipboard(le_struct))
 			return (LE_FAILURE);
 	if (le_struct->history_activ != -1 && \
 	(le_struct->term == LE_ARROW_UP || le_struct->term == LE_ARROW_DOWN))

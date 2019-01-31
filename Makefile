@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
+#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/01/31 10:30:13 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/01/31 19:06:22 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ LINE_EDITION_NAME = line_edition.c \
 					le_buffer_operation.c \
 					le_cursor.c \
 					le_init.c \
-					le_cursor_tool.c
+					le_cursor_tool.c \
+					le_clipboard.c
 
 HISTORY_NAME =		hy_history.c
 

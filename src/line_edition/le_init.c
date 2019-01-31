@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 12:14:19 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/31 19:17:08 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,19 +47,19 @@ void	le_init_prompt(struct s_le *le_struct)
 	pwd = NULL;
 	if (!le_struct->prompt_type)
 	{
-		if (!(pwd = getenv("PWD")))
-		{
+		// if (!(pwd = getenv("PWD")))
+		// {
 			ft_putstr(LE_PROMPT);
 			le_struct->prompt_size = LE_PROMPT_SIZE + 1;
-		}
-		else
-		{
-			ft_putstr("\033[1m\033[32m");
-			ft_putstr(pwd);
-			ft_putstr(" > ");
-			ft_putstr("\033[0m");
-			le_struct->prompt_size = ft_strlen(pwd) + 3;
-		}
+		// }
+		// else
+		// {
+		// 	ft_putstr("\033[1m\033[32m");
+		// 	ft_putstr(pwd);
+		// 	ft_putstr(" > ");
+		// 	ft_putstr("\033[0m");
+		// 	le_struct->prompt_size = ft_strlen(pwd) + 3;
+		// }
 		
 	}
 	else
@@ -81,6 +81,9 @@ int		le_init_struct(struct s_le *le_struct)
 	ft_bzero(le_struct->tmp, LE_TMP_BUFF_SIZE);
 	if (hy_history_fill_list(le_struct) || !le_struct->history)
 		le_struct->history_activ = -1;
+	le_struct->clipboard = NULL;
+	le_struct->copy_on = 0;
+	le_struct->copy_off = 0;
 	return (LE_SUCCESS);
 }
 
@@ -102,8 +105,8 @@ void	le_init_calcul(struct s_le *le_struct)
 {
 	ft_strclr(le_struct->tmp);
 	le_cursor_calcul_empty_char(le_struct, le_struct->cursor_x);
-	le_struct->cursor_real = le_struct->cursor_x - le_struct->prompt_size;
-	// le_struct->cursor_real += le_struct->nb_empty_char;
+	le_struct->cursor_buff = le_struct->cursor_x - le_struct->prompt_size;
+	// le_struct->cursor_buff += le_struct->nb_empty_char;
 	le_struct->cursor_y = ((le_struct->cursor_x - 1) / le_struct->w_col) + 1;
 	if	(!le_struct->cursor_y)
 		le_struct->cursor_y++;
@@ -114,7 +117,7 @@ void	le_init_calcul(struct s_le *le_struct)
 }
 
 /*
-**	Initialise cursor_real, real position on shell, with the prompt
+**	Initialise cursor_buff, real position on shell, with the prompt
 **	Initialise cursor_y, line postion of the cursor, for avoid a division by 0
 **	the number of line must be start at 1
 **	Calculate nb_line, number of line on the command line
@@ -155,7 +158,7 @@ int		le_window_check(struct s_le *le_struct)
 	{
 		le_struct->w_col = col_new;
 		le_struct->w_line = line_new;
-		le_cursor_beggin(le_struct, le_struct->cursor_real);
+		le_cursor_beggin(le_struct, le_struct->cursor_buff);
 		le_termcap_print(TC_CLEAR_NEXT, 1);
 		ft_putstr(LE_PROMPT);
 		if (le_struct->nb_char)

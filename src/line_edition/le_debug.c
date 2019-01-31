@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   le_debug.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/03 17:19:32 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 10:39:00 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/01/31 13:21:45 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	le_debug_fct(struct s_le *le_struct)
 		return ;
 	if ((write(fd, "\nCursor_real: ", ft_strlen("\nCursor_real: "))) == -1)
 		return ;
-	if ((write(fd, ft_itoa(le_struct->cursor_real), ft_nblen(le_struct->cursor_real))) == -1)
+	if ((write(fd, ft_itoa(le_struct->cursor_buff), ft_nblen(le_struct->cursor_buff))) == -1)
 		return ;
 	if ((write(fd, "\nPrompt_size: ", ft_strlen("\nPrompt_size: "))) == -1)
 		return ;
@@ -64,7 +64,7 @@ void	le_debug_fct(struct s_le *le_struct)
 		return ;
 	if ((write(fd, ft_itoa(le_struct->w_line), ft_nblen(le_struct->w_line))) == -1)
 		return ;
-	motion_calcul(le_struct->cursor_real, le_struct->nb_char, le_struct->w_col, fd);
+	motion_calcul(le_struct->cursor_buff, le_struct->nb_char, le_struct->w_col, fd);
 	if ((write(fd, "\n\n\n\033[0m", ft_strlen("\n\n\n\033[0m"))) == -1)
 		return ;
 	close(fd);

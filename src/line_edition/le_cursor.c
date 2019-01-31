@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   le_cursor.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:37:17 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 10:39:00 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/01/31 13:21:45 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int		le_cursor_word_forward(struct s_le *le_struct)
 {
 	int	i;
 
-	i = le_struct->cursor_real;
+	i = le_struct->cursor_buff;
 	if (le_struct->buff && le_struct->buff[i] == ' ')
 		while (le_struct->buff && le_struct->nb_char && \
 		le_struct->buff[i] == ' ' && i <= le_struct->nb_char)
@@ -188,7 +188,7 @@ int		le_cursor_word_backward(struct s_le *le_struct)
 {
 	int	i;
 
-	i = le_struct->cursor_real;
+	i = le_struct->cursor_buff;
 	if (le_struct->buff[i] == ' ')
 		while (le_struct->buff && le_struct->nb_char && le_struct->buff[i]\
 		 == ' ' && i <= le_struct->nb_char && i >= le_struct->prompt_size)
