@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lex_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/30 13:58:18 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/31 10:44:04 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
+#include "../includes/sh21.h"
 
 
 int         lex_is_special_char(int c)
@@ -42,7 +42,7 @@ int     ft_is_operator(int c)
     return (1);
 }
 
-int     get_token_op(char *c, int length)
+int     get_ast_op(char *c, int length)
 {
     int     i;
 
@@ -61,7 +61,7 @@ ssize_t     error_arg(void)
 }
 
 
-void    display_list(t_token *lst)
+void    display_list(t_ast *lst)
 {
     if (!lst)
         printf("/!\\ LST IS NULL ERROR /!\\ \n");
@@ -85,34 +85,36 @@ int     ft_isidentifier(int c)
     return (0);
 }
 
-int    push_node(char *value, int token, t_token **current_node)
+int    push_node(char *value, int token, t_ast **node)
 {
-    t_token     *tmp;
-    if (!current_node || !*current_node)
+    t_ast     *tmp;
+    if (!node || !*node)
     {
-        if (!(*current_node = create_elem()))
+        if (!(*node = create_elem()))
             return (FAILURE);
-        if (!((*current_node)->value = ft_strdup(value)))
+        if (!((*node)->value = ft_strdup(value)))
             return (FAILURE);
-        (*current_node)->token = token;
-        (*current_node)->next = NULL;
-        (*current_node)->right = NULL;
-        (*current_node)->left = NULL;
+        (*node)->token = token;
+        (*node)->pipecall = 0;
+        (*node)->next = NULL;
+        (*node)->right = NULL;
+        (*node)->left = NULL;
     }
     else
     {
-        tmp = *current_node;
-        while ((*current_node)->next)
-            (*current_node) = (*current_node)->next;
-        if (!((*current_node)->next = create_elem()))
+        tmp = *node;
+        while ((*node)->next)
+            (*node) = (*node)->next;
+        if (!((*node)->next = create_elem()))
             return (FAILURE);
-        if (!((*current_node)->next->value = ft_strdup(value)))
+        if (!((*node)->next->value = ft_strdup(value)))
             return (FAILURE);
-        (*current_node)->next->token = token;
-        (*current_node)->next->next = NULL;
-        (*current_node)->next->left = NULL;
-        (*current_node)->next->left = NULL;
-        *current_node = tmp;
+        (*node)->next->token = token;
+        (*node)->pipecall = 0;
+        (*node)->next->next = NULL;
+        (*node)->next->left = NULL;
+        (*node)->next->left = NULL;
+        *node = tmp;
     }
     return (SUCCESS);
 }
@@ -127,11 +129,11 @@ int     ft_is_double_quote(int c)
     return (c == DQUOTE ? 1 : 0);
 }
 
-t_token     *create_elem(void)
+t_ast     *create_elem(void)
 {
-    t_token     *new;
+    t_ast     *new;
 
-    if (!(new = malloc(sizeof(t_token))))
+    if (!(new = malloc(sizeof(t_ast))))
         ft_malloc_error();
     new->value = NULL;
     new->token = 0;
@@ -156,7 +158,7 @@ char    *copy_until_ft(char *s, int *start, int(*f)(int c))
     return (tmp); 
 }
 
-char    *copy_until_array_ft(char *s, int *start, int(*tab[2])(int))
+char    *copy_until_array_ft(char *s, int *start, int(*array[2])(int))
 {
     char    *tmp;
     int     length;
@@ -170,7 +172,7 @@ char    *copy_until_array_ft(char *s, int *start, int(*tab[2])(int))
         i = 0;
         while (i < SIZE_CONDITION)
         {
-            if (!tab[i](s[length]))
+            if (!array[i](s[length]))
                 return (NULL);
             i++;
         }
@@ -183,9 +185,9 @@ char    *copy_until_array_ft(char *s, int *start, int(*tab[2])(int))
 }
 
 
-// t_token     *copy_list(t_token *lst)
+// t_ast     *copy_list(t_ast *lst)
 // {
-//     t_token     *new;
+//     t_ast     *new;
 
 //     new = NULL;
 //     while (lst)

@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   history.h                                          :+:      :+:    :+:   */
+/*   ms_file_exist.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/24 14:27:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 10:39:00 by DERYCKE          ###   ########.fr       */
+/*   Created: 2018/09/19 13:52:06 by dideryck          #+#    #+#             */
+/*   Updated: 2018/09/24 17:49:45 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HISTORY_H
-# define HISTORY_H
+#include "libms.h"
 
-# include "sh21.h"
+ssize_t		ms_file_exist(const char *path)
+{
+	struct stat	buffer;
 
-int		hy_history_fill_list(struct s_le *le_struct);
-int		hy_history_write(char *command);
-void	hy_dlst_push(t_dlist **history, char *content);
-void	hy_dlst_free(t_dlist *dlist);
-
-#endif
+	if (lstat(path, &buffer) == 0 || stat(path, &buffer) == 0)
+		return (SUCCESS);
+	return (FAILURE);
+}

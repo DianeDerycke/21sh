@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   history.h                                          :+:      :+:    :+:   */
+/*   ms_get_cwd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/24 14:27:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 10:39:00 by DERYCKE          ###   ########.fr       */
+/*   Created: 2018/09/19 12:31:16 by dideryck          #+#    #+#             */
+/*   Updated: 2018/09/24 18:27:39 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HISTORY_H
-# define HISTORY_H
+#include "libms.h"
 
-# include "sh21.h"
-
-int		hy_history_fill_list(struct s_le *le_struct);
-int		hy_history_write(char *command);
-void	hy_dlst_push(t_dlist **history, char *content);
-void	hy_dlst_free(t_dlist *dlist);
-
-#endif
+ssize_t		ms_get_cwd(char **buf)
+{
+	if (!(*buf = malloc(MS_BUFF_SIZE)))
+		ms_malloc_error();
+	if (!(getcwd(*buf, MS_BUFF_SIZE)))
+	{
+		ft_strdel(buf);
+		return (FAILURE);
+	}
+	return (SUCCESS);
+}

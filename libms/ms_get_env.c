@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_init.c                                         :+:      :+:    :+:   */
+/*   ms_get_env.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/11/17 00:15:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/31 10:38:46 by DERYCKE          ###   ########.fr       */
+/*   Created: 2018/08/30 13:34:39 by DERYCKE           #+#    #+#             */
+/*   Updated: 2018/10/03 17:55:44 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "libms.h"
 
-void    init_param(t_param **param)
+char	**ms_get_env(void)
 {
-    (*param)->input = NULL;
-    (*param)->index = 0;
-    (*param)->token = 0;
-    (*param)->ft = NULL;
-    (*param)->l_tokens = NULL;
+	extern char		**environ;
+	char			**new_env;
+
+	new_env = NULL;
+	if (environ && environ[0] &&
+		!(new_env = ft_copy_array(environ, ft_strlen_array(environ))))
+		ms_malloc_error();
+	return (new_env);
 }

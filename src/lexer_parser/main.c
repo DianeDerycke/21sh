@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/29 15:26:55 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/31 10:51:46 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int     lex_input(t_param *param)
 static int     loop_input(t_param *param)
 {
 	int     ret;
-	t_token *ast;
+	t_ast *ast;
 	char    *tmp;
 
 	ret = 0;
@@ -70,14 +70,8 @@ static int     loop_input(t_param *param)
 	{
 		if (!(param->input = line_edition(0)))
 			continue ;
-		if (ft_strcmp(param->input, "exit") == SUCCESS)
-			exit(0);
 		while (!tmp && (ret = valid_quotes(param->input)))
 		{
-			// if (ret == 1)
-			// 	ft_putstr("quote>");
-			// if (ret == 2)
-			// 	ft_putstr("dquote>");
 			if (!(tmp = line_edition(ret)))
 				continue;
 			param->input = ft_strjoin_free(param->input, "\n");
@@ -92,14 +86,14 @@ static int     loop_input(t_param *param)
 		}
 		// else
 		// 	display_list(param->l_tokens);
-		if (!(ast = parser_input(param->l_tokens, NULL)))
+		if (!(ast = parser_input(param->l_tokens, param->l_tokens, NULL)))
 			return (FAILURE);
-		// else
+		else
+        {
 		// 	display_tree(ast, 0, 0);
+            parser_execution(ast);
+        }
 		ft_strdel(&param->input);
-		free(param);
-		if (!(param = malloc(sizeof(t_param))))
-			return (FAILURE);
 		init_param(&param);
 	}
 	return (SUCCESS);

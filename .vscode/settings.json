@@ -2,6 +2,8 @@
 	"files.associations": {
 		"libsh.h": "c",
 		"lineedition.h": "c",
-		"sh21.h": "c"
+		"sh21.h": "c",
+		"types.h": "c",
+		"wait.h": "c"
 	}
 }

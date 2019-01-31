@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lex_action.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 23:48:24 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/24 14:40:11 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/31 10:38:46 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
+#include "../includes/sh21.h"
 
 int(*condition[SIZE_CONDITION])(int c) = {
     &ft_is_whitespace,
@@ -20,7 +20,8 @@ int(*condition[SIZE_CONDITION])(int c) = {
 int     whitespace_action(t_param *param)
 {
     //It allows to indent on the string by augmenting the index
-    return (param->index++);
+    param->index++;
+    return (SUCCESS);
 }
 
 
@@ -106,7 +107,7 @@ int     io_number_action(t_param *param)
     if (!(tmp2 = copy_until_ft(param->input + i, &i, &ft_is_operator)))
         return (FAILURE);
     len = ft_strlen(tmp2);
-    if (len <= 2 && len > 0 && (param->token = get_token_op(tmp2, len) >= 0))
+    if (len <= 2 && len > 0 && (param->token = get_ast_op(tmp2, len) >= 0))
         ret = push_node(ft_strjoin(tmp, tmp2), IO_NUMBER, &(param->l_tokens));
     else if (len > 2)
         ret = ERROR;
@@ -127,14 +128,12 @@ int     digit_action(t_param *param)
 
     tmp = NULL;
     ret = 0;
-    //Copy until there is a digit in the string
     if ((ret = io_number_action(param)) == SUCCESS)
         return (SUCCESS);
     else if (ret == ERROR)
         return (FAILURE);
     if (!(tmp = copy_until_ft(param->input + param->index, &param->index, param->ft)))
         return (FAILURE);
-    //Add the token to the chained list
     if (push_node(tmp, DIGIT, &(param->l_tokens)) == FAILURE)
     {
         ft_strdel(&tmp);
@@ -156,7 +155,7 @@ int     operator_action(t_param *param)
     len = ft_strlen(tmp);
     //If the length of tmp is less/equal than 2 : Check the string if the operator exist
     //f.e : &> : The operator exist but : &&&& generates an ERROR
-    if ((len <= 2) && (param->token = get_token_op(tmp, len)) >= 0)
+    if ((len <= 2) && (param->token = get_ast_op(tmp, len)) >= 0)
         ret = push_node(tmp, param->token, &(param->l_tokens));
     else
         ret = FAILURE;

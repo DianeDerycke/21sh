@@ -1,83 +1,97 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/27 17:10:18 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/27 17:10:19 by mrandou          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef LEXER_H
 #define LEXER_H
-
-#include "../libft/libft.h"
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
 
 #define SUCCESS 0
 #define FAILURE 1
 #define ERROR -1
-#define DOLLAR '$'
 #define LEX_DQUOTE '\"'
 #define LEX_SQUOTE '\''
 #define BACKSLASH '\\'
 #define SIZE_CONDITION 2
+#define BUILTIN_SIZE 6
 #define ARRAY_SIZE 6
+#define SH_STDIN 0
+#define SH_STDOUT 1
+#define SH_STDERR 2
+
 
 static char     operators[20][20] = {
-	{";"},
-	{"|"},
-	("\n"),
-	{"\n"},
-	{"\n"},
-	{">"},
-	{">>"},
-	{"<"},
-	{"<<"},
-	{"&"},
-	{"<&"},
-	{">&"},
-	{"\0"}
+    {";"},
+    {"|"},
+    ("\n"),
+    {"\n"},
+    {"\n"},
+    {">"},
+    {">>"},
+    {"<"},
+    {"<<"},
+    {"&"},
+    {"<&"},
+    {">&"},
+    {"\0"},
 };
 
 typedef enum    e_ope{
-	SEPARATOR, //   ;
-	PIPE,      //   |
-	NEWLINE,   //   \n
-	WORD,      //   [aA-zZ.. 0..9]
-	GREAT,     //   >
-	DGREAT,    //   >>
-	LESS,      //   <
-	DLESS,     //   <<
-	AND,       //   &
-	LESSAND,   //   <&
-	GREATAND,  //   >&
-	IO_NUMBER,  //   [0,1,2...] Digit with '<' or '>' as delimiter
-	DIGIT,      // [0..9]
-	DQUOTE = '\"', 
-	SQUOTE = '\'',
-	C_DOLLAR = '$'
+    SEPARATOR, //   ;
+    PIPE,      //   |
+    NEWLINE,   //   \n
+    WORD,      //   [aA-zZ.. 0..9]
+    GREAT,     //   >
+    DGREAT,    //   >>
+    LESS,      //   <
+    DLESS,     //   <<
+    AND,       //   &
+    LESSAND,   //   <&
+    GREATAND,  //   >&
+    IO_NUMBER,  //   [0,1,2...] Digit with '<' or '>' as delimiter
+    DIGIT,      // [0..9]
+    DQUOTE = '\"', 
+    SQUOTE = '\'',
+    C_DOLLAR = '$',
 }               t_ope;
 
 typedef struct      s_param {
-	char            *input;
-	int             index;
-	int           token;
-	int(*ft)(int);
-	struct s_token  *l_tokens;
+    char            *input;
+    int             index;
+    int           token;
+    int(*ft)(int);
+    struct s_ast  *l_tokens;
 }                   t_param;
 
-typedef struct      s_token {
-	char            *value;
-	t_ope            token;
-	struct s_token  *next;
-	struct s_token  *right;
-	struct s_token  *left;
-}                   t_token;
+typedef struct      s_ast {
+    char            *value;
+    t_ope           token;
+    int             pipecall;
+    struct s_ast  *next;
+    struct s_ast  *right;
+    struct s_ast  *left;
+}                   t_ast;
+
+typedef struct      s_builtin
+{
+    char            name[20];
+    ssize_t			(*function)(char **, char ***, int);
+}                   t_builtin;
+
+
+typedef struct		s_expansion
+{
+	char	*tmp;
+	char	*sub;
+	char	*join;
+	char	*v_value;
+	int		index;
+}					t_expansion;
+
+typedef struct		s_opt
+{
+	ssize_t			i;
+	ssize_t			p;
+	ssize_t			s;
+	ssize_t			u;
+	ssize_t			v;
+}					t_opt;
+
 
 //def type char function
 int         ft_isallowedsymb(int c);
@@ -89,17 +103,17 @@ int         lex_is_special_char(int c);
 
 
 //token
-int         get_token_op(char *c, int length);
+int         get_ast_op(char *c, int length);
 
 
 // list function
-void        display_list(t_token *lst);
-int         push_node(char *value, int token, t_token **current_node);
-t_token     *create_elem(void);
+void        display_list(t_ast *lst);
+int         push_node(char *value, int token, t_ast **node);
+t_ast     *create_elem(void);
 
 //utils
 char        *copy_until_ft(char *s, int *start, int(*f)(int c));
-char        *copy_until_array_ft(char *s, int *start, int(*tab[2])(int));
+char        *copy_until_array_ft(char *s, int *start, int(*array[2])(int));
 
 
 //lex_action
@@ -121,8 +135,58 @@ int     valid_quotes(char *str);
 ssize_t     error_arg(void);
 
 //parser
-t_token     *parser_input(t_token *start, t_token *end);
-void        display_tree(t_token *tree, int lvl, int position);
+t_ast     *parser_input(t_ast *curr_node, t_ast *start, t_ast *end);
+
+//parser_utils
+int         get_size_rtree(t_ast *lst);
+char        **rtree_to_array(t_ast *tree);
+void        display_tree(t_ast *tree, int lvl, int position);
+
+//parser_exec
+void    parser_execution(t_ast *ast);
+int     exec_cmd(t_ast *ast);
+ssize_t		apply_expansions(char **cmdline, char **ms_env);
+
+//exec.c
+void    exec_pipe(t_ast *ast);
+int     find_redir(t_ast *ast);
+void    exec_redirection(t_ast *ast);
+
+
+//builtin
+ssize_t		ms_echo(char **split_cmd, char ***ms_env, int ret);
+ssize_t		ms_cd(char **split_cmd, char ***ms_env, int ret);
+ssize_t		ms_setenv(char **split_cmd, char ***ms_env, int ret);
+ssize_t		ms_unsetenv(char **split_cmd, char ***ms_env, int ret);
+ssize_t		ms_env(char **split_cmd, char ***ms_env, int ret);
+ssize_t     ms_exit(char **split_cmd, char ***ms_env, int ret);
+int			find_builtin(char *cmd);
+
+//error
+void		error_option(char c);
+ssize_t		too_many_args(char *cmd);
+ssize_t		unvalid_setenv_cmd(void);
+ssize_t		error_chdir(int error, char *path, char *cmd);
+
+//utils2.c
+char		**find_first_bin(char **split_cmd, int c);
+size_t		getnbr_args(char **split_cmd, int c);
+void		copy_add_var_to_env(char ***env, char *name, char *value);
+
+//init.c
+ssize_t		exec_simple_env(char **cmd, char **s_bin, char **env);
+void	    init_opt_struct(t_opt *env_opt);
+void		init_env_options(char **split_cmd, t_opt *env_opt);
+void		valid_option(char c, t_opt *env_opt);
+//env.c
+void		add_argument_to_env(char **split_cmd, char ***env);
+
+// setenv.c
+char		**add_variable(char *v_name, char *v_value, char **ms_env);
+
+//expansions
+
+
 
 
 #endif

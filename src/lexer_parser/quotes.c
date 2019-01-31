@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/24 14:40:11 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/31 10:38:46 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
+#include "../includes/sh21.h"
 
 // int    push_lst(char c, t_list **current_node)
 // {
@@ -41,6 +41,8 @@ int     valid_quotes(char *str)
     i = 0;
     len = ft_strlen(str);
     j = 0;
+    if (!str)
+        return (-1);
     while (str[i])
     {
         if (str[i] == DQUOTE)

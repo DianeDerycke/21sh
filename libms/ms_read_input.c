@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh21.h                                             :+:      :+:    :+:   */
+/*   ms_read_input.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:05:44 by dideryck          #+#    #+#             */
-/*   Updated: 2019/01/31 10:54:27 by DERYCKE          ###   ########.fr       */
+/*   Created: 2018/08/23 22:06:11 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/01/31 10:15:45 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SH21_H
-# define SH21_H
+#include "libms.h"
 
-# include "../libft/libft.h"
-# include "../libsh/libsh.h"
-# include "../libms/libms.h"
-# include "lexer.h"
-# include "lineedition.h"
-# include "history.h"
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
+ssize_t		ms_read_input(char **input)
+{
+	ssize_t		is_read_done;
 
-void	read_input(char buff[]);
-
-t_env	*env_fill_list(char **env);
-void	env_display(t_env *env);
-
-#endif
+	is_read_done = get_next_line(0, input);
+	if (is_read_done == -1)
+	{
+		ft_strdel(input);
+		return (ERR_INTR);
+	}
+	if (is_read_done == 1 && !(**input))
+	{
+		ft_strdel(input);
+		return (PAGAIN);
+	}
+	return (SUCCESS);
+}

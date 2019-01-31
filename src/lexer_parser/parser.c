@@ -3,42 +3,58 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:23:45 by dideryck          #+#    #+#             */
-/*   Updated: 2019/01/24 14:40:11 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/01/31 10:40:21 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/lexer.h"
+#include "../includes/sh21.h"
 
-static t_token     *find_priority_token(t_token *start, t_token *end)
+static t_ast     *find_priority_token(t_ast *start, t_ast *end)
 {
-    t_token     *tmp;
+    t_ast     *tmp;
 
     tmp = NULL;
     if (!start)
         return (NULL);
     while(start != end)
     {
-        if (tmp == NULL || (start->token <= tmp->token && start->token != WORD))
+        if (tmp == NULL || (start->token < tmp->token && start->token != WORD))
             tmp = start;
         start = start->next;
     }
     return (tmp);
 }
 
-t_token      *parser_input(t_token *start, t_token *end)
+static t_ast     *parser_left(t_ast *start, t_ast *end)
 {
-    t_token *tmp;
+    t_ast     *tmp;
 
     tmp = NULL;
     if ((tmp = find_priority_token(start, end)))
     {
-        tmp->right = parser_input(tmp->next, end);
-        tmp->left = parser_input(start, tmp);
+        tmp->right = parser_left(start, tmp);
+        tmp->left = parser_left(tmp->next, end);
     }
     return (tmp);
 }
+
+t_ast      *parser_input(t_ast *curr_node, t_ast *start, t_ast *end)
+{
+    t_ast *tmp;
+
+    tmp = NULL;
+    if (start && (curr_node = find_priority_token(start, end)))
+    {
+        curr_node->right = parser_left(start, curr_node);
+        curr_node->left = parser_input(curr_node->right, curr_node->next, end);
+    }
+    return (curr_node);
+}
+
+
+
 
 //to do : function that free every structure and return FAILURE, to replace FAILURE with this function

@@ -1,32 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh21.h                                             :+:      :+:    :+:   */
+/*   ms_simple_exec.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:05:44 by dideryck          #+#    #+#             */
-/*   Updated: 2019/01/31 10:54:27 by DERYCKE          ###   ########.fr       */
+/*   Created: 2019/01/30 17:14:45 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/01/30 17:29:28 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SH21_H
-# define SH21_H
+#include "libms.h"
 
-# include "../libft/libft.h"
-# include "../libsh/libsh.h"
-# include "../libms/libms.h"
-# include "lexer.h"
-# include "lineedition.h"
-# include "history.h"
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
+int		ms_simple_exec(char *utility, char **split_cmd, char **env, char **tmp)
+{
+	char	*path;
+	int		ret;
 
-void	read_input(char buff[]);
-
-t_env	*env_fill_list(char **env);
-void	env_display(t_env *env);
-
-#endif
+	path = NULL;
+    ret = 0;
+	if ((path = ms_get_valid_cmd(utility, env))
+		&& access(path, X_OK) == SUCCESS)
+			ret = execve(path, split_cmd, tmp);
+	else if (!path)
+		return (FAILURE);
+	else
+		ms_perm_denied(split_cmd[0]);
+	ft_strdel(&path);
+	return (ret);
+}
