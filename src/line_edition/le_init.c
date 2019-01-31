@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   le_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 10:39:00 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/01/31 12:14:19 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,7 @@ int		le_init(struct s_le *le_struct)
 			return (LE_FAILURE);
 	if (le_struct->nb_char == LE_START)
 	{
-		if (!le_struct->prompt_type)
-		{
-			ft_putstr(LE_PROMPT);
-			le_struct->prompt_size = LE_PROMPT_SIZE + 1;
-		}
-		else
-		{
-			ft_putstr(LE_PROMPT_MIN);
-			le_struct->prompt_size = 4;
-		}
+		le_init_prompt(le_struct);
 		le_struct->nb_char = 0;
 		le_struct->cursor_x = le_struct->prompt_size;
 	}
@@ -48,6 +39,35 @@ int		le_init(struct s_le *le_struct)
 **	If the buffer is bigger than LE_BUFF_SIZE, it's reallocated
 **	Print the prompt and initialise nb_char and the cursor posiotion
 */
+
+void	le_init_prompt(struct s_le *le_struct)
+{
+	char *pwd;
+
+	pwd = NULL;
+	if (!le_struct->prompt_type)
+	{
+		if (!(pwd = getenv("PWD")))
+		{
+			ft_putstr(LE_PROMPT);
+			le_struct->prompt_size = LE_PROMPT_SIZE + 1;
+		}
+		else
+		{
+			ft_putstr("\033[1m\033[32m");
+			ft_putstr(pwd);
+			ft_putstr(" > ");
+			ft_putstr("\033[0m");
+			le_struct->prompt_size = ft_strlen(pwd) + 3;
+		}
+		
+	}
+	else
+	{
+		ft_putstr(LE_PROMPT_MIN);
+		le_struct->prompt_size = 4;
+	}
+}
 
 int		le_init_struct(struct s_le *le_struct)
 {

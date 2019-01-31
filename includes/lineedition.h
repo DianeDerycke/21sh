@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lineedition.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 10:39:00 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/01/31 12:14:18 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ char	*line_edition(int prompt);
 */
 
 int		le_init(struct s_le *le_struct);
+void	le_init_prompt(struct s_le *le_struct);
 int		le_init_struct(struct s_le *le_struct);
 void	le_init_calcul(struct s_le *le_struct);
 int		le_set_attribute(struct termios *backup);
