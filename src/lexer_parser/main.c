@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/31 10:51:46 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/01/31 10:58:35 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ static int     loop_input(t_param *param)
 		ft_strdel(&param->input);
 		init_param(&param);
 	}
+    free(param);
 	return (SUCCESS);
 }
 
