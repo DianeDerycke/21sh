@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 13:21:45 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/01 10:42:19 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ int		le_buff_append(struct s_le *le_struct, char c)
 	else
 		ft_putchar(c);
 	le_struct->history_activ = 0;
+	le_struct->copy_on = -1;
+	le_struct->copy_off = -1;
 	return (LE_SUCCESS);
 }
 
@@ -172,3 +174,28 @@ int		le_buff_history(struct s_le *le_struct)
 /*
 **	Browse the historic whit up/down arrows
 */
+
+void	le_buff_print(struct s_le *le_struct)
+{
+	int	i;
+	int	off;
+
+	i = 0;
+	off = le_struct->copy_off;
+	if (!le_struct->buff)
+		return ;
+	if (off == -1)
+		off = le_struct->cursor_buff;
+	while (le_struct->buff[i])
+	{
+		if (i >= le_struct->copy_on && i <= off)
+		{
+			ft_putstr(LE_SELECT_CLR_ON);
+			ft_putchar(le_struct->buff[i]);
+			ft_putstr(LE_SELECT_CLR_OFF);
+		}
+		else
+			ft_putchar(le_struct->buff[i]);
+		i++;
+	}
+}

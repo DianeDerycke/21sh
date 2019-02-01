@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 19:17:08 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/01 15:45:30 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int		le_init(struct s_le *le_struct)
 			return (LE_FAILURE);
 	if (le_struct->nb_char == LE_START)
 	{
-		le_init_prompt(le_struct);
+		if (le_init_prompt(le_struct))
+			return (LE_FAILURE);
 		le_struct->nb_char = 0;
 		le_struct->cursor_x = le_struct->prompt_size;
 	}
@@ -40,33 +41,50 @@ int		le_init(struct s_le *le_struct)
 **	Print the prompt and initialise nb_char and the cursor posiotion
 */
 
-void	le_init_prompt(struct s_le *le_struct)
+int		le_init_prompt(struct s_le *le_struct)
 {
 	char *pwd;
 
 	pwd = NULL;
+	le_struct->prompt = NULL;
 	if (!le_struct->prompt_type)
 	{
-		// if (!(pwd = getenv("PWD")))
-		// {
-			ft_putstr(LE_PROMPT);
+		if (!(pwd = getenv("PWD")))
+		{
+			if (!(le_struct->prompt = ft_strdup(LE_PROMPT)))
+				return (LE_FAILURE);
+			ft_putstr(le_struct->prompt);
 			le_struct->prompt_size = LE_PROMPT_SIZE + 1;
-		// }
-		// else
-		// {
-		// 	ft_putstr("\033[1m\033[32m");
-		// 	ft_putstr(pwd);
-		// 	ft_putstr(" > ");
-		// 	ft_putstr("\033[0m");
-		// 	le_struct->prompt_size = ft_strlen(pwd) + 3;
-		// }
-		
+		}
+		else
+		{
+			if (!(le_struct->prompt = ft_strdup(pwd)))
+				return (LE_FAILURE);
+			le_print_prompt(le_struct);
+			le_struct->prompt_size = ft_strlen(le_struct->prompt) + 4;
+		}
 	}
 	else
 	{
-		ft_putstr(LE_PROMPT_MIN);
+		if (!(le_struct->prompt = ft_strdup(LE_PROMPT_MIN)))
+			return (LE_FAILURE);
+		le_print_prompt(le_struct);		
 		le_struct->prompt_size = 4;
 	}
+	return (LE_SUCCESS);
+}
+
+void	le_print_prompt(struct s_le *le_struct)
+{
+	if (!le_struct->prompt_type)
+	{
+		ft_putstr("\033[1m\033[32m");
+		ft_putstr(le_struct->prompt);
+		ft_putstr(" > ");
+		ft_putstr("\033[0m");
+	}
+	else
+		ft_putstr(le_struct->prompt);		
 }
 
 int		le_init_struct(struct s_le *le_struct)
@@ -82,8 +100,8 @@ int		le_init_struct(struct s_le *le_struct)
 	if (hy_history_fill_list(le_struct) || !le_struct->history)
 		le_struct->history_activ = -1;
 	le_struct->clipboard = NULL;
-	le_struct->copy_on = 0;
-	le_struct->copy_off = 0;
+	le_struct->copy_on = LE_START;
+	le_struct->copy_off = LE_START;
 	return (LE_SUCCESS);
 }
 
@@ -162,7 +180,7 @@ int		le_window_check(struct s_le *le_struct)
 		le_termcap_print(TC_CLEAR_NEXT, 1);
 		ft_putstr(LE_PROMPT);
 		if (le_struct->nb_char)
-			ft_putstr(le_struct->buff);
+			le_buff_print(le_struct);
 		if (le_cursor_goto(le_struct->cursor_x,\
 		 (le_struct->nb_char + le_struct->prompt_size), le_struct))
 		 	return (LE_FAILURE);
@@ -180,11 +198,17 @@ int		le_exit(struct s_le *le_struct, int ret)
 	if (ret == LE_ENDL)
 	{
 		hy_dlst_free(le_struct->history);
+		if (le_struct->clipboard)
+			ft_strdel(&le_struct->clipboard);
+		ft_strclr(le_struct->tmp);
 		return (LE_EXIT);
 	}
 	if (ret == LE_FAILURE)
 	{
 		hy_dlst_free(le_struct->history);
+		if (le_struct->clipboard)
+			ft_strdel(&le_struct->clipboard);
+		ft_strclr(le_struct->tmp);
 		return (LE_FAILURE);
 	}
 	// if (*le_struct->buff == LE_EXIT)
@@ -211,7 +235,7 @@ int		le_clear(struct s_le *le_struct)
 		return (LE_FAILURE);
 	if (le_termcap_print(TC_CLEAR_NEXT, 1))
 		return (LE_FAILURE);
-	ft_putstr(le_struct->buff);
+	le_buff_print(le_struct);
 	return (LE_SUCCESS);
 }
 
@@ -221,8 +245,8 @@ int		le_clear_restore(struct s_le *le_struct)
 		return (LE_FAILURE);
 	if (le_termcap_print(TC_CLEAR_NEXT, 1))
 		return (LE_FAILURE);
-	ft_putstr(LE_PROMPT);
-	ft_putstr(le_struct->buff);
+	le_print_prompt(le_struct);
+	le_buff_print(le_struct);
 	if (le_cursor_beggin(le_struct, le_struct->nb_char \
 	+ le_struct->prompt_size - 1))
 		return (LE_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 19:18:36 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/01 15:38:40 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@
 # define LE_CUT				21
 # define LE_PASTE			16
 # define LE_COPY			25
-
+# define LE_SELECT_CLR_ON	"\033[249m"
+# define LE_SELECT_CLR_OFF	"\033[0m"
 
 /*
 **	Termcaps DEFINE
@@ -109,6 +110,9 @@ typedef struct		s_le
 	char	*buff;
 	char	*clipboard;
 	char	tmp[LE_TMP_BUFF_SIZE];
+	char	*prompt;
+	int		prompt_size;
+	int		prompt_type;
 	int		buffer_size;
 	int		cursor_x;
 	int		cursor_y;
@@ -120,8 +124,6 @@ typedef struct		s_le
 	int		w_col;
 	int		last_line;
 	int		term;
-	int		prompt_size;
-	int		prompt_type;
 	int		history_activ;
 	int		copy_on;
 	int		copy_off;
@@ -139,7 +141,8 @@ char	*line_edition(int prompt);
 */
 
 int		le_init(struct s_le *le_struct);
-void	le_init_prompt(struct s_le *le_struct);
+int		le_init_prompt(struct s_le *le_struct);
+void	le_print_prompt(struct s_le *le_struct);
 int		le_init_struct(struct s_le *le_struct);
 void	le_init_calcul(struct s_le *le_struct);
 int		le_set_attribute(struct termios *backup);
@@ -175,6 +178,7 @@ int		le_buff_append(struct s_le *le_struct, char c);
 char	*le_buff_realloc(struct s_le *le_struct, int size);
 int		le_buff_check_space(struct s_le *le_struc, int size);
 int		le_buff_history(struct s_le *le_struct);
+void	le_buff_print(struct s_le *le_struct);
 
 /*
 **	le_cursor.c
@@ -207,7 +211,7 @@ int		le_clipboard(struct s_le *le_struct);
 int		le_clipboard_copy(struct s_le *le_struct);
 int		le_clipboard_paste(struct s_le *le_struct);
 int		le_clipboard_cut(struct s_le *le_struct);
-char	*ft_strpcat(char *dst, char *src, int pos);
+char	*sh_strinsert(char *dst, char *src, int pos);
 
 /*
 **	le_debug.c /!\ DELETE THIS FILE AT THE END /!\
