@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   sh_free_shell.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/05 00:26:59 by DERYCKE          ###   ########.fr       */
+/*   Created: 2019/02/05 00:05:57 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/02/05 00:06:18 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "libsh.h"
 
-void    display_tree(t_ast *tree, int lvl, int position)
+void		sh_free_shell(t_sh *shell)
 {
-    if (!tree)
+    if (!shell)
         return ;
-    if (position == 2)
-        printf("RIGHT |  ");
-    else if (position == 3)
-        printf("LEFT  |  ");
-    else
-        printf("START  |  ");
-    printf("LVL: %d --- %d ---->> %s \n",lvl, tree->token, tree->value);
-    display_tree(tree->right, lvl + 1, 2);
-    display_tree(tree->left, lvl + 1, 3);
+    ft_free_array(shell->cmd);
+    ft_free_array(shell->env);
+    free(shell);
+    shell = NULL;
 }

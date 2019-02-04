@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:18:40 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/31 10:38:46 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/04 23:51:09 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,21 @@ static void			dollar_expansion(char **cmdline, char **env, char *arg,
 	*cmdline = st.join;
 }
 
-ssize_t				apply_expansions(char **cmdline, char **ms_env)
+ssize_t				apply_expansions(t_sh *shell)
 {
 	size_t		i;
 	char		*ptr;
 
 	ptr = NULL;
 	i = 0;
-	while (cmdline[i])
+	while (shell->cmd[i])
 	{
-		if ((ptr = ft_strchr(cmdline[i], VAL_DOLLAR)) &&
-				ft_strlen(cmdline[i]) > 1)
-					dollar_expansion(cmdline + i, ms_env, cmdline[i], ptr);
-		else if ((ft_strcmp(cmdline[i], "~") == SUCCESS) ||
-					ft_strchr(cmdline[i], VAL_TILDE))
-			if (tilde_expansion(cmdline + i) == FAILURE)
+		if ((ptr = ft_strchr(shell->cmd[i], VAL_DOLLAR)) &&
+				ft_strlen(shell->cmd[i]) > 1)
+					dollar_expansion(shell->cmd + i, shell->env, shell->cmd[i], ptr);
+		else if ((ft_strcmp(shell->cmd[i], "~") == SUCCESS) ||
+					ft_strchr(shell->cmd[i], VAL_TILDE))
+			if (tilde_expansion(shell->cmd + i) == FAILURE)
 				return (FAILURE);
 		i++;
 	}

@@ -1,28 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_utils.c                                      :+:      :+:    :+:   */
+/*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/05 00:26:59 by DERYCKE          ###   ########.fr       */
+/*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/02/04 23:10:41 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/sh21.h"
 
-void    display_tree(t_ast *tree, int lvl, int position)
+int     find_redir(t_ast *ast)
 {
-    if (!tree)
-        return ;
-    if (position == 2)
-        printf("RIGHT |  ");
-    else if (position == 3)
-        printf("LEFT  |  ");
-    else
-        printf("START  |  ");
-    printf("LVL: %d --- %d ---->> %s \n",lvl, tree->token, tree->value);
-    display_tree(tree->right, lvl + 1, 2);
-    display_tree(tree->left, lvl + 1, 3);
+    if (!ast)
+        return (FAILURE);
+    while(ast)
+    {
+        if (ast->token >= GREAT && ast->token <= GREATAND)
+            return (SUCCESS);
+        ast = ast->left;
+    }
+    return (FAILURE);
+}
+
+void    exec_redirection(t_ast *ast)
+{
+    (void)ast;
+    return ;
 }

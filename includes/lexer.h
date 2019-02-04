@@ -1,6 +1,7 @@
 #ifndef LEXER_H
 #define LEXER_H
 
+# include "../libsh/libsh.h"
 #define SUCCESS 0
 #define FAILURE 1
 #define ERROR -1
@@ -14,42 +15,6 @@
 #define SH_STDOUT 1
 #define SH_STDERR 2
 
-
-static char     operators[20][20] = {
-    {";"},
-    {"|"},
-    ("\n"),
-    {"\n"},
-    {"\n"},
-    {">"},
-    {">>"},
-    {"<"},
-    {"<<"},
-    {"&"},
-    {"<&"},
-    {">&"},
-    {"\0"},
-};
-
-typedef enum    e_ope{
-    SEPARATOR, //   ;
-    PIPE,      //   |
-    NEWLINE,   //   \n
-    WORD,      //   [aA-zZ.. 0..9]
-    GREAT,     //   >
-    DGREAT,    //   >>
-    LESS,      //   <
-    DLESS,     //   <<
-    AND,       //   &
-    LESSAND,   //   <&
-    GREATAND,  //   >&
-    IO_NUMBER,  //   [0,1,2...] Digit with '<' or '>' as delimiter
-    DIGIT,      // [0..9]
-    DQUOTE = '\"', 
-    SQUOTE = '\'',
-    C_DOLLAR = '$',
-}               t_ope;
-
 typedef struct      s_param {
     char            *input;
     int             index;
@@ -57,15 +22,6 @@ typedef struct      s_param {
     int(*ft)(int);
     struct s_ast  *l_tokens;
 }                   t_param;
-
-typedef struct      s_ast {
-    char            *value;
-    t_ope           token;
-    int             pipecall;
-    struct s_ast  *next;
-    struct s_ast  *right;
-    struct s_ast  *left;
-}                   t_ast;
 
 typedef struct      s_builtin
 {
@@ -138,14 +94,12 @@ ssize_t     error_arg(void);
 t_ast     *parser_input(t_ast *curr_node, t_ast *start, t_ast *end);
 
 //parser_utils
-int         get_size_rtree(t_ast *lst);
-char        **rtree_to_array(t_ast *tree);
 void        display_tree(t_ast *tree, int lvl, int position);
 
 //parser_exec
-void    parser_execution(t_ast *ast);
+int    parser_execution(t_ast *ast);
 int     exec_cmd(t_ast *ast);
-ssize_t		apply_expansions(char **cmdline, char **ms_env);
+ssize_t		apply_expansions(t_sh *shell);
 
 //exec.c
 void    exec_pipe(t_ast *ast);

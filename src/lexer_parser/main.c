@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/31 10:58:35 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/04 23:36:41 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ static int     loop_input(t_param *param)
 		else
         {
 		// 	display_tree(ast, 0, 0);
-            parser_execution(ast);
+            if (parser_execution(ast) != 0)
+				printf("error execution\n");
         }
 		ft_strdel(&param->input);
 		init_param(&param);

@@ -1,36 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_exec_binary.c                                   :+:      :+:    :+:   */
+/*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/27 14:26:30 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/05 00:09:52 by DERYCKE          ###   ########.fr       */
+/*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/02/04 23:11:19 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
-int		ms_exec_binary(char *utility, char **split_cmd, char **env, char **tmp)
+#include "../includes/sh21.h"
+
+void    exec_pipe(t_ast *ast)
 {
-	char	*path;
+    int		fildes[2];
 	pid_t	pid;
 	int		status;
 
-	path = NULL;
-	if ((path = ms_get_valid_cmd(utility, env))
-		&& access(path, X_OK) == SUCCESS)
+	status = 0;
+	// if (ast->right && find_builtin(ast->right->value) == SUCCESS)
+		// exec_pipe2(ast);
+	if (pipe(fildes) == 0)
 	{
-		pid = fork ();
+		pid = fork();
 		if (pid == 0)
-			execve(path, split_cmd, tmp);
+		{
+			// close(fildes[0]);
+			dup2(fildes[1], 1);
+			close(fildes[0]);
+			parser_execution(ast->right);
+		}
 		else
+		{
+			// close(fildes[1]);
+			dup2(fildes[0], 0);
+			close(fildes[1]);
 			waitpid(-1, &status, 0);
+			parser_execution(ast->left);
+		}
 	}
-	else if (!path)
-		return (FAILURE);
 	else
-		ms_perm_denied(split_cmd[0]);
-	ft_strdel(&path);
-	return (0);
+		exit(2);
 }

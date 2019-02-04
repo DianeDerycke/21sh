@@ -4,6 +4,7 @@
 		"lineedition.h": "c",
 		"sh21.h": "c",
 		"types.h": "c",
-		"wait.h": "c"
+		"wait.h": "c",
+		"lexer.h": "c"
 	}
 }

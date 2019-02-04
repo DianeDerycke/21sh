@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
+#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/01/31 19:06:22 by mrandou          ###   ########.fr        #
+#    Updated: 2019/02/04 23:14:07 by DERYCKE          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,8 +43,10 @@ LEX_PARSE_NAME =	main.c \
 					exec.c \
 					expansions.c \
 					init.c \
-					utils2.c
-
+					utils2.c \
+					redir.c \
+					pipe.c \
+					builtin.c
 
 LINE_EDITION_PATH = src/line_edition/
 HISTORY_PATH = src/history/
