@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:12:17 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/05 00:31:35 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/05 17:09:39 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,12 @@ int     exec_cmd(t_ast *ast)
     struct stat f_stat;
     static int ret = 0;
 
-    shell = NULL;
-    if (sh_get_shell(ast, shell) == FAILURE)
+    if (!(shell = sh_get_shell(ast)))
         return (FAILURE);
     apply_expansions(shell);
     if ((ret = exec_builtin(shell)) == FAILURE)
     {
-        ret = sh_exec_cmd(shell);
+        ret = ms_exec_binary(shell->cmd[0], shell->cmd, shell->env, shell->env);
         if (ret == -1)
         {
             if (ms_file_exist(shell->cmd[0]) == FAILURE)

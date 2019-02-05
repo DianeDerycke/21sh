@@ -6,19 +6,22 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:07:37 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/05 00:16:58 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/05 17:08:20 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libsh.h"
 
-int     sh_get_shell(t_ast *ast, t_sh *shell)
+t_sh     *sh_get_shell(t_ast *ast)
 {
-    if (!(shell = malloc(sizeof(t_sh))))
-        return (FAILURE);
-    if (!(shell->cmd = sh_rtree_to_array(ast)))
-        return (FAILURE);
-    if (!(shell->env = ms_get_env()))
-        return (FAILURE);
-    return (SUCCESS);
+    t_sh *new;
+
+    new = NULL;
+    if (!(new = malloc(sizeof(t_sh))))
+        return (NULL);
+    if (!(new->cmd = sh_rtree_to_array(ast)))
+        return (NULL);
+    if (!(new->env = ms_get_env()))
+        return (NULL);
+    return (new);
 }
