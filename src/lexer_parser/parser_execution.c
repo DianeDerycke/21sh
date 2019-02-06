@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:41:10 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/05 00:29:27 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/06 05:23:03 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int    parser_execution(t_ast *ast)
     if (ast->token == SEPARATOR)
         parser_execution(ast->right);
     else if (ast->token == PIPE)
-        exec_pipe(ast);
+        do_pipe(ast);
     else if (ast->token == WORD)
     {
         if ((redir = find_redir(ast) == SUCCESS))

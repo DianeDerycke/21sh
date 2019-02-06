@@ -89,6 +89,8 @@ int     valid_quotes(char *str);
 
 //ERROR CASE
 ssize_t     error_arg(void);
+int     error_execution(char *cmd_name);
+
 
 //parser
 t_ast     *parser_input(t_ast *curr_node, t_ast *start, t_ast *end);
@@ -102,7 +104,7 @@ int     exec_cmd(t_ast *ast);
 ssize_t		apply_expansions(t_sh *shell);
 
 //exec.c
-void    exec_pipe(t_ast *ast);
+void    do_pipe(t_ast *ast);
 int     find_redir(t_ast *ast);
 void    exec_redirection(t_ast *ast);
 

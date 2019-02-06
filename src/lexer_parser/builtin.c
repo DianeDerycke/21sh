@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:12:17 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/05 17:09:39 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/06 05:27:22 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,27 +51,30 @@ int     exec_builtin(t_sh *shell)
     return (ret);
 }
 
+int     error_execution(char *cmd_name)
+{
+    struct stat f_stat;
+
+    if (ms_file_exist(cmd_name) == FAILURE)
+        ms_command_not_found(cmd_name);
+    else if (lstat(cmd_name, &f_stat) == 0 && 
+                    !(f_stat.st_mode & S_IXUSR))
+        ms_perm_denied(cmd_name);
+    return (FAILURE);
+}
+
 int     exec_cmd(t_ast *ast)
 {
     t_sh    *shell;
-    struct stat f_stat;
     static int ret = 0;
 
     if (!(shell = sh_get_shell(ast)))
         return (FAILURE);
     apply_expansions(shell);
-    if ((ret = exec_builtin(shell)) == FAILURE)
-    {
-        ret = ms_exec_binary(shell->cmd[0], shell->cmd, shell->env, shell->env);
-        if (ret == -1)
-        {
-            if (ms_file_exist(shell->cmd[0]) == FAILURE)
-                ms_command_not_found(shell->cmd[0]);
-            else if (lstat(shell->cmd[0], &f_stat) == 0 && 
-                    !(f_stat.st_mode & S_IXUSR))
-                ms_perm_denied(shell->cmd[0]);
-        }
-    }
+    if ((exec_builtin(shell)) == FAILURE)
+        if ((ms_exec_binary(shell->cmd[0], shell->cmd, shell->env, shell->env)) == -1)
+            ret = error_execution(shell->cmd[0]);
     sh_free_shell(shell);
     return (ret);
 }
+//create array error
