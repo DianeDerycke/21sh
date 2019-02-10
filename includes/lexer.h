@@ -14,6 +14,8 @@
 #define SH_STDIN 0
 #define SH_STDOUT 1
 #define SH_STDERR 2
+#define INPUT_END 1
+#define OUTPUT_END 0
 
 typedef struct      s_param {
     char            *input;
@@ -104,7 +106,9 @@ int     exec_cmd(t_ast *ast);
 ssize_t		apply_expansions(t_sh *shell);
 
 //exec.c
-void    do_pipe(t_ast *ast);
+void	do_process(t_ast *ast, int fd[], int state);
+int     do_pipe(t_ast *ast);
+// void	do_pipe(t_ast *ast);
 int     find_redir(t_ast *ast);
 void    exec_redirection(t_ast *ast);
 
