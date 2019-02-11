@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/11 16:46:16 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/11 17:23:25 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,6 +216,9 @@ char	*sh_strinsert(char *dst, char *src, int pos);
 */
 
 int		le_prompt_init(struct s_le *le_struct);
+int		le_prompt_simple(struct s_le *le_struct);
+int		le_prompt_pwd(struct s_le *le_struct);
+int		le_prompt_quote(struct s_le *le_struct);
 void	le_prompt_print(struct s_le *le_struct);
 
 /*
