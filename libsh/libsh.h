@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/10 16:51:32 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/11 15:25:27 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ int			sh_find_env_key(char **env, char *key);
 void		sh_append_env_value(char **env, char *key, char *newvalue);
 char		*sh_get_env_key(char **env, int field);
 // void		sh_env_display(char **env);
-int         sh_get_size_rtree(t_ast *lst);
-char        **sh_rtree_to_array(t_ast *tree);
-t_sh 		*sh_get_shell(t_ast *ast);
+int         sh_get_size_rtree(t_ast *start, t_ast *end);
+char        **sh_rtree_to_array(t_ast *start, t_ast *end);
+t_sh 		*sh_get_shell(t_ast *start, t_ast *end);
 void		sh_free_shell(t_sh *shell);
 
 #endif

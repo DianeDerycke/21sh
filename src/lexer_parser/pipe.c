@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/11 11:39:51 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/11 15:27:40 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@ static int     just_exec(t_sh *shell)
     char    *path;
 
     path = NULL;
+	apply_expansions(shell);
+	if ((exec_builtin(shell) == SUCCESS))
+		return (SUCCESS);
     if ((path = ms_get_valid_cmd(shell->cmd[0], shell->env))
             && access(path, X_OK) == SUCCESS)
         execve(path, shell->cmd, shell->env);
@@ -34,14 +37,12 @@ static int     exec_pipe_cmd(t_ast *ast)
 
 	if (!ast)
 		return (FAILURE);
-	// if (find_redir(ast))
-		// return (exec_redirection(ast));
-    if (!(shell = sh_get_shell(ast)))
+	if (find_next_redir(ast))
+		return (exec_redirection(ast));
+    if (!(shell = sh_get_shell(ast, NULL)))
         return (FAILURE);
-    apply_expansions(shell);
-    if ((exec_builtin(shell)) == FAILURE)
-		if (just_exec(shell) == FAILURE)
-			return (FAILURE);
+	if (just_exec(shell) == FAILURE)
+		return (FAILURE);
 	return (SUCCESS);
 }
 
@@ -132,6 +133,7 @@ void		do_pipe(t_ast *ast)
 		recurse_pipe(ast->left, fd);
 	else if (ast->left)
 		end_pipe(ast->left, fd);
+	wait(NULL);
 	close(fd[OUTPUT_END]);
 	close(fd[INPUT_END]);
 	waitpid(-1, &status, 0);

@@ -108,7 +108,7 @@ ssize_t		apply_expansions(t_sh *shell);
 //exec.c
 void     do_pipe(t_ast *ast);
 // void	do_pipe(t_ast *ast);
-t_ast  *find_redir(t_ast *ast);
+t_ast  *find_next_redir(t_ast *ast);
 int    exec_redirection(t_ast *ast);
 
 

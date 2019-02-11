@@ -6,11 +6,17 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/27 14:26:30 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/05 00:09:52 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/11 12:58:47 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libms.h"
+// void	handle_sigint(int sig)
+// {
+// 	(void)sig;
+// 	printf("CAUGHT SIGINT SIGNAL\n");
+// }
+
 int		ms_exec_binary(char *utility, char **split_cmd, char **env, char **tmp)
 {
 	char	*path;
@@ -25,7 +31,11 @@ int		ms_exec_binary(char *utility, char **split_cmd, char **env, char **tmp)
 		if (pid == 0)
 			execve(path, split_cmd, tmp);
 		else
+		{
+			// if (signal(SIGINT, handle_sigint))
+				// kill(pid, SIGINT);
 			waitpid(-1, &status, 0);
+		}
 	}
 	else if (!path)
 		return (FAILURE);
