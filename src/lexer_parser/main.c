@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/04 23:36:41 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/11 11:38:42 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int     loop_input(t_param *param)
 			return (FAILURE);
 		}
 		// else
-		// 	display_list(param->l_tokens);
+			// display_list(param->l_tokens);
 		if (!(ast = parser_input(param->l_tokens, param->l_tokens, NULL)))
 			return (FAILURE);
 		else

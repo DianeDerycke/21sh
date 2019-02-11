@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/06 05:22:13 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/10 16:51:32 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # define C_EQUAL '='
 # define BUFF_SIZE 4096
+# define REDIR_SIZE 1
 # define SUCCESS 0
 # define FAILURE 1
 # define ERROR -1

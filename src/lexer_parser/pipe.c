@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/10 15:16:11 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/11 11:39:51 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static int     exec_pipe_cmd(t_ast *ast)
 
 	if (!ast)
 		return (FAILURE);
+	// if (find_redir(ast))
+		// return (exec_redirection(ast));
     if (!(shell = sh_get_shell(ast)))
         return (FAILURE);
     apply_expansions(shell);

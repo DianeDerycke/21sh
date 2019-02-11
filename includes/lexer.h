@@ -108,8 +108,8 @@ ssize_t		apply_expansions(t_sh *shell);
 //exec.c
 void     do_pipe(t_ast *ast);
 // void	do_pipe(t_ast *ast);
-int     find_redir(t_ast *ast);
-void    exec_redirection(t_ast *ast);
+t_ast  *find_redir(t_ast *ast);
+int    exec_redirection(t_ast *ast);
 
 
 //builtin
@@ -143,7 +143,8 @@ void		add_argument_to_env(char **split_cmd, char ***env);
 // setenv.c
 char		**add_variable(char *v_name, char *v_value, char **ms_env);
 
-//expansions
+// redir
+int		redir_great(t_ast *ast);
 
 
 
