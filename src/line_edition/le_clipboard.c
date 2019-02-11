@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 13:09:48 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/01 15:21:23 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/11 15:29:56 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int		le_clipboard(struct s_le *le_struct)
 	{
 		if (le_clipboard_cut(le_struct))
 			return (LE_FAILURE);
-		le_struct->cursor_x -= ft_strlen(le_struct->clipboard);
+		le_struct->cursor_x -= ft_strlen(le_struct->clipboard) - 1;
 		le_struct->nb_char -= ft_strlen(le_struct->clipboard);
 		if (le_clear_restore(le_struct))
 			return (LE_FAILURE);
@@ -119,9 +119,9 @@ int		le_clipboard_cut(struct s_le *le_struct)
 	if (le_clipboard_copy(le_struct))
 		return (LE_FAILURE);
 	i = le_struct->copy_on;
-	size = ft_strlen(&le_struct->buff[le_struct->copy_off + 1]);
-	while (le_struct->buff[i] && k <= size)
+	size = ft_strlen(&le_struct->buff[le_struct->copy_off] - 1);
+	while (le_struct->buff[i] && k < size)
 		le_struct->buff[i++] = le_struct->buff[le_struct->copy_off + k++];
-	le_struct->buff[i] = '\0';
+	ft_strclr(&le_struct->buff[i]);
 	return (LE_SUCCESS);
 }

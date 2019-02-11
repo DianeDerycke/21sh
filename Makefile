@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
+#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/02/04 23:14:07 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/02/11 16:47:40 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ LIBFT = ./libft/
 LIBSH = ./libsh/
 LIBMS = ./libms/
 LIBNAME = ./libft/libft.a ./libsh/libsh.a ./libms/libms.a
+HISTORY = .21sh_history
 
 LINE_EDITION_NAME = line_edition.c \
 					le_termcap.c \
@@ -23,7 +24,8 @@ LINE_EDITION_NAME = line_edition.c \
 					le_cursor.c \
 					le_init.c \
 					le_cursor_tool.c \
-					le_clipboard.c
+					le_clipboard.c \
+					le_prompt.c
 
 HISTORY_NAME =		hy_history.c
 
@@ -102,7 +104,7 @@ compile:
 	make $(NAME)
 	
 clean:
-	rm -rf $(OBJ)
+	rm -rf $(OBJ) $(HISTORY)
 	rmdir $(OBJ_PATH) 2> /dev/null || true
 	make -C $(LIBFT) clean
 	make -C $(LIBSH) clean

@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/01 15:38:40 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/11 16:46:16 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,6 @@ char	*line_edition(int prompt);
 */
 
 int		le_init(struct s_le *le_struct);
-int		le_init_prompt(struct s_le *le_struct);
-void	le_print_prompt(struct s_le *le_struct);
 int		le_init_struct(struct s_le *le_struct);
 void	le_init_calcul(struct s_le *le_struct);
 int		le_set_attribute(struct termios *backup);
@@ -212,6 +210,13 @@ int		le_clipboard_copy(struct s_le *le_struct);
 int		le_clipboard_paste(struct s_le *le_struct);
 int		le_clipboard_cut(struct s_le *le_struct);
 char	*sh_strinsert(char *dst, char *src, int pos);
+
+/*
+**	le_prompt.c
+*/
+
+int		le_prompt_init(struct s_le *le_struct);
+void	le_prompt_print(struct s_le *le_struct);
 
 /*
 **	le_debug.c /!\ DELETE THIS FILE AT THE END /!\

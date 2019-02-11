@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/01 15:45:30 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/11 16:46:14 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		le_init(struct s_le *le_struct)
 			return (LE_FAILURE);
 	if (le_struct->nb_char == LE_START)
 	{
-		if (le_init_prompt(le_struct))
+		if (le_prompt_init(le_struct))
 			return (LE_FAILURE);
 		le_struct->nb_char = 0;
 		le_struct->cursor_x = le_struct->prompt_size;
@@ -41,51 +41,6 @@ int		le_init(struct s_le *le_struct)
 **	Print the prompt and initialise nb_char and the cursor posiotion
 */
 
-int		le_init_prompt(struct s_le *le_struct)
-{
-	char *pwd;
-
-	pwd = NULL;
-	le_struct->prompt = NULL;
-	if (!le_struct->prompt_type)
-	{
-		if (!(pwd = getenv("PWD")))
-		{
-			if (!(le_struct->prompt = ft_strdup(LE_PROMPT)))
-				return (LE_FAILURE);
-			ft_putstr(le_struct->prompt);
-			le_struct->prompt_size = LE_PROMPT_SIZE + 1;
-		}
-		else
-		{
-			if (!(le_struct->prompt = ft_strdup(pwd)))
-				return (LE_FAILURE);
-			le_print_prompt(le_struct);
-			le_struct->prompt_size = ft_strlen(le_struct->prompt) + 4;
-		}
-	}
-	else
-	{
-		if (!(le_struct->prompt = ft_strdup(LE_PROMPT_MIN)))
-			return (LE_FAILURE);
-		le_print_prompt(le_struct);		
-		le_struct->prompt_size = 4;
-	}
-	return (LE_SUCCESS);
-}
-
-void	le_print_prompt(struct s_le *le_struct)
-{
-	if (!le_struct->prompt_type)
-	{
-		ft_putstr("\033[1m\033[32m");
-		ft_putstr(le_struct->prompt);
-		ft_putstr(" > ");
-		ft_putstr("\033[0m");
-	}
-	else
-		ft_putstr(le_struct->prompt);		
-}
 
 int		le_init_struct(struct s_le *le_struct)
 {
@@ -178,7 +133,7 @@ int		le_window_check(struct s_le *le_struct)
 		le_struct->w_line = line_new;
 		le_cursor_beggin(le_struct, le_struct->cursor_buff);
 		le_termcap_print(TC_CLEAR_NEXT, 1);
-		ft_putstr(LE_PROMPT);
+		le_prompt_print(le_struct);
 		if (le_struct->nb_char)
 			le_buff_print(le_struct);
 		if (le_cursor_goto(le_struct->cursor_x,\
@@ -245,7 +200,7 @@ int		le_clear_restore(struct s_le *le_struct)
 		return (LE_FAILURE);
 	if (le_termcap_print(TC_CLEAR_NEXT, 1))
 		return (LE_FAILURE);
-	le_print_prompt(le_struct);
+	le_prompt_print(le_struct);
 	le_buff_print(le_struct);
 	if (le_cursor_beggin(le_struct, le_struct->nb_char \
 	+ le_struct->prompt_size - 1))

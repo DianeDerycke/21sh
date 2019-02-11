@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/01 10:42:19 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/11 14:11:58 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,8 @@ int		le_buff_append(struct s_le *le_struct, char c)
 	}
 	else
 		ft_putchar(c);
-	le_struct->history_activ = 0;
+	if (le_struct->history_activ != -1)
+		le_struct->history_activ = 0;
 	le_struct->copy_on = -1;
 	le_struct->copy_off = -1;
 	return (LE_SUCCESS);

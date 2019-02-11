@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/01 14:03:05 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/11 16:31:17 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	hy_dlst_free(t_dlist *dlist)
 		tmp = dlist->next;
 		if (dlist->content)
 			free(dlist->content);
-		free(dlist);
+		if (dlist)
+			free(dlist);
 		dlist = tmp;
 	}
 }
