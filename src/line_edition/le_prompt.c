@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 16:44:04 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/11 17:26:51 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/11 18:16:59 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		le_prompt_simple(struct s_le *le_struct)
 		return (LE_FAILURE);
 	ft_putstr(le_struct->prompt);
 	le_struct->prompt_size = LE_PROMPT_SIZE + 1;
+	le_struct->prompt_type = 1;
 	return (LE_SUCCESS);
 }
 
