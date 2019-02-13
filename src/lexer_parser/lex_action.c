@@ -6,16 +6,11 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 23:48:24 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/13 12:52:53 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 20:17:01 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
-
-int(*condition[SIZE_CONDITION])(int c) = {
-    &ft_is_whitespace,
-    &lex_is_special_char
-};
 
 int     whitespace_action(t_param *param)
 {
