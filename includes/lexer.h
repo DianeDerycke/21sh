@@ -101,15 +101,17 @@ t_ast     *parser_input(t_ast *curr_node, t_ast *start, t_ast *end);
 void        display_tree(t_ast *tree, int lvl, int position);
 
 //parser_exec
-int    		parser_execution(t_ast *ast);
 int     	exec_cmd(t_ast *ast);
+int    		parser_execution(t_ast *ast);
 ssize_t		apply_expansions(t_sh *shell);
+
+int     just_exec(t_sh *shell);
+int     exec_builtin(t_sh *shell);
 
 //exec.c
 void     do_pipe(t_ast *ast);
 t_ast  *find_next_redir(t_ast *ast);
 int    exec_redirection(t_ast *ast);
-int     just_exec(t_sh *shell);
 
 
 //builtin

@@ -6,7 +6,7 @@
 #    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/02/12 17:30:19 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/02/13 11:33:39 by DERYCKE          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,15 @@ LINE_EDITION_NAME = line_edition.c \
 
 HISTORY_NAME =		hy_history.c
 
+BUILTINS_NAME =		cd.c \
+					echo.c \
+					env.c \
+					setenv.c \
+					unsetenv.c \
+					builtin.c \
+					init.c \
+					utils2.c
+
 LEX_PARSE_NAME =	main.c \
 					lex_utils.c \
 					lex_action.c \
@@ -36,39 +45,35 @@ LEX_PARSE_NAME =	main.c \
 					parse_utils.c \
 					parser_execution.c \
 					quotes.c \
-					cd.c \
-					echo.c \
-					env.c \
-					setenv.c \
-					unsetenv.c \
 					error.c \
 					exec.c \
 					expansions.c \
-					init.c \
-					utils2.c \
 					redir.c \
 					pipe.c \
-					builtin.c \
 					redir_functions.c
 
 LINE_EDITION_PATH = src/line_edition/
 HISTORY_PATH = src/history/
 LEX_PARSE_PATH = src/lexer_parser/
+BUILTINS_PATH = src/builtins/
 
 OBJ_LINE_EDITION_PATH = obj/line_edition/
 OBJ_HISTORY_PATH = obj/history/
 OBJ_LEX_PARSE_PATH = obj/lexer_parser/
+OBJ_BUILTINS_PATH = obj/builtins/
 
 SRC = ./src
 LINE_EDITION_SRC = $(addprefix $(LINE_EDITION_PATH), $(LINE_EDITION_NAME))
 HISTORY_SRC = $(addprefix $(HISTORY_PATH), $(HISTORY_NAME))
 LEX_PARSE_SRC = $(addprefix $(LEX_PARSE_PATH), $(LEX_PARSE_NAME))
+BUILTINS_SRC = $(addprefix $(BUILTINS_PATH), $(BUILTINS_NAME))
 
 
 OBJ = obj/
 LINE_EDITION_OBJ = $(addprefix $(OBJ_LINE_EDITION_PATH), $(LINE_EDITION_NAME:.c=.o))
 HISTORY_OBJ = $(addprefix $(OBJ_HISTORY_PATH), $(HISTORY_NAME:.c=.o))
 LEX_PARSE_OBJ = $(addprefix $(OBJ_LEX_PARSE_PATH), $(LEX_PARSE_NAME:.c=.o))
+BUILTINS_OBJ = $(addprefix $(OBJ_BUILTINS_PATH), $(BUILTINS_NAME.c=.o))
 
 CPPFLAGS = -Iincludes
 LDFLAGS = -Llibft -Llibsh -Llibms
@@ -84,6 +89,7 @@ $(OBJ):
 	mkdir $(OBJ_LINE_EDITION_PATH)
 	mkdir $(OBJ_HISTORY_PATH)
 	mkdir $(OBJ_LEX_PARSE_PATH)
+	mkdir $(OBJ_BUILTINS_PATH)
 
 $(OBJ_LEX_PARSE_PATH)%.o: $(LEX_PARSE_PATH)%.c
 	$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
@@ -94,9 +100,12 @@ $(OBJ_HISTORY_PATH)%.o: $(HISTORY_PATH)%.c
 $(OBJ_LINE_EDITION_PATH)%.o: $(LINE_EDITION_PATH)%.c
 	$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
 
-$(NAME): $(OBJ) $(LINE_EDITION_OBJ) $(HISTORY_OBJ) $(LEX_PARSE_OBJ)
-	$(CC) $(CFLAGS) -o $@ $(LINE_EDITION_OBJ) $(HISTORY_OBJ) $(LEX_PARSE_OBJ) \
-	$(LIBNAME) $(TFLAGS)
+$(OBJ_BUILTINS_PATH)%.o: $(BUILTINS_PATH)%.c
+	$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
+
+$(NAME): $(OBJ) $(LINE_EDITION_OBJ) $(HISTORY_OBJ)  $(BUILTINS_OBJ) $(LEX_PARSE_OBJ)
+	$(CC) $(CFLAGS) -o $@ $(LINE_EDITION_OBJ) $(HISTORY_OBJ) \
+	$(BUILTINS_OBJ) $(LEX_PARSE_OBJ) $(LIBNAME) $(TFLAGS)
 
 compile: 
 	make -C $(LIBFT)
