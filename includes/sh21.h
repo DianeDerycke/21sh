@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:05:44 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/13 12:48:25 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 20:38:59 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,4 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-int     	exec_builtin(t_sh *shell);
 #endif
