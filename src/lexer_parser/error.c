@@ -6,11 +6,17 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:07:12 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/13 12:52:58 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 19:56:05 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
+
+ssize_t     error_arg(void)
+{
+    ft_putendl("Number args or args unvalid");
+    return (FAILURE);
+}
 
 int     error_execution(char *cmd_name)
 {
