@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/13 12:52:53 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 13:39:07 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,18 +183,3 @@ char    *copy_until_array_ft(char *s, int *start, int(*array[2])(int))
     *start += length;
     return (tmp);
 }
-
-
-// t_ast     *copy_list(t_ast *lst)
-// {
-//     t_ast     *new;
-
-//     new = NULL;
-//     while (lst)
-//     {
-//         if ((push_node(lst->value, lst->token, &new)) == FAILURE)
-//             ft_malloc_error();
-//         lst = lst->next;
-//     }
-//     return (new);
-// }
