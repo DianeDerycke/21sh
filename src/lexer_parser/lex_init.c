@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 00:15:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/13 16:30:22 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 20:17:14 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,84 @@ t_param    *init_param(void)
     (new)->ft = NULL;
     (new)->l_tokens = NULL;
     return (new);
+}
+
+int    push_node(char *value, int token, t_ast **node)
+{
+    t_ast     *tmp;
+    if (!node || !*node)
+    {
+        if (!(*node = create_elem()))
+            return (FAILURE);
+        if (!((*node)->value = ft_strdup(value)))
+            return (FAILURE);
+        (*node)->token = token;
+        (*node)->pipecall = 0;
+        (*node)->next = NULL;
+        (*node)->right = NULL;
+        (*node)->left = NULL;
+    }
+    else
+    {
+        tmp = *node;
+        while ((*node)->next)
+            (*node) = (*node)->next;
+        if (!((*node)->next = create_elem()))
+            return (FAILURE);
+        if (!((*node)->next->value = ft_strdup(value)))
+            return (FAILURE);
+        (*node)->next->token = token;
+        (*node)->pipecall = 0;
+        (*node)->next->next = NULL;
+        (*node)->next->left = NULL;
+        (*node)->next->left = NULL;
+        *node = tmp;
+    }
+    return (SUCCESS);
+}
+
+t_ast     *create_elem(void)
+{
+    t_ast     *new;
+
+    if (!(new = malloc(sizeof(t_ast))))
+        ft_malloc_error();
+    new->value = NULL;
+    new->token = 0;
+    new->next = NULL;
+    new->right = NULL;
+    new->left = NULL;
+    return (new);
+}
+
+void    display_list(t_ast *lst)
+{
+    if (!lst)
+        printf("/!\\ LST IS NULL ERROR /!\\ \n");
+    else
+    {
+        while (lst)
+        {
+            printf("----------\n");
+            printf("TOKEN IS : %d\n", lst->token);
+            printf("VALUE IS : %s\n", lst->value);
+            printf("~~~~~~~~~~\n");
+            lst = lst->next;
+        }
+    }
+}
+
+void    display_tree(t_ast *tree, int lvl, int position)
+{
+    if (!tree)
+        return ;
+    if (position == 2)
+        printf("RIGHT |  ");
+    else if (position == 3)
+        printf("LEFT  |  ");
+    else
+        printf("START  |  ");
+    printf("LVL: %d --- %d ---->> %s \n",lvl, tree->token, tree->value);
+    display_tree(tree->right, lvl + 1, 2);
+    display_tree(tree->left, lvl + 1, 3);
 }
