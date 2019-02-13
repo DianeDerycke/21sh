@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/11 15:25:27 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/12 20:48:57 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 # define C_EQUAL '='
 # define BUFF_SIZE 4096
-# define REDIR_SIZE 1
+# define REDIR_SIZE 15
 # define SUCCESS 0
 # define FAILURE 1
 # define ERROR -1
@@ -30,7 +30,6 @@ static char     operators[20][20] = {
     {";"},
     {"|"},
     ("\n"),
-    {"\n"},
     {"\n"},
     {">"},
     {">>"},
@@ -56,6 +55,7 @@ typedef enum    e_ope{
     GREATAND,  //   >&
     IO_NUMBER,  //   [0,1,2...] Digit with '<' or '>' as delimiter
     DIGIT,      // [0..9]
+    BUILTIN = 3,
     DQUOTE = '\"', 
     SQUOTE = '\'',
     C_DOLLAR = '$',
@@ -99,9 +99,9 @@ int			sh_find_env_key(char **env, char *key);
 void		sh_append_env_value(char **env, char *key, char *newvalue);
 char		*sh_get_env_key(char **env, int field);
 // void		sh_env_display(char **env);
-int         sh_get_size_rtree(t_ast *start, t_ast *end);
-char        **sh_rtree_to_array(t_ast *start, t_ast *end);
-t_sh 		*sh_get_shell(t_ast *start, t_ast *end);
+int         sh_get_size_rtree(t_ast *ast);
+char        **sh_rtree_to_array(t_ast *ast);
+t_sh 		*sh_get_shell(t_ast *ast);
 void		sh_free_shell(t_sh *shell);
 
 #endif

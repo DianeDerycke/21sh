@@ -6,22 +6,22 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:26:26 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/11 14:54:10 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/12 19:19:41 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libsh.h"
 
-int     sh_get_size_rtree(t_ast *start, t_ast *end)
+int     sh_get_size_rtree(t_ast *ast)
 {
     int     i;
 
     i = 0;
-    if (!start)
+    if (!ast)
         return (ERROR);
-    while (start != end)
+    while (ast && (ast->token == WORD || ast->token == DIGIT))
     {
-        start = start->left;
+        ast = ast->left;
         i++;
     }
     return (i);

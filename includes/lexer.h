@@ -91,7 +91,7 @@ int     valid_quotes(char *str);
 
 //ERROR CASE
 ssize_t     error_arg(void);
-int     error_execution(char *cmd_name);
+int     	error_execution(char *cmd_name);
 
 
 //parser
@@ -101,15 +101,15 @@ t_ast     *parser_input(t_ast *curr_node, t_ast *start, t_ast *end);
 void        display_tree(t_ast *tree, int lvl, int position);
 
 //parser_exec
-int    parser_execution(t_ast *ast);
-int     exec_cmd(t_ast *ast);
+int    		parser_execution(t_ast *ast);
+int     	exec_cmd(t_ast *ast);
 ssize_t		apply_expansions(t_sh *shell);
 
 //exec.c
 void     do_pipe(t_ast *ast);
-// void	do_pipe(t_ast *ast);
 t_ast  *find_next_redir(t_ast *ast);
 int    exec_redirection(t_ast *ast);
+int     just_exec(t_sh *shell);
 
 
 //builtin
@@ -145,6 +145,10 @@ char		**add_variable(char *v_name, char *v_value, char **ms_env);
 
 // redir
 int		redir_great(t_ast *ast);
+int     redir_less(t_ast *ast);
+int     redir_dless(t_ast *ast);
+int     redir_and(t_ast *ast);
+
 
 
 

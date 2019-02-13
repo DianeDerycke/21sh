@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:12:17 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/11 18:16:53 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/12 20:03:47 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int     exec_cmd(t_ast *ast)
     t_sh    *shell;
     static int ret = 0;
 
-    if (!(shell = sh_get_shell(ast, NULL)))
+    if (!(shell = sh_get_shell(ast)))
         return (FAILURE);
     apply_expansions(shell);
     if ((exec_builtin(shell)) == FAILURE)

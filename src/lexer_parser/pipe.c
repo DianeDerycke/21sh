@@ -6,13 +6,13 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/11 15:27:40 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/12 19:28:35 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/sh21.h"
 
-static int     just_exec(t_sh *shell)
+int     just_exec(t_sh *shell)
 {
     char    *path;
 
@@ -38,8 +38,8 @@ static int     exec_pipe_cmd(t_ast *ast)
 	if (!ast)
 		return (FAILURE);
 	if (find_next_redir(ast))
-		return (exec_redirection(ast));
-    if (!(shell = sh_get_shell(ast, NULL)))
+		exec_redirection(ast);
+    if (!(shell = sh_get_shell(ast)))
         return (FAILURE);
 	if (just_exec(shell) == FAILURE)
 		return (FAILURE);

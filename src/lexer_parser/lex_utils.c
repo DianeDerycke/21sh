@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/31 12:08:33 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/12 19:10:53 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ int     get_ast_op(char *c, int length)
     i = 0;
     if (!c)
         return (FAILURE);
-    while (i < 13 && ft_strncmp(c, operators[i], length) != 0)
+    while (i < 11 && ft_strncmp(c, operators[i], length) != 0)
         i++;
-    return (i == 13 ? -1 : i);
+    return (i == 11 ? -1 : i);
 }
 
 ssize_t     error_arg(void)

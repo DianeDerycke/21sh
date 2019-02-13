@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:23:45 by dideryck          #+#    #+#             */
-/*   Updated: 2019/01/31 10:40:21 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/12 20:46:37 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,5 @@ t_ast      *parser_input(t_ast *curr_node, t_ast *start, t_ast *end)
     }
     return (curr_node);
 }
-
-
-
 
 //to do : function that free every structure and return FAILURE, to replace FAILURE with this function

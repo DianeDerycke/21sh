@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:41:10 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/11 18:16:51 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/12 17:38:52 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,12 @@ int    parser_execution(t_ast *ast)
     else if (ast->token == PIPE)
         do_pipe(ast);
     else if (ast->token == WORD)
-        ret = exec_cmd(ast);
+    {
+        if (find_next_redir(ast))
+            ret = exec_redirection(ast);
+        else
+            ret = exec_cmd(ast);
+    }
     if (ast->token != WORD && ast->token != PIPE)
         parser_execution(ast->left);
     return (ret);
