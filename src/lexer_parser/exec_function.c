@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/13 13:03:44 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 13:04:49 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ int     just_exec(t_sh *shell)
 
     path = NULL;
 	apply_expansions(shell);
-	// if ((exec_builtin(shell) == SUCCESS))
-	// 	return (SUCCESS);
+	if ((exec_builtin(shell) == SUCCESS))
+		return (SUCCESS);
     if ((path = ms_get_valid_cmd(shell->cmd[0], shell->env))
             && access(path, X_OK) == SUCCESS)
         execve(path, shell->cmd, shell->env);
