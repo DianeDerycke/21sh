@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/01 10:20:20 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/13 13:56:06 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ int		le_read_and_exec(struct s_le *le_struct)
 			return (LE_FAILURE);
 		if (read(STDIN_FILENO, le_struct->tmp, 1) == -1)
 			return (LE_FAILURE);
-		if ((le_struct->term = le_termcap_check(le_struct->tmp)) != LE_FAILURE\
-		 && le_struct->term)
+		if (le_termcap_check(le_struct) != LE_FAILURE && le_struct->term)
 		 {
 			if (le_termcap_exec(le_struct))
 				return (LE_FAILURE);

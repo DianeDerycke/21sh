@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:37:17 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 13:21:45 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/13 16:16:19 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ int		le_cursor_home_end(struct s_le *le_struct, int direction)
 			return (LE_FAILURE);
 		le_struct->cursor_x = le_struct->prompt_size;
 	}
-	if (direction == LE_END && le_struct->cursor_x < le_struct->nb_char)
+	if (direction == LE_END && le_struct->cursor_buff < le_struct->nb_char)
 	{
 		if (le_cursor_goto(le_struct->nb_char + le_struct->prompt_size,\
 		 le_struct->cursor_x, le_struct))
@@ -281,7 +281,8 @@ int		le_cursor_down(struct s_le *le_struct)
 	}
 	else if (le_struct->cursor_y + 1 == le_struct->nb_line)
 	{
-		if (le_struct->cursor_x / le_struct->cursor_y > le_struct->last_line)
+		if ((le_struct->cursor_x - le_struct->w_col * le_struct->cursor_y)\
+		 + le_struct->w_col > le_struct->last_line - 1)
 		{
 			if (le_cursor_goto(le_struct->nb_char + le_struct->prompt_size,\
 			 le_struct->cursor_x, le_struct))

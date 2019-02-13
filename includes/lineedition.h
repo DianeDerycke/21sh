@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/11 17:23:25 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/13 14:20:21 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,11 @@ int		le_clear_restore(struct s_le *le_struct);
 ** le_termcap.c
 */
 
-int		le_termcap_check(char tmp[]);
+int		le_termcap_check(struct s_le *le_struct);
+void	le_termcap_type(struct s_le *le_struct);
 int		le_termcap_exec(struct s_le *le_struct);
+int		le_termcap_motion(struct s_le *le_struct);
+int		le_termcap_delete(struct s_le *le_struct);
 
 /*
 **	le_termcap_tool.c
