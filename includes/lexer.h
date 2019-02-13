@@ -50,6 +50,9 @@ typedef struct		s_opt
 	ssize_t			v;
 }					t_opt;
 
+//lex_input
+int     lex_input(t_param *param);
+char 	*get_valid_input(void);
 //def type char function
 int         ft_isallowedsymb(int c);
 int         ft_is_operator(int c);
@@ -57,7 +60,6 @@ int         ft_is_single_quote(int c);
 int         ft_is_double_quote(int c);
 int         ft_isidentifier(int c);
 int         lex_is_special_char(int c);
-
 
 //lex_action
 int     whitespace_action(t_param *param);
@@ -67,10 +69,12 @@ int     io_number_action(t_param *param);
 int     digit_action(t_param *param);
 int     operator_action(t_param *param);
 int     identifier_action(t_param *param);
-
 //token
 int         get_ast_op(char *c, int length);
 
+//lex_init
+t_param    *init_param(void);
+void    free_param(t_param *param);
 
 // list function
 void        display_list(t_ast *lst);
@@ -81,13 +85,9 @@ t_ast     *create_elem(void);
 char        *copy_until_ft(char *s, int *start, int(*f)(int c));
 char        *copy_until_array_ft(char *s, int *start, int(*array[2])(int));
 
-
-
-//lex_init
-void    init_param(t_param **param);
-
 //Quotes
-int     valid_quotes(char *str);
+void		handle_quotes(char **input);
+int     is_valid_quotes(char *str);
 
 //ERROR CASE
 ssize_t     error_arg(void);
@@ -95,7 +95,7 @@ int     	error_execution(char *cmd_name);
 
 
 //parser
-t_ast     *parser_input(t_ast *curr_node, t_ast *start, t_ast *end);
+t_ast     *create_ast(t_ast *curr_node, t_ast *start, t_ast *end);
 
 //parser_utils
 void        display_tree(t_ast *tree, int lvl, int position);
