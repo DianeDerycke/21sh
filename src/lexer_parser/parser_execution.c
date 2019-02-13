@@ -6,11 +6,11 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:41:10 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/12 17:38:52 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 12:52:53 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "../../includes/sh21.h"
 
 int    parser_execution(t_ast *ast)
 {

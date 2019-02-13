@@ -6,11 +6,11 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/12 19:10:53 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 12:52:53 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "../../includes/sh21.h"
 
 
 int         lex_is_special_char(int c)

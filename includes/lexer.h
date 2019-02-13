@@ -1,7 +1,7 @@
 #ifndef LEXER_H
 #define LEXER_H
 
-# include "../libsh/libsh.h"
+// # include "../libsh/libsh.h"
 #define SUCCESS 0
 #define FAILURE 1
 #define ERROR -1
@@ -50,7 +50,6 @@ typedef struct		s_opt
 	ssize_t			v;
 }					t_opt;
 
-
 //def type char function
 int         ft_isallowedsymb(int c);
 int         ft_is_operator(int c);
@@ -59,6 +58,15 @@ int         ft_is_double_quote(int c);
 int         ft_isidentifier(int c);
 int         lex_is_special_char(int c);
 
+
+//lex_action
+int     whitespace_action(t_param *param);
+int     single_quote_action(t_param *param);
+int     double_quote_action(t_param *param);
+int     io_number_action(t_param *param);
+int     digit_action(t_param *param);
+int     operator_action(t_param *param);
+int     identifier_action(t_param *param);
 
 //token
 int         get_ast_op(char *c, int length);
@@ -74,14 +82,6 @@ char        *copy_until_ft(char *s, int *start, int(*f)(int c));
 char        *copy_until_array_ft(char *s, int *start, int(*array[2])(int));
 
 
-//lex_action
-int     whitespace_action(t_param *param);
-int     single_quote_action(t_param *param);
-int     double_quote_action(t_param *param);
-int     io_number_action(t_param *param);
-int     digit_action(t_param *param);
-int     operator_action(t_param *param);
-int     identifier_action(t_param *param);
 
 //lex_init
 void    init_param(t_param **param);
@@ -101,12 +101,11 @@ t_ast     *parser_input(t_ast *curr_node, t_ast *start, t_ast *end);
 void        display_tree(t_ast *tree, int lvl, int position);
 
 //parser_exec
+int     	exec_builtin(t_sh *shell);
+int     	just_exec(t_sh *shell);
 int     	exec_cmd(t_ast *ast);
 int    		parser_execution(t_ast *ast);
 ssize_t		apply_expansions(t_sh *shell);
-
-int     just_exec(t_sh *shell);
-int     exec_builtin(t_sh *shell);
 
 //exec.c
 void     do_pipe(t_ast *ast);

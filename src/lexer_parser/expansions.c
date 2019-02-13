@@ -6,11 +6,11 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:18:40 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/05 17:08:18 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 12:52:53 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "../../includes/sh21.h"
 
 static ssize_t		tilde_expansion(char **arg)
 {

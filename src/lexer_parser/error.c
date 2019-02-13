@@ -6,11 +6,23 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:07:12 by dideryck          #+#    #+#             */
-/*   Updated: 2019/01/31 10:38:46 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 12:52:58 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "../../includes/sh21.h"
+
+int     error_execution(char *cmd_name)
+{
+    struct stat f_stat;
+
+    if (ms_file_exist(cmd_name) == FAILURE)
+        ms_command_not_found(cmd_name);
+    else if (lstat(cmd_name, &f_stat) == 0 && 
+                    !(f_stat.st_mode & S_IXUSR))
+        ms_perm_denied(cmd_name);
+    return (FAILURE);
+}
 
 void		error_option(char c)
 {

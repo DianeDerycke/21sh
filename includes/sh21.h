@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:05:44 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/06 05:25:57 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 12:48:25 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,5 @@
 # include <stdio.h>
 # include <stdlib.h>
 
-void	read_input(char buff[]);
-
-t_env	*env_fill_list(char **env);
-void	env_display(t_env *env);
-
-//builtin
-int     exec_builtin(t_sh *shell);
-
+int     	exec_builtin(t_sh *shell);
 #endif

@@ -6,11 +6,11 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/31 10:38:46 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 12:52:53 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "../../includes/sh21.h"
 
 // int    push_lst(char c, t_list **current_node)
 // {

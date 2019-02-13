@@ -6,11 +6,11 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 13:51:19 by dideryck          #+#    #+#             */
-/*   Updated: 2019/01/31 10:38:46 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 12:51:31 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "../../includes/sh21.h"
 
 char		**find_first_bin(char **split_cmd, int c)
 {

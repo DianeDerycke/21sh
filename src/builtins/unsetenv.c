@@ -6,11 +6,11 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:03:32 by dideryck          #+#    #+#             */
-/*   Updated: 2019/01/31 10:38:46 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 12:51:28 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
+#include "../../includes/sh21.h"
 
 char		**delete_variable(char **ms_env, size_t index)
 {

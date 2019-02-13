@@ -6,30 +6,11 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/12 19:28:35 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 12:48:01 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/sh21.h"
-
-int     just_exec(t_sh *shell)
-{
-    char    *path;
-
-    path = NULL;
-	apply_expansions(shell);
-	if ((exec_builtin(shell) == SUCCESS))
-		return (SUCCESS);
-    if ((path = ms_get_valid_cmd(shell->cmd[0], shell->env))
-            && access(path, X_OK) == SUCCESS)
-        execve(path, shell->cmd, shell->env);
-    else if (!path)
-        return (FAILURE);
-    else 
-        ms_perm_denied(shell->cmd[0]);
-    ft_strdel(&path);
-    return (SUCCESS);
-}
+#include "../../includes/sh21.h"
 
 static int     exec_pipe_cmd(t_ast *ast)
 {	
