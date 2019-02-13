@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/13 13:39:07 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 19:59:33 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,81 +42,11 @@ int     ft_is_operator(int c)
     return (1);
 }
 
-int     get_ast_op(char *c, int length)
-{
-    int     i;
-
-    i = 0;
-    if (!c)
-        return (FAILURE);
-    while (i < 11 && ft_strncmp(c, operators[i], length) != 0)
-        i++;
-    return (i == 11 ? -1 : i);
-}
-
-ssize_t     error_arg(void)
-{
-    ft_putendl("Number args or args unvalid");
-    return (FAILURE);
-}
-
-
-void    display_list(t_ast *lst)
-{
-    if (!lst)
-        printf("/!\\ LST IS NULL ERROR /!\\ \n");
-    else
-    {
-        while (lst)
-        {
-            printf("----------\n");
-            printf("TOKEN IS : %d\n", lst->token);
-            printf("VALUE IS : %s\n", lst->value);
-            printf("~~~~~~~~~~\n");
-            lst = lst->next;
-        }
-    }
-}
-
 int     ft_isidentifier(int c)
 {
     if ((ft_isdigit(c) || ft_isalpha(c) || ft_isallowedsymb(c)))
         return (1);
     return (0);
-}
-
-int    push_node(char *value, int token, t_ast **node)
-{
-    t_ast     *tmp;
-    if (!node || !*node)
-    {
-        if (!(*node = create_elem()))
-            return (FAILURE);
-        if (!((*node)->value = ft_strdup(value)))
-            return (FAILURE);
-        (*node)->token = token;
-        (*node)->pipecall = 0;
-        (*node)->next = NULL;
-        (*node)->right = NULL;
-        (*node)->left = NULL;
-    }
-    else
-    {
-        tmp = *node;
-        while ((*node)->next)
-            (*node) = (*node)->next;
-        if (!((*node)->next = create_elem()))
-            return (FAILURE);
-        if (!((*node)->next->value = ft_strdup(value)))
-            return (FAILURE);
-        (*node)->next->token = token;
-        (*node)->pipecall = 0;
-        (*node)->next->next = NULL;
-        (*node)->next->left = NULL;
-        (*node)->next->left = NULL;
-        *node = tmp;
-    }
-    return (SUCCESS);
 }
 
 int     ft_is_single_quote(int c)
@@ -129,18 +59,16 @@ int     ft_is_double_quote(int c)
     return (c == DQUOTE ? 1 : 0);
 }
 
-t_ast     *create_elem(void)
+int     get_ast_op(char *c, int length)
 {
-    t_ast     *new;
+    int     i;
 
-    if (!(new = malloc(sizeof(t_ast))))
-        ft_malloc_error();
-    new->value = NULL;
-    new->token = 0;
-    new->next = NULL;
-    new->right = NULL;
-    new->left = NULL;
-    return (new);
+    i = 0;
+    if (!c)
+        return (FAILURE);
+    while (i < 11 && ft_strncmp(c, operators[i], length) != 0)
+        i++;
+    return (i == 11 ? -1 : i);
 }
 
 char    *copy_until_ft(char *s, int *start, int(*f)(int c))
