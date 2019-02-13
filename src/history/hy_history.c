@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hy_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/11 16:31:17 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/13 16:47:16 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		hy_history_fill_list(struct s_le *le_struct)
 	{
 		if ((ret = get_next_line(fd, &line)) == -1)
 			return (FAILURE);
-		while (ret != -1 && ret && valid_quotes(line))
+		while (ret != -1 && ret && is_valid_quotes(line))
 		{
 			if ((ret = get_next_line(fd, &tmp)) == -1)
 				return (FAILURE);
