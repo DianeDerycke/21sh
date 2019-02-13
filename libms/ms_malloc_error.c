@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_malloc_error.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/23 14:16:58 by DERYCKE           #+#    #+#             */
-/*   Updated: 2018/09/24 19:38:28 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/13 16:05:06 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 void	ms_malloc_error(void)
 {
-	ft_putendl("minishell: Malloc error");
+	ft_putendl("21sh: Malloc error");
 	exit(FAILURE);
 }
