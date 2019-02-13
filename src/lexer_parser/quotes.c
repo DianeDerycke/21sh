@@ -6,33 +6,29 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/13 12:52:53 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 17:05:41 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-// int    push_lst(char c, t_list **current_node)
-// {
-//     t_list     *tmp;
-//     if (!current_node || !*current_node)
-//     {
-//         if (!(*current_node = ft_lstnew(value, ft_strlen(value))))
-//             return (FAILURE);
-//     }
-//     else
-//     {
-//         tmp = *current_node;
-//         while ((*current_node)->next)
-//             (*current_node) = (*current_node)->next;
-//         if (!((*current_node)->next = ft_lstnew(value, ft_strlen(value))))
-//             return (FAILURE);
-//         *current_node = tmp;
-//     }
-//     return (SUCCESS);
-// }
+void		handle_quotes(char **input)
+{
+	char	*tmp;
+	int		ret;
 
-int     valid_quotes(char *str)
+	tmp = NULL;
+	ret = 0;
+	while (!tmp && (ret = is_valid_quotes(*input)))
+	{
+		if (!(tmp = line_edition(ret))) //to edit when feature \n line edition is add : if ft_strcmp(\n, tmp)
+			continue;
+		*input = ft_strjoin_free(*input, tmp);
+		ft_strdel(&tmp);
+	}
+}
+
+int     is_valid_quotes(char *str)
 {
     int     i;
     int     len;
