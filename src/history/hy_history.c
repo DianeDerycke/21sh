@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hy_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/13 16:47:16 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/13 18:45:34 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		hy_history_fill_list(struct s_le *le_struct)
 			{
 				if (line)
 					ft_strdel(&line);
-				return (LE_SUCCESS);
+				return (SUCCESS);
 			}
 			if (!(line = ft_strjoin(line, tmp)))
 				return (FAILURE);

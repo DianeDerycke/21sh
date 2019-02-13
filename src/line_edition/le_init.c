@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/13 13:59:28 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/13 18:44:06 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,12 @@ int		le_exit(struct s_le *le_struct, int ret)
 		if (le_struct->clipboard)
 			ft_strdel(&le_struct->clipboard);
 		ft_strclr(le_struct->tmp);
+		if (le_struct->prompt_type)
+		{
+			if (le_buff_add(le_struct, 0, '\n'))
+				return (LE_FAILURE);
+			le_struct->nb_char++;
+		}
 		return (LE_EXIT);
 	}
 	if (ret == LE_FAILURE)
@@ -167,15 +173,6 @@ int		le_exit(struct s_le *le_struct, int ret)
 		ft_strclr(le_struct->tmp);
 		return (LE_FAILURE);
 	}
-	// if (*le_struct->buff == LE_EXIT)
-	// {
-	// 	tcsetattr(STDIN_FILENO, 0, backup);
-	// 	ft_putendl("\n");
-	// 	ft_putstr("\033[31mFINAL BUFFER ===> ");
-	// 	ft_putendl(le_struct->buff);
-	// 	ft_putstr("\033[0m");
-	// 	return (LE_EXIT);
-	// }
 	return (LE_SUCCESS);
 }
 
