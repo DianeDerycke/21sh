@@ -6,17 +6,20 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/13 13:04:49 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/14 16:47:21 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-int     just_exec(t_sh *shell)
+int     just_exec(t_ast *ast, t_sh *shell)
 {
     char    *path;
-
+    int     ret;
+    
     path = NULL;
+    ret = 0;
+    shell->cmd = sh_rtree_to_array(ast);
 	apply_expansions(shell);
 	if ((exec_builtin(shell) == SUCCESS))
 		return (SUCCESS);
@@ -24,20 +27,18 @@ int     just_exec(t_sh *shell)
             && access(path, X_OK) == SUCCESS)
         execve(path, shell->cmd, shell->env);
     else if (!path)
-        return (FAILURE);
+        ret = FAILURE;
     else 
-        ms_perm_denied(shell->cmd[0]);
+        ret = ms_perm_denied(shell->cmd[0]);
     ft_strdel(&path);
-    return (SUCCESS);
+    return (ret);
 }
 
-int     exec_cmd(t_ast *ast)
+int     exec_cmd(t_ast *ast, t_sh *shell)
 {
-    t_sh    *shell;
     static int ret = 0;
 
-    if (!(shell = sh_get_shell(ast)))
-        return (FAILURE);
+    shell->cmd = sh_rtree_to_array(ast);
     apply_expansions(shell);
     if ((exec_builtin(shell)) == FAILURE)
         if ((ms_exec_binary(shell->cmd[0], shell->cmd, shell->env, shell->env)) == -1)
