@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/13 18:44:06 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/14 14:02:39 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ int		le_window_check(struct s_le *le_struct)
 		le_termcap_print(TC_CLEAR_NEXT, 1);
 		le_prompt_print(le_struct);
 		if (le_struct->nb_char)
-			le_buff_print(le_struct);
+			le_buff_print(le_struct, 0);
 		if (le_cursor_goto(le_struct->cursor_x,\
 		 (le_struct->nb_char + le_struct->prompt_size), le_struct))
 		 	return (LE_FAILURE);
@@ -188,7 +188,7 @@ int		le_clear(struct s_le *le_struct)
 		return (LE_FAILURE);
 	if (le_termcap_print(TC_CLEAR_NEXT, 1))
 		return (LE_FAILURE);
-	le_buff_print(le_struct);
+	le_buff_print(le_struct, 0);
 	return (LE_SUCCESS);
 }
 
@@ -199,7 +199,7 @@ int		le_clear_restore(struct s_le *le_struct)
 	if (le_termcap_print(TC_CLEAR_NEXT, 1))
 		return (LE_FAILURE);
 	le_prompt_print(le_struct);
-	le_buff_print(le_struct);
+	le_buff_print(le_struct, 0);
 	if (le_cursor_beggin(le_struct, le_struct->nb_char \
 	+ le_struct->prompt_size - 1))
 		return (LE_FAILURE);

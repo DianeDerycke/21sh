@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/13 17:57:13 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/14 18:36:26 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ int		le_buff_append(struct s_le *le_struct, char c)
 			return (LE_FAILURE);
 	}
 	else
-		ft_putchar(c);
+		le_buff_print(le_struct, le_struct->cursor_buff);
 	if (le_struct->history_activ != -1)
 		le_struct->history_activ = 0;
-	le_struct->copy_on = -1;
-	le_struct->copy_off = -1;
+	le_struct->copy_on = LE_START;
+	le_struct->copy_off = LE_START;
 	return (LE_SUCCESS);
 }
 
@@ -186,24 +186,32 @@ int		le_buff_history(struct s_le *le_struct)
 **	Browse the historic whit up/down arrows
 */
 
-void	le_buff_print(struct s_le *le_struct)
+void	le_buff_print(struct s_le *le_struct, int pos)
 {
 	int	i;
 	int	off;
+	int	on;
 
-	i = 0;
 	off = le_struct->copy_off;
+	on	= le_struct->copy_on;
 	if (!le_struct->buff)
 		return ;
 	if (off == -1)
 		off = le_struct->cursor_buff;
+	if (off < on)
+	{
+		i = on;
+		on = off;
+		off = i;
+	}
+	i = pos;
 	while (le_struct->buff[i])
 	{
-		if (i >= le_struct->copy_on && i <= off)
+		if (on != LE_START && i >= on && i <= off)
 		{
-			ft_putstr(LE_SELECT_CLR_ON);
+			ft_putstr(LE_SELECT_ON);
 			ft_putchar(le_struct->buff[i]);
-			ft_putstr(LE_SELECT_CLR_OFF);
+			ft_putstr(LE_SELECT_OFF);
 		}
 		else
 			ft_putchar(le_struct->buff[i]);

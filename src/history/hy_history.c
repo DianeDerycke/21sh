@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/13 18:45:34 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/14 11:15:35 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int		hy_history_fill_list(struct s_le *le_struct)
 					ft_strdel(&line);
 				return (SUCCESS);
 			}
-			if (!(line = ft_strjoin(line, tmp)))
+			if (!(line = ft_strmjoin(line, "\n", tmp)))
 				return (FAILURE);
 			if (tmp)
 				ft_strdel(&tmp);

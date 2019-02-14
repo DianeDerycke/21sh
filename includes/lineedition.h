@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/13 14:20:21 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/14 15:58:51 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@
 # define LE_CUT				21
 # define LE_PASTE			16
 # define LE_COPY			25
-# define LE_SELECT_CLR_ON	"\033[249m"
-# define LE_SELECT_CLR_OFF	"\033[0m"
+# define LE_SELECT_ON		"\033[7m"
+# define LE_SELECT_OFF		"\033[0m"
 
 /*
 **	Termcaps DEFINE
@@ -179,7 +179,7 @@ int		le_buff_append(struct s_le *le_struct, char c);
 char	*le_buff_realloc(struct s_le *le_struct, int size);
 int		le_buff_check_space(struct s_le *le_struc, int size);
 int		le_buff_history(struct s_le *le_struct);
-void	le_buff_print(struct s_le *le_struct);
+void	le_buff_print(struct s_le *le_struct, int pos);
 
 /*
 **	le_cursor.c
