@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/14 14:13:02 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/14 15:49:24 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ t_ast     *find_next_redir(t_ast *ast)
 {
     if (!ast)
         return (NULL);
-    if (ast->token >= GREAT && ast->token <= GREATAND)
-        ast = ast->left;
     while(ast)
     {
         if (ast->token >= GREAT && ast->token <= GREATAND)
@@ -45,29 +43,30 @@ static int      do_redirection(int token, t_ast *redir)
     return(redir_array[token](redir));
 }
 
-int     exec_redirection(t_ast *ast)
+int     exec_redirection(t_ast *ast, t_sh *shell)
 {
     t_ast   *redir;
+    int     status;
     t_ast   *tmp;
     pid_t   pid;
-    t_sh    *shell;
     
-    if (!(shell = sh_get_shell(ast)))
-        return (FAILURE);
     tmp = ast;
     pid = fork();
     if (pid == 0)
     {
         while ((redir = find_next_redir(tmp)))
         {
+            printf("REDIR ===> %s TOKEN IS ===> %d\n", redir->value, redir->token);
             do_redirection(redir->token, redir);
             // add_argument_to_cmd(ast, ast->left);
-            tmp = redir;
+            tmp = redir->left;
         }
-        just_exec(shell);
+        just_exec(ast, shell);
     }
     else
-        wait(NULL);
+        waitpid(pid, &status, 0);
+    if (WIFEXITED(status))
+        ms_no_such_file_or_dir(tmp->left->value, NULL);
     sh_free_shell(shell);
     return (SUCCESS) ;
 }

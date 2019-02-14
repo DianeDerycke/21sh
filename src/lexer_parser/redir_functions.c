@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/12 20:38:32 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/14 15:29:18 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ int     redir_great(t_ast *ast)
 int     redir_less(t_ast *ast)
 {
     int     fd;
-    if ((fd = open(ast->left->value, O_RDWR)))
+    if ((fd = open(ast->left->value, O_RDWR)) >= 0)
     {
         dup2(fd, 0);
         close(fd);
     }
+    else if (fd == -1)
+        exit(1);
     return (SUCCESS);
 }
 
