@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/12 20:48:57 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/14 16:52:45 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # define SUCCESS 0
 # define FAILURE 1
 # define ERROR -1
+# define NOT_FOUND 0
+# define ACCESS_D 1
+# define NO_FILE_DIR 2
 
 static char     operators[20][20] = {
     {";"},
@@ -101,7 +104,7 @@ char		*sh_get_env_key(char **env, int field);
 // void		sh_env_display(char **env);
 int         sh_get_size_rtree(t_ast *ast);
 char        **sh_rtree_to_array(t_ast *ast);
-t_sh 		*sh_get_shell(t_ast *ast);
+t_sh 		*init_shell(void);
 void		sh_free_shell(t_sh *shell);
 
 #endif
