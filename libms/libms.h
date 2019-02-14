@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/23 13:09:16 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/31 10:31:57 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/14 16:56:49 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 # define SUCCESS 0
 # define FAILURE 1
+# define ERROR -1
 # define PAGAIN 1
 # define ERR_INTR -1
 # define DEFAULT_HOME "/Users/dideryck"
