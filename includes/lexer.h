@@ -83,20 +83,20 @@ int     	lex_input(t_param *param);
 char 		*get_valid_input(void);
 
 //EXEC FUNCTION
-int     	just_exec(t_sh *shell);
-int     	exec_cmd(t_ast *ast);
+int     	just_exec(t_ast *ast, t_sh *shell);
+int     	exec_cmd(t_ast *ast, t_sh *shell);
 
 //EXPANSIONS
 ssize_t		apply_expansions(t_sh *shell);
 
 //PARSE EXECUTION
-int    		parser_execution(t_ast *ast);
+int    		parser_execution(t_ast *ast, t_sh *shell);
 
 //PARSER
 t_ast     *create_ast(t_ast *curr_node, t_ast *start, t_ast *end);
 
 //PIPE
-void     	do_pipe(t_ast *ast);
+void     	do_pipe(t_ast *ast, t_sh *shell);
 
 //QUOTES
 void		handle_quotes(char **input);
@@ -110,7 +110,7 @@ int     redir_and(t_ast *ast);
 
 //REDIR
 t_ast  *find_next_redir(t_ast *ast);
-int    exec_redirection(t_ast *ast);
+int    exec_redirection(t_ast *ast, t_sh *shell);
 
 
 //ERROR CASE
