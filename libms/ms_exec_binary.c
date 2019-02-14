@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/27 14:26:30 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/11 20:23:54 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/14 16:57:08 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int		ms_exec_binary(char *utility, char **split_cmd, char **env, char **tmp)
 	char	*path;
 	pid_t	pid;
 	int		status;
+	int		ret;
 
 	path = NULL;
+	ret = 0;
 	if ((path = ms_get_valid_cmd(utility, env))
 		&& access(path, X_OK) == SUCCESS)
 	{
@@ -33,9 +35,9 @@ int		ms_exec_binary(char *utility, char **split_cmd, char **env, char **tmp)
 		}
 	}
 	else if (!path)
-		return (FAILURE);
+		ret = ERROR;
 	else
-		ms_perm_denied(split_cmd[0]);
+		ret = ms_perm_denied(split_cmd[0]);
 	ft_strdel(&path);
-	return (0);
+	return (ret);
 }
