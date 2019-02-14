@@ -6,13 +6,13 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/13 12:52:53 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/14 14:13:02 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-int(*do_redir[REDIR_SIZE])(t_ast *) = {
+int(*redir_array[REDIR_SIZE])(t_ast *) = {
     NULL,
     NULL,
     NULL,
@@ -40,28 +40,34 @@ t_ast     *find_next_redir(t_ast *ast)
     return (NULL);
 }
 
+static int      do_redirection(int token, t_ast *redir)
+{
+    return(redir_array[token](redir));
+}
+
 int     exec_redirection(t_ast *ast)
 {
     t_ast   *redir;
+    t_ast   *tmp;
     pid_t   pid;
-    t_ope   token;
     t_sh    *shell;
     
     if (!(shell = sh_get_shell(ast)))
         return (FAILURE);
-    if (!(redir = find_next_redir(ast)))
-        return (SUCCESS);
-    token = redir->token;
+    tmp = ast;
     pid = fork();
     if (pid == 0)
     {
-        if (redir->token == GREAT)
-            do_redir[redir->token](ast->left);
+        while ((redir = find_next_redir(tmp)))
+        {
+            do_redirection(redir->token, redir);
+            // add_argument_to_cmd(ast, ast->left);
+            tmp = redir;
+        }
         just_exec(shell);
     }
     else
         wait(NULL);
     sh_free_shell(shell);
-    exec_redirection(redir);
     return (SUCCESS) ;
 }
