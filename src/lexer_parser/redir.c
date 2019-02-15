@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/14 15:49:24 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/15 16:18:32 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
-
-int(*redir_array[REDIR_SIZE])(t_ast *) = {
-    NULL,
-    NULL,
-    NULL,
-    NULL,
-    &redir_great,
-    &redir_less,
-    &redir_dless
-    // &redir_and,
-    // &redir_lessand,
-    // &redir_greatand,
-};
 
 t_ast     *find_next_redir(t_ast *ast)
 {
@@ -40,6 +27,19 @@ t_ast     *find_next_redir(t_ast *ast)
 
 static int      do_redirection(int token, t_ast *redir)
 {
+    static int(*redir_array[REDIR_SIZE])(t_ast *) = {
+        NULL,
+        NULL,
+        NULL,
+        NULL,
+        &redir_great,
+        &redir_dgreat,
+        &redir_less,
+        &redir_dless
+        // &redir_and,
+        // &redir_lessand,
+        // &redir_greatand,
+    };
     return(redir_array[token](redir));
 }
 
@@ -47,16 +47,18 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
 {
     t_ast   *redir;
     int     status;
+    int     ret;
     t_ast   *tmp;
     pid_t   pid;
-    
+
     tmp = ast;
+    ret = 0;
     pid = fork();
     if (pid == 0)
     {
         while ((redir = find_next_redir(tmp)))
         {
-            printf("REDIR ===> %s TOKEN IS ===> %d\n", redir->value, redir->token);
+            // printf("REDIR ===> %s TOKEN IS ===> %d\n", redir->value, redir->token);
             do_redirection(redir->token, redir);
             // add_argument_to_cmd(ast, ast->left);
             tmp = redir->left;
@@ -66,7 +68,6 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
     else
         waitpid(pid, &status, 0);
     if (WIFEXITED(status))
-        ms_no_such_file_or_dir(tmp->left->value, NULL);
-    sh_free_shell(shell);
+        return (FAILURE);
     return (SUCCESS) ;
 }
