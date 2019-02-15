@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libsh.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/14 16:52:45 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/15 17:17:24 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef enum    e_ope{
     LESSAND,   //   <&
     GREATAND,  //   >&
     IO_NUMBER,  //   [0,1,2...] Digit with '<' or '>' as delimiter
-    DIGIT,      // [0..9]
+    DIGIT = 3,      // [0..9]
     BUILTIN = 3,
     DQUOTE = '\"', 
     SQUOTE = '\'',
