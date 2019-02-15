@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/15 16:18:32 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/15 17:39:19 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static int      do_redirection(int token, t_ast *redir)
         &redir_great,
         &redir_dgreat,
         &redir_less,
-        &redir_dless
-        // &redir_and,
+        &redir_dless,
+        NULL,
         // &redir_lessand,
         // &redir_greatand,
     };
@@ -63,11 +63,10 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
             // add_argument_to_cmd(ast, ast->left);
             tmp = redir->left;
         }
-        just_exec(ast, shell);
+        if (just_exec(ast, shell) == FAILURE)
+            exit (1);
     }
     else
         waitpid(pid, &status, 0);
-    if (WIFEXITED(status))
-        return (FAILURE);
     return (SUCCESS) ;
 }

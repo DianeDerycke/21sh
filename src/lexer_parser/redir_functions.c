@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/15 16:17:43 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/15 17:39:06 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,3 @@ int     redir_dless(t_ast *ast)
     }
     return (SUCCESS);
 }
-
-int     redir_and(t_ast *ast)
-{
-    (void)ast;
-    return (SUCCESS);
-}
-
