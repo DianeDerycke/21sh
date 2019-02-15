@@ -104,6 +104,7 @@ int     	is_valid_quotes(char *str);
 
 //REDIR_FUNCTIONS
 int		redir_great(t_ast *ast);
+int		redir_dgreat(t_ast *ast);
 int     redir_less(t_ast *ast);
 int     redir_dless(t_ast *ast);
 int     redir_and(t_ast *ast);
