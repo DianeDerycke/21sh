@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:41:10 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/15 14:06:36 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/15 17:13:03 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int    parser_execution(t_ast *ast, t_sh *shell)
         parser_execution(ast->right, shell);
     else if (ast->token == PIPE)
         do_pipe(ast, shell);
-    else if (ast->token == WORD)
+    else if (ast->token == WORD || ast->token == DIGIT)
     {
         if (find_next_redir(ast))
             ret = exec_redirection(ast, shell);
