@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/14 16:58:28 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/15 17:37:38 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ int     main(void)
 			printf("ERROR LEXER\n");
 		if (!(ast = create_ast(param->l_tokens, param->l_tokens, NULL)))
 			ret = FAILURE;
-		else if (parser_execution(ast, shell) != 0)
+		// display_tree(ast, 0, 0);
+		if (ast && parser_execution(ast, shell) != 0)
 			ret = FAILURE;
 		free_param(param);
 	}
