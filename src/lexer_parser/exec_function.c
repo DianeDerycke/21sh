@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/14 16:47:21 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/15 14:18:22 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int     just_exec(t_ast *ast, t_sh *shell)
     
     path = NULL;
     ret = 0;
-    shell->cmd = sh_rtree_to_array(ast);
+    if (!(shell->cmd = sh_rtree_to_array(ast)))
+        return (FAILURE);
 	apply_expansions(shell);
 	if ((exec_builtin(shell) == SUCCESS))
 		return (SUCCESS);
@@ -31,6 +32,7 @@ int     just_exec(t_ast *ast, t_sh *shell)
     else 
         ret = ms_perm_denied(shell->cmd[0]);
     ft_strdel(&path);
+    ft_strdel(shell->cmd);
     return (ret);
 }
 
@@ -38,11 +40,12 @@ int     exec_cmd(t_ast *ast, t_sh *shell)
 {
     static int ret = 0;
 
-    shell->cmd = sh_rtree_to_array(ast);
+    if (!(shell->cmd = sh_rtree_to_array(ast)))
+        return (FAILURE);
     apply_expansions(shell);
     if ((exec_builtin(shell)) == FAILURE)
         if ((ms_exec_binary(shell->cmd[0], shell->cmd, shell->env, shell->env)) == -1)
             ret = error_execution(shell->cmd[0]);
-    sh_free_shell(shell);
+    ft_strdel(shell->cmd);
     return (ret);
 }
