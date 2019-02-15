@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/15 14:18:22 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/15 17:27:42 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,8 @@ int     just_exec(t_ast *ast, t_sh *shell)
     if ((path = ms_get_valid_cmd(shell->cmd[0], shell->env))
             && access(path, X_OK) == SUCCESS)
         execve(path, shell->cmd, shell->env);
-    else if (!path)
-        ret = FAILURE;
-    else 
-        ret = ms_perm_denied(shell->cmd[0]);
+    else
+       ret = error_execution(shell->cmd[0]);
     ft_strdel(&path);
     ft_strdel(shell->cmd);
     return (ret);
