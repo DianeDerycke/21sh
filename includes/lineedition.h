@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/14 15:58:51 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/15 17:08:31 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ int		le_cursor_down(struct s_le *le_struct);
 */
 
 int		le_cursor_endl(struct s_le *le_struct);
-void	le_cursor_calcul_empty_char(struct s_le *le_struct, int max);
+int		le_calcul_empty_char(struct s_le *le_struct, int max);
 
 /*	
 **	le_clipboard.c

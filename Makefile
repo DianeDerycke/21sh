@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
+#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/02/13 20:17:42 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/02/15 14:16:49 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,8 +116,9 @@ compile:
 	make $(NAME)
 	
 clean:
-	rm -rf $(OBJ) $(HISTORY)
-	rmdir $(OBJ) 2> /dev/null || true
+	rm -rf	$(OBJ)
+	rm -f	$(HISTORY)
+	rmdir	$(OBJ) 2> /dev/null || true
 	make -C $(LIBFT) clean
 	make -C $(LIBSH) clean
 	make -C $(LIBMS) clean
