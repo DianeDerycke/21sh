@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/28 20:03:40 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/25 15:06:23 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/15 17:25:26 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 ssize_t		ms_command_not_found(char *cmd)
 {
-	ft_putstr("21sh: command not found: ");
-	ft_putendl(cmd);
+	ft_putstr_fd("21sh: command not found: ", 2);
+	ft_putendl_fd(cmd, 2);
 	return (FAILURE);
 }
