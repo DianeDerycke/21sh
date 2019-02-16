@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/14 13:57:32 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/16 18:08:31 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int		le_read_and_exec(struct s_le *le_struct)
 			if (le_buff_append(le_struct, le_struct->tmp[0]))
 				return (LE_FAILURE);
 		}
+		if (ft_strchr(le_struct->buff, '\n'))
+			if (le_cursor_endl(le_struct))
+				return (LE_FAILURE);
 	}
 	return (LE_FAILURE);
 }

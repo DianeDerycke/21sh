@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/16 14:10:32 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/16 17:04:04 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # define LE_ESCAPEBRK		"\033["
 # define LE_ENDL			'\n'
 # define LE_EXIT 			'\003'
+# define LE_EOF 			'\004'
 # define LE_UP				"A"
 # define LE_DOWN			"B"
 # define LE_RIGHT			"C"

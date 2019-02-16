@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 18:35:30 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/16 14:10:30 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/16 18:07:48 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,6 @@ int		le_termcap_exec(struct s_le *le_struct)
 		le_struct->history_activ = 0;
 	if (le_struct->copy_on != LE_START)
 		if (le_clear_restore(le_struct))
-			return (LE_FAILURE);
-	if (ft_strchr(le_struct->buff, '\n'))
-		if (le_cursor_endl(le_struct))
 			return (LE_FAILURE);
 	return (LE_SUCCESS);
 }
