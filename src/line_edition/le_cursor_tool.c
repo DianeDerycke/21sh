@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 15:54:51 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/15 18:56:23 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/16 13:53:37 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		le_cursor_endl(struct s_le *le_struct)
 	return (LE_SUCCESS);
 }
 
-int	le_calcul_empty_char(struct s_le *le_struct, int max)
+int		le_calcul_empty_char(struct s_le *le_struct, int max)
 {
 	int i;
 	int endl;

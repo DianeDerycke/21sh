@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/15 17:01:35 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/16 14:27:16 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		le_init(struct s_le *le_struct)
 {
-	if (le_struct->nb_char >= le_struct->buffer_size - 1)
+	if (!le_buff_check_space(le_struct, 1))
 		if (!(le_struct->buff = le_buff_realloc(le_struct, LE_BUFF_SIZE)) ||\
 		 (le_struct->nb_char >= INT_MAX - 1))
 			return (LE_FAILURE);
@@ -25,10 +25,15 @@ int		le_init(struct s_le *le_struct)
 		le_struct->nb_char = 0;
 		le_struct->cursor_x = le_struct->prompt_size;
 	}
-	if (le_struct->tmp[0] == LE_ENDL)
+	else if (le_struct->tmp[0] == LE_EXIT)
+	{
+		ft_putchar(LE_ENDL);
+		return (LE_EXIT);
+	}
+	else if (le_struct->tmp[0] == LE_ENDL)
 	{
 		le_cursor_goto(le_struct->nb_char, 1, le_struct);
-		ft_putchar('\n');
+		ft_putchar(LE_ENDL);
 		le_struct->buff[le_struct->nb_char] = '\0';
 		return (LE_ENDL);
 	}
@@ -131,14 +136,8 @@ int		le_window_check(struct s_le *le_struct)
 	{
 		le_struct->w_col = col_new;
 		le_struct->w_line = line_new;
-		le_cursor_beggin(le_struct, le_struct->cursor_buff);
-		le_termcap_print(TC_CLEAR_NEXT, 1);
-		le_prompt_print(le_struct);
-		if (le_struct->nb_char)
-			le_buff_print(le_struct, 0);
-		if (le_cursor_goto(le_struct->cursor_x,\
-		 (le_struct->nb_char + le_struct->prompt_size), le_struct))
-		 	return (LE_FAILURE);
+		if (le_clear_restore(le_struct))
+			return (LE_FAILURE);
 	}
 	return (LE_SUCCESS);
 }
@@ -150,12 +149,14 @@ int		le_window_check(struct s_le *le_struct)
 
 int		le_exit(struct s_le *le_struct, int ret)
 {
-	if (ret == LE_ENDL)
+	if (ret == LE_ENDL || ret == LE_EXIT)
 	{
 		hy_dlst_free(le_struct->history);
 		if (le_struct->clipboard)
 			ft_strdel(&le_struct->clipboard);
 		ft_strclr(le_struct->tmp);
+		if (ret == LE_EXIT)
+			ft_strclr(le_struct->buff);
 		if (le_struct->prompt_type)
 		{
 			if (le_buff_add(le_struct, 0, '\n'))
@@ -164,7 +165,7 @@ int		le_exit(struct s_le *le_struct, int ret)
 		}
 		return (LE_EXIT);
 	}
-	if (ret == LE_FAILURE)
+	else if (ret == LE_FAILURE)
 	{
 		hy_dlst_free(le_struct->history);
 		if (le_struct->clipboard)
@@ -177,7 +178,6 @@ int		le_exit(struct s_le *le_struct, int ret)
 
 /*
 **	Exit and set the old shell attribute
-**	Just for the tests, I put the final buffer
 */
 
 int		le_clear(struct s_le *le_struct)
