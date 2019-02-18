@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh_rtree_to_array.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:14:54 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/12 19:19:32 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/18 14:20:53 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char    **sh_rtree_to_array(t_ast *ast)
     if (!(array = malloc(sizeof(char*) * (i + 1))))
         return (NULL);
     i = 0;
-    while (ast && (ast->token == WORD || ast->token == DIGIT))
+    while (ast && (ast->token == WORD || (ast->token == DIGIT && ast->io_number == 0)))
     {
         if (!(array[i] = ft_strdup(ast->value)))
         {
