@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/15 17:27:42 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/18 15:58:24 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ int     exec_cmd(t_ast *ast, t_sh *shell)
     if (!(shell->cmd = sh_rtree_to_array(ast)))
         return (FAILURE);
     apply_expansions(shell);
+    if (!shell->cmd)
+        return (FAILURE);
     if ((exec_builtin(shell)) == FAILURE)
         if ((ms_exec_binary(shell->cmd[0], shell->cmd, shell->env, shell->env)) == -1)
             ret = error_execution(shell->cmd[0]);
