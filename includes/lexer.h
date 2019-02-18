@@ -20,7 +20,7 @@
 typedef struct      s_param {
     char            *input;
     int             index;
-    int           token;
+    int           	token;
     int(*ft)(int);
     struct s_ast  *l_tokens;
 }                   t_param;
@@ -53,7 +53,7 @@ typedef struct		s_opt
 //LEX_INIT
 t_param    	*init_param(void);
 void    	free_param(t_param *param);
-int         push_node(char *value, int token, t_ast **node);
+int         push_node(char *value, int token, t_ast **node, int io_number);
 t_ast     	*create_elem(void);
 void        display_list(t_ast *lst);
 void        display_tree(t_ast *tree, int lvl, int position);
@@ -73,7 +73,7 @@ char        *copy_until_array_ft(char *s, int *start, int(*array[2])(int));
 int     whitespace_action(t_param *param);
 int     single_quote_action(t_param *param);
 int     double_quote_action(t_param *param);
-int     io_number_action(t_param *param);
+int     is_io_number(t_param *param);
 int     digit_action(t_param *param);
 int     operator_action(t_param *param);
 int     identifier_action(t_param *param);
@@ -103,11 +103,12 @@ void		handle_quotes(char **input);
 int     	is_valid_quotes(char *str);
 
 //REDIR_FUNCTIONS
-int		redir_great(t_ast *ast);
-int		redir_dgreat(t_ast *ast);
-int     redir_less(t_ast *ast);
-int     redir_dless(t_ast *ast);
-int     redir_and(t_ast *ast);
+int		redir_great(t_ast *redir, t_ast *ast);
+int		redir_dgreat(t_ast *redir, t_ast *ast);
+int     redir_less(t_ast *redir, t_ast *ast);
+int     redir_dless(t_ast *redir, t_ast *ast);
+int     redir_and(t_ast *redir, t_ast *ast);
+int     redir_greatand(t_ast *redir, t_ast *ast);
 
 //REDIR
 t_ast  *find_next_redir(t_ast *ast);
