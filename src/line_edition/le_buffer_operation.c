@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/14 18:36:26 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/18 13:05:52 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,8 @@ int		le_buff_history(struct s_le *le_struct)
 			le_struct->history = le_struct->history->prev;
 	if (le_struct->term == LE_ARROW_UP && (!le_struct->nb_char || le_struct->history_activ))
 	{
+		if (le_count_occ(le_struct->buff, '\n'))
+			le_ansi_print(le_count_occ(le_struct->buff, '\n'), LE_UP);
 		ft_bzero(le_struct->buff, le_struct->nb_char);
 		len = ft_strlen (le_struct->history->content);
 		if (le_buff_check_space(le_struct, len))
@@ -167,6 +169,8 @@ int		le_buff_history(struct s_le *le_struct)
 			le_struct->history_activ = 1;
 			return (LE_SUCCESS);
 		}
+		if (le_count_occ(le_struct->buff, '\n'))
+			le_ansi_print(le_count_occ(le_struct->buff, '\n'), LE_UP);
 		ft_bzero(le_struct->buff, le_struct->nb_char);
 		len = ft_strlen (le_struct->history->content);
 		if (!le_buff_check_space(le_struct, len))

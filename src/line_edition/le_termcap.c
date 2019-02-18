@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 18:35:30 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/16 18:07:48 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/18 15:20:43 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int		le_termcap_check(struct s_le *le_struct)
 		le_struct->term =  LE_CUT;
 	else if (le_struct->tmp[0] == TC_DEL)
 		le_struct->term = LE_DEL;
+	else if (le_struct->tmp[0] == LE_EOT)
+		le_struct->term = LE_EOF;
 	else if (le_struct->tmp[0] == LE_ESCAPE)
 	{
 		if (read(STDIN_FILENO, &le_struct->tmp[1], 15) == -1)
@@ -130,8 +132,8 @@ int		le_termcap_delete(struct s_le *le_struct)
 		if (le_clipboard(le_struct))
 			return (LE_FAILURE);
 	}
-	if (le_struct->term == LE_DELFRONT && le_struct->cursor_buff <\
-	 le_struct->nb_char && le_struct->nb_char)
+	if ((le_struct->term == LE_DELFRONT || le_struct->term == LE_EOF)\
+	&& le_struct->cursor_buff < le_struct->nb_char && le_struct->nb_char)
 	{
 		if (le_buff_remove(le_struct, le_struct->cursor_buff))
 			return (LE_FAILURE);

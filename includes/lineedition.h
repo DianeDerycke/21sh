@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/16 17:04:04 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/18 15:19:59 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define LE_ESCAPEBRK		"\033["
 # define LE_ENDL			'\n'
 # define LE_EXIT 			'\003'
-# define LE_EOF 			'\004'
+# define LE_EOT 			'\004'
 # define LE_UP				"A"
 # define LE_DOWN			"B"
 # define LE_RIGHT			"C"
@@ -102,7 +102,8 @@ typedef enum		e_termnum
 	LE_SHIFT_UP,
 	LE_SHIFT_DOWN,
 	LE_END,
-	LE_HOME
+	LE_HOME,
+	LE_EOF
 }					t_termnum;
 
 typedef struct		s_le
@@ -204,6 +205,7 @@ int		le_cursor_down(struct s_le *le_struct);
 
 int		le_cursor_endl(struct s_le *le_struct);
 int		le_calcul_empty_char(struct s_le *le_struct, int max);
+int		le_count_occ(char *str, char oc);
 
 /*	
 **	le_clipboard.c

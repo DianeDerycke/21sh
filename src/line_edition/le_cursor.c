@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:37:17 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/16 16:45:01 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/18 13:51:49 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,10 +123,13 @@ int		le_cursor_restore(struct s_le *le_struct)
 {
 	int line;
 	int col;
+	// int	endl;
 
+	// endl = le_count_occ(le_struct->buff, LE_ENDL);
 	line = (le_struct->cursor_x - 1) / le_struct->w_col;
 	col = (le_struct->cursor_x - 1) % le_struct->w_col;
-	if (line)
+	// line -= endl;
+	if (line > 0)
 		if (le_termcap_print(TC_GO_DOWN, line))
 			return (LE_FAILURE);
 	if (col)

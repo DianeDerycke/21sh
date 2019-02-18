@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/16 16:29:31 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/18 15:29:13 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int		le_init(struct s_le *le_struct)
 		le_struct->nb_char = 0;
 		le_struct->cursor_x = le_struct->prompt_size;
 	}
-	else if (le_struct->tmp[0] == LE_EXIT)
+	else if (le_struct->tmp[0] == LE_EXIT || (le_struct->term == LE_EOF\
+	 && !le_struct->nb_char))
 	{
 		ft_putchar(LE_ENDL);
 		return (LE_EXIT);
@@ -155,6 +156,8 @@ int		le_exit(struct s_le *le_struct, int ret)
 		if (le_struct->clipboard)
 			ft_strdel(&le_struct->clipboard);
 		ft_strclr(le_struct->tmp);
+		if (le_struct->term == LE_EOF)
+			exit(0);
 		if (ret == LE_EXIT)
 			ft_strclr(le_struct->buff);
 		if (le_struct->prompt_type)
@@ -182,11 +185,11 @@ int		le_exit(struct s_le *le_struct, int ret)
 
 int		le_clear(struct s_le *le_struct)
 {
-	if (le_cursor_goto(le_struct->prompt_size, le_struct->cursor_x,\
-	 le_struct))
+	if (le_cursor_beggin(le_struct, le_struct->cursor_x))
 		return (LE_FAILURE);
 	if (le_termcap_print(TC_CLEAR_NEXT, 1))
 		return (LE_FAILURE);
+	le_prompt_print(le_struct);
 	le_buff_print(le_struct, 0);
 	return (LE_SUCCESS);
 }
