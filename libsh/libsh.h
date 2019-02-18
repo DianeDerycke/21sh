@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/15 17:17:24 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/18 15:35:16 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 static char     operators[20][20] = {
     {";"},
     {"|"},
-    ("\n"),
     {"\n"},
     {">"},
     {">>"},
@@ -47,7 +46,6 @@ static char     operators[20][20] = {
 typedef enum    e_ope{
     SEPARATOR, //   ;
     PIPE,      //   |
-    NEWLINE,   //   \n
     WORD,      //   [aA-zZ.. 0..9]
     GREAT,     //   >
     DGREAT,    //   >>
@@ -56,9 +54,7 @@ typedef enum    e_ope{
     AND,       //   &
     LESSAND,   //   <&
     GREATAND,  //   >&
-    IO_NUMBER,  //   [0,1,2...] Digit with '<' or '>' as delimiter
-    DIGIT = 3,      // [0..9]
-    BUILTIN = 3,
+    DIGIT = 2,      // [0..9]
     DQUOTE = '\"', 
     SQUOTE = '\'',
     C_DOLLAR = '$',
@@ -80,9 +76,7 @@ typedef struct      s_sh {
 typedef struct      s_ast {
     char            *value;
     int             token;
-    int             pipecall;
-    int             fd1;
-    int             fd0;
+    int             io_number;
     struct s_ast  *next;
     struct s_ast  *right;
     struct s_ast  *left;
