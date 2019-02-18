@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:41:10 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/15 17:13:03 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/18 14:05:07 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int    parser_execution(t_ast *ast, t_sh *shell)
         else
             ret = exec_cmd(ast, shell);
     }
-    if (ast->token != WORD && ast->token != PIPE)
+    if (ast->token == SEPARATOR)
         parser_execution(ast->left, shell);
     return (ret);
 }

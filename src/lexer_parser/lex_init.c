@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 00:15:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/13 20:17:14 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/18 15:23:57 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_param    *init_param(void)
     return (new);
 }
 
-int    push_node(char *value, int token, t_ast **node)
+int    push_node(char *value, int token, t_ast **node, int io_nb)
 {
     t_ast     *tmp;
     if (!node || !*node)
@@ -49,7 +49,7 @@ int    push_node(char *value, int token, t_ast **node)
         if (!((*node)->value = ft_strdup(value)))
             return (FAILURE);
         (*node)->token = token;
-        (*node)->pipecall = 0;
+        (*node)->io_number = io_nb;
         (*node)->next = NULL;
         (*node)->right = NULL;
         (*node)->left = NULL;
@@ -64,7 +64,7 @@ int    push_node(char *value, int token, t_ast **node)
         if (!((*node)->next->value = ft_strdup(value)))
             return (FAILURE);
         (*node)->next->token = token;
-        (*node)->pipecall = 0;
+        (*node)->next->io_number = io_nb;
         (*node)->next->next = NULL;
         (*node)->next->left = NULL;
         (*node)->next->left = NULL;

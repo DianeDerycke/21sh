@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/13 19:59:33 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/18 15:35:46 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,9 @@ int     ft_is_operator(int c)
     int     i;
 
     i = 0;
-    while (i < 11 && c != operators[i][0])
+    while (i < 10 && c != operators[i][0])
         i++;
-    if (i == 11)
-        return (0);
-    return (1);
+    return (i == 10 ? 0 : 1);
 }
 
 int     ft_isidentifier(int c)
@@ -66,9 +64,9 @@ int     get_ast_op(char *c, int length)
     i = 0;
     if (!c)
         return (FAILURE);
-    while (i < 11 && ft_strncmp(c, operators[i], length) != 0)
+    while (i < 10 && ft_strncmp(c, operators[i], length) != 0)
         i++;
-    return (i == 11 ? -1 : i);
+    return (i == 10 ? -1 : i);
 }
 
 char    *copy_until_ft(char *s, int *start, int(*f)(int c))
