@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/18 15:58:24 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/19 20:00:36 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int     just_exec(t_ast *ast, t_sh *shell)
     if (!(shell->cmd = sh_rtree_to_array(ast)))
         return (FAILURE);
 	apply_expansions(shell);
+    if (!shell->cmd)
+        return (FAILURE);
 	if ((exec_builtin(shell) == SUCCESS))
 		return (SUCCESS);
     if ((path = ms_get_valid_cmd(shell->cmd[0], shell->env))

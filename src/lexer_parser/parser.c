@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:23:45 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/13 16:35:36 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/19 12:45:00 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static t_ast     *find_priority_token(t_ast *start, t_ast *end)
         return (NULL);
     while(start != end)
     {
-        if (tmp == NULL || (start->token < tmp->token && start->token != WORD))
+        if (tmp == NULL || (start->token < tmp->token && start->token < WORD))
             tmp = start;
         start = start->next;
     }

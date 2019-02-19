@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/18 15:35:46 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/19 11:01:11 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int     ft_is_operator(int c)
 
 int     ft_isidentifier(int c)
 {
+    if (ft_is_operator(c))
+        return (0);
     if ((ft_isdigit(c) || ft_isalpha(c) || ft_isallowedsymb(c)))
         return (1);
     return (0);

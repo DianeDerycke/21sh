@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_execution.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:41:10 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/18 14:05:07 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/19 18:02:30 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int    parser_execution(t_ast *ast, t_sh *shell)
         parser_execution(ast->right, shell);
     else if (ast->token == PIPE)
         do_pipe(ast, shell);
-    else if (ast->token == WORD || ast->token == DIGIT)
+    else if (ast->token == WORD || ast->token == DIGIT || 
+        (ast->token >= GREAT && ast->token <= GREATAND))
     {
         if (find_next_redir(ast))
             ret = exec_redirection(ast, shell);

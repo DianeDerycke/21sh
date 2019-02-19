@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/18 14:58:08 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/19 19:57:50 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int     main(void)
 		hy_history_write(param->input);
 		if (lex_input(param) == FAILURE)
 			printf("ERROR LEXER\n");
+		// display_list(param->l_tokens);
 		if (!(ast = create_ast(param->l_tokens, param->l_tokens, NULL)))
 			ret = FAILURE;
 		// display_tree(ast, 0, 0);

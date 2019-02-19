@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/18 16:44:18 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/19 21:34:56 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 int     redir_great(t_ast *redir, t_ast *ast)
 {
     int     fd;
-    
+
     (void)ast;
+    // dprintf(2, "REDIR GREAT\n");
     if ((fd = open(redir->left->value,  O_RDWR | O_CREAT | O_TRUNC, 0677)))
     {
-        dup2(fd, 1);
+        dup2(fd, STDOUT_FILENO);
         close(fd);
+        // dprintf(STDOUT_FILENO, "HELLO WRLD\n");
+        // dprintf(2,"CMD IS ==> %s\n", redir->left->value);
     }
     return (SUCCESS);
 }
@@ -74,17 +77,28 @@ int     redir_dless(t_ast *redir, t_ast *ast)
     return (SUCCESS);
 }
 
+int     get_io_number(t_ast *ast, t_ast *redir)
+{
+    if (!ast || !redir)
+        return (ERROR);
+    if (ast == redir)
+        return (-2);
+    while (ast->left && ast->left != redir)
+        ast = ast->left;
+    if (ast && ast->token == DIGIT && ast->io_number == 1)
+        return (ft_atoi(ast->value));
+    return (ERROR);
+}
+
 int     redir_greatand(t_ast *redir, t_ast *ast)
 {
     int     io_nb;
     int     output;
 
-
-    io_nb = 2;
-    (void)ast;
+    // dprintf(2, "REDIR GREATAND\n");
     if (!redir->left)
     {
-        dprintf(2, "21sh: syntax error near unexpected tokan `newline`\n");
+        printf("21sh: syntax error near unexpected tokan `newline`\n");
         exit (1);
     }
     if (redir->left->token != DIGIT)
@@ -93,14 +107,14 @@ int     redir_greatand(t_ast *redir, t_ast *ast)
         exit (1);
     }
     output = ft_atoi(redir->left->value);
-    // if ((io_nb = get_io_number(ast)) == -1)
-        if ((io_nb))
+    if ((io_nb = get_io_number(ast, redir)) == -2)
     {
-        dup2(output, 1);
-        close(output);
+        dup2(1, output);
+        close(1);
     }
     else
     {
+        // dprintf(2, "OUTPUT ===> %d, IO_NB ===> %d\n", output, io_nb);
         dup2(output, io_nb);
         close(output);
     }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/18 16:41:25 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/19 19:42:35 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,10 @@ static int      do_redirection(int token, t_ast *redir, t_ast *ast)
         &redir_dgreat,
         &redir_less,
         &redir_dless,
-        // &redir_lessand,
+        NULL,
+        NULL,
         &redir_greatand,
+        // &redir_lessand,
     };
     return(redir_array[token](redir, ast));
 }
@@ -58,9 +60,8 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
             // add_argument_to_cmd(ast, ast->left);
             tmp = redir->left;
         }
-        if (ast->token == WORD && ast->io_number == 0)
-            if (just_exec(ast, shell) == FAILURE)
-                exit (1);
+        if (ast->token == WORD)
+            just_exec(ast, shell);
     }
     else
         waitpid(pid, &status, 0);
