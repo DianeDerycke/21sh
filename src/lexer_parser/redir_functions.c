@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/19 21:34:56 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/20 13:06:24 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,8 @@ int     redir_great(t_ast *redir, t_ast *ast)
     int     fd;
 
     (void)ast;
-    // dprintf(2, "REDIR GREAT\n");
     if ((fd = open(redir->left->value,  O_RDWR | O_CREAT | O_TRUNC, 0677)))
-    {
         dup2(fd, STDOUT_FILENO);
-        close(fd);
-        // dprintf(STDOUT_FILENO, "HELLO WRLD\n");
-        // dprintf(2,"CMD IS ==> %s\n", redir->left->value);
-    }
     return (SUCCESS);
 }
 
@@ -34,10 +28,7 @@ int     redir_dgreat(t_ast *redir, t_ast *ast)
     
     (void)ast;
     if ((fd = open(redir->left->value, O_RDWR | O_CREAT | O_APPEND, 0677)))
-    {
         dup2(fd, 1);
-        close(fd);
-    }
     else if (fd == -1)
     {
         ms_no_such_file_or_dir("21sh", redir->left->value);
@@ -52,10 +43,7 @@ int     redir_less(t_ast *redir, t_ast *ast)
     
     (void)ast;
     if ((fd = open(redir->left->value, O_RDWR)) >= 0)
-    {
         dup2(fd, 0);
-        close(fd);
-    }
     else if (fd == ERROR)
     {
         ms_no_such_file_or_dir("21sh",redir->left->value);
@@ -70,10 +58,7 @@ int     redir_dless(t_ast *redir, t_ast *ast)
     
     (void)ast;
     if ((fd = open(redir->left->value, O_RDWR | O_APPEND, 0777)))
-    {
         dup2(fd, 0);
-        close(fd);
-    }
     return (SUCCESS);
 }
 
@@ -95,7 +80,6 @@ int     redir_greatand(t_ast *redir, t_ast *ast)
     int     io_nb;
     int     output;
 
-    // dprintf(2, "REDIR GREATAND\n");
     if (!redir->left)
     {
         printf("21sh: syntax error near unexpected tokan `newline`\n");
@@ -103,20 +87,13 @@ int     redir_greatand(t_ast *redir, t_ast *ast)
     }
     if (redir->left->token != DIGIT)
     {
-        printf("21sh: %s: ambiguous redirect\n", redir->left->value);
+        dprintf(2,"21sh: %s: ambiguous redirect\n", redir->left->value);
         exit (1);
     }
     output = ft_atoi(redir->left->value);
     if ((io_nb = get_io_number(ast, redir)) == -2)
-    {
-        dup2(1, output);
-        close(1);
-    }
+        dup2(STDOUT_FILENO, output);
     else
-    {
-        // dprintf(2, "OUTPUT ===> %d, IO_NB ===> %d\n", output, io_nb);
         dup2(output, io_nb);
-        close(output);
-    }
     return (SUCCESS);
 }
