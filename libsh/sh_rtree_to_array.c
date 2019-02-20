@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:14:54 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/19 18:43:58 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/20 16:48:09 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ char    **sh_rtree_to_array(t_ast *ast)
     if (!(array = malloc(sizeof(char*) * (i + 1))))
         return (NULL);
     i = 0;
-    while (ast && ast->token == WORD && ast->io_number == 0)
+    while (ast && ((ast->token == WORD && ast->io_number == 0) || 
+    ast->token == DQUOTE || ast->token == SQUOTE))
     {
         if (!(array[i] = ft_strdup(ast->value)))
         {
