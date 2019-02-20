@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_action.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 23:48:24 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/18 15:36:02 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/20 14:41:38 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ int     digit_action(t_param *param)
     char    *tmp;
     int     ret;
 
-    tmp = NULL;
     ret = is_io_number(param);
     if (!(tmp = copy_until_ft(param->input + param->index, &param->index, param->ft)))
         return (FAILURE);

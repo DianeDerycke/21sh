@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_exec_binary.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/27 14:26:30 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/15 17:06:11 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/20 16:45:11 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int		ms_exec_binary(char *utility, char **split_cmd, char **env, char **tmp)
 	int		status;
 	int		ret;
 
-	path = NULL;
 	ret = 0;
 	if ((path = ms_get_valid_cmd(utility, env))
 		&& access(path, X_OK) == SUCCESS)

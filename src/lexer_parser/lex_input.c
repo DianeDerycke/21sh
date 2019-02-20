@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/20 15:30:35 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/20 17:43:01 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,7 @@ int     lex_input(t_param *param)
 char 	*get_valid_input(char **env)
 {
 	char	*input;
-	char	*tmp;
 
-	input = NULL;
-	tmp = NULL;
 	while (21)
 	{
 		if (!(input = line_edition(0, env)))
