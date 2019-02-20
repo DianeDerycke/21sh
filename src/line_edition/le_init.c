@@ -6,13 +6,13 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/18 15:29:13 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/20 15:37:35 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-int		le_init(struct s_le *le_struct)
+int		le_init(struct s_le *le_struct, char **env)
 {
 	if (!le_buff_check_space(le_struct, 1))
 		if (!(le_struct->buff = le_buff_realloc(le_struct, LE_BUFF_SIZE)) ||\
@@ -20,7 +20,7 @@ int		le_init(struct s_le *le_struct)
 			return (LE_FAILURE);
 	if (le_struct->nb_char == LE_START)
 	{
-		if (le_prompt_init(le_struct))
+		if (le_prompt_init(le_struct, env))
 			return (LE_FAILURE);
 		le_struct->nb_char = 0;
 		le_struct->cursor_x = le_struct->prompt_size;
@@ -57,6 +57,7 @@ int		le_init_struct(struct s_le *le_struct)
 	le_struct->cursor_x = le_struct->prompt_size;
 	le_struct->buffer_size = LE_BUFF_SIZE;
 	le_struct->history_activ = 0;
+	le_struct->endl = 0;
 	ft_bzero(le_struct->tmp, LE_TMP_BUFF_SIZE);
 	if (hy_history_fill_list(le_struct) || !le_struct->history)
 		le_struct->history_activ = -1;
@@ -93,6 +94,8 @@ void	le_init_calcul(struct s_le *le_struct)
 	 / le_struct->w_col) + 1;
 	le_struct->last_line = le_struct->w_col - (le_struct->nb_line *\
 		le_struct->w_col - (le_struct->nb_char + le_struct->prompt_size));
+	if (ft_strchr(le_struct->buff, LE_ENDL))
+		le_struct->endl = 1;
 }
 
 /*

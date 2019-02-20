@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/13 17:05:41 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/20 15:37:05 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void		handle_quotes(char **input)
 	ret = 0;
 	while (!tmp && (ret = is_valid_quotes(*input)))
 	{
-		if (!(tmp = line_edition(ret))) //to edit when feature \n line edition is add : if ft_strcmp(\n, tmp)
+		if (!(tmp = line_edition(ret , NULL))) //to edit when feature \n line edition is add : if ft_strcmp(\n, tmp)
 			continue;
 		*input = ft_strjoin_free(*input, tmp);
 		ft_strdel(&tmp);

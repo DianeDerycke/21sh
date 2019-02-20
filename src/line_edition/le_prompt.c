@@ -6,18 +6,18 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 16:44:04 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/11 18:16:59 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/20 15:39:56 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-int		le_prompt_init(struct s_le *le_struct)
+int		le_prompt_init(struct s_le *le_struct, char **env)
 {
 	le_struct->prompt = NULL;
 	if (!le_struct->prompt_type)
 	{
-		if (le_prompt_pwd(le_struct))
+		if (le_prompt_pwd(le_struct, env))
 			if (le_prompt_simple(le_struct))
 				return (LE_FAILURE);
 	}
@@ -37,14 +37,19 @@ int		le_prompt_simple(struct s_le *le_struct)
 	return (LE_SUCCESS);
 }
 
-int		le_prompt_pwd(struct s_le *le_struct)
+int		le_prompt_pwd(struct s_le *le_struct, char **env)
 {
 	char	*home;
 	char	*pwd;
 	int		len;
+	size_t	pos;
 
-	home = getenv("HOME");
-	if (!(pwd = getenv("PWD")))
+ 	if (ms_find_variable("HOME", env, &pos) == -1)
+		home = NULL;
+	else
+		home = ms_get_var_value(env[pos]);
+	ms_find_variable("PWD", env, &pos);
+	if (!(pwd = ms_get_var_value(env[pos])))
 		return (LE_FAILURE);
 	if (home)
 	{

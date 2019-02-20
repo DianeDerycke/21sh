@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:37:17 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/18 13:51:49 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/20 12:38:53 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,24 +16,11 @@ int		le_cursor_motion(struct s_le *le_struct, int motion)
 {
 	if (motion == LE_ARROW_RIGHT)
 	{
-		// if (le_struct->buff[le_struct->cursor_x + le_struct->prompt_size + 1] == LE_ENDL)
-		// {
-		// 	le_termcap_print(TC_GO_DOWN, 1);
-		// 	le_struct->cursor_x += 1;
-		// 	le_struct->cursor_y += 1;
-		// }
-		// else 
 			if (le_cursor_right(le_struct))
 				return (LE_FAILURE);
 	}
 	if (motion == LE_ARROW_LEFT)
 	{
-		// if (le_struct->buff[le_struct->cursor_x + le_struct->prompt_size - 1] == LE_ENDL)
-		// {
-		// 	if (le_cursor_endl(le_struct))
-		// 		return (LE_FAILURE);
-		// }
-		// else
 			if (le_cursor_left(le_struct))
 				return (LE_FAILURE);
 	}
@@ -52,8 +39,11 @@ int		le_cursor_motion(struct s_le *le_struct, int motion)
 
 int		le_cursor_right(struct s_le *le_struct)
 {
-	if (le_struct->cursor_y &&\
-	 (le_struct->cursor_x / le_struct->cursor_y) == le_struct->w_col)
+	if (le_struct->buff[le_struct->cursor_buff + 1] == LE_ENDL)
+			if (le_termcap_print(TC_GO_DOWN, 1))
+				return (LE_FAILURE);
+	if ((le_struct->cursor_y && (le_struct->cursor_x / le_struct->cursor_y)\
+	 == le_struct->w_col) && !le_struct->endl)
 	{
 		if (le_termcap_print(TC_GO_DOWN, 1))
 			return (LE_FAILURE);
@@ -71,7 +61,8 @@ int		le_cursor_right(struct s_le *le_struct)
 
 int		le_cursor_left(struct s_le *le_struct)
 {
-	if (le_struct->cursor_x - 1 == le_struct->w_col * (le_struct->cursor_y - 1))
+	if ((le_struct->cursor_x - 1 == le_struct->w_col * (le_struct->cursor_y - 1\
+	)) || le_struct->buff[le_struct->cursor_buff - 1] == LE_ENDL)
 	{
 		if (le_termcap_print(TC_GO_UP, 1))
 			return (LE_FAILURE);

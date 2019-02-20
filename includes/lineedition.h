@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/18 15:19:59 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/20 15:21:56 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct		s_le
 	int		last_line;
 	int		term;
 	int		history_activ;
+	int		endl;
 	int		copy_on;
 	int		copy_off;
 }					t_le;
@@ -135,14 +136,14 @@ typedef struct		s_le
 **	main.c
 */
 
-int		le_read_and_exec(struct s_le *le_struct);
-char	*line_edition(int prompt);
+int		le_read_and_exec(struct s_le *le_struct, char **env);
+char	*line_edition(int prompt, char **env);
 
 /*
 **	le_init.c
 */
 
-int		le_init(struct s_le *le_struct);
+int		le_init(struct s_le *le_struct, char **env);
 int		le_init_struct(struct s_le *le_struct);
 void	le_init_calcul(struct s_le *le_struct);
 int		le_set_attribute(struct termios *backup);
@@ -221,9 +222,9 @@ char	*sh_strinsert(char *dst, char *src, int pos);
 **	le_prompt.c
 */
 
-int		le_prompt_init(struct s_le *le_struct);
+int		le_prompt_init(struct s_le *le_struct, char **env);
 int		le_prompt_simple(struct s_le *le_struct);
-int		le_prompt_pwd(struct s_le *le_struct);
+int		le_prompt_pwd(struct s_le *le_struct, char **env);
 int		le_prompt_quote(struct s_le *le_struct);
 void	le_prompt_print(struct s_le *le_struct);
 

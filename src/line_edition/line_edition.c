@@ -6,14 +6,14 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/18 13:45:56 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/20 15:31:43 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
 
-int		le_read_and_exec(struct s_le *le_struct)
+int		le_read_and_exec(struct s_le *le_struct, char **env)
 {
 	int	ret;
 
@@ -25,13 +25,12 @@ int		le_read_and_exec(struct s_le *le_struct)
 	{
 		if (le_window_check(le_struct))
 			return (LE_FAILURE);
-		if ((ret = le_exit(le_struct, le_init(le_struct))) == LE_EXIT)
+		if ((ret = le_exit(le_struct, le_init(le_struct, env))) == LE_EXIT)
 			return (LE_SUCCESS);
 		else if (ret == LE_FAILURE)
 			return (LE_FAILURE);
-		if (le_struct->buff && ft_strchr(le_struct->buff, '\n'))
-			if (le_cursor_endl(le_struct))
-				return (LE_FAILURE);
+		if (le_struct->endl)
+			le_cursor_endl(le_struct);
 		if (read(STDIN_FILENO, le_struct->tmp, 1) == -1)
 			return (LE_FAILURE);
 		if (le_termcap_check(le_struct) != LE_FAILURE && le_struct->term)
@@ -54,7 +53,7 @@ int		le_read_and_exec(struct s_le *le_struct)
 **	Else add the char to the buffer
 */
 
-char	*line_edition(int prompt)
+char	*line_edition(int prompt, char **env)
 {
 	struct termios	backup;
 	struct s_le		le_struct;
@@ -62,7 +61,7 @@ char	*line_edition(int prompt)
 	le_struct.prompt_type = prompt;
 	if (le_set_attribute(&backup))
 		return (NULL);
-	if (le_read_and_exec(&le_struct))
+	if (le_read_and_exec(&le_struct, env))
 	{
 		if (tcsetattr(STDIN_FILENO, 0, &backup))
 			return (NULL);
