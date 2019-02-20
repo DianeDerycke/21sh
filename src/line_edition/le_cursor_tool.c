@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/27 15:54:51 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/20 12:23:38 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/20 18:31:06 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,14 @@
 
 int		le_cursor_endl(struct s_le *le_struct)
 {
-	int endl;
-
 	le_struct->cursor_buff = le_struct->cursor_x - le_struct->prompt_size;
 	le_struct->nb_empty_char = le_calcul_empty_char(le_struct, le_struct->cursor_buff);
-	endl = le_count_occ(le_struct->buff, LE_ENDL);
  	le_struct->cursor_x += le_struct->nb_empty_char;
-	// le_struct->nb_char += le_struct->nb_empty_char;
 	if (le_clear_restore(le_struct))
 		return (LE_FAILURE);
 	le_struct->cursor_x -= le_struct->nb_empty_char;
-	// le_struct->nb_char -= le_struct->nb_empty_char;
-	if (endl)
-		le_ansi_print(endl, LE_UP);
+	if (le_struct->endl)
+		le_ansi_print(le_struct->endl, LE_UP);
 	return (LE_SUCCESS);
 }
 

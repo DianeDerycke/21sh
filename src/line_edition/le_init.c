@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/20 15:37:35 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/20 17:28:19 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,7 @@ void	le_init_calcul(struct s_le *le_struct)
 	 / le_struct->w_col) + 1;
 	le_struct->last_line = le_struct->w_col - (le_struct->nb_line *\
 		le_struct->w_col - (le_struct->nb_char + le_struct->prompt_size));
-	if (ft_strchr(le_struct->buff, LE_ENDL))
-		le_struct->endl = 1;
+	le_struct->endl = le_count_occ(le_struct->buff, LE_ENDL);
 }
 
 /*
