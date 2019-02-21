@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/18 15:35:16 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/21 14:38:39 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ typedef enum    e_ope{
     AND,       //   &
     LESSAND,   //   <&
     GREATAND,  //   >&
-    DIGIT = 2,      // [0..9]
+    DIGIT,      // [0..9]
     DQUOTE = '\"', 
     SQUOTE = '\'',
     C_DOLLAR = '$',

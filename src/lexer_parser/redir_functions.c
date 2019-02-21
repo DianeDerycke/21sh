@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/20 13:14:42 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/21 15:00:17 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int     get_io_number(t_ast *ast, t_ast *redir)
     if (!ast || !redir)
         return (ERROR);
     if (ast == redir)
-        return (-2);
+        return (1);
     while (ast->left && ast->left != redir)
         ast = ast->left;
     if (ast && ast->token == DIGIT && ast->io_number == 1)
@@ -84,18 +84,12 @@ int     redir_greatand(t_ast *redir, t_ast *ast)
 
     if (!redir->left)
     {
-        printf("21sh: syntax error near unexpected tokan `newline`\n");
-        exit (1);
-    }
-    if (redir->left->token != DIGIT)
-    {
-        dprintf(2,"21sh: %s: ambiguous redirect\n", redir->left->value);
+        syntax_error(NULL);
         exit (1);
     }
     output = ft_atoi(redir->left->value);
-    if ((io_nb = get_io_number(ast, redir)) == -2)
-        dup2(STDOUT_FILENO, output);
-    else
-        dup2(output, io_nb);
+    if ((io_nb = get_io_number(ast, redir)) == ERROR)
+        exit (1);
+    dup2(output, io_nb);
     return (SUCCESS);
 }
