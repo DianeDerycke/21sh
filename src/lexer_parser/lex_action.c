@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_action.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 23:48:24 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/20 14:41:38 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/21 15:31:17 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,29 +91,32 @@ int     is_io_number(t_param *param)
     return (1);
 }
 
-int     digit_action(t_param *param)
-{
-    char    *tmp;
-    int     ret;
+// int     digit_action(t_param *param)
+// {
+//     char    *tmp;
+//     int     ret;
 
-    ret = is_io_number(param);
-    if (!(tmp = copy_until_ft(param->input + param->index, &param->index, param->ft)))
-        return (FAILURE);
-    if (push_node(tmp, DIGIT, &(param->l_tokens), ret) == FAILURE)
-    {
-        ft_strdel(&tmp);
-        return (FAILURE);
-    }
-    ft_strdel(&tmp);
-    return (SUCCESS);
-}
+//     ret = is_io_number(param);
+//     if (!(tmp = copy_until_ft(param->input + param->index, &param->index, param->ft)))
+//         return (FAILURE);
+//     if (push_node(tmp, DIGIT, &(param->l_tokens), ret) == FAILURE)
+//     {
+//         ft_strdel(&tmp);
+//         return (FAILURE);
+//     }
+//     ft_strdel(&tmp);
+//     return (SUCCESS);
+// }
 
 int     operator_action(t_param *param)
 {
-    char *tmp = NULL;
-    int ret = 0;
-    int len = 0;
+    char    *tmp;
+    int ret;
+    int len;
 
+    tmp = NULL;
+    ret = 0;
+    len = 0;
     if (!(tmp = copy_until_ft(param->input + param->index, &param->index, param->ft)))
         return (FAILURE);
     len = ft_strlen(tmp);
@@ -127,11 +130,15 @@ int     operator_action(t_param *param)
 
 int     identifier_action(t_param *param)
 {
-    char *tmp = NULL;
+    char    *tmp;
+    t_ope       token;
 
+    token = WORD;
     if (!(tmp = copy_until_ft(param->input + param->index, &param->index, param->ft)))
         return (FAILURE);
-    if (push_node(tmp, WORD, &(param->l_tokens), 0) == FAILURE)
+    if (ft_str_isdigit(tmp))
+        token = DIGIT;
+    if (push_node(tmp, token, &(param->l_tokens), is_io_number(param)) == FAILURE)
     {
         ft_strdel(&tmp);
         return (FAILURE);
