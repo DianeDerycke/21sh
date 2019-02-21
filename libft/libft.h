@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 03:09:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/23 17:00:56 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/21 15:18:30 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,8 @@ char				*ft_dup_until(char *str, char c);
 void				ft_clear_screen(void);
 char				*ft_strmjoin(char const *s, char const *s2, char const *s3);
 int					ft_nblen(int nb);
-int				get_next_line(const int fd, char **line);
+int					get_next_line(const int fd, char **line);
+int     			ft_str_isdigit(char *str);
+
 
 #endif
