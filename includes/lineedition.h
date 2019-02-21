@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/20 15:21:56 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/21 19:44:52 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,12 @@
 # include <limits.h>
 
 # define LE_SUCCESS			0
-# define LE_FAILURE 		1
-# define LE_BUFF_SIZE		2048
+# define LE_FAILURE			1
+# define LE_INFINITE_LOOP	21
+# define LE_BUFF_SIZE		1024
 # define LE_TMP_BUFF_SIZE	16
-# define LE_PROMPT 			"\033[1m\033[32m$> \033[0m"
+# define LE_PROMPT_CLR		"\033[1m\033[32m"
+# define LE_PROMPT 			LE_PROMPT_CLR"$> \033[0m"
 # define LE_PROMPT_MIN		"\033[1m\033[30m\\> \033[0m"
 # define LE_PROMPT_SIZE		3
 # define LE_ESCAPE			'\033'
@@ -47,7 +49,7 @@
 # define LE_PASTE			16
 # define LE_COPY			25
 # define LE_SELECT_ON		"\033[7m"
-# define LE_SELECT_OFF		"\033[0m"
+# define LE_TERM_OFF		"\033[0m"
 
 /*
 **	Termcaps DEFINE
@@ -86,7 +88,7 @@ typedef	struct		s_dlist
 {
 	void			*content;
 	struct s_dlist	*next;
-	struct s_dlist	*prev;	
+	struct s_dlist	*prev;
 }					t_dlist;
 
 typedef enum		e_termnum
@@ -116,6 +118,7 @@ typedef struct		s_le
 	int		prompt_size;
 	int		prompt_type;
 	int		buffer_size;
+	int		max_size;
 	int		cursor_x;
 	int		cursor_y;
 	int		cursor_buff;
@@ -127,7 +130,6 @@ typedef struct		s_le
 	int		last_line;
 	int		term;
 	int		history_activ;
-	int		endl;
 	int		copy_on;
 	int		copy_off;
 }					t_le;
@@ -146,11 +148,17 @@ char	*line_edition(int prompt, char **env);
 int		le_init(struct s_le *le_struct, char **env);
 int		le_init_struct(struct s_le *le_struct);
 void	le_init_calcul(struct s_le *le_struct);
-int		le_set_attribute(struct termios *backup);
+int		le_init_set_attribute(struct termios *backup);
 int		le_exit(struct s_le *le_struct, int ret);
+
+/*
+**	le_window.c
+*/
+
+int		le_window_size(int *col, int *line);
 int		le_window_check(struct s_le *le_struct);
-int		le_clear(struct s_le *le_struct);
-int		le_clear_restore(struct s_le *le_struct);
+int		le_window_clear(struct s_le *le_struct);
+int		le_window_clear_restore(struct s_le *le_struct);
 
 /*
 ** le_termcap.c
@@ -170,7 +178,16 @@ int		le_termcap_print(char *str, int nb);
 int		le_ansi_print(int nb, char *s);
 int		le_termcap_init(void);
 int		le_rputchar(int c);
-int		le_termcap_window_size(int *col, int *line);
+
+/*
+**	le_buffer.c
+*/
+
+int		le_buff_history(struct s_le *le_struct);
+int		le_buff_history_forward(struct s_le *le_struct);
+int		le_buff_history_backward(struct s_le *le_struct);
+void	le_buff_print(struct s_le *le_struct, int pos);
+void	le_buff_print_select(struct s_le *le_struct, int pos, int on, int off);
 
 /*
 **	le_buffer_operation.c
@@ -180,23 +197,14 @@ int		le_buff_remove(struct s_le *le_struct, int i);
 int		le_buff_add(struct s_le *le_struct, int i, char c);
 int		le_buff_append(struct s_le *le_struct, char c);
 char	*le_buff_realloc(struct s_le *le_struct, int size);
-int		le_buff_check_space(struct s_le *le_struc, int size);
-int		le_buff_history(struct s_le *le_struct);
-void	le_buff_print(struct s_le *le_struct, int pos);
 
 /*
-**	le_cursor.c
+**	le_cursor_motion.c
 */
 
 int		le_cursor_motion(struct s_le *le_struct, int motion);
 int		le_cursor_right(struct s_le *le_struct);
 int		le_cursor_left(struct s_le *le_struct);
-int		le_cursor_goto(int expected, int current, struct s_le *le_struct);
-int		le_cursor_restore(struct s_le *le_struct);
-int		le_cursor_beggin(struct s_le *le_struct, int current);
-int		le_cursor_word_forward(struct s_le *le_struct);
-int		le_cursor_word_backward(struct s_le *le_struct);
-int		le_cursor_home_end(struct s_le *le_struct, int direction);
 int		le_cursor_up(struct s_le *le_struct);
 int		le_cursor_down(struct s_le *le_struct);
 
@@ -204,15 +212,24 @@ int		le_cursor_down(struct s_le *le_struct);
 **	le_cursor_tool.c
 */
 
-int		le_cursor_endl(struct s_le *le_struct);
-int		le_calcul_empty_char(struct s_le *le_struct, int max);
-int		le_count_occ(char *str, char oc);
+int		le_cursor_goto(int expected, int current, struct s_le *le_struct);
+int		le_cursor_restore(struct s_le *le_struct);
+int		le_cursor_beggin(struct s_le *le_struct, int current);
 
-/*	
+/*
+**	le_cursor.c
+*/
+
+int		le_cursor_word_forward(struct s_le *le_struct);
+int		le_cursor_word_backward(struct s_le *le_struct);
+int		le_cursor_home_end(struct s_le *le_struct, int direction);
+
+/*
 **	le_clipboard.c
 */
 
 int		le_clipboard(struct s_le *le_struct);
+int		le_clipboard_exec_cut(struct s_le *le_struct);
 int		le_clipboard_copy(struct s_le *le_struct);
 int		le_clipboard_paste(struct s_le *le_struct);
 int		le_clipboard_cut(struct s_le *le_struct);
@@ -223,16 +240,9 @@ char	*sh_strinsert(char *dst, char *src, int pos);
 */
 
 int		le_prompt_init(struct s_le *le_struct, char **env);
-int		le_prompt_simple(struct s_le *le_struct);
 int		le_prompt_pwd(struct s_le *le_struct, char **env);
+int		le_prompt_home(struct s_le *le_struct, char **env, char *pwd);
 int		le_prompt_quote(struct s_le *le_struct);
 void	le_prompt_print(struct s_le *le_struct);
-
-/*
-**	le_debug.c /!\ DELETE THIS FILE AT THE END /!\
-*/
-
-void	le_debug_fct(struct s_le *le_strucr);
-void	motion_calcul(int expected, int current, int col, int fd);
 
 #endif

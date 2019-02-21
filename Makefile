@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/02/15 14:16:49 by mrandou          ###   ########.fr        #
+#    Updated: 2019/02/21 18:53:39 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,12 +20,15 @@ HISTORY = .21sh_history
 LINE_EDITION_NAME = line_edition.c \
 					le_termcap.c \
 					le_termcap_tool.c \
+					le_buffer.c \
 					le_buffer_operation.c \
+					le_cursor_motion.c \
+					le_cursor_tool.c \
 					le_cursor.c \
 					le_init.c \
-					le_cursor_tool.c \
 					le_clipboard.c \
-					le_prompt.c
+					le_prompt.c \
+					le_window.c
 
 HISTORY_NAME =		hy_history.c
 

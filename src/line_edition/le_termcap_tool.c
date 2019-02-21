@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   le_termcap_tool.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:37:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/01/31 10:39:00 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/21 15:32:50 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +75,4 @@ int		le_rputchar(int c)
 
 /*
 **	Just char print with int return for tputs function
-*/
-
-int		le_termcap_window_size(int *col, int *line)
-{
-	if (le_termcap_init())
-		return (LE_FAILURE);
-	if ((*col = tgetnum(TC_GET_COL)) == -1)
-		return (LE_FAILURE);
-	if ((*line = tgetnum(TC_GET_LINE)) == -1)
-		return (LE_FAILURE);
-	if (*col <= 0 || *line  <= 0)
-		return (LE_FAILURE);
-	return (LE_SUCCESS);
-}
-
-/*
-**	Get the size of the shell window
 */

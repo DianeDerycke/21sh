@@ -5,55 +5,74 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/01/27 15:54:51 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/20 18:31:06 by mrandou          ###   ########.fr       */
+/*   Created: 2019/02/21 18:52:41 by mrandou           #+#    #+#             */
+/*   Updated: 2019/02/21 18:59:16 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-int		le_cursor_endl(struct s_le *le_struct)
+int		le_cursor_goto(int expected, int current, struct s_le *le_struct)
 {
-	le_struct->cursor_buff = le_struct->cursor_x - le_struct->prompt_size;
-	le_struct->nb_empty_char = le_calcul_empty_char(le_struct, le_struct->cursor_buff);
- 	le_struct->cursor_x += le_struct->nb_empty_char;
-	if (le_clear_restore(le_struct))
-		return (LE_FAILURE);
-	le_struct->cursor_x -= le_struct->nb_empty_char;
-	if (le_struct->endl)
-		le_ansi_print(le_struct->endl, LE_UP);
+	int	diff;
+
+	diff = current - expected;
+	expected = (expected - 1) / le_struct->w_col;
+	current = (current - 1) / le_struct->w_col;
+	expected = expected - current;
+	if (expected > 0)
+		le_ansi_print(expected, LE_DOWN);
+	else if (expected < 0)
+	{
+		expected *= -1;
+		le_ansi_print(expected, LE_UP);
+	}
+	if (diff < 0)
+		diff = -diff - (le_struct->w_col * expected);
+	else if (diff > 0)
+		diff = (le_struct->w_col * expected) - diff;
+	if (diff > 0)
+		le_ansi_print(diff, LE_RIGHT);
+	if (diff < 0)
+		le_ansi_print(diff * -1, LE_LEFT);
 	return (LE_SUCCESS);
 }
 
-int		le_calcul_empty_char(struct s_le *le_struct, int max)
-{
-	int i;
-	int endl;
-	int nb_empty_char;
+/*
+**	Move to current position at expected
+*/
 
-	i = 0;
-	endl = 0;
-	nb_empty_char = 0;
-	while (le_struct->buff[i] && i < max)
-	{
-		if (le_struct->buff[i] == '\n')
-		{
-			endl = (i + le_struct->prompt_size - 1 + nb_empty_char);
-			endl = (endl % le_struct->w_col) + 1;
-			nb_empty_char += le_struct->w_col - endl;
-		}
-		i++;
-	}
-	return (nb_empty_char);
+int		le_cursor_restore(struct s_le *le_struct)
+{
+	int line;
+	int col;
+
+	line = (le_struct->cursor_x - 1) / le_struct->w_col;
+	col = (le_struct->cursor_x - 1) % le_struct->w_col;
+	if (line > 0)
+		if (le_termcap_print(TC_GO_DOWN, line))
+			return (LE_FAILURE);
+	if (col)
+		le_ansi_print(col, LE_RIGHT);
+	return (LE_SUCCESS);
 }
 
-int		le_count_occ(char *str, char oc)
-{
-	int count;
+/*
+**	Restore the cursor, the cursor must be at the beginning of the line command
+*/
 
-	count = 0;
-	while (*str)
-		if (*(str++) == oc)
-			count++;
-	return (count);
+int		le_cursor_beggin(struct s_le *le_struct, int current)
+{
+	int y;
+
+	y = ((current - 1) / le_struct->w_col);
+	if (le_termcap_print(TC_GO_BEGIN, 1))
+		return (LE_FAILURE);
+	if (y)
+		le_ansi_print(y, LE_UP);
+	return (LE_SUCCESS);
 }
+
+/*
+**	Put the cursor at the beginning of the command line
+*/

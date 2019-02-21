@@ -6,11 +6,37 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/20 12:56:40 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/21 17:30:11 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
+
+int		le_buff_append(struct s_le *le_struct, char c)
+{
+	if (c != LE_ENDL)
+		if (le_buff_add(le_struct, le_struct->cursor_buff, c))
+			return (LE_FAILURE);
+	le_struct->cursor_x += 1;
+	le_struct->nb_char += 1;
+	if (le_struct->cursor_buff != le_struct->nb_char - 1)
+	{
+		if (le_window_clear_restore(le_struct))
+			return (LE_FAILURE);
+	}
+	else
+		le_buff_print(le_struct, le_struct->cursor_buff);
+	if (le_struct->history_activ != -1)
+		le_struct->history_activ = 0;
+	le_struct->copy_on = LE_START;
+	le_struct->copy_off = LE_START;
+	return (LE_SUCCESS);
+}
+
+/*
+**	Append the new read char to the buffer at cursor position
+**	Clear at cursor position and print
+*/
 
 int		le_buff_remove(struct s_le *le_struct, int i)
 {
@@ -27,6 +53,7 @@ int		le_buff_remove(struct s_le *le_struct, int i)
 		i++;
 	}
 	le_struct->buff[i] = '\0';
+	le_struct->nb_char--;
 	return (LE_SUCCESS);
 }
 
@@ -67,43 +94,19 @@ int		le_buff_add(struct s_le *le_struct, int i, char c)
 **	Add the c char at i position on the buffer and shift all chars after i
 */
 
-
-int		le_buff_append(struct s_le *le_struct, char c)
-{
-	if (c != LE_ENDL)
-		if (le_buff_add(le_struct, le_struct->cursor_buff, c))
-			return (LE_FAILURE);
-	le_struct->cursor_x += 1;
-	le_struct->nb_char += 1;
-	if (le_struct->cursor_buff != le_struct->nb_char - 1 && !le_struct->endl)
-	{
-		if (le_clear_restore(le_struct))
-			return (LE_FAILURE);
-	}
-	else if (!le_struct->endl)
-		le_buff_print(le_struct, le_struct->cursor_buff);
-	if (le_struct->history_activ != -1)
-		le_struct->history_activ = 0;
-	le_struct->copy_on = LE_START;
-	le_struct->copy_off = LE_START;
-	return (LE_SUCCESS);
-}
-
-/*
-**	Append the new read char to the buffer at cursor position
-**	Clear at cursor position and print
-**	If the cursor is at end of the line, it move down
-*/
-
-char		*le_buff_realloc(struct s_le *le_struct, int size)
+char	*le_buff_realloc(struct s_le *le_struct, int nb)
 {
 	char	*tmp;
-	
-	le_struct->buffer_size = le_struct->buffer_size + size;
+
+	if (le_struct->nb_char + nb < le_struct->buffer_size\
+	|| le_struct->nb_char + nb > le_struct->max_size)
+		return (le_struct->buff);
+	le_struct->buffer_size += LE_BUFF_SIZE + nb;
 	if (!(tmp = ft_strdup(le_struct->buff)))
 		return (NULL);
 	ft_strdel(&le_struct->buff);
-	if (!(le_struct->buff = (char *)malloc(sizeof(char *) * le_struct->buffer_size)))
+	if (!(le_struct->buff = (char *)malloc(sizeof(char *)\
+	* le_struct->buffer_size)))
 		return (NULL);
 	if (!(ft_memmove(le_struct->buff, tmp, le_struct->buffer_size)))
 	{
@@ -115,110 +118,6 @@ char		*le_buff_realloc(struct s_le *le_struct, int size)
 }
 
 /*
-**	Realloc the buffer if the command line is over than LE_BUFF_SIZE
+**	Check if there is enough place on the buffer for more nb chars
+**	Realloc the buffer if the command line is over than LE_BUFF_SIZE + nb
 */
-
-int		le_buff_check_space(struct s_le *le_struct, int size)
-{
-	if (le_struct->nb_char + size > le_struct->buffer_size)
-		return (0);
-	return (1);
-}
-
-/*
-**	Return 1 if there is space on the buffer for add new chars or 0 if it's full
-*/
-
-int		le_buff_history(struct s_le *le_struct)
-{
-	int len;
-
-	len = 0;
-	if (!le_struct->history_activ)
-		while (le_struct->history->prev)
-			le_struct->history = le_struct->history->prev;
-	if (le_struct->term == LE_ARROW_UP && (!le_struct->nb_char || le_struct->history_activ))
-	{
-		if ((le_struct->endl = le_count_occ(le_struct->buff, LE_ENDL)))
-			le_ansi_print(le_struct->endl, LE_UP);
-		ft_bzero(le_struct->buff, le_struct->nb_char);
-		len = ft_strlen (le_struct->history->content);
-		if (le_buff_check_space(le_struct, len))
-			if (!(le_struct->buff = le_buff_realloc(le_struct, len + LE_BUFF_SIZE)))
-				return (LE_FAILURE);
-		ft_strcpy(le_struct->buff, le_struct->history->content);
-		le_struct->nb_char = len;
-		if (le_clear(le_struct))
-			return (LE_FAILURE);
-		le_struct->cursor_x = le_struct->nb_char + le_struct->prompt_size;
-		if (le_struct->history->next)
-			le_struct->history = le_struct->history->next;
-		le_struct->history_activ = 1;
-	}
-	if (le_struct->term == LE_ARROW_DOWN && (!le_struct->nb_char || le_struct->history_activ))
-	{
-		if (le_struct->history->prev)
-			le_struct->history = le_struct->history->prev;
-		else
-		{
-			ft_bzero(le_struct->buff, le_struct->nb_char);
-			if (le_clear(le_struct))
-				return (LE_FAILURE);
-			le_struct->cursor_x = le_struct->prompt_size;
-			le_struct->nb_char = 0;
-			le_struct->history_activ = 1;
-			return (LE_SUCCESS);
-		}
-		if ((le_struct->endl = le_count_occ(le_struct->buff, LE_ENDL)))
-			le_ansi_print(le_struct->endl, LE_UP);
-		ft_bzero(le_struct->buff, le_struct->nb_char);
-		len = ft_strlen (le_struct->history->content);
-		if (!le_buff_check_space(le_struct, len))
-			if (!(le_struct->buff = le_buff_realloc(le_struct, len + LE_BUFF_SIZE)))
-				return (LE_FAILURE);
-		ft_strcpy(le_struct->buff, le_struct->history->content);
-		le_struct->nb_char = len;
-		if (le_clear(le_struct))
-			return (LE_FAILURE);
-		le_struct->cursor_x = le_struct->nb_char + le_struct->prompt_size;
-		le_struct->history_activ = 1;
-	}
-	return (LE_SUCCESS);
-}
-
-/*
-**	Browse the historic whit up/down arrows
-*/
-
-void	le_buff_print(struct s_le *le_struct, int pos)
-{
-	int	i;
-	int	off;
-	int	on;
-
-	off = le_struct->copy_off;
-	on	= le_struct->copy_on;
-	if (!le_struct->buff)
-		return ;
-	if (off == -1)
-		off = le_struct->cursor_buff;
-	if (off < on)
-	{
-		i = on;
-		on = off;
-		off = i;
-	}
-	i = pos;
-	while (le_struct->buff[i])
-	{
-		if (on != LE_START && i >= on && i <= off)
-		{
-			ft_putstr(LE_SELECT_ON);
-			ft_putchar(le_struct->buff[i]);
-			ft_putstr(LE_SELECT_OFF);
-		}
-		else
-			ft_putchar(le_struct->buff[i]);
-		i++;
-	}
-}

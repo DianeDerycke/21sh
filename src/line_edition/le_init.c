@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/20 17:28:19 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/21 15:43:45 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 int		le_init(struct s_le *le_struct, char **env)
 {
-	if (!le_buff_check_space(le_struct, 1))
-		if (!(le_struct->buff = le_buff_realloc(le_struct, LE_BUFF_SIZE)) ||\
-		 (le_struct->nb_char >= INT_MAX - 1))
-			return (LE_FAILURE);
+	if (!(le_struct->buff = le_buff_realloc(le_struct, 1)))
+		return (LE_FAILURE);
 	if (le_struct->nb_char == LE_START)
 	{
 		if (le_prompt_init(le_struct, env))
@@ -26,7 +24,7 @@ int		le_init(struct s_le *le_struct, char **env)
 		le_struct->cursor_x = le_struct->prompt_size;
 	}
 	else if (le_struct->tmp[0] == LE_EXIT || (le_struct->term == LE_EOF\
-	 && !le_struct->nb_char))
+	&& !le_struct->nb_char))
 	{
 		ft_putchar(LE_ENDL);
 		return (LE_EXIT);
@@ -40,24 +38,27 @@ int		le_init(struct s_le *le_struct, char **env)
 	}
 	le_init_calcul(le_struct);
 	return (LE_SUCCESS);
-}	
+}
 
 /*
 **	If the buffer is bigger than LE_BUFF_SIZE, it's reallocated
-**	Print the prompt and initialise nb_char and the cursor posiotion
+**	Initialise the prompt
+**	Initialise nb_char and the cursor position
+**	Check if the last char is interruption (end of text) or new line
+**	If it's end, go at the end of the command line and print a new line
 */
-
 
 int		le_init_struct(struct s_le *le_struct)
 {
 	if (!(le_struct->buff = (char *)malloc(sizeof(char *) * LE_BUFF_SIZE)))
 		return (LE_FAILURE);
 	ft_bzero(le_struct->buff, LE_BUFF_SIZE);
+	if (le_window_size(&le_struct->w_col, &le_struct->w_line))
+		return (LE_FAILURE);
 	le_struct->nb_char = LE_START;
 	le_struct->cursor_x = le_struct->prompt_size;
 	le_struct->buffer_size = LE_BUFF_SIZE;
 	le_struct->history_activ = 0;
-	le_struct->endl = 0;
 	ft_bzero(le_struct->tmp, LE_TMP_BUFF_SIZE);
 	if (hy_history_fill_list(le_struct) || !le_struct->history)
 		le_struct->history_activ = -1;
@@ -68,11 +69,12 @@ int		le_init_struct(struct s_le *le_struct)
 }
 
 /*
-**	Allocated the buffer at the BUFF_SIZE
 **	Initialise the line edition structure
+**	Allocated the buffer at the BUFF_SIZE
+**	w_col and w_line are the shells window size
 **	nb_char is the number of char on the command line
-**	cursor_x is the position of the cursor, initialise at the prompt size + 1
-**	buffer_size is the size of the buffer, when the buffer is realllocated, 
+**	cursor_x is the position of the cursor, initialise at the prompt size
+**	buffer_size is the size of the buffer, when the buffer is realllocated,
 **	the buffer_size = the buffer_size mulitplicated by himself
 **	history_activ is for the management of the historic, when the user push
 **	the up or down arrow, this value are set to 1, for know if the user want
@@ -86,15 +88,13 @@ void	le_init_calcul(struct s_le *le_struct)
 	ft_strclr(le_struct->tmp);
 	le_struct->term = 0;
 	le_struct->cursor_buff = le_struct->cursor_x - le_struct->prompt_size;
-	// le_struct->cursor_buff += le_struct->nb_empty_char;
 	le_struct->cursor_y = ((le_struct->cursor_x - 1) / le_struct->w_col) + 1;
-	if	(!le_struct->cursor_y)
-		le_struct->cursor_y++;
 	le_struct->nb_line = ((le_struct->nb_char + le_struct->prompt_size)\
-	 / le_struct->w_col) + 1;
+	/ le_struct->w_col) + 1;
 	le_struct->last_line = le_struct->w_col - (le_struct->nb_line *\
 		le_struct->w_col - (le_struct->nb_char + le_struct->prompt_size));
-	le_struct->endl = le_count_occ(le_struct->buff, LE_ENDL);
+	le_struct->max_size = le_struct->w_col * le_struct->w_line\
+		- le_struct->prompt_size;
 }
 
 /*
@@ -103,9 +103,10 @@ void	le_init_calcul(struct s_le *le_struct)
 **	the number of line must be start at 1
 **	Calculate nb_line, number of line on the command line
 **	Initialise last_line, number of char on the last line
+**	Calculate max_size, the maximum chars printable on the shell
 */
 
-int		le_set_attribute(struct termios *backup)
+int		le_init_set_attribute(struct termios *backup)
 {
 	struct termios	s_set;
 
@@ -126,30 +127,6 @@ int		le_set_attribute(struct termios *backup)
 **	backup struct for save the last configuration of the shell
 */
 
-int		le_window_check(struct s_le *le_struct)
-{
-	int	col_new;
-	int	line_new;
-
-	if (!le_struct->w_col || !le_struct->w_line)
-		return (LE_FAILURE);
-	if (le_termcap_window_size(&col_new, &line_new))
-		return (LE_FAILURE);
-	if (le_struct->w_col != col_new || le_struct->w_line != line_new)
-	{
-		le_struct->w_col = col_new;
-		le_struct->w_line = line_new;
-		if (le_clear_restore(le_struct))
-			return (LE_FAILURE);
-	}
-	return (LE_SUCCESS);
-}
-
-/*
-**	Check if the window was resize, if it's true, clear and print
-**	Restore cursor position
-*/
-
 int		le_exit(struct s_le *le_struct, int ret)
 {
 	if (ret == LE_ENDL || ret == LE_EXIT)
@@ -158,8 +135,8 @@ int		le_exit(struct s_le *le_struct, int ret)
 		if (le_struct->clipboard)
 			ft_strdel(&le_struct->clipboard);
 		ft_strclr(le_struct->tmp);
-		if (le_struct->term == LE_EOF)
-			exit(0);
+		if (le_struct->term == LE_EOF)		//DELETE THIS. Just for test
+			exit(0);						//DELETE THIS. Implement after the LE
 		if (ret == LE_EXIT)
 			ft_strclr(le_struct->buff);
 		if (le_struct->prompt_type)
@@ -184,30 +161,3 @@ int		le_exit(struct s_le *le_struct, int ret)
 /*
 **	Exit and set the old shell attribute
 */
-
-int		le_clear(struct s_le *le_struct)
-{
-	if (le_cursor_beggin(le_struct, le_struct->cursor_x))
-		return (LE_FAILURE);
-	if (le_termcap_print(TC_CLEAR_NEXT, 1))
-		return (LE_FAILURE);
-	le_prompt_print(le_struct);
-	le_buff_print(le_struct, 0);
-	return (LE_SUCCESS);
-}
-
-int		le_clear_restore(struct s_le *le_struct)
-{
-	if (le_cursor_beggin(le_struct, le_struct->cursor_x))
-		return (LE_FAILURE);
-	if (le_termcap_print(TC_CLEAR_NEXT, 1))
-		return (LE_FAILURE);
-	le_prompt_print(le_struct);
-	le_buff_print(le_struct, 0);
-	if (le_cursor_beggin(le_struct, le_struct->nb_char \
-	+ le_struct->prompt_size - 1))
-		return (LE_FAILURE);
-	if (le_cursor_restore(le_struct))
-		return (LE_FAILURE);
-	return (LE_SUCCESS);
-}

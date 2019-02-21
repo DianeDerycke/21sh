@@ -6,12 +6,11 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/20 15:31:43 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/21 17:30:00 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
-
 
 int		le_read_and_exec(struct s_le *le_struct, char **env)
 {
@@ -19,9 +18,7 @@ int		le_read_and_exec(struct s_le *le_struct, char **env)
 
 	if (le_init_struct(le_struct))
 		return (LE_FAILURE);
-	if (le_termcap_window_size(&le_struct->w_col, &le_struct->w_line))
-		return (LE_FAILURE);
-	while (21)
+	while (LE_INFINITE_LOOP)
 	{
 		if (le_window_check(le_struct))
 			return (LE_FAILURE);
@@ -29,20 +26,17 @@ int		le_read_and_exec(struct s_le *le_struct, char **env)
 			return (LE_SUCCESS);
 		else if (ret == LE_FAILURE)
 			return (LE_FAILURE);
-		if (le_struct->endl)
-			le_cursor_endl(le_struct);
 		if (read(STDIN_FILENO, le_struct->tmp, 1) == -1)
 			return (LE_FAILURE);
 		if (le_termcap_check(le_struct) != LE_FAILURE && le_struct->term)
-		 {
+		{
 			if (le_termcap_exec(le_struct))
 				return (LE_FAILURE);
-		 }
-		else if (!le_struct->term && ft_isprint(le_struct->tmp[0]))
-		{
+		}
+		else if (!le_struct->term && ft_isprint(le_struct->tmp[0])\
+		&& le_struct->nb_char + 1 < le_struct->max_size)
 			if (le_buff_append(le_struct, le_struct->tmp[0]))
 				return (LE_FAILURE);
-		}
 	}
 	return (LE_FAILURE);
 }
@@ -59,7 +53,7 @@ char	*line_edition(int prompt, char **env)
 	struct s_le		le_struct;
 
 	le_struct.prompt_type = prompt;
-	if (le_set_attribute(&backup))
+	if (le_init_set_attribute(&backup))
 		return (NULL);
 	if (le_read_and_exec(&le_struct, env))
 	{
