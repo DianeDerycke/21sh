@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 23:48:24 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/21 15:31:17 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/21 17:04:19 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,23 +90,6 @@ int     is_io_number(t_param *param)
         return (0);
     return (1);
 }
-
-// int     digit_action(t_param *param)
-// {
-//     char    *tmp;
-//     int     ret;
-
-//     ret = is_io_number(param);
-//     if (!(tmp = copy_until_ft(param->input + param->index, &param->index, param->ft)))
-//         return (FAILURE);
-//     if (push_node(tmp, DIGIT, &(param->l_tokens), ret) == FAILURE)
-//     {
-//         ft_strdel(&tmp);
-//         return (FAILURE);
-//     }
-//     ft_strdel(&tmp);
-//     return (SUCCESS);
-// }
 
 int     operator_action(t_param *param)
 {
