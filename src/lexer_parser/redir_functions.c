@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/21 15:00:17 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/22 17:20:24 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,19 +77,48 @@ int     get_io_number(t_ast *ast, t_ast *redir)
     return (ERROR);
 }
 
+static int     get_dest_fd(char *arg, int *is_close)
+{
+    int     i;
+    int     dest;
+    char    *tmp;
+
+    i = 0;
+    dest = 0;
+    tmp = NULL;
+    while(arg[i] && ft_isdigit(arg[i]))
+        i++;
+    if (arg[i] && (arg[i] != '-' || (ft_strlen(arg) - (i + 1)) > 0))
+        return (ERROR);
+    if (arg[i] == '-' && !arg[i + 1])
+        *is_close = 1;
+    if (!(tmp = ft_strndup(arg, i)))
+        return (ERROR);
+    dest = ft_atoi(tmp);
+    ft_strdel(&tmp);
+    return(dest);
+}
+
 int     redir_greatand(t_ast *redir, t_ast *ast)
 {
     int     io_nb;
     int     output;
+    int     is_close;
 
     if (!redir->left)
     {
         syntax_error(NULL);
         exit (1);
     }
-    output = ft_atoi(redir->left->value);
+    if ((output = get_dest_fd(redir->left->value, &is_close)) == ERROR)
+    {
+        ambiguous_redirect(redir->left->value);
+        exit (1);
+    }
     if ((io_nb = get_io_number(ast, redir)) == ERROR)
         exit (1);
     dup2(output, io_nb);
+    if (is_close == 1)
+        close(io_nb);
     return (SUCCESS);
 }

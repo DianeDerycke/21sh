@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/21 15:05:23 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/22 17:23:38 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,8 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
             tmp = redir->left;
         }
         if (ast->token == WORD)
-        {
             just_exec(ast, shell);
-            exit (1);
-        }
+        exit (0);
     }
     else
         waitpid(pid, &status, 0);
