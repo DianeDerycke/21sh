@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:07:12 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/21 14:51:49 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/22 16:28:42 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,13 @@ int			syntax_error(char *str)
 		ft_putendl_fd("'newline'", 2);
 	else
 		ft_putendl_fd(str, 2);
+	return (FAILURE);
+}
+
+int			ambiguous_redirect(char *arg)
+{
+	ft_putstr_fd("21sh: ", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putendl_fd(": ambiguous redirect", 2);
 	return (FAILURE);
 }
