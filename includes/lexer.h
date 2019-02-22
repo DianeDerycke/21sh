@@ -123,6 +123,7 @@ ssize_t		too_many_args(char *cmd);
 ssize_t		unvalid_setenv_cmd(void);
 ssize_t		error_chdir(int error, char *path, char *cmd);
 int			syntax_error(char *str);
+int			ambiguous_redirect(char *arg);
 
 //==========================================================//
 
