@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/22 17:23:38 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/22 18:11:15 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,8 @@ static int      do_redirection(int token, t_ast *redir, t_ast *ast)
         &redir_less,
         &redir_dless,
         NULL,
-        NULL,
+        &redir_lessand,
         &redir_greatand,
-        // &redir_lessand,
     };
     return(redir_array[token](redir, ast));
 }

@@ -109,8 +109,9 @@ int     redir_less(t_ast *redir, t_ast *ast);
 int     redir_dless(t_ast *redir, t_ast *ast);
 int     redir_and(t_ast *redir, t_ast *ast);
 int     redir_greatand(t_ast *redir, t_ast *ast);
+int     redir_lessand(t_ast *redir, t_ast *ast);
 
-//REDIR
+//REDIR FILE
 t_ast  *find_next_redir(t_ast *ast);
 int    exec_redirection(t_ast *ast, t_sh *shell);
 
