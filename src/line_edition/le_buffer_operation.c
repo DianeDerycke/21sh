@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/21 17:30:11 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/22 16:14:39 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,24 @@ int		le_buff_add(struct s_le *le_struct, int i, char c)
 **	Add the c char at i position on the buffer and shift all chars after i
 */
 
+int		le_buff_check_space(struct s_le *le_struct, int len)
+{
+	if (le_struct->nb_char + len > le_struct->max_size)
+		return (LE_TRUNCATE);
+	if (le_struct->nb_char + len > le_struct->buffer_size)
+		return (LE_REALLOC);
+	return (0);
+}
+
+/*
+**	Check if there is enough space on the buffer and the shell window
+**	for more nb chars, if yes return 0
+*/
+
 char	*le_buff_realloc(struct s_le *le_struct, int nb)
 {
 	char	*tmp;
 
-	if (le_struct->nb_char + nb < le_struct->buffer_size\
-	|| le_struct->nb_char + nb > le_struct->max_size)
-		return (le_struct->buff);
 	le_struct->buffer_size += LE_BUFF_SIZE + nb;
 	if (!(tmp = ft_strdup(le_struct->buff)))
 		return (NULL);
@@ -118,6 +129,5 @@ char	*le_buff_realloc(struct s_le *le_struct, int nb)
 }
 
 /*
-**	Check if there is enough place on the buffer for more nb chars
 **	Realloc the buffer if the command line is over than LE_BUFF_SIZE + nb
 */

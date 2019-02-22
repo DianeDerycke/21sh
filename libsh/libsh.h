@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libsh.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/21 14:38:39 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/22 17:19:24 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,10 @@ int			sh_find_env_key(char **env, char *key);
 void		sh_append_env_value(char **env, char *key, char *newvalue);
 char		*sh_get_env_key(char **env, int field);
 // void		sh_env_display(char **env);
-int         sh_get_size_rtree(t_ast *ast);
-char        **sh_rtree_to_array(t_ast *ast);
+int			sh_get_size_rtree(t_ast *ast);
+char		**sh_rtree_to_array(t_ast *ast);
 t_sh 		*init_shell(void);
 void		sh_free_shell(t_sh *shell);
+char		*sh_strinsert(char *dst, char *src, int pos);
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
+#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/23 13:11:33 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/02/14 15:46:07 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/02/22 17:18:57 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = libsh.a
 FILES = sh_strsplit sh_strfpos sh_getvalue \
 		sh_get_env_value sh_add_field_array sh_find_env_key sh_append_env_value \
 		sh_get_env_key init_shell sh_free_shell sh_rtree_to_array \
-		sh_get_size_rtree \
+		sh_get_size_rtree sh_strinsert \
 
 SRC = $(addsuffix .c, $(FILES))
 OBJ = $(addsuffix .o, $(FILES))

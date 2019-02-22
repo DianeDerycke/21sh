@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/21 15:43:45 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/22 16:01:17 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 
 int		le_init(struct s_le *le_struct, char **env)
 {
-	if (!(le_struct->buff = le_buff_realloc(le_struct, 1)))
-		return (LE_FAILURE);
+	if ((le_buff_check_space(le_struct, 1) == LE_REALLOC))
+		if (!(le_struct->buff = le_buff_realloc(le_struct, 1)))
+			return (LE_FAILURE);
 	if (le_struct->nb_char == LE_START)
 	{
 		if (le_prompt_init(le_struct, env))

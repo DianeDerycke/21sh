@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/21 17:30:00 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/22 11:50:59 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		le_read_and_exec(struct s_le *le_struct, char **env)
 				return (LE_FAILURE);
 		}
 		else if (!le_struct->term && ft_isprint(le_struct->tmp[0])\
-		&& le_struct->nb_char + 1 < le_struct->max_size)
+		&& le_struct->nb_char < le_struct->max_size)
 			if (le_buff_append(le_struct, le_struct->tmp[0]))
 				return (LE_FAILURE);
 	}

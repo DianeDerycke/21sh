@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 13:09:48 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/21 19:09:58 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/22 17:16:29 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,9 @@ int		le_clipboard_paste(struct s_le *le_struct)
 	if (!(le_struct->clipboard))
 		return (LE_SUCCESS);
 	size = ft_strlen(le_struct->clipboard);
-	if (!(le_struct->buff = le_buff_realloc(le_struct, size)))
-		return (LE_FAILURE);
+	if (le_buff_check_space(le_struct, size) == LE_REALLOC)
+		if (!(le_struct->buff = le_buff_realloc(le_struct, size)))
+			return (LE_FAILURE);
 	if (!(le_struct->buff = sh_strinsert(le_struct->buff,\
 	le_struct->clipboard, le_struct->cursor_buff)))
 		return (LE_FAILURE);
@@ -116,22 +117,4 @@ int		le_clipboard_cut(struct s_le *le_struct)
 		le_struct->buff[i++] = le_struct->buff[le_struct->copy_off + k++];
 	ft_strclr(&le_struct->buff[i]);
 	return (LE_SUCCESS);
-}
-
-char	*sh_strinsert(char *dst, char *src, int pos)		//change place
-{
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	if (!(tmp = ft_strdup(&dst[pos])))
-		return (NULL);
-	while (src[i])
-		dst[pos++] = src[i++];
-	i = 0;
-	while (tmp[i])
-		dst[pos++] = tmp[i++];
-	dst[pos] = '\0';
-	ft_strdel(&tmp);
-	return (dst);
 }

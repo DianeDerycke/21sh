@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/21 19:44:52 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/22 17:11:16 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@
 # define LE_COPY			25
 # define LE_SELECT_ON		"\033[7m"
 # define LE_TERM_OFF		"\033[0m"
+# define LE_REALLOC			1
+# define LE_TRUNCATE		2
 
 /*
 **	Termcaps DEFINE
@@ -84,14 +86,14 @@
 # define TC_SH_LEFT			"\033[1;2D"
 # define TC_DEL				'\177'
 
-typedef	struct		s_dlist
+typedef	struct	s_dlist
 {
-	void			*content;
-	struct s_dlist	*next;
-	struct s_dlist	*prev;
-}					t_dlist;
+	void				*content;
+	struct s_dlist		*next;
+	struct s_dlist		*prev;
+}				t_dlist;
 
-typedef enum		e_termnum
+typedef enum	e_termnum
 {
 	LE_ARROW_UP = 2,
 	LE_ARROW_DOWN,
@@ -106,33 +108,33 @@ typedef enum		e_termnum
 	LE_END,
 	LE_HOME,
 	LE_EOF
-}					t_termnum;
+}				t_termnum;
 
-typedef struct		s_le
+typedef struct	s_le
 {
-	t_dlist	*history;
-	char	*buff;
-	char	*clipboard;
-	char	tmp[LE_TMP_BUFF_SIZE];
-	char	*prompt;
-	int		prompt_size;
-	int		prompt_type;
-	int		buffer_size;
-	int		max_size;
-	int		cursor_x;
-	int		cursor_y;
-	int		cursor_buff;
-	int		nb_char;
-	int		nb_empty_char;
-	int		nb_line;
-	int		w_line;
-	int		w_col;
-	int		last_line;
-	int		term;
-	int		history_activ;
-	int		copy_on;
-	int		copy_off;
-}					t_le;
+	t_dlist			*history;
+	char			*buff;
+	char			*clipboard;
+	char			tmp[LE_TMP_BUFF_SIZE];
+	char			*prompt;
+	int				prompt_size;
+	int				prompt_type;
+	int				buffer_size;
+	int				max_size;
+	int				cursor_x;
+	int				cursor_y;
+	int				cursor_buff;
+	int				nb_char;
+	int				nb_empty_char;
+	int				nb_line;
+	int				w_line;
+	int				w_col;
+	int				last_line;
+	int				term;
+	int				history_activ;
+	int				copy_on;
+	int				copy_off;
+}				t_le;
 
 /*
 **	main.c
@@ -180,14 +182,21 @@ int		le_termcap_init(void);
 int		le_rputchar(int c);
 
 /*
-**	le_buffer.c
+**	le_buffer_tool.c
+*/
+
+void	le_buff_print(struct s_le *le_struct, int pos);
+void	le_buff_print_select(struct s_le *le_struct, int pos, int on, int off);
+void	le_buff_truncate(struct s_le *le_struct, int *len);
+
+/*
+**	le_buffer_history.c
 */
 
 int		le_buff_history(struct s_le *le_struct);
 int		le_buff_history_forward(struct s_le *le_struct);
 int		le_buff_history_backward(struct s_le *le_struct);
-void	le_buff_print(struct s_le *le_struct, int pos);
-void	le_buff_print_select(struct s_le *le_struct, int pos, int on, int off);
+int		le_buff_history_clear(struct s_le *le_struct);
 
 /*
 **	le_buffer_operation.c
@@ -196,6 +205,7 @@ void	le_buff_print_select(struct s_le *le_struct, int pos, int on, int off);
 int		le_buff_remove(struct s_le *le_struct, int i);
 int		le_buff_add(struct s_le *le_struct, int i, char c);
 int		le_buff_append(struct s_le *le_struct, char c);
+int		le_buff_check_space(struct s_le *le_struct, int len);
 char	*le_buff_realloc(struct s_le *le_struct, int size);
 
 /*
