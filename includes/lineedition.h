@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/22 17:11:16 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/22 18:24:05 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 # define LE_CUT				21
 # define LE_PASTE			16
 # define LE_COPY			25
-# define LE_SELECT_ON		"\033[7m"
+# define LE_SELECT_ON		"\033[100m"
 # define LE_TERM_OFF		"\033[0m"
 # define LE_REALLOC			1
 # define LE_TRUNCATE		2
@@ -243,7 +243,6 @@ int		le_clipboard_exec_cut(struct s_le *le_struct);
 int		le_clipboard_copy(struct s_le *le_struct);
 int		le_clipboard_paste(struct s_le *le_struct);
 int		le_clipboard_cut(struct s_le *le_struct);
-char	*sh_strinsert(char *dst, char *src, int pos);
 
 /*
 **	le_prompt.c

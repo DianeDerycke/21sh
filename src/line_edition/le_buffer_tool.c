@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:33:43 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/22 16:12:42 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/22 18:48:38 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	le_buff_print(struct s_le *le_struct, int pos)
 {
 	if (!le_struct->buff)
 		return ;
+	le_struct->cursor_buff = le_struct->cursor_x - le_struct->prompt_size;
 	le_buff_truncate(le_struct, &le_struct->nb_char);
 	le_buff_print_select(le_struct,\
 	pos, le_struct->copy_on, le_struct->copy_off);
@@ -38,8 +39,6 @@ void	le_buff_print_select(struct s_le *le_struct, int pos, int on, int off)
 		if (on != LE_START && pos >= on && pos <= off)
 		{
 			ft_putstr(LE_SELECT_ON);
-			if (le_struct->cursor_buff == pos)
-				ft_putstr(LE_PROMPT_CLR);
 			ft_putchar(le_struct->buff[pos]);
 			ft_putstr(LE_TERM_OFF);
 		}
@@ -59,7 +58,7 @@ void	le_buff_truncate(struct s_le *le_struct, int *len)
 	if (*len > le_struct->max_size)
 	{
 		ft_strclr(&le_struct->buff[le_struct->max_size]);
-		*len = le_struct->max_size - 1;
+		*len = le_struct->max_size;
 		le_struct->cursor_x = le_struct->nb_char + le_struct->prompt_size;
 	}
 }
