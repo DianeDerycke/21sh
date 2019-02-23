@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 13:09:48 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/22 17:16:29 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/23 19:06:55 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,11 @@ int		le_clipboard(struct s_le *le_struct)
 	return (LE_SUCCESS);
 }
 
+/*
+**	Call the clipboard functions and set the good values
+**	for the cursor and nb_char
+*/
+
 int		le_clipboard_exec_cut(struct s_le *le_struct)
 {
 	if (le_struct->term == LE_CUT && le_struct->nb_char\
@@ -55,6 +60,10 @@ int		le_clipboard_exec_cut(struct s_le *le_struct)
 	}
 	return (LE_SUCCESS);
 }
+
+/*
+**	Execute the cut function and set the values for the cursor and nb_char
+*/
 
 int		le_clipboard_copy(struct s_le *le_struct)
 {
@@ -84,6 +93,12 @@ int		le_clipboard_copy(struct s_le *le_struct)
 	return (LE_SUCCESS);
 }
 
+/*
+**	Copy a part of the command line, for use: enter on select mode with
+**	control + y, and select the end of your copy by press a last time
+**	control + y, now this part of command are save on the clipboard
+*/
+
 int		le_clipboard_paste(struct s_le *le_struct)
 {
 	int size;
@@ -99,6 +114,10 @@ int		le_clipboard_paste(struct s_le *le_struct)
 		return (LE_FAILURE);
 	return (LE_SUCCESS);
 }
+
+/*
+**	Paste the clipboard content on the command line, for use: press control + p
+*/
 
 int		le_clipboard_cut(struct s_le *le_struct)
 {
@@ -118,3 +137,9 @@ int		le_clipboard_cut(struct s_le *le_struct)
 	ft_strclr(&le_struct->buff[i]);
 	return (LE_SUCCESS);
 }
+
+/*
+**	Cut a part of the command line, and save the content on the clipboard
+**	for use: enter on the select mode with control + y, and chose the second
+**	place for cut, press control + u or delete key
+*/

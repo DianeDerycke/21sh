@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/22 18:24:05 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/23 18:42:28 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,11 @@
 # define LE_BUFF_SIZE		1024
 # define LE_TMP_BUFF_SIZE	16
 # define LE_PROMPT_CLR		"\033[1m\033[32m"
+# define LE_FAILURE_CLR		"\033[1m\033[31m"
+# define LE_GIT_CLR			"\033[1m\033[34m"
 # define LE_PROMPT 			LE_PROMPT_CLR"$> \033[0m"
-# define LE_PROMPT_MIN		"\033[1m\033[30m\\> \033[0m"
-# define LE_PROMPT_SIZE		3
+# define LE_PROMPT_QUOTE	"\033[1m\033[30m\\> \033[0m"
+# define LE_PROMPT_DEF_SIZE	4
 # define LE_ESCAPE			'\033'
 # define LE_ESCAPEBRK		"\033["
 # define LE_ENDL			'\n'
@@ -86,14 +88,7 @@
 # define TC_SH_LEFT			"\033[1;2D"
 # define TC_DEL				'\177'
 
-typedef	struct	s_dlist
-{
-	void				*content;
-	struct s_dlist		*next;
-	struct s_dlist		*prev;
-}				t_dlist;
-
-typedef enum	e_termnum
+typedef	enum		e_termnum
 {
 	LE_ARROW_UP = 2,
 	LE_ARROW_DOWN,
@@ -108,15 +103,23 @@ typedef enum	e_termnum
 	LE_END,
 	LE_HOME,
 	LE_EOF
-}				t_termnum;
+}					t_termnum;
 
-typedef struct	s_le
+typedef	struct		s_dlist
+{
+	void			*content;
+	struct s_dlist	*next;
+	struct s_dlist	*prev;
+}					t_dlist;
+
+typedef	struct		s_le
 {
 	t_dlist			*history;
 	char			*buff;
 	char			*clipboard;
 	char			tmp[LE_TMP_BUFF_SIZE];
 	char			*prompt;
+	char			*git;
 	int				prompt_size;
 	int				prompt_type;
 	int				buffer_size;
@@ -134,124 +137,142 @@ typedef struct	s_le
 	int				history_activ;
 	int				copy_on;
 	int				copy_off;
-}				t_le;
+}					t_le;
 
 /*
 **	main.c
 */
 
-int		le_read_and_exec(struct s_le *le_struct, char **env);
-char	*line_edition(int prompt, char **env);
+int					le_read_and_exec(struct s_le *le_struct, char **env);
+char				*line_edition(int prompt, char **env);
 
 /*
 **	le_init.c
 */
 
-int		le_init(struct s_le *le_struct, char **env);
-int		le_init_struct(struct s_le *le_struct);
-void	le_init_calcul(struct s_le *le_struct);
-int		le_init_set_attribute(struct termios *backup);
-int		le_exit(struct s_le *le_struct, int ret);
+int					le_init(struct s_le *le_struct, char **env);
+int					le_init_struct(struct s_le *le_struct);
+void				le_init_calcul(struct s_le *le_struct);
+int					le_init_set_attribute(struct termios *backup);
+
+/*
+**	le_exit.c
+*/
+
+int					le_exit(struct s_le *le_struct, int ret);
+void				le_free(struct s_le *le_struct);
 
 /*
 **	le_window.c
 */
 
-int		le_window_size(int *col, int *line);
-int		le_window_check(struct s_le *le_struct);
-int		le_window_clear(struct s_le *le_struct);
-int		le_window_clear_restore(struct s_le *le_struct);
+int					le_window_size(int *col, int *line);
+int					le_window_check(struct s_le *le_struct);
+int					le_window_clear(struct s_le *le_struct);
+int					le_window_clear_restore(struct s_le *le_struct);
+int					le_window_clear_all_restore(struct s_le *le_struct);
 
 /*
 ** le_termcap.c
 */
 
-int		le_termcap_check(struct s_le *le_struct);
-void	le_termcap_type(struct s_le *le_struct);
-int		le_termcap_exec(struct s_le *le_struct);
-int		le_termcap_motion(struct s_le *le_struct);
-int		le_termcap_delete(struct s_le *le_struct);
+int					le_termcap_check(struct s_le *le_struct);
+void				le_termcap_type(struct s_le *le_struct);
+int					le_termcap_exec(struct s_le *le_struct);
+int					le_termcap_motion(struct s_le *le_struct);
+int					le_termcap_delete(struct s_le *le_struct);
 
 /*
 **	le_termcap_tool.c
 */
 
-int		le_termcap_print(char *str, int nb);
-int		le_ansi_print(int nb, char *s);
-int		le_termcap_init(void);
-int		le_rputchar(int c);
+int					le_termcap_print(char *str, int nb);
+int					le_ansi_print(int nb, char *s);
+int					le_termcap_init(void);
+int					le_rputchar(int c);
 
 /*
 **	le_buffer_tool.c
 */
 
-void	le_buff_print(struct s_le *le_struct, int pos);
-void	le_buff_print_select(struct s_le *le_struct, int pos, int on, int off);
-void	le_buff_truncate(struct s_le *le_struct, int *len);
+void				le_buff_print(struct s_le *le_struct, int pos);
+void				le_buff_print_select(struct s_le *le_struct,\
+					int pos, int on, int off);
+void				le_buff_truncate(struct s_le *le_struct, int *len);
 
 /*
 **	le_buffer_history.c
 */
 
-int		le_buff_history(struct s_le *le_struct);
-int		le_buff_history_forward(struct s_le *le_struct);
-int		le_buff_history_backward(struct s_le *le_struct);
-int		le_buff_history_clear(struct s_le *le_struct);
+int					le_buff_history(struct s_le *le_struct);
+int					le_buff_history_forward(struct s_le *le_struct);
+int					le_buff_history_backward(struct s_le *le_struct);
+int					le_buff_history_clear(struct s_le *le_struct);
 
 /*
 **	le_buffer_operation.c
 */
 
-int		le_buff_remove(struct s_le *le_struct, int i);
-int		le_buff_add(struct s_le *le_struct, int i, char c);
-int		le_buff_append(struct s_le *le_struct, char c);
-int		le_buff_check_space(struct s_le *le_struct, int len);
-char	*le_buff_realloc(struct s_le *le_struct, int size);
+int					le_buff_remove(struct s_le *le_struct, int i);
+int					le_buff_add(struct s_le *le_struct, int i, char c);
+int					le_buff_append(struct s_le *le_struct, char c);
+int					le_buff_check_space(struct s_le *le_struct, int len);
+char				*le_buff_realloc(struct s_le *le_struct, int size);
 
 /*
 **	le_cursor_motion.c
 */
 
-int		le_cursor_motion(struct s_le *le_struct, int motion);
-int		le_cursor_right(struct s_le *le_struct);
-int		le_cursor_left(struct s_le *le_struct);
-int		le_cursor_up(struct s_le *le_struct);
-int		le_cursor_down(struct s_le *le_struct);
+int					le_cursor_motion(struct s_le *le_struct, int motion);
+int					le_cursor_right(struct s_le *le_struct);
+int					le_cursor_left(struct s_le *le_struct);
+int					le_cursor_up(struct s_le *le_struct);
+int					le_cursor_down(struct s_le *le_struct);
 
 /*
 **	le_cursor_tool.c
 */
 
-int		le_cursor_goto(int expected, int current, struct s_le *le_struct);
-int		le_cursor_restore(struct s_le *le_struct);
-int		le_cursor_beggin(struct s_le *le_struct, int current);
+int					le_cursor_goto(int expected, int current,\
+					struct s_le *le_struct);
+int					le_cursor_restore(struct s_le *le_struct);
+int					le_cursor_beggin(struct s_le *le_struct, int current);
 
 /*
 **	le_cursor.c
 */
 
-int		le_cursor_word_forward(struct s_le *le_struct);
-int		le_cursor_word_backward(struct s_le *le_struct);
-int		le_cursor_home_end(struct s_le *le_struct, int direction);
+int					le_cursor_word_forward(struct s_le *le_struct);
+int					le_cursor_word_backward(struct s_le *le_struct);
+int					le_cursor_home_end(struct s_le *le_struct, int direction);
 
 /*
 **	le_clipboard.c
 */
 
-int		le_clipboard(struct s_le *le_struct);
-int		le_clipboard_exec_cut(struct s_le *le_struct);
-int		le_clipboard_copy(struct s_le *le_struct);
-int		le_clipboard_paste(struct s_le *le_struct);
-int		le_clipboard_cut(struct s_le *le_struct);
+int					le_clipboard(struct s_le *le_struct);
+int					le_clipboard_exec_cut(struct s_le *le_struct);
+int					le_clipboard_copy(struct s_le *le_struct);
+int					le_clipboard_paste(struct s_le *le_struct);
+int					le_clipboard_cut(struct s_le *le_struct);
 
 /*
 **	le_prompt.c
 */
 
-int		le_prompt_init(struct s_le *le_struct, char **env);
-int		le_prompt_pwd(struct s_le *le_struct, char **env);
-int		le_prompt_home(struct s_le *le_struct, char **env, char *pwd);
-int		le_prompt_quote(struct s_le *le_struct);
-void	le_prompt_print(struct s_le *le_struct);
+int					le_prompt_init(struct s_le *le_struct, char **env);
+int					le_prompt_pwd(struct s_le *le_struct, char **env);
+int					le_prompt_home(struct s_le *le_struct,\
+					char **env, char *pwd);
+int					le_prompt_quote(struct s_le *le_struct);
+void				le_prompt_print(struct s_le *le_struct);
+
+/*
+**	le_prompt_git.c
+*/
+
+int					le_prompt_git(struct s_le *le_struct);
+char				*le_prompt_git_read(void);
+void				le_prompt_git_print(struct s_le *le_struct);
 
 #endif
