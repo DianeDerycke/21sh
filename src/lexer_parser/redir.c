@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/22 18:11:15 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/24 21:29:47 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_ast     *find_next_redir(t_ast *ast)
 {
     if (!ast)
         return (NULL);
-    while(ast)
+    while (ast)
     {
         if (ast->token >= GREAT && ast->token <= GREATAND)
             return (ast);
@@ -42,25 +42,61 @@ static int      do_redirection(int token, t_ast *redir, t_ast *ast)
     return(redir_array[token](redir, ast));
 }
 
+static t_ast    *add_argument_to_cmd(t_ast *ast)
+{
+    t_ast   *cmd;
+    t_ast   *tmp;
+    
+    cmd = create_elem();
+    tmp = cmd;
+    while (ast)
+    {
+        while (ast && ((ast->token == WORD && ast->io_number == 0) || 
+        ast->token == DQUOTE || ast->token == SQUOTE || (ast->token == DIGIT && ast->io_number == 0)))
+        {
+            cmd->value = ft_strdup(ast->value);
+            cmd->token = ast->token;
+            ast = ast->left;
+            cmd->left = create_elem();
+            cmd = cmd->left;
+        }
+        if ((ast = find_next_redir(ast)) && ast->left && ast->left->left)
+            ast = ast->left->left;
+        else
+        {
+            while (ast && ast->left && !ast->left->left)
+            {
+                ast = ast->left;
+                ast = find_next_redir(ast);
+            }
+            if (ast)
+                ast = ast->left->left;
+        }
+    }
+    cmd = tmp;
+    return (cmd);
+}
+
 int     exec_redirection(t_ast *ast, t_sh *shell)
 {
+    pid_t   pid;
     t_ast   *redir;
     int     status;
     t_ast   *tmp;
-    pid_t   pid;
+    t_ast   *cmd;
 
     tmp = ast;
+    cmd = add_argument_to_cmd(ast);
     pid = fork();
     if (pid == 0)
     {
         while ((redir = find_next_redir(tmp)))
         {
             do_redirection(redir->token, redir, ast);
-            // add_argument_to_cmd(ast, ast->left);
             tmp = redir->left;
         }
-        if (ast->token == WORD)
-            just_exec(ast, shell);
+        if (cmd)
+            just_exec(cmd, shell);
         exit (0);
     }
     else
