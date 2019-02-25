@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 16:44:55 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/25 11:13:42 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/25 15:49:06 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ char	*le_prompt_git_read(void)
 		return (NULL);
 	if (get_next_line(fd, &line) == -1)
 		return (NULL);
+	close(fd);
 	return (line);
 }
 

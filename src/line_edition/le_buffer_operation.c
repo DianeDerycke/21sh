@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/22 18:11:49 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/25 17:26:40 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,24 +108,27 @@ int		le_buff_check_space(struct s_le *le_struct, int len)
 **	for more nb chars, if yes return 0
 */
 
-char	*le_buff_realloc(struct s_le *le_struct, int nb)
+int		le_buff_realloc(struct s_le *le_struct, int nb)
 {
 	char	*tmp;
 
 	le_struct->buffer_size += LE_BUFF_SIZE + nb;
 	if (!(tmp = ft_strdup(le_struct->buff)))
-		return (NULL);
+		return (LE_FAILURE);
 	ft_strdel(&le_struct->buff);
 	if (!(le_struct->buff = (char *)malloc(sizeof(char *)\
 	* le_struct->buffer_size)))
-		return (NULL);
-	if (!(ft_memmove(le_struct->buff, tmp, le_struct->buffer_size)))
 	{
 		ft_strdel(&tmp);
-		return (NULL);
+		return (LE_FAILURE);
+	}
+	if (!(ft_strncpy(le_struct->buff, tmp, le_struct->buffer_size)))
+	{
+		ft_strdel(&tmp);
+		return (LE_FAILURE);
 	}
 	ft_strdel(&tmp);
-	return (le_struct->buff);
+	return (LE_SUCCESS);
 }
 
 /*

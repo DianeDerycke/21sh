@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 16:48:36 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/25 13:16:27 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/25 16:49:24 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ int		le_exit(struct s_le *le_struct, int ret)
 
 void	le_free(struct s_le *le_struct)
 {
-	hy_dlst_free(le_struct->history);
+	if (le_struct->history_activ != -1)
+		hy_dlst_free(le_struct->history);
 	ft_strclr(le_struct->tmp);
 	if (le_struct->clipboard)
 		ft_strdel(&le_struct->clipboard);

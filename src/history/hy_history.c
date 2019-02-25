@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/20 18:55:31 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/25 16:49:59 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ void	hy_dlst_push(t_dlist **history, char *content)
 	if (!(newlist = (t_dlist *)malloc(sizeof(t_dlist))))
 		return ;
 	if (!(newlist->content = ft_strdup(content)))
+	{
+		free(newlist);
 		return ;
+	}
 	newlist->next = *history;
 	newlist->prev = NULL;
 	if (*history)
@@ -32,7 +35,8 @@ void	hy_dlst_free(t_dlist *dlist)
 {
 	t_dlist	*tmp;
 
-	tmp = NULL;
+	while (dlist->prev)
+		dlist = dlist->prev;
 	while (dlist)
 	{
 		tmp = dlist->next;
@@ -69,18 +73,15 @@ int		hy_history_fill_list(struct s_le *le_struct)
 				return (FAILURE);
 			if (!ret)
 			{
-				if (line)
-					ft_strdel(&line);
+				ft_strdel(&line);
 				return (SUCCESS);
 			}
 			if (!(line = ft_strjoin(line, tmp)))
 				return (FAILURE);
-			if (tmp)
-				ft_strdel(&tmp);
+			ft_strdel(&tmp);
 		}
 		hy_dlst_push(&le_struct->history, line);
-		if (line)
-			ft_strdel(&line);
+		ft_strdel(&line);
 	}
 	if (close(fd) == -1)
 		return (FAILURE);

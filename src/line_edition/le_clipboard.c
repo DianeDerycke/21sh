@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 13:09:48 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/23 19:06:55 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/25 17:28:14 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int		le_clipboard_paste(struct s_le *le_struct)
 		return (LE_SUCCESS);
 	size = ft_strlen(le_struct->clipboard);
 	if (le_buff_check_space(le_struct, size) == LE_REALLOC)
-		if (!(le_struct->buff = le_buff_realloc(le_struct, size)))
+		if (le_buff_realloc(le_struct, size))
 			return (LE_FAILURE);
 	if (!(le_struct->buff = sh_strinsert(le_struct->buff,\
 	le_struct->clipboard, le_struct->cursor_buff)))

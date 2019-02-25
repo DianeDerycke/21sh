@@ -6,11 +6,46 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/22 11:50:59 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/25 18:52:01 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
+
+char	*line_edition(int prompt, char **env)
+{
+	struct termios	backup;
+	struct s_le		le_struct;
+
+	if (!isatty(0))
+		return (le_interactif_disabled());
+	le_struct.prompt_type = prompt;
+	if (le_init_set_attribute(&backup))
+		return (NULL);
+	if (le_read_and_exec(&le_struct, env))
+	{
+		if (tcsetattr(STDIN_FILENO, 0, &backup))
+			return (NULL);
+		if (le_struct.buff)
+			ft_strdel(&le_struct.buff);
+		return (NULL);
+	}
+	if (tcsetattr(STDIN_FILENO, 0, &backup))
+		return (NULL);
+	if (!(le_struct.nb_char))
+	{
+		ft_strdel(&le_struct.buff);
+		return (NULL);
+	}
+	return (le_struct.buff);
+}
+
+/*
+**	le_ = line_edition
+**	It's this function that will have to be called for line edition
+**	Set the attribute for the shell and launch the read/execute function
+*/
+
 
 int		le_read_and_exec(struct s_le *le_struct, char **env)
 {
@@ -47,34 +82,34 @@ int		le_read_and_exec(struct s_le *le_struct, char **env)
 **	Else add the char to the buffer
 */
 
-char	*line_edition(int prompt, char **env)
+char	*le_interactif_disabled(void)
 {
-	struct termios	backup;
-	struct s_le		le_struct;
+	char	*command;
+	char	*line;
+	int		ret;
 
-	le_struct.prompt_type = prompt;
-	if (le_init_set_attribute(&backup))
+	command = NULL;
+	line = NULL;
+	ret = 1;
+	if ((ret = get_next_line(0, &command)) == -1)
 		return (NULL);
-	if (le_read_and_exec(&le_struct, env))
+	while (ret != -1 && ret)
 	{
-		if (tcsetattr(STDIN_FILENO, 0, &backup))
+		if (line)
+		{
+			if (!(command = ft_strmjoin(command, " ; ", line)))
+			{
+				ft_strdel(&line);
+				ft_strdel(&command);
+				return (NULL);
+			}
+			ft_strdel(&line);
+		}
+		if ((ret = get_next_line(0, &line)) == -1)
+		{
+			ft_strdel(&command);
 			return (NULL);
-		if (le_struct.buff)
-			ft_strdel(&le_struct.buff);
-		return (NULL);
+		}
 	}
-	if (tcsetattr(STDIN_FILENO, 0, &backup))
-		return (NULL);
-	if (!(le_struct.nb_char))
-	{
-		ft_strdel(&le_struct.buff);
-		return (NULL);
-	}
-	return (le_struct.buff);
+	return (command);
 }
-
-/*
-**	le_ = line_edition
-**	It's this function that will have to be called for line edition
-**	Set the attribute for the shell and launch the read/execute function
-*/

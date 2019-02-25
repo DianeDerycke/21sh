@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/25 12:14:14 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/25 18:19:00 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,9 @@ typedef	struct		s_le
 **	main.c
 */
 
-int					le_read_and_exec(struct s_le *le_struct, char **env);
 char				*line_edition(int prompt, char **env);
+int					le_read_and_exec(struct s_le *le_struct, char **env);
+char				*le_interactif_disabled(void);
 
 /*
 **	le_init.c
@@ -219,7 +220,7 @@ int					le_buff_remove(struct s_le *le_struct, int i);
 int					le_buff_add(struct s_le *le_struct, int i, char c);
 int					le_buff_append(struct s_le *le_struct, char c);
 int					le_buff_check_space(struct s_le *le_struct, int len);
-char				*le_buff_realloc(struct s_le *le_struct, int size);
+int					le_buff_realloc(struct s_le *le_struct, int size);
 
 /*
 **	le_cursor_motion.c
