@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/25 13:47:25 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/25 14:26:25 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,14 @@ int     just_exec(t_ast *ast, t_sh *shell)
 	apply_expansions(shell);
     if (!shell->cmd)
         return (FAILURE);
-	if ((exec_builtin(shell) == SUCCESS))
-		return (SUCCESS);
-    if ((path = ms_get_valid_cmd(shell->cmd[0], shell->env))
+	if ((ret = exec_builtin(shell)) == ERROR)
+    {
+        if ((path = ms_get_valid_cmd(shell->cmd[0], shell->env))
             && access(path, X_OK) == SUCCESS)
-        execve(path, shell->cmd, shell->env);
-    else
-       ret = error_execution(shell->cmd[0]);
+        ret = execve(path, shell->cmd, shell->env);
+        else
+            ret = error_execution(shell->cmd[0]);
+    }
     ft_strdel(&path);
     ft_strdel(shell->cmd);
     return (ret);
@@ -46,7 +47,7 @@ int     exec_cmd(t_ast *ast, t_sh *shell)
     apply_expansions(shell);
     if (!shell->cmd)
         return (FAILURE);
-    if ((exec_builtin(shell)) == FAILURE)
+    if ((ret = exec_builtin(shell)) == ERROR)
         if ((ms_exec_binary(shell->cmd[0], shell->cmd, shell->env, shell->env)) == -1)
             ret = error_execution(shell->cmd[0]);
     ft_strdel(shell->cmd);
