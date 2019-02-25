@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:41:10 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/25 14:10:06 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/25 15:06:43 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int    parser_execution(t_ast *ast, t_sh *shell)
     ret = 0;
     if (!ast)
         return (0);
-    if (ast->token == SEPARATOR)
-        parser_execution(ast->right, shell);
+    if (ast->token == SEPARATOR && ast->right)
+        ret = parser_execution(ast->right, shell);
     else if (ast->token == PIPE)
         do_pipe(ast, shell);
     else if (ast->token >= WORD)
@@ -30,7 +30,7 @@ int    parser_execution(t_ast *ast, t_sh *shell)
         else
             ret = exec_cmd(ast, shell);
     }
-    if (ast->token == SEPARATOR)
-        parser_execution(ast->left, shell);
+    if (ast->token == SEPARATOR && ast->left)
+        ret = parser_execution(ast->left, shell);
     return (ret);
 }

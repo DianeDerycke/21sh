@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/25 14:26:25 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/25 15:04:43 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int     exec_cmd(t_ast *ast, t_sh *shell)
     if (!shell->cmd)
         return (FAILURE);
     if ((ret = exec_builtin(shell)) == ERROR)
-        if ((ms_exec_binary(shell->cmd[0], shell->cmd, shell->env, shell->env)) == -1)
+        if ((ret = ms_exec_binary(shell->cmd[0], shell->cmd, shell->env, shell->env)) == -1)
             ret = error_execution(shell->cmd[0]);
     ft_strdel(shell->cmd);
     return (ret);
