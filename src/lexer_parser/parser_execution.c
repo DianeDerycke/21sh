@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_execution.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:41:10 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/25 13:25:18 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/25 14:10:06 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 int    parser_execution(t_ast *ast, t_sh *shell)
 {
-    t_ast     *redir;
     int     ret;
 
-    redir = 0;
     ret = 0;
     if (!ast)
         return (0);

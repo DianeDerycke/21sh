@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:23:45 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/19 12:45:00 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/25 14:20:30 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ t_ast      *create_ast(t_ast *curr_node, t_ast *start, t_ast *end)
     tmp = NULL;
     if (start && (curr_node = find_priority_token(start, end)))
     {
-        curr_node->right = parser_left(start, curr_node);
         curr_node->left = create_ast(curr_node->right, curr_node->next, end);
+        curr_node->right = parser_left(start, curr_node);
     }
     return (curr_node);
 }
