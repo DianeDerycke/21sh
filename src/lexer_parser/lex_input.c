@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/21 15:28:03 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/25 13:16:03 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,13 @@ int     lex_input(t_param *param)
 	return (SUCCESS);
 }
 
-char 	*get_valid_input(char **env)
+char 	*get_valid_input(char **env, int ret)
 {
 	char	*input;
 
 	while (21)
 	{
-		if (!(input = line_edition(0, env)))
+		if (!(input = line_edition(ret, env)))
 			continue;
 		handle_quotes(&input);
 		if (input)

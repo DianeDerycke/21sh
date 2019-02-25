@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/20 15:37:05 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/25 13:13:23 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int     is_valid_quotes(char *str)
                     return (2);
                 i++;
                 if (!str[i])
-                    return (2);
+                    return (DQUOTE);
             }
             if (str[i] == DQUOTE)
                 j++;
@@ -65,7 +65,7 @@ int     is_valid_quotes(char *str)
             while (str[i] && str[i] != SQUOTE)
                 i++;
             if (!str[i] || str[i] != SQUOTE)
-                return (1);
+                return (SQUOTE);
         }
         i++;
     }

@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/23 18:42:28 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/25 12:14:14 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define LE_GIT_CLR			"\033[1m\033[34m"
 # define LE_PROMPT 			LE_PROMPT_CLR"$> \033[0m"
 # define LE_PROMPT_QUOTE	"\033[1m\033[30m\\> \033[0m"
+# define LE_PROMPT_SIMPLE	3
 # define LE_PROMPT_DEF_SIZE	4
 # define LE_ESCAPE			'\033'
 # define LE_ESCAPEBRK		"\033["
@@ -161,6 +162,7 @@ int					le_init_set_attribute(struct termios *backup);
 
 int					le_exit(struct s_le *le_struct, int ret);
 void				le_free(struct s_le *le_struct);
+int					le_free_return(char *s1, char *s2, char *s3, int status);
 
 /*
 **	le_window.c

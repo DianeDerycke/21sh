@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/19 20:00:36 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/25 13:47:25 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ int     just_exec(t_ast *ast, t_sh *shell)
 
 int     exec_cmd(t_ast *ast, t_sh *shell)
 {
-    static int ret = 0;
+    int ret;
 
+	ret = 0;
     if (!(shell->cmd = sh_rtree_to_array(ast)))
         return (FAILURE);
     apply_expansions(shell);

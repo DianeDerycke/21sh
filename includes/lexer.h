@@ -80,7 +80,7 @@ int     identifier_action(t_param *param);
 
 //LEX INPUT
 int     	lex_input(t_param *param);
-char 		*get_valid_input(char **env);
+char 		*get_valid_input(char **env, int ret);
 
 //EXEC FUNCTION
 int     	just_exec(t_ast *ast, t_sh *shell);
