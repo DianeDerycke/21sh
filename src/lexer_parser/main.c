@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/25 15:06:13 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/27 18:32:01 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ int     main(void)
 		if (ast && parser_execution(ast, shell) != 0)
 			ret = FAILURE;
 		free_param(param);
+		if (!isatty(0))
+			break;
 	}
+	sh_free_shell(shell);
 	return (ret);
 }
