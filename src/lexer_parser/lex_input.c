@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/25 13:16:03 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/27 19:08:43 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ char 	*get_valid_input(char **env, int ret)
 	while (21)
 	{
 		if (!(input = line_edition(ret, env)))
+		{
+			ret = SUCCESS;
 			continue;
+		}
 		handle_quotes(&input);
 		if (input)
 			break ;

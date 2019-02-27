@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 16:48:36 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/27 15:34:23 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/27 18:39:27 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,8 @@ int		le_exit(struct s_le *le_struct, int ret)
 		if (ret == LE_EXIT)
 			ft_strclr(le_struct->buff);
 		if (le_struct->prompt_type == DQUOTE || le_struct->prompt_type == SQUOTE)
-		{
 			if (le_buff_add(le_struct, 0, '\n'))
 				return (LE_FAILURE);
-			le_struct->nb_char++;
-		}
 		return (LE_EXIT);
 	}
 	else if (ret == LE_FAILURE)

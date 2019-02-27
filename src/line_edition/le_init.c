@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/25 17:26:47 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/27 18:37:02 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ int		le_init(struct s_le *le_struct, char **env)
 	}
 	else if (le_struct->tmp[0] == LE_ENDL)
 	{
-		le_cursor_goto(le_struct->nb_char, 1, le_struct);
+		if (le_cursor_beggin(le_struct, le_struct->cursor_x))
+			return (LE_FAILURE);
+		le_struct->cursor_x = le_struct->nb_char + le_struct->prompt_size;
+		if (le_cursor_restore(le_struct))
+			return (LE_FAILURE);
 		ft_putchar(LE_ENDL);
 		le_struct->buff[le_struct->nb_char] = '\0';
 		return (LE_ENDL);

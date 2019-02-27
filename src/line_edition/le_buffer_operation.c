@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/27 17:01:53 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/27 18:31:10 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ int		le_buff_append(struct s_le *le_struct, char c)
 	{
 		if (le_window_clear_restore(le_struct))
 			return (LE_FAILURE);
+		if (le_struct->cursor_x == le_struct->w_col * le_struct->cursor_y)
+			if (le_termcap_print(TC_GO_DOWN, 1))
+				return (LE_FAILURE);
 	}
 	else
 		le_buff_print(le_struct, le_struct->cursor_buff);
