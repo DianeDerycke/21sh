@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/25 18:52:01 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/27 12:01:21 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,21 @@ char	*le_interactif_disabled(void)
 	ret = 1;
 	if ((ret = get_next_line(0, &command)) == -1)
 		return (NULL);
+	while (ret != -1 && ret && is_valid_quotes(command))
+	{
+		if ((ret = get_next_line(0, &line)) == -1)
+		{
+			ft_strdel(&command);
+			return (NULL);
+		}
+		if (!(command = ft_strmjoin(command, "\n", line)))
+		{
+			ft_strdel(&line);
+			ft_strdel(&command);
+			return (NULL);
+		}
+		ft_strdel(&line);
+	}
 	while (ret != -1 && ret)
 	{
 		if (line)

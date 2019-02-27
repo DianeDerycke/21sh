@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/25 13:13:23 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/27 15:47:41 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int     is_valid_quotes(char *str)
                 if (str[i] && str[i] == BACKSLASH && str[i + 1])
                     i++;
                 else if (!str[i + 1])
-                    return (2);
+                    return (DQUOTE);
                 i++;
                 if (!str[i])
                     return (DQUOTE);
@@ -70,7 +70,7 @@ int     is_valid_quotes(char *str)
         i++;
     }
     if (j % 2 > 0)
-        return (2);
+        return (DQUOTE);
     return (SUCCESS);
 }
 //to do : valid quote should return size_t

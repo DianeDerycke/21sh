@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/25 18:19:00 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/27 16:56:06 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # define LE_CUT				21
 # define LE_PASTE			16
 # define LE_COPY			25
+# define LE_CLEAR			12
 # define LE_SELECT_ON		"\033[100m"
 # define LE_TERM_OFF		"\033[0m"
 # define LE_REALLOC			1
@@ -120,7 +121,6 @@ typedef	struct		s_le
 	char			*clipboard;
 	char			tmp[LE_TMP_BUFF_SIZE];
 	char			*prompt;
-	char			*git;
 	int				prompt_size;
 	int				prompt_type;
 	int				buffer_size;
@@ -269,13 +269,5 @@ int					le_prompt_home(struct s_le *le_struct,\
 					char **env, char *pwd);
 int					le_prompt_quote(struct s_le *le_struct);
 void				le_prompt_print(struct s_le *le_struct);
-
-/*
-**	le_prompt_git.c
-*/
-
-int					le_prompt_git(struct s_le *le_struct);
-char				*le_prompt_git_read(void);
-void				le_prompt_git_print(struct s_le *le_struct);
 
 #endif

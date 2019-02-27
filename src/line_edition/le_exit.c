@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 16:48:36 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/25 16:49:24 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/27 15:34:23 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,6 @@ void	le_free(struct s_le *le_struct)
 	ft_strclr(le_struct->tmp);
 	if (le_struct->clipboard)
 		ft_strdel(&le_struct->clipboard);
-	if (!le_struct->prompt_type)
-		if (le_struct->git)
-			ft_strdel(&le_struct->git);
 	if (le_struct->prompt)
 			ft_strdel(&le_struct->prompt);
 }

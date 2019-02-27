@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 18:35:30 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/21 16:40:02 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/27 16:56:11 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int		le_termcap_check(struct s_le *le_struct)
 {
+	if (le_struct->tmp[0] == LE_CLEAR)
+		if (le_window_clear_all_restore(le_struct))
+			return (LE_FAILURE);
 	if (le_struct->tmp[0] == LE_COPY)
 		le_struct->term = LE_COPY;
 	else if (le_struct->tmp[0] == LE_PASTE)

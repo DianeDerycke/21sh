@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 16:44:04 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/25 13:45:02 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/27 15:37:42 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int		le_prompt_pwd(struct s_le *le_struct, char **env)
 	index = ms_find_variable("PWD", env, &pos);
 	if (index == -1 || !(pwd = ms_get_var_value(env[pos])))
 		return (LE_FAILURE);
-	le_prompt_git(le_struct);
 	if (le_prompt_home(le_struct, env, pwd))
 	{
 		if (!(le_struct->prompt = ft_strdup(pwd)))
@@ -118,7 +117,6 @@ void	le_prompt_print(struct s_le *le_struct)
 	{
 		ft_putstr(LE_PROMPT_CLR);
 		ft_putstr(le_struct->prompt);
-		le_prompt_git_print(le_struct);
 		if (le_struct->prompt_type == SUCCESS)
 			ft_putstr(LE_PROMPT_CLR" > ");
 		else

@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/02/25 17:28:23 by mrandou          ###   ########.fr        #
+#    Updated: 2019/02/27 15:33:58 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ LINE_EDITION_NAME = line_edition.c \
 					le_exit.c \
 					le_clipboard.c \
 					le_prompt.c \
-					le_prompt_git.c \
 					le_window.c
 
 HISTORY_NAME =		hy_history.c
