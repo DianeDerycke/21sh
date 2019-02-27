@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/14 17:00:27 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/02/27 18:38:21 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
+
+pid_t	get_pid(pid_t val)
+{
+	static int 		pid;
+	if (val != -1)
+		pid = val;
+	return (pid);
+}
+
+void	signal_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		kill(sig, get_pid(-1));
+		ft_putstr_fd("21sh: Interrupt program. Signal received: ", 2);
+		ft_putnbr_fd(sig, 2);
+		ft_putendl_fd("", 2);
+	}
+}
 
 static int     exec_pipe_cmd(t_sh *shell, t_ast *ast)
 {	
@@ -27,7 +46,9 @@ static int     exec_pipe_cmd(t_sh *shell, t_ast *ast)
 static void		end_recurse_pipe(t_sh *shell, t_ast *ast, int oldfd[], int newfd[])
 {
 	pid_t	child_pid;
-
+	int		status;
+	
+	status = 0;
 	child_pid = fork();
 	if (child_pid == 0)
 	{
@@ -38,16 +59,24 @@ static void		end_recurse_pipe(t_sh *shell, t_ast *ast, int oldfd[], int newfd[])
 		close(oldfd[INPUT_END]);
 		exec_pipe_cmd(shell, ast);
 	}
+	else
+	{
+		get_pid(child_pid);
+		signal(SIGINT, signal_handler);
+		waitpid(child_pid, &status, 0);
+	}
+	
 }
 
 static void		recurse_pipe(t_sh *shell, t_ast *ast, int oldfd[])
 {
 	int		newfd[2];
 	pid_t	child_pid;
+	int		status;
 
-
+	status = 0;
 	if (pipe(newfd) == -1)
-		exit (2);
+		exit (1);
 	child_pid = fork();
 	if (child_pid == 0)
 	{
@@ -71,35 +100,43 @@ static void		recurse_pipe(t_sh *shell, t_ast *ast, int oldfd[])
 		close(oldfd[INPUT_END]);
 		close(oldfd[OUTPUT_END]);
 	}
+		waitpid(child_pid, &status, 0);
 }
 
 static void		end_pipe(t_sh *shell, t_ast *ast, int *fd)
 {
 	pid_t	child_pid;
+	int		status;
 
+	status = 0;
 	child_pid = fork();
 	if (child_pid == 0)
 	{
 		close(fd[INPUT_END]);
 		dup2(fd[OUTPUT_END], STDIN_FILENO);
 		close(fd[INPUT_END]);
+		close(fd[OUTPUT_END]);
 		exec_pipe_cmd(shell, ast);		
 	}
+	else
+	{
+		get_pid(child_pid);
+		signal(SIGINT, signal_handler);
+		waitpid(child_pid, &status, 0);
+	}
+	
 }
 
 void		do_pipe(t_ast *ast, t_sh *shell)
 {
 	pid_t	child_pid;
 	int		fd[2];
-	int		pipe_ret;
 	int		status;
 	
-	pipe_ret = pipe(fd);
-	if (pipe_ret == -1)
+	status = 0;
+	if (pipe(fd) == -1)
 		exit (1);
 	child_pid = fork();
-	if (child_pid == -1)
-		exit(1);
 	if (child_pid == 0)
 	{
 		close(fd[0]);
@@ -107,12 +144,16 @@ void		do_pipe(t_ast *ast, t_sh *shell)
 		close(fd[1]);
 		exec_pipe_cmd(shell, ast->right);
 	}
-	if (ast->left && ast->left->token == PIPE)
-		recurse_pipe(shell, ast->left, fd);
-	else if (ast->left)
-		end_pipe(shell, ast->left, fd);
-	wait(NULL);
-	close(fd[OUTPUT_END]);
-	close(fd[INPUT_END]);
-	waitpid(-1, &status, 0);
+	else 
+	{
+		if (ast->left && ast->left->token == PIPE)
+			recurse_pipe(shell, ast->left, fd);
+		else if (ast->left)
+			end_pipe(shell, ast->left, fd);
+		close(fd[OUTPUT_END]);
+		close(fd[INPUT_END]);
+		get_pid(child_pid);
+		signal(SIGINT, signal_handler);
+		waitpid(-1, &status, 0);
+	}
 }
