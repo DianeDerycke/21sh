@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/27 12:01:21 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/28 11:47:14 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		le_read_and_exec(struct s_le *le_struct, char **env)
 {
 	int	ret;
 
-	if (le_init_struct(le_struct))
+	if (le_init_struct(le_struct, env))
 		return (LE_FAILURE);
 	while (LE_INFINITE_LOOP)
 	{

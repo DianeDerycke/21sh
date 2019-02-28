@@ -6,12 +6,11 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/25 16:49:59 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/28 13:20:31 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
-
 
 void	hy_dlst_push(t_dlist **history, char *content)
 {
@@ -48,21 +47,41 @@ void	hy_dlst_free(t_dlist *dlist)
 	}
 }
 
-int		hy_history_fill_list(struct s_le *le_struct)
+int		hy_history(struct s_le *le_struct, char **env)
 {
 	int		fd;
 	int		ret;
-	char	*line;
-	char	*tmp;
+	char	*path;
+	size_t	pos;
 
+	path = NULL;
+	if (!env || ms_find_variable("HOME", env, &pos) == -1)
+		return (FAILURE);
+	if (!(path = ms_get_var_value(env[pos])))
+		return (FAILURE);
+	if (!(path = ft_strjoin_free(path, HY_FILE)))
+		return (FAILURE);
 	ret = 1;
-	line = NULL;
-	tmp = NULL;
 	if (!le_struct)
 		return (FAILURE);
 	le_struct->history = NULL;
-	if ((fd = open(".21sh_history", O_RDONLY | O_CREAT, S_IRWXU)) == -1)
+	if ((fd = open(path, O_RDONLY | O_CREAT, S_IREAD | S_IWRITE)) == -1)
 		return (FAILURE);
+	ft_strdel(&path);
+	if (hy_history_fill_list(le_struct, fd, ret))
+		return (FAILURE);
+	if (close(fd) == -1)
+		return (FAILURE);
+	return (SUCCESS);
+}
+
+int		hy_history_fill_list(struct s_le *le_struct, int fd, int ret)
+{
+	char	*line;
+	char	*tmp;
+
+	line = NULL;
+	tmp = NULL;
 	while (ret != -1 && ret)
 	{
 		if ((ret = get_next_line(fd, &line)) == -1)
@@ -76,35 +95,37 @@ int		hy_history_fill_list(struct s_le *le_struct)
 				ft_strdel(&line);
 				return (SUCCESS);
 			}
-			if (!(line = ft_strjoin(line, tmp)))
+			if (!(line = ft_strjoin_free(line, tmp)))
 				return (FAILURE);
 			ft_strdel(&tmp);
 		}
 		hy_dlst_push(&le_struct->history, line);
-		ft_strdel(&line);
+	}
+	return (SUCCESS);
+}
+
+int		hy_history_write(char *command, char **env)
+{
+	int		fd;
+	char	*path;
+	size_t	pos;
+
+	path = NULL;
+	if (!env || ms_find_variable("HOME", env, &pos) == -1)
+		return (FAILURE);
+	if (!(path = ms_get_var_value(env[pos])))
+		return (FAILURE);
+	if (!(path = ft_strjoin_free(path, HY_FILE)))
+		return (FAILURE);
+	if ((fd = open(path, O_WRONLY | O_APPEND)) == -1)
+		return (FAILURE);
+	if ((write(fd, command, ft_strlen(command))) == -1\
+	|| write(fd, "\n", 1) == -1)
+	{
+		close(fd);
+		return (FAILURE);
 	}
 	if (close(fd) == -1)
 		return (FAILURE);
 	return (SUCCESS);
-}
-
-int		hy_history_write(char *command)
-{
-	int	fd;
-
-	if ((fd = open(".21sh_history", O_WRONLY | O_APPEND)) == -1)
-		return (1);
-	if ((write(fd, command, ft_strlen(command))) == -1)
-	{
-		close(fd);
-		return (1);
-	}
-	if ((write(fd, "\n", 1)) == -1)
-	{
-		close(fd);
-		return (1);
-	}
-	if (close(fd) == -1)
-		return (1);
-	return (0);
 }

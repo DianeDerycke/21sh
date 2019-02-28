@@ -3,36 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:18:40 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/18 15:53:44 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/28 14:04:59 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-static ssize_t		tilde_expansion(char **arg)
+static ssize_t		tilde_expansion(char **arg, char **env)
 {
 	char	*tmp;
+	char	*home;
+	size_t	pos;
 
-	tmp = NULL;
-	if (!arg || !(*arg))
+	if ((!arg || !(*arg) || !env || ms_find_variable(HOME, env, &pos) == -1))
 		return (FAILURE);
-	if ((*arg)[0] == C_TILDE && ft_strlen(*arg) > 1 && (*arg)[1] == C_SLASH)
+	if (!(home = ms_get_var_value(env[pos])))
+		return (FAILURE);
+	tmp = NULL;
+	if ((*arg)[0] == C_TILDE)
 	{
-		if (!(tmp = ft_strdup((*arg) + 1)))
-			ms_malloc_error();
-		ft_strdel(arg);
-		if (!(*arg = ft_strjoin(DEFAULT_HOME, tmp)))
-			ms_malloc_error();
-		ft_strdel(&tmp);
-	}
-	else if ((*arg)[0] == C_TILDE)
-	{
-		ft_strdel(arg);
-		if (!(*arg = ft_strdup(DEFAULT_HOME)))
-			ms_malloc_error();
+		if (ft_strlen(*arg) > 1 && (*arg)[1] == C_SLASH)
+		{
+			if (!(tmp = ft_strdup((*arg) + 1)))
+				ms_malloc_error();
+			ft_strdel(arg);
+			if (!(*arg = ft_strjoin_free(home, tmp)))
+				ms_malloc_error();
+			ft_strdel(&tmp);
+		}
+		else
+			ft_strdel(arg);
 	}
 	return (SUCCESS);
 }
@@ -87,12 +90,12 @@ ssize_t				apply_expansions(t_sh *shell)
 	i = 0;
 	while (shell->cmd[i])
 	{
-		if ((ptr = ft_strchr(shell->cmd[i], VAL_DOLLAR)) &&
-				ft_strlen(shell->cmd[i]) > 1)
-					dollar_expansion(shell->cmd + i, shell->env, shell->cmd[i], ptr);
-		else if ((ft_strcmp(shell->cmd[i], "~") == SUCCESS) ||
-					ft_strchr(shell->cmd[i], VAL_TILDE))
-			if (tilde_expansion(shell->cmd + i) == FAILURE)
+		if ((ptr = ft_strchr(shell->cmd[i], VAL_DOLLAR))
+		&& ft_strlen(shell->cmd[i]) > 1)
+			dollar_expansion(shell->cmd + i, shell->env, shell->cmd[i], ptr);
+		else if ((ft_strcmp(shell->cmd[i], "~") == SUCCESS)
+		|| ft_strchr(shell->cmd[i], VAL_TILDE))
+			if (tilde_expansion(shell->cmd + i, shell->env) == FAILURE)
 				return (FAILURE);
 		i++;
 	}

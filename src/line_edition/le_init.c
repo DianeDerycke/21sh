@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/27 18:37:02 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/28 11:49:52 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		le_init(struct s_le *le_struct, char **env)
 **	If it's end, go at the end of the command line and print a new line
 */
 
-int		le_init_struct(struct s_le *le_struct)
+int		le_init_struct(struct s_le *le_struct, char **env)
 {
 	if (!(le_struct->buff = (char *)malloc(sizeof(char *) * LE_BUFF_SIZE)))
 		return (LE_FAILURE);
@@ -66,7 +66,7 @@ int		le_init_struct(struct s_le *le_struct)
 	le_struct->buffer_size = LE_BUFF_SIZE;
 	le_struct->history_activ = 0;
 	ft_bzero(le_struct->tmp, LE_TMP_BUFF_SIZE);
-	if (hy_history_fill_list(le_struct) || !le_struct->history)
+	if (hy_history(le_struct, env) || !le_struct->history)
 		le_struct->history_activ = -1;
 	le_struct->clipboard = NULL;
 	le_struct->copy_on = LE_START;

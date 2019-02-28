@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/27 18:32:01 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/02/28 13:12:49 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int     main(void)
 	{
 		param = init_param();
 		param->input = get_valid_input(shell->env, ret);
-		hy_history_write(param->input);
+		hy_history_write(param->input, shell->env);
 		if (lex_input(param) == FAILURE)
 			printf("ERROR LEXER\n");
 		// display_list(param->l_tokens);

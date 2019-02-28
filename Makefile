@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/02/27 15:33:58 by mrandou          ###   ########.fr        #
+#    Updated: 2019/02/28 13:13:22 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ LIBFT = ./libft/
 LIBSH = ./libsh/
 LIBMS = ./libms/
 LIBNAME = ./libft/libft.a ./libsh/libsh.a ./libms/libms.a
-HISTORY = .21sh_history
+HISTORY = ~/.21sh_history
 
 LINE_EDITION_NAME = line_edition.c \
 					le_termcap.c \
