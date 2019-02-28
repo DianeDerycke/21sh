@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 18:35:30 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/28 11:26:44 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/28 18:32:22 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ int		le_termcap_exec(struct s_le *le_struct)
 	}
 	else if (le_struct->history_activ != -1)
 		le_struct->history_activ = 0;
-	if (le_struct->copy_on != LE_START)
+	if ((le_struct->copy_on != LE_START && le_struct->copy_off == LE_START)\
+	|| le_struct->term == LE_PASTE)
 		if (le_window_clear_restore(le_struct))
 			return (LE_FAILURE);
 	return (LE_SUCCESS);
@@ -147,8 +148,12 @@ int		le_termcap_delete(struct s_le *le_struct)
 	}
 	if ((le_struct->term == LE_DELFRONT || le_struct->term == LE_EOF)\
 	&& le_struct->cursor_buff < le_struct->nb_char && le_struct->nb_char)
+	{
 		if (le_buff_remove(le_struct, le_struct->cursor_buff))
 			return (LE_FAILURE);
+		if (le_window_clear_restore(le_struct))
+			return (LE_FAILURE);
+	}
 	if (le_struct->term == LE_DEL\
 	&& le_struct->cursor_x > le_struct->prompt_size && le_struct->nb_char)
 	{
@@ -157,9 +162,9 @@ int		le_termcap_delete(struct s_le *le_struct)
 		le_struct->cursor_buff--;
 		if (le_buff_remove(le_struct, le_struct->cursor_buff))
 			return (LE_FAILURE);
+		if (le_window_clear_restore(le_struct))
+			return (LE_FAILURE);
 	}
-	if (le_window_clear_restore(le_struct))
-		return (LE_FAILURE);
 	return (LE_SUCCESS);
 }
 

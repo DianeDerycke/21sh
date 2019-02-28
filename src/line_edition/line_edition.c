@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/28 11:47:14 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/28 18:21:55 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,9 @@ int		le_read_and_exec(struct s_le *le_struct, char **env)
 		if (read(STDIN_FILENO, le_struct->tmp, 1) == -1)
 			return (LE_FAILURE);
 		if (le_termcap_check(le_struct) != LE_FAILURE && le_struct->term)
-		{
 			if (le_termcap_exec(le_struct))
 				return (LE_FAILURE);
-		}
-		else if (!le_struct->term && ft_isprint(le_struct->tmp[0])\
+		if (!le_struct->term && ft_isprint(le_struct->tmp[0])\
 		&& le_struct->nb_char < le_struct->max_size)
 			if (le_buff_append(le_struct, le_struct->tmp[0]))
 				return (LE_FAILURE);
@@ -78,7 +76,7 @@ int		le_read_and_exec(struct s_le *le_struct, char **env)
 
 /*
 **	Initialize the shell, and read char by char the standard input
-**	Check if it's  a termcaps, if it's true, then launch the termacap function
+**	Check if it's  a termcaps, if it's true, then launch the termcap function
 **	Else add the char to the buffer
 */
 

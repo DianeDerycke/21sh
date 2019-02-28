@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/28 11:49:52 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/02/28 18:11:11 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ void	le_init_calcul(struct s_le *le_struct)
 	le_struct->cursor_y = ((le_struct->cursor_x - 1) / le_struct->w_col) + 1;
 	le_struct->nb_line = ((le_struct->nb_char + le_struct->prompt_size)\
 	/ le_struct->w_col) + 1;
-	le_struct->last_line = le_struct->w_col - (le_struct->nb_line *\
-		le_struct->w_col - (le_struct->nb_char + le_struct->prompt_size));
+	le_struct->last_line = le_struct->w_col - (le_struct->nb_line\
+	* le_struct->w_col - (le_struct->nb_char + le_struct->prompt_size));
 	le_struct->max_size = le_struct->w_col * le_struct->w_line\
-		- le_struct->prompt_size;
+	- le_struct->prompt_size;
 }
 
 /*
