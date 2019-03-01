@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh21.h                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/16 15:05:44 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/28 20:31:09 by DERYCKE          ###   ########.fr       */
+/*   Created: 2019/02/28 20:28:25 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/02/28 20:30:15 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SH21_H
-# define SH21_H
+#include "../../includes/sh21.h"
 
-# include "../libft/libft.h"
-# include "../libsh/libsh.h"
-# include "../libms/libms.h"
-# include "lexer.h"
-# include "lineedition.h"
-# include "history.h"
-# include <fcntl.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <stdlib.h>
+void	signal_handler(int sig)
+{
+	if (sig == SIGINT)
+	{
+		kill(sig, get_pid(-1));
+		ft_putstr_fd("21sh: Interrupt program. Signal received: ", 2);
+		ft_putnbr_fd(sig, 2);
+		ft_putendl_fd("", 2);
+	}
+}
 
-//signal.h
-void	signal_handler(int sig);
-pid_t	get_pid(pid_t val);
-
-#endif
+pid_t	get_pid(pid_t val)
+{
+	static int 		pid;
+	if (val != -1)
+		pid = val;
+	return (pid);
+}
