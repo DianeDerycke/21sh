@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/25 15:04:43 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/01 12:34:01 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,3 +53,15 @@ int     exec_cmd(t_ast *ast, t_sh *shell)
     ft_strdel(shell->cmd);
     return (ret);
 }
+
+int     exec_pipe_cmd(t_sh *shell, t_ast *ast)
+{	
+	if (!ast)
+		return (FAILURE);
+	if (find_next_redir(ast))
+		return (exec_redirection(ast, shell));
+	if (just_exec(ast, shell) == FAILURE)
+		exit(1);
+	return (SUCCESS);
+}
+
