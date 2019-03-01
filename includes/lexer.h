@@ -85,6 +85,7 @@ char 		*get_valid_input(char **env, int ret);
 //EXEC FUNCTION
 int     	just_exec(t_ast *ast, t_sh *shell);
 int     	exec_cmd(t_ast *ast, t_sh *shell);
+int     exec_pipe_cmd(t_sh *shell, t_ast *ast);
 
 //EXPANSIONS
 ssize_t		apply_expansions(t_sh *shell);
@@ -96,7 +97,7 @@ int    		parser_execution(t_ast *ast, t_sh *shell);
 t_ast     *create_ast(t_ast *curr_node, t_ast *start, t_ast *end);
 
 //PIPE
-void     	do_pipe(t_ast *ast, t_sh *shell);
+void		recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd);
 
 //QUOTES
 void		handle_quotes(char **input);

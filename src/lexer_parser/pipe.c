@@ -6,40 +6,30 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/01 11:49:40 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/01 13:39:48 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-static int     exec_pipe_cmd(t_sh *shell, t_ast *ast)
-{	
-	if (!ast)
-		return (FAILURE);
-	if (find_next_redir(ast))
-		return (exec_redirection(ast, shell));
-	if (just_exec(ast, shell) == FAILURE)
-		exit(1);
-	return (SUCCESS);
-}
-
-void	double_close(int *fd)
+static void		close_pipe(int *fd)
 {
+	if (!fd)
+		return ;
 	close(fd[INPUT_END]);
 	close(fd[OUTPUT_END]);
 }
 
-void	handle_pipe(int *oldfd, int *newfd)
+static void		close_dup(int *fd, int std)
 {
-	close(oldfd[INPUT_END]);
-	dup2(oldfd[OUTPUT_END], STDIN_FILENO);
-	close(oldfd[OUTPUT_END]);
-	close(newfd[OUTPUT_END]);
-	dup2(newfd[INPUT_END], STDOUT_FILENO);
-	close(newfd[INPUT_END]);
+	if (!fd)
+		return ;
+	close(fd[std == STDIN_FILENO ? INPUT_END : OUTPUT_END]);
+	dup2(fd[std == STDIN_FILENO ? OUTPUT_END : INPUT_END], std);
+	close(fd[std == STDIN_FILENO ? OUTPUT_END : INPUT_END]);
 }
 
-static void		end_recurse_pipe(t_sh *shell, t_ast *ast, int oldfd[], int newfd[])
+static void		end_recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *newfd)
 {
 	pid_t	child_pid;
 	int		status;
@@ -48,21 +38,23 @@ static void		end_recurse_pipe(t_sh *shell, t_ast *ast, int oldfd[], int newfd[])
 	child_pid = fork();
 	if (child_pid == 0)
 	{
-		close(newfd[INPUT_END]);
-		dup2(newfd[OUTPUT_END], STDIN_FILENO);
-		close(newfd[OUTPUT_END]);
-		double_close(oldfd);
+		close_dup(newfd, STDIN_FILENO);
+		if (oldfd)
+			close_pipe(oldfd);
 		exec_pipe_cmd(shell, ast);
 	}
 	else
 	{
-		double_close(oldfd);
-		double_close(newfd);
+		if (oldfd)
+			close_pipe(oldfd);
+		close_pipe(newfd);
+		get_pid(child_pid);
+		signal(SIGINT, signal_handler);
 		waitpid(child_pid, &status, 0);
 	}	
 }
 
-static void		recurse_pipe(t_sh *shell, t_ast *ast, int oldfd[])
+void		recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd)
 {
 	int		newfd[2];
 	pid_t	child_pid;
@@ -73,68 +65,20 @@ static void		recurse_pipe(t_sh *shell, t_ast *ast, int oldfd[])
 		exit (1);
 	child_pid = fork();
 	if (child_pid == 0)
-	{	
-		handle_pipe(oldfd, newfd);
+	{
+		if (oldfd)	
+			close_dup(oldfd, STDIN_FILENO);
+		close_dup(newfd, STDOUT_FILENO);
 		exec_pipe_cmd(shell, ast->right);
 	}
 	else
 	{
-		double_close(oldfd);
+		if (oldfd)
+			close_pipe(oldfd);
 		waitpid(child_pid, &status, 0);
 	}
-		if (ast->left && ast->left->token == PIPE)
-			recurse_pipe(shell, ast->left, newfd);
-		else if (ast->left)
-			end_recurse_pipe(shell, ast->left, oldfd, newfd);
-}
-
-static void		end_pipe(t_sh *shell, t_ast *ast, int *fd)
-{
-	pid_t	child_pid;
-	int		status;
-
-	status = 0;
-	child_pid = fork();
-	if (child_pid == 0)
-	{
-		close(fd[INPUT_END]);
-		dup2(fd[OUTPUT_END], STDIN_FILENO);
-		close(fd[OUTPUT_END]);
-		exec_pipe_cmd(shell, ast);		
-	}
-	else
-	{
-		double_close(fd);
-		waitpid(child_pid, &status, 0);
-	}
-}
-
-void		do_pipe(t_ast *ast, t_sh *shell)
-{
-	pid_t	child_pid;
-	int		fd[2];
-	int		status;
-	
-	status = 0;
-	if (pipe(fd) == -1)
-		exit (1);
-	child_pid = fork();
-	if (child_pid == 0)
-	{
-		close(fd[0]);
-		dup2(fd[1], 1);
-		close(fd[1]);
-		exec_pipe_cmd(shell, ast->right);
-	}
-	else 
-	{
-		if (ast->left && ast->left->token == PIPE)
-			recurse_pipe(shell, ast->left, fd);
-		else if (ast->left)
-			end_pipe(shell, ast->left, fd);
-		get_pid(child_pid);
-		signal(SIGINT, signal_handler);
-		double_close(fd);
-		waitpid(child_pid, &status, 0);
-	}
+	if (ast->left && ast->left->token == PIPE)
+		recurse_pipe(shell, ast->left, newfd);
+	else if (ast->left)
+		end_recurse_pipe(shell, ast->left, oldfd, newfd);
 }
