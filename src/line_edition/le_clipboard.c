@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 13:09:48 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/27 18:56:50 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/01 16:02:10 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,8 @@ int		le_clipboard(struct s_le *le_struct)
 			return (LE_FAILURE);
 		le_struct->cursor_x += ft_strlen(le_struct->clipboard);
 		le_struct->nb_char += ft_strlen(le_struct->clipboard);
-		// if (le_struct->cursor_x - 1 >= le_struct->w_col * le_struct->cursor_y)
-		// 	if (le_termcap_print(TC_GO_DOWN, 1))
-		// 		return (LE_FAILURE);
+		if (le_window_clear_restore(le_struct))
+			return (LE_FAILURE);
 	}
 	return (LE_SUCCESS);
 }

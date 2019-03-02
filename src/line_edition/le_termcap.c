@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 18:35:30 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/28 18:32:22 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/01 15:59:31 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,7 @@ int		le_termcap_exec(struct s_le *le_struct)
 	}
 	else if (le_struct->history_activ != -1)
 		le_struct->history_activ = 0;
-	if ((le_struct->copy_on != LE_START && le_struct->copy_off == LE_START)\
-	|| le_struct->term == LE_PASTE)
+	if ((le_struct->copy_on != LE_START && le_struct->copy_off == LE_START))
 		if (le_window_clear_restore(le_struct))
 			return (LE_FAILURE);
 	return (LE_SUCCESS);
@@ -139,8 +138,8 @@ int		le_termcap_motion(struct s_le *le_struct)
 
 int		le_termcap_delete(struct s_le *le_struct)
 {
-	if (le_struct->copy_on != LE_START && (le_struct->term == LE_DEL\
-	|| le_struct->term == LE_DELFRONT))
+	if (le_struct->copy_on != LE_START && le_struct->copy_off == LE_START\
+	&& (le_struct->term == LE_DEL || le_struct->term == LE_DELFRONT))
 	{
 		le_struct->term = LE_CUT;
 		if (le_clipboard(le_struct))

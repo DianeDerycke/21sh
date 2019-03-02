@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 16:44:04 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/28 19:01:07 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/01 16:43:07 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int		le_prompt_init(struct s_le *le_struct, char **env)
 {
-	le_struct->prompt = NULL;
 	if (le_struct->prompt_type != DQUOTE && le_struct->prompt_type != SQUOTE)
 	{
 		if (le_prompt_pwd(le_struct, env))

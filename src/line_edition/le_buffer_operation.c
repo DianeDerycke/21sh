@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/27 18:31:10 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/02 13:32:14 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ int		le_buff_add(struct s_le *le_struct, int i, char c)
 {
 	char	old;
 	char	new;
-	int		len;
 
+	new = 0;
 	if (!c || i < 0)
 		return (LE_FAILURE);
 	if (!le_struct->nb_char)
@@ -77,11 +77,14 @@ int		le_buff_add(struct s_le *le_struct, int i, char c)
 		le_struct->buff[0] = c;
 		return (LE_SUCCESS);
 	}
-	if (i > (len = ft_strlen(le_struct->buff)))
-		i = len;
+	if (i > le_struct->nb_char)
+	{
+		le_struct->buff[i] = c;
+		le_struct->buff[i + 1] = '\0';
+		return (LE_SUCCESS);
+	}
 	old = le_struct->buff[i];
 	le_struct->buff[i++] = c;
-	new = '\0';
 	while (le_struct->buff[i])
 	{
 		new = le_struct->buff[i];
@@ -101,7 +104,8 @@ int		le_buff_check_space(struct s_le *le_struct, int len)
 {
 	if (le_struct->nb_char + len > le_struct->max_size)
 		return (LE_TRUNCATE);
-	if (le_struct->nb_char + len > le_struct->buffer_size)
+	if (le_struct->nb_char != LE_START\
+	&& le_struct->nb_char + len > le_struct->buffer_size)
 		return (LE_REALLOC);
 	return (0);
 }
@@ -119,7 +123,7 @@ int		le_buff_realloc(struct s_le *le_struct, int nb)
 	if (!(tmp = ft_strdup(le_struct->buff)))
 		return (LE_FAILURE);
 	ft_strdel(&le_struct->buff);
-	if (!(le_struct->buff = (char *)malloc(sizeof(char *)\
+	if (!(le_struct->buff = (char *)malloc(sizeof(char)\
 	* le_struct->buffer_size)))
 	{
 		ft_strdel(&tmp);

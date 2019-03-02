@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/28 18:11:11 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/02 13:25:36 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,8 @@ int		le_init(struct s_le *le_struct, char **env)
 		le_struct->nb_char = 0;
 		le_struct->cursor_x = le_struct->prompt_size;
 	}
-	else if (le_struct->tmp[0] == LE_EXIT || (le_struct->term == LE_EOF\
-	&& !le_struct->nb_char))
-	{
-		ft_putchar(LE_ENDL);
-		return (LE_EXIT);
-	}
-	else if (le_struct->tmp[0] == LE_ENDL)
+	else if (le_struct->tmp[0] == LE_ENDL || le_struct->tmp[0] == LE_EXIT\
+	|| (le_struct->term == LE_EOF && !le_struct->nb_char))
 	{
 		if (le_cursor_beggin(le_struct, le_struct->cursor_x))
 			return (LE_FAILURE);
@@ -39,7 +34,9 @@ int		le_init(struct s_le *le_struct, char **env)
 			return (LE_FAILURE);
 		ft_putchar(LE_ENDL);
 		le_struct->buff[le_struct->nb_char] = '\0';
-		return (LE_ENDL);
+		if (le_struct->tmp[0] == LE_ENDL)
+			return (LE_ENDL);
+		return (LE_EXIT);
 	}
 	le_init_calcul(le_struct);
 	return (LE_SUCCESS);
@@ -55,20 +52,23 @@ int		le_init(struct s_le *le_struct, char **env)
 
 int		le_init_struct(struct s_le *le_struct, char **env)
 {
-	if (!(le_struct->buff = (char *)malloc(sizeof(char *) * LE_BUFF_SIZE)))
+	if (!(le_struct->buff = (char *)malloc(sizeof(char) * (LE_BUFF_SIZE + 1))))
 		return (LE_FAILURE);
-	ft_bzero(le_struct->buff, LE_BUFF_SIZE);
+	ft_bzero(le_struct->buff, LE_BUFF_SIZE + 1);
+	ft_bzero(le_struct->tmp, LE_TMP_BUFF_SIZE);
 	if (le_window_size(&le_struct->w_col, &le_struct->w_line))
 		return (LE_FAILURE);
+	le_struct->clipboard = NULL;
+	le_struct->prompt = NULL;
 	le_struct->nb_char = LE_START;
 	le_struct->prompt_size = 0;
+	le_struct->cursor_buff = 0;
+	le_struct->max_size = 0;
 	le_struct->cursor_x = le_struct->prompt_size;
-	le_struct->buffer_size = LE_BUFF_SIZE;
+	le_struct->buffer_size = LE_BUFF_SIZE + 1;
 	le_struct->history_activ = 0;
-	ft_bzero(le_struct->tmp, LE_TMP_BUFF_SIZE);
 	if (hy_history(le_struct, env) || !le_struct->history)
 		le_struct->history_activ = -1;
-	le_struct->clipboard = NULL;
 	le_struct->copy_on = LE_START;
 	le_struct->copy_off = LE_START;
 	return (LE_SUCCESS);

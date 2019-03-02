@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/28 18:42:46 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/01 16:58:15 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	hy_dlst_push(t_dlist **history, char *content)
 		return ;
 	if (!(newlist->content = ft_strdup(content)))
 	{
-		free(newlist);
+		if (newlist)
+			free(newlist);
 		return ;
 	}
 	newlist->next = *history;
@@ -62,11 +63,12 @@ int		hy_history(struct s_le *le_struct, char **env)
 	if (!(path = ft_strjoin_free(path, HY_FILE)))
 		return (FAILURE);
 	ret = 1;
-	if (!le_struct)
-		return (FAILURE);
 	le_struct->history = NULL;
 	if ((fd = open(path, O_RDONLY | O_CREAT, S_IREAD | S_IWRITE)) == -1)
+	{
+		ft_strdel(&path);
 		return (FAILURE);
+	}
 	ft_strdel(&path);
 	if (hy_history_fill_list(le_struct, fd, ret))
 		return (FAILURE);

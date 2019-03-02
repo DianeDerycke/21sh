@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
+#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/01 11:34:25 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/03/02 11:49:23 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,7 +87,7 @@ CPPFLAGS = -Iincludes
 LDFLAGS = -Llibft -Llibsh -Llibms
 LDLIBS = -lft -lsh -lms
 CC = gcc
-CFLAGS = -Werror -Wextra -Wall
+CFLAGS = -Werror -Wextra -Wall -g3
 TFLAGS = -ltermcap
 
 all: compile

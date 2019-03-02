@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/28 18:21:55 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/02 12:44:07 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ char	*line_edition(int prompt, char **env)
 
 	if (!isatty(0))
 		return (le_interactif_disabled());
+	le_struct.buff = NULL;
 	le_struct.prompt_type = prompt;
 	if (le_init_set_attribute(&backup))
 		return (NULL);
@@ -26,8 +27,7 @@ char	*line_edition(int prompt, char **env)
 	{
 		if (tcsetattr(STDIN_FILENO, 0, &backup))
 			return (NULL);
-		if (le_struct.buff)
-			ft_strdel(&le_struct.buff);
+		ft_strdel(&le_struct.buff);
 		return (NULL);
 	}
 	if (tcsetattr(STDIN_FILENO, 0, &backup))
