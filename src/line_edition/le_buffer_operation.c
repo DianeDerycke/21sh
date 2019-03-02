@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/02 13:32:14 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/02 15:12:07 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,33 +66,24 @@ int		le_buff_remove(struct s_le *le_struct, int i)
 
 int		le_buff_add(struct s_le *le_struct, int i, char c)
 {
-	char	old;
-	char	new;
+	char	*tmp;
 
-	new = 0;
-	if (!c || i < 0)
-		return (LE_FAILURE);
-	if (!le_struct->nb_char)
-	{
-		le_struct->buff[0] = c;
-		return (LE_SUCCESS);
-	}
-	if (i > le_struct->nb_char)
+	if (i == le_struct->nb_char)
 	{
 		le_struct->buff[i] = c;
-		le_struct->buff[i + 1] = '\0';
 		return (LE_SUCCESS);
 	}
-	old = le_struct->buff[i];
-	le_struct->buff[i++] = c;
-	while (le_struct->buff[i])
+	if (!(tmp = ft_strnew(ft_strlen(le_struct->buff + i) + 1)))
+		return (LE_FAILURE);
+	tmp[0] = c;
+	ft_strcpy(&tmp[1], &le_struct->buff[i]);
+	ft_strclr(&le_struct->buff[i]);
+	if (!(le_struct->buff = ft_strjoin(le_struct->buff, tmp)))
 	{
-		new = le_struct->buff[i];
-		le_struct->buff[i++] = old;
-		old = new;
+		ft_strdel(&tmp);
+		return (LE_FAILURE);
 	}
-	le_struct->buff[i] = old;
-	le_struct->buff[i + 1] = '\0';
+	ft_strdel(&tmp);
 	return (LE_SUCCESS);
 }
 
