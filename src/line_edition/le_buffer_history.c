@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:33:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/01 18:06:08 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/02 17:05:30 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,9 @@ int		le_buff_history_forward(struct s_le *le_struct)
 
 	len = ft_strlen(le_struct->history->content);
 	if (le_buff_check_space(le_struct, len) == LE_REALLOC)
-	{
 		if (le_buff_realloc(le_struct, len))
 			return (LE_FAILURE);
-	}
-	else
-		ft_bzero(le_struct->buff, le_struct->nb_char + 1);
+	ft_bzero(le_struct->buff, le_struct->nb_char + 1);
 	ft_strcpy(le_struct->buff, le_struct->history->content);
 	le_struct->nb_char = len;
 	if (le_window_clear(le_struct))
@@ -71,14 +68,11 @@ int		le_buff_history_backward(struct s_le *le_struct)
 			return (LE_FAILURE);
 		return (LE_SUCCESS);
 	}
-	len = ft_strlen(le_struct->history->content);
+	len = ft_strlen(le_struct->history->content);\
 	if (le_buff_check_space(le_struct, len) == LE_REALLOC)
-	{
 		if (le_buff_realloc(le_struct, len))
 			return (LE_FAILURE);
-	}
-	else
-		ft_bzero(le_struct->buff, le_struct->nb_char + 1);
+	ft_bzero(le_struct->buff, le_struct->nb_char + 1);
 	ft_strcpy(le_struct->buff, le_struct->history->content);
 	le_struct->nb_char = len;
 	if (le_window_clear(le_struct))

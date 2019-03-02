@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/02 15:52:21 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/02 17:06:53 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,6 @@ int		le_buff_add(struct s_le *le_struct, int i, char c)
 
 int		le_buff_check_space(struct s_le *le_struct, int len)
 {
-	if (le_struct->nb_char + len > le_struct->max_size)
-		return (LE_TRUNCATE);
 	if (le_struct->nb_char != LE_START\
 	&& le_struct->nb_char + len >= le_struct->buffer_size - 1)
 		return (LE_REALLOC);
@@ -116,7 +114,7 @@ int		le_buff_realloc(struct s_le *le_struct, int nb)
 		return (LE_FAILURE);
 	ft_strdel(&le_struct->buff);
 	if (!(le_struct->buff = (char *)malloc(sizeof(char)
-	* le_struct->buffer_size)))
+	* (le_struct->buffer_size + 1))))
 	{
 		ft_strdel(&tmp);
 		return (LE_FAILURE);
