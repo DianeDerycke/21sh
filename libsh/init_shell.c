@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:07:37 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/14 15:47:40 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/02 12:30:25 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_sh     *init_shell(void)
 {
     t_sh *new;
 
-    new = NULL;
     if (!(new = malloc(sizeof(t_sh))))
         ms_malloc_error();
     new->cmd = NULL;
