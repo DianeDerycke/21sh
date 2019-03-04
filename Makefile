@@ -6,7 +6,7 @@
 #    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/04 17:22:16 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/03/04 17:33:37 by DERYCKE          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ BUILTINS_NAME =		cd.c \
 
 LEX_PARSE_NAME =	main.c \
 					lex_input.c \
+					lex_error.c \
 					lex_utils.c \
 					lex_action.c \
 					init_ft.c \

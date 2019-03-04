@@ -13,6 +13,7 @@
 #define ARRAY_SIZE 6
 #define INPUT_END 1
 #define OUTPUT_END 0
+#define ERRLEX_SIZE 5  
 
 typedef struct      s_param {
     char            *input;
@@ -47,6 +48,11 @@ typedef struct		s_opt
 	ssize_t			v;
 }					t_opt;
 
+typedef enum    e_lex 
+{
+    UNEXPTOKEN = 4,
+}               t_lex;
+
 //LEX_INIT
 t_param    	*init_param(void);
 void    	free_param(t_param *param);
@@ -78,6 +84,9 @@ int     	identifier_action(t_param *param);
 //LEX INPUT
 int     	lex_input(t_param *param);
 char 		*get_valid_input(char **env, int ret);
+
+//LEX_ERROR
+int         get_error_lex(int error_nb, char *str);
 
 //EXEC FUNCTION
 int     	just_exec(t_ast *ast, t_sh *shell);
