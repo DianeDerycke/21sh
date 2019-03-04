@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/01 12:34:01 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/04 16:46:27 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ int     just_exec(t_ast *ast, t_sh *shell)
     {
         if ((path = ms_get_valid_cmd(shell->cmd[0], shell->env))
             && access(path, X_OK) == SUCCESS)
-        ret = execve(path, shell->cmd, shell->env);
+            ret = execve(path, shell->cmd, shell->env);
         else
             ret = error_execution(shell->cmd[0]);
     }
+    else
+        exit(ret);
     ft_strdel(&path);
     ft_strdel(shell->cmd);
     return (ret);
@@ -61,7 +63,7 @@ int     exec_pipe_cmd(t_sh *shell, t_ast *ast)
 	if (find_next_redir(ast))
 		return (exec_redirection(ast, shell));
 	if (just_exec(ast, shell) == FAILURE)
-		exit(1);
+        return (FAILURE);
 	return (SUCCESS);
 }
 
