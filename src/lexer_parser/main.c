@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/28 13:12:49 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/04 17:54:59 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,11 @@ int     main(void)
 		param = init_param();
 		param->input = get_valid_input(shell->env, ret);
 		hy_history_write(param->input, shell->env);
-		if (lex_input(param) == FAILURE)
-			printf("ERROR LEXER\n");
+		if ((ret = lex_input(param)) != SUCCESS)
+		{
+			free_param(param);
+			continue ;
+		}
 		// display_list(param->l_tokens);
 		ret = SUCCESS;
 		if (!(ast = create_ast(param->l_tokens, param->l_tokens, NULL)))
