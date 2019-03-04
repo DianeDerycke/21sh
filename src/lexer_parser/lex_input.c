@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/27 19:08:43 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/04 17:18:48 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ static int		getter_type_input(int c, int index, t_param *param)
 		&ft_is_double_quote,
 		&ft_is_operator,
 		&ft_isidentifier
-		// &ft_isdigit,
 	};
 	param->ft = def_type[index];
 	return (def_type[index](c));
@@ -37,7 +36,6 @@ static int		getter_action(t_param *param, int index)
 		&double_quote_action,
 		&operator_action,
 		&identifier_action
-		// &digit_action, //fix digit action ex : ls > 1ppppp
 	};
 	return (action[index](param));
 }
