@@ -6,11 +6,37 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:03:44 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/13 12:51:18 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/04 17:23:06 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
+
+ssize_t		exec_simple_env(char **cmd, char **s_bin, char **env)
+{
+	char	**tmp_env;
+	char	*path;
+	ssize_t	ret;
+
+	ret = 0;
+	path = NULL;
+	tmp_env = ft_copy_array(env, ft_strlen_array(env));
+	add_argument_to_env(cmd, &tmp_env);
+	if (!(s_bin = find_first_bin(cmd, VAL_EQUAL)))
+		s_bin = cmd + 1;
+	if ((path = ms_find_path_variable(tmp_env)))
+	{
+		if (ms_exec_binary(*s_bin, s_bin, tmp_env, tmp_env) == FAILURE)
+			ret = ms_no_such_file_or_dir(cmd[0], *s_bin);
+		ft_strdel(&path);
+	}
+	else if (ms_exec_binary(*s_bin, s_bin, env, tmp_env) == FAILURE)
+		ret = ms_no_such_file_or_dir(cmd[0], *s_bin);
+	if (tmp_env)
+		ft_free_array(tmp_env);
+	return (ret);
+}
+
 
 void				add_argument_to_env(char **split_cmd, char ***env)
 {
