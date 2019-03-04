@@ -6,11 +6,29 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 00:15:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/02 12:32:12 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/04 17:13:19 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
+
+static void    free_lexer(t_ast **ast)
+{
+    t_ast *tmp;
+    if (!ast || !*ast)
+        return ;
+    while (*ast)
+    {
+        tmp = *ast;
+        (*ast) = (*ast)->next;
+        ft_strdel(&(tmp->value));
+        tmp->token = 0;
+        tmp->io_number = 0;
+        tmp->next = NULL;
+        tmp->right = NULL;
+        tmp->left = NULL;
+    }
+}
 
 void    free_param(t_param *param)
 {
@@ -20,7 +38,7 @@ void    free_param(t_param *param)
     param->index = 0;
     param->token = 0;
     param->ft = NULL;
-    param->l_tokens = NULL;
+    free_lexer(&param->l_tokens);
     free(param);
     param = NULL;
 }
