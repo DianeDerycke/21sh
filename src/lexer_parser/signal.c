@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 20:28:25 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/28 20:30:15 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/04 15:53:52 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,15 @@
 
 void	signal_handler(int sig)
 {
+	t_pid	*pid_list;
 	if (sig == SIGINT)
 	{
-		kill(sig, get_pid(-1));
+		pid_list = get_pid_list(NULL);
+		while (pid_list)
+		{
+			kill(pid_list->proc, sig);
+			pid_list = pid_list->next;
+		}
 		ft_putstr_fd("21sh: Interrupt program. Signal received: ", 2);
 		ft_putnbr_fd(sig, 2);
 		ft_putendl_fd("", 2);
