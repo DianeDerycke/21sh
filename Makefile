@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
+#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/02 11:49:23 by mrandou          ###   ########.fr        #
+#    Updated: 2019/03/04 14:04:15 by DERYCKE          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,8 +56,9 @@ LEX_PARSE_NAME =	main.c \
 					exec_function.c \
 					redir.c \
 					pipe.c \
+					pipe_utils.c \
 					redir_functions.c \
-					signal.c
+					signal.c \
 
 
 LINE_EDITION_PATH = src/line_edition/
