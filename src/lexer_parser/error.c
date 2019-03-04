@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:07:12 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/22 16:28:42 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/04 18:15:12 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,16 +63,6 @@ ssize_t		error_chdir(int error, char *path, char *cmd)
 	}
 	else
 		return (ms_no_such_file_or_dir(cmd, path));
-	return (FAILURE);
-}
-
-int			syntax_error(char *str)
-{
-	ft_putstr_fd("21sh: syntax error near unexpected token ", 2);
-	if (!str)
-		ft_putendl_fd("'newline'", 2);
-	else
-		ft_putendl_fd(str, 2);
 	return (FAILURE);
 }
 
