@@ -11,9 +11,6 @@
 #define SIZE_CONDITION 2
 #define BUILTIN_SIZE 6
 #define ARRAY_SIZE 6
-#define SH_STDIN 0
-#define SH_STDOUT 1
-#define SH_STDERR 2
 #define INPUT_END 1
 #define OUTPUT_END 0
 
@@ -70,13 +67,13 @@ char        *copy_until_ft(char *s, int *start, int(*f)(int c));
 char        *copy_until_array_ft(char *s, int *start, int(*array[2])(int));
 
 //LEX_ACTION
-int     whitespace_action(t_param *param);
-int     single_quote_action(t_param *param);
-int     double_quote_action(t_param *param);
-int     is_io_number(t_param *param);
-int     digit_action(t_param *param);
-int     operator_action(t_param *param);
-int     identifier_action(t_param *param);
+int     	whitespace_action(t_param *param);
+int     	single_quote_action(t_param *param);
+int     	double_quote_action(t_param *param);
+int     	is_io_number(t_param *param);
+int     	digit_action(t_param *param);
+int     	operator_action(t_param *param);
+int     	identifier_action(t_param *param);
 
 //LEX INPUT
 int     	lex_input(t_param *param);
@@ -85,7 +82,7 @@ char 		*get_valid_input(char **env, int ret);
 //EXEC FUNCTION
 int     	just_exec(t_ast *ast, t_sh *shell);
 int     	exec_cmd(t_ast *ast, t_sh *shell);
-int     exec_pipe_cmd(t_sh *shell, t_ast *ast);
+int     	exec_pipe_cmd(t_sh *shell, t_ast *ast);
 
 //EXPANSIONS
 ssize_t		apply_expansions(t_sh *shell);
@@ -97,7 +94,12 @@ int    		parser_execution(t_ast *ast, t_sh *shell);
 t_ast     *create_ast(t_ast *curr_node, t_ast *start, t_ast *end);
 
 //PIPE
-void		recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd);
+int 	    recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd);
+
+//PIPE_UTILS
+t_pid 	    *get_pid_list(t_pid *new_list);
+void		close_pipe(int *fd);
+void		close_dup(int *fd, int std);
 
 //QUOTES
 void		handle_quotes(char **input);
