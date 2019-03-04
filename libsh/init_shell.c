@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:07:37 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/02 12:30:25 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/04 14:06:23 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ t_sh     *init_shell(void)
     new->cmd = NULL;
     if (!(new->env = ms_get_env()))
         new->env = NULL;
+    new->l_pid = NULL;
     return (new);
 }
