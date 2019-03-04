@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/04 15:02:13 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/04 18:18:03 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char     operators[20][20] = {
     {"\0"},
 };
 
-typedef enum    e_ope{
+typedef enum    e_ope {
     SEPARATOR, //   ;
     PIPE,      //   |
     WORD,      //   [aA-zZ.. 0..9]
