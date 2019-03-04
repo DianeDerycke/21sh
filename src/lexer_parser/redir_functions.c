@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/22 18:16:13 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/04 23:46:15 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,12 @@ int     redir_great(t_ast *redir, t_ast *ast)
     int     fd;
 
     (void)ast;
+    if (redir->left && ((redir->left->token >= SEPARATOR && redir->left->token <=
+    PIPE) || (redir->left->token >= GREAT && redir->left->token <= GREATAND)))
+    {
+        syntax_error(redir->left->value);
+        exit(1);
+    }
     if ((fd = open(redir->left->value,  O_RDWR | O_CREAT | O_TRUNC, 0677)))
         dup2(fd, STDOUT_FILENO);
     if (ast == redir)

@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/24 21:29:47 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/04 23:53:19 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,13 @@ static int      do_redirection(int token, t_ast *redir, t_ast *ast)
         &redir_lessand,
         &redir_greatand,
     };
+    if (!redir->left || (redir->left && 
+    ((redir->left->token >= SEPARATOR && redir->left->token <= PIPE) 
+    || (redir->left->token >= GREAT && redir->left->token <= GREATAND))))
+    {
+        syntax_error(redir->left->value);
+        exit(1);
+    }
     return(redir_array[token](redir, ast));
 }
 
@@ -64,7 +71,7 @@ static t_ast    *add_argument_to_cmd(t_ast *ast)
             ast = ast->left->left;
         else
         {
-            while (ast && ast->left && !ast->left->left)
+            while (ast)
             {
                 ast = ast->left;
                 ast = find_next_redir(ast);
@@ -97,7 +104,6 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
         }
         if (cmd)
             just_exec(cmd, shell);
-        exit (0);
     }
     else
         waitpid(pid, &status, 0);
