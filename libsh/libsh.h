@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/24 17:22:34 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/04 15:02:13 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,17 @@ typedef struct		s_env
 	struct s_env	*next;
 }					t_env;
 
+typedef struct      s_pid
+{
+    int             proc;
+    struct s_pid    *next;
+}                   t_pid;
+
 
 typedef struct      s_sh {
     char            **env;
     char            **cmd;
+    struct s_pid    *l_pid;
 }                   t_sh;
 
 typedef struct      s_ast {
@@ -101,5 +108,9 @@ char		**sh_rtree_to_array(t_ast *ast);
 t_sh 		*init_shell(void);
 void		sh_free_shell(t_sh *shell);
 char		*sh_strinsert(char *dst, char *src, int pos);
+
+t_pid       *sh_pidnew(int pid);
+int         sh_push_pidnew(int pid, t_pid **list);
+void        sh_freepidlist(t_pid *list);
 
 #endif
