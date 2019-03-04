@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/04 18:18:03 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/04 23:47:01 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ typedef enum    e_ope {
     DIGIT,      // [0..9]
     DQUOTE = '\"', 
     SQUOTE = '\'',
-    C_DOLLAR = '$',
 }               t_ope;
 
 typedef struct		s_env
