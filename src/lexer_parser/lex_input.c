@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 17:18:48 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/04 18:08:56 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,11 @@ static int		getter_action(t_param *param, int index)
 
 int     lex_input(t_param *param)
 {
-	int i = 0;
+	int 	i;
+	int		ret;
 
+	i = 0;
+	ret = 0;
 	if (!param || !(param->input))
 		return (FAILURE);
 	while (param->input[param->index])
@@ -54,8 +57,8 @@ int     lex_input(t_param *param)
 		if (i == ARRAY_SIZE)
 			return (FAILURE);
 		if (getter_type_input(param->input[param->index], i, param))
-			if (getter_action(param, i) == FAILURE)
-				return (FAILURE);
+			if ((ret = getter_action(param, i)) != SUCCESS)
+				return (get_error_lex(ret, param->input + param->index));
 		i = 0;
 	}
 	return (SUCCESS);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_action.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 23:48:24 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/21 17:04:19 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/04 18:14:47 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,19 +96,25 @@ int     operator_action(t_param *param)
     char    *tmp;
     int ret;
     int len;
+    int size;
 
     tmp = NULL;
     ret = 0;
     len = 0;
+    size = param->index;
     if (!(tmp = copy_until_ft(param->input + param->index, &param->index, param->ft)))
-        return (FAILURE);
+        ft_malloc_error();
     len = ft_strlen(tmp);
     if ((len <= 2) && (param->token = get_ast_op(tmp, len)) >= 0)
         ret = push_node(tmp, param->token, &(param->l_tokens), 0);
     else
-        ret = FAILURE;
+    {
+        param->index = size;
+        ft_strdel(&tmp);
+        return (UNEXPTOKEN);
+    }
     ft_strdel(&tmp);
-    return (ret == FAILURE ? FAILURE : SUCCESS);
+    return (ret);
 }
 
 int     identifier_action(t_param *param)
