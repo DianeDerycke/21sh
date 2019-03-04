@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_init.c                                         :+:      :+:    :+:   */
+/*   init_ft.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 00:15:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 17:13:19 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/04 17:24:46 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ static void    free_lexer(t_ast **ast)
         tmp->next = NULL;
         tmp->right = NULL;
         tmp->left = NULL;
+        tmp = NULL;
     }
+    ast = NULL;
 }
 
 void    free_param(t_param *param)
