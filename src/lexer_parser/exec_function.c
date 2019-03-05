@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 16:46:27 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/05 19:22:17 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,15 +35,17 @@ int     just_exec(t_ast *ast, t_sh *shell)
     else
         exit(ret);
     ft_strdel(&path);
-    ft_strdel(shell->cmd);
+    ft_free_array(shell->cmd);
     return (ret);
 }
 
 int     exec_cmd(t_ast *ast, t_sh *shell)
 {
     int ret;
+    int i;
 
 	ret = 0;
+    i = 0;
     if (!(shell->cmd = sh_rtree_to_array(ast)))
         return (FAILURE);
     apply_expansions(shell);
@@ -52,7 +54,7 @@ int     exec_cmd(t_ast *ast, t_sh *shell)
     if ((ret = exec_builtin(shell)) == ERROR)
         if ((ret = ms_exec_binary(shell->cmd[0], shell->cmd, shell->env, shell->env)) == -1)
             ret = error_execution(shell->cmd[0]);
-    ft_strdel(shell->cmd);
+    ft_free_array(shell->cmd);
     return (ret);
 }
 

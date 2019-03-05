@@ -103,7 +103,7 @@ int    		parser_execution(t_ast *ast, t_sh *shell);
 t_ast     *create_ast(t_ast *curr_node, t_ast *start, t_ast *end);
 
 //PIPE
-int 	    recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd);
+int 	    recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd);
 
 //PIPE_UTILS
 t_pid 	    *get_pid_list(t_pid *new_list);

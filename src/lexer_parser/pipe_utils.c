@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 13:00:37 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 14:04:37 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/05 17:09:31 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_pid 	*get_pid_list(t_pid *new_list)
 {
-	static t_pid *pid_list;
+	static t_pid *pid_list = NULL;
 
 	if (new_list)
 		pid_list = new_list;

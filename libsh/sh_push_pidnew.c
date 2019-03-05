@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh_push_pidnew.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 13:50:02 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 16:49:20 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/05 15:47:59 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int    sh_push_pidnew(int pid, t_pid **list)
 {
     t_pid   *tmp;
     
+    tmp = NULL;
     if (!list || !*list)
     {
         if (!(*list = sh_pidnew(pid)))

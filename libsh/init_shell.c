@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:07:37 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 14:06:23 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/05 15:56:26 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_sh     *init_shell(void)
 {
     t_sh *new;
 
+    new = NULL;
     if (!(new = malloc(sizeof(t_sh))))
         ms_malloc_error();
     new->cmd = NULL;

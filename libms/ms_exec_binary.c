@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/27 14:26:30 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/27 17:38:45 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/05 16:08:48 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static pid_t		getter_pid(pid_t val)
 {
-	static int 		pid;
+	static int 		pid = 0;
 	if (val != -1)
 		pid = val;
 	return (pid);

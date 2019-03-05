@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ms_get_valid_cmd.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 12:16:30 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/01/28 19:21:54 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/05 19:19:10 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ char			*ms_get_valid_cmd(char *cmd, char **ms_env)
 	path_array = ft_strsplit(dir_path, ':');
 	ft_strdel(&dir_path);
 	if ((dir_path = ms_test_each_path(path_array, cmd)))
+	{
+		ft_free_array(path_array);
 		return (dir_path);
+	}
+	ft_free_array(path_array);
 	return (NULL);
 }
