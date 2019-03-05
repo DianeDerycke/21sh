@@ -6,37 +6,35 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 16:48:36 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/01 12:47:56 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/05 14:42:39 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-int		le_exit(struct s_le *le_struct, int ret)
+int		le_exit(struct s_le *le_struct)
 {
-	if (ret == LE_ENDL || ret == LE_EXIT)
-	{
-		le_free(le_struct);
-		if (le_struct->term == LE_EOF)		//DELETE THIS. Just for test
-			exit(0);						//DELETE THIS. Implement after the LE
-		if (ret == LE_EXIT)
-			ft_strclr(le_struct->buff);
-		if (le_struct->prompt_type == DQUOTE || le_struct->prompt_type == SQUOTE)
-			if (le_buff_add(le_struct, 0, '\n'))
-				return (LE_FAILURE);
-		return (LE_EXIT);
-	}
-	else if (ret == LE_FAILURE)
-	{
-		le_free(le_struct);
+	le_struct->buff[le_struct->nb_char] = '\0';
+	if (le_cursor_beggin(le_struct, le_struct->cursor_x))
 		return (LE_FAILURE);
+	le_struct->cursor_x = le_struct->nb_char + le_struct->prompt_size;
+	if (le_cursor_restore(le_struct))
+		return (LE_FAILURE);
+	if (le_struct->tmp[0] != LE_ENDL)
+		ft_strclr(le_struct->buff);
+	le_free(le_struct);
+	if (le_struct->term == LE_EOF)
+	{
+		le_struct->buff = ft_strcpy(le_struct->buff, "exit");
+		le_buff_print(le_struct, 0);
+		le_struct->nb_char = 4;
 	}
+	if (le_struct->prompt_type == DQUOTE || le_struct->prompt_type == SQUOTE)
+		if (le_buff_add(le_struct, 0, '\n'))
+			return (LE_FAILURE);
+	ft_putchar(LE_ENDL);
 	return (LE_SUCCESS);
 }
-
-/*
-**	Exit and set the old shell attribute
-*/
 
 void	le_free(struct s_le *le_struct)
 {

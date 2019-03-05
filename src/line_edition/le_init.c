@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/02 15:45:03 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/05 16:21:15 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,11 @@ int		le_init(struct s_le *le_struct, char **env)
 		le_struct->nb_char = 0;
 		le_struct->cursor_x = le_struct->prompt_size;
 	}
-	else if (le_struct->tmp[0] == LE_ENDL || le_struct->tmp[0] == LE_EXIT\
+	else if (le_struct->tmp[0] == LE_ENDL || le_struct->tmp[0] == LE_EXIT
 	|| (le_struct->term == LE_EOF && !le_struct->nb_char))
-	{
-		if (le_cursor_beggin(le_struct, le_struct->cursor_x))
-			return (LE_FAILURE);
-		le_struct->cursor_x = le_struct->nb_char + le_struct->prompt_size;
-		if (le_cursor_restore(le_struct))
-			return (LE_FAILURE);
-		ft_putchar(LE_ENDL);
-		le_struct->buff[le_struct->nb_char] = '\0';
-		if (le_struct->tmp[0] == LE_ENDL)
-			return (LE_ENDL);
-		return (LE_EXIT);
-	}
+		return (le_exit(le_struct));
 	le_init_calcul(le_struct);
-	return (LE_SUCCESS);
+	return (LE_CONTINUE);
 }
 
 /*

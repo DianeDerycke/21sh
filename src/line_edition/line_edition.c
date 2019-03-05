@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/02 12:44:07 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/05 14:27:16 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,8 @@ int		le_read_and_exec(struct s_le *le_struct, char **env)
 	{
 		if (le_window_check(le_struct))
 			return (LE_FAILURE);
-		if ((ret = le_exit(le_struct, le_init(le_struct, env))) == LE_EXIT)
-			return (LE_SUCCESS);
-		else if (ret == LE_FAILURE)
-			return (LE_FAILURE);
+		if ((ret = le_init(le_struct, env)) != LE_CONTINUE)
+			return (ret);
 		if (read(STDIN_FILENO, le_struct->tmp, 1) == -1)
 			return (LE_FAILURE);
 		if (le_termcap_check(le_struct) != LE_FAILURE && le_struct->term)

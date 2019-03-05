@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/02 17:25:00 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/05 13:50:43 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,9 @@
 
 # define LE_SUCCESS			0
 # define LE_FAILURE			1
+# define LE_CONTINUE		2
 # define LE_INFINITE_LOOP	21
-# define LE_BUFF_SIZE		1024
+# define LE_BUFF_SIZE		1
 # define LE_TMP_BUFF_SIZE	16
 # define LE_PROMPT_CLR		"\033[1m\033[32m"
 # define LE_FAILURE_CLR		"\033[1m\033[31m"
@@ -160,7 +161,7 @@ int					le_init_set_attribute(struct termios *backup);
 **	le_exit.c
 */
 
-int					le_exit(struct s_le *le_struct, int ret);
+int					le_exit(struct s_le *le_struct);
 void				le_free(struct s_le *le_struct);
 int					le_free_return(char *s1, char *s2, char *s3, int status);
 

@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 18:35:30 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/01 15:59:31 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/05 16:22:18 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,13 +145,15 @@ int		le_termcap_delete(struct s_le *le_struct)
 		if (le_clipboard(le_struct))
 			return (LE_FAILURE);
 	}
-	if ((le_struct->term == LE_DELFRONT || le_struct->term == LE_EOF)\
-	&& le_struct->cursor_buff < le_struct->nb_char && le_struct->nb_char)
+	if ((le_struct->term == LE_DELFRONT || (le_struct->term == LE_EOF
+	&& le_struct->nb_char)) && le_struct->cursor_buff < le_struct->nb_char
+	&& le_struct->nb_char)
 	{
 		if (le_buff_remove(le_struct, le_struct->cursor_buff))
 			return (LE_FAILURE);
 		if (le_window_clear_restore(le_struct))
 			return (LE_FAILURE);
+		le_struct->term = 0;
 	}
 	if (le_struct->term == LE_DEL\
 	&& le_struct->cursor_x > le_struct->prompt_size && le_struct->nb_char)
