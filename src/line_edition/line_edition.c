@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/05 14:27:16 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/05 20:00:23 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,13 @@ char	*line_edition(int prompt, char **env)
 		return (NULL);
 	if (le_read_and_exec(&le_struct, env))
 	{
-		if (tcsetattr(STDIN_FILENO, 0, &backup))
-			return (NULL);
 		ft_strdel(&le_struct.buff);
+		le_free(&le_struct);
+		tcsetattr(STDIN_FILENO, 0, &backup);
 		return (NULL);
 	}
-	if (tcsetattr(STDIN_FILENO, 0, &backup))
-		return (NULL);
-	if (!(le_struct.nb_char))
+	le_free(&le_struct);
+	if (tcsetattr(STDIN_FILENO, 0, &backup) || !le_struct.nb_char)
 	{
 		ft_strdel(&le_struct.buff);
 		return (NULL);

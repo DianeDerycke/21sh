@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 18:35:30 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/05 16:22:18 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/05 19:20:54 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ int		le_termcap_check(struct s_le *le_struct)
 		return (0);
 	if (le_struct->term)
 		return (LE_SUCCESS);
-	le_struct->term = 0;
 	return (LE_FAILURE);
 }
 

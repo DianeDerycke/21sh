@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/05 16:19:08 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/05 17:32:26 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		le_buff_append(struct s_le *le_struct, char c)
 	le_struct->cursor_x += 1;
 	le_struct->nb_char += 1;
 	le_struct->cursor_buff += 1;
-	if (le_struct->cursor_buff != le_struct->nb_char - 1)
+	if (le_struct->cursor_buff != le_struct->nb_char)
 	{
 		if (le_window_clear_restore(le_struct))
 			return (LE_FAILURE);
@@ -29,7 +29,7 @@ int		le_buff_append(struct s_le *le_struct, char c)
 				return (LE_FAILURE);
 	}
 	else
-		le_buff_print(le_struct, le_struct->cursor_buff);
+		le_buff_print(le_struct, le_struct->cursor_buff - 1);
 	if (le_struct->history_activ != -1)
 		le_struct->history_activ = 0;
 	le_struct->copy_on = LE_START;
