@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/05 16:37:09 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/05 19:06:20 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,11 @@ int		hy_history_write(char *command, char **env)
 	if (!(path = ft_strjoin_free(path, HY_FILE)))
 		return (FAILURE);
 	if ((fd = open(path, O_WRONLY | O_APPEND)) == -1)
+	{
+		ft_strdel(&path);
 		return (FAILURE);
+	}
+	ft_strdel(&path);
 	if ((write(fd, command, ft_strlen(command))) == -1\
 	|| write(fd, "\n", 1) == -1)
 	{
