@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/01 16:58:15 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/05 16:37:09 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ int		hy_history_fill_list(struct s_le *le_struct, int fd, int ret)
 			ft_strdel(&tmp);
 		}
 		hy_dlst_push(&le_struct->history, line);
+		ft_strdel(&line);
 	}
 	return (SUCCESS);
 }
