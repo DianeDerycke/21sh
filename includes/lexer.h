@@ -55,6 +55,8 @@ typedef enum    e_lex
 
 //LEX_INIT
 t_param    	*init_param(void);
+void    	free_ast(t_ast **ast);
+void    	free_lexer(t_ast **ast);
 void    	free_param(t_param *param);
 int         push_node(char *value, int token, t_ast **node, int io_number);
 t_ast     	*create_elem(void);

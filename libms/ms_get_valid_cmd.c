@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/29 12:16:30 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/05 19:19:10 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/06 18:06:40 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ char			*ms_get_valid_cmd(char *cmd, char **ms_env)
 	char			*dir_path;
 	char			**path_array;
 
+	path_array = NULL;
+	dir_path = NULL;
 	if (!cmd)
 		return (NULL);
 	if (stat(cmd, &buf) == 0 && (S_ISREG(buf.st_mode) &&
@@ -56,8 +58,10 @@ char			*ms_get_valid_cmd(char *cmd, char **ms_env)
 	if ((dir_path = ms_test_each_path(path_array, cmd)))
 	{
 		ft_free_array(path_array);
+		free(path_array);
 		return (dir_path);
 	}
 	ft_free_array(path_array);
+	free(path_array);
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/05 19:22:17 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/06 18:05:37 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int     just_exec(t_ast *ast, t_sh *shell)
         exit(ret);
     ft_strdel(&path);
     ft_free_array(shell->cmd);
+    free(shell->cmd);
     return (ret);
 }
 
@@ -55,6 +56,7 @@ int     exec_cmd(t_ast *ast, t_sh *shell)
         if ((ret = ms_exec_binary(shell->cmd[0], shell->cmd, shell->env, shell->env)) == -1)
             ret = error_execution(shell->cmd[0]);
     ft_free_array(shell->cmd);
+    free(shell->cmd);
     return (ret);
 }
 

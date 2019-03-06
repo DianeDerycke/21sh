@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:14:54 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/05 19:24:35 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/06 18:02:42 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,11 @@ char    **sh_rtree_to_array(t_ast *ast)
     int     i;
 
     array = NULL;
+    if (!ast)
+        return (NULL);
     if ((i = sh_get_size_rtree(ast)) < 0)
         return (NULL);
-    if (!(array = (char **)malloc(sizeof(char*) * (i + 1))))
+    if (!(array = ft_memalloc(sizeof(char *) * (i + 1))))
         return (NULL);
     i = 0;
     while (ast && (ast->token == WORD || 

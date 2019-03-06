@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 18:02:44 by dideryck          #+#    #+#             */
-/*   Updated: 2018/09/20 14:57:36 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/06 17:44:15 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static char		**ft_fill_table(char **tab, char const *s, char c, int i)
 	while (s[i] && n < ft_count_words(s, c))
 	{
 		tab[n] = ft_strsub(s, i, ft_size_word(s, i, c));
+		// printf(" SIZE STRING ==> %zu\n", sizeof(char) * ft_strlen(tab[n]) + sizeof(char *));
 		if (!(tab[n]))
 		{
 			ft_free_array(tab);
@@ -81,13 +82,13 @@ char			**ft_strsplit(char const *s, char c)
 	int		i;
 	char	**tab;
 
-	tab = 0;
+	tab = NULL;
 	i = 0;
 	if (s == NULL)
 		return (NULL);
 	if ((i = ft_count_words(s, c)) == 0)
 		return (NULL);
-	if (!(tab = (char**)malloc(sizeof(char*) * i)))
+	if (!(tab = ft_memalloc(sizeof(char *) * i)))
 		return (NULL);
 	i = 0;
 	return (ft_fill_table(tab, s, c, i));
