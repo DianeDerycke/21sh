@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 17:15:42 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/22 17:16:35 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/06 17:11:39 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ char	*sh_strinsert(char *dst, char *src, int pos)
 	char	*tmp;
 	int		i;
 
+	if (!dst || !src || !dst[pos])
+		return (NULL);
 	i = 0;
-	if (!(tmp = ft_strdup(&dst[pos])))
+	if (!(tmp = ft_strdup(dst + pos)))
 		return (NULL);
 	while (src[i])
 		dst[pos++] = src[i++];
