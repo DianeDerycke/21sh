@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/06 15:01:16 by mrandou          ###   ########.fr        #
+#    Updated: 2019/03/06 15:31:08 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -156,7 +156,7 @@ $(OBJ_LEX_PARSE_PATH)%.o: $(LEX_PARSE_PATH)%.c $(INC_DEPEND)
 	@printf "\033[A"
 	@printf "\033[K\r"
 
-$(NAME): $(MAKEFILE) $(OBJ) $(OBJ_DEPEND)
+$(NAME): $(MAKEFILE) $(OBJ) $(OBJ_DEPEND) $(LIBFT) $(LIBMS) $(LIBSH)
 	@$(CC) $(CFLAGS) -o $@ $(LINE_EDITION_OBJ) $(HISTORY_OBJ) \
 	$(LEX_PARSE_OBJ) $(BUILTINS_OBJ)  $(LIBNAME) $(TFLAGS) \
 
@@ -170,7 +170,6 @@ compile:
 	@printf "LIBMS -> "
 	@make -C $(LIBMS)
 	@printf "\033[32mDone ✓\033[0m\n"
-	@printf "21sh --> "
 	@make $(NAME)
 	@printf "21sh --> \033[32mDone ✓\033[0m\r"
 	@printf "\n\nCompilation\033[32m Done ✓\\033[0m\n"
