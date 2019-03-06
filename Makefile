@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/06 16:28:09 by mrandou          ###   ########.fr        #
+#    Updated: 2019/03/06 16:42:04 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,7 +111,7 @@ CFLAGS			= -Werror -Wextra -Wall -g3
 TFLAGS			= -ltermcap
 MAKEFILE		= ./Makefile
 
-all: compile
+all:	compile
 
 $(OBJ):
 	@mkdir -p $@
@@ -160,7 +160,8 @@ $(NAME): $(MAKEFILE) $(OBJ) $(OBJ_DEPEND) $(LIBFT) $(LIBMS) $(LIBSH)
 	@$(CC) $(CFLAGS) -o $@ $(LINE_EDITION_OBJ) $(HISTORY_OBJ) \
 	$(LEX_PARSE_OBJ) $(BUILTINS_OBJ)  $(LIBNAME) $(TFLAGS) \
 
-compile: 
+compile:
+	@printf "\033[1m\033[32m\n⚙ 21sh Make ⚙\n\n\033[0m"
 	@make -C $(LIBFT)
 	@printf "\n\033[K\r"
 	@printf "\033[A"
@@ -184,6 +185,7 @@ compile:
 	@printf "\n\nCompilation\033[32m Done ✓\\033[0m\n"
 	
 clean:
+	@printf "\033[1m\033[31m\n⚙ 21sh Make Clean ⚙\n\n\033[0m"
 	@rm -rf	$(OBJ)
 	@rm -f	$(HISTORY)
 	@rmdir	$(OBJ) 2> /dev/null || true
