@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 13:09:48 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/06 11:02:33 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/06 18:21:22 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,15 +88,12 @@ int		le_clipboard_copy(struct s_le *le_struct)
 			le_struct->copy_off = le_struct->copy_on;
 			le_struct->copy_on = tmp;
 		}
-		tmp = le_struct->copy_off - le_struct->copy_on;
-		tmp += 1;
-		if (le_struct->clipboard)
-			ft_strdel(&le_struct->clipboard);
+		tmp = le_struct->copy_off - le_struct->copy_on + 1;
+		ft_strdel(&le_struct->clipboard);
 		if (!(le_struct->clipboard = ft_strnew(tmp)))
 			return (LE_FAILURE);
 		le_struct->clipboard = ft_strncpy(le_struct->clipboard,\
-		&le_struct->buff[le_struct->copy_on], tmp);
-		le_struct->clipboard[tmp] = '\0';
+		le_struct->buff + le_struct->copy_on, tmp);
 	}
 	return (LE_SUCCESS);
 }
@@ -139,10 +136,10 @@ int		le_clipboard_cut(struct s_le *le_struct)
 	if (le_clipboard_copy(le_struct))
 		return (LE_FAILURE);
 	i = le_struct->copy_on;
-	size = ft_strlen(&le_struct->buff[le_struct->copy_off] - 1);
+	size = ft_strlen(le_struct->buff + le_struct->copy_off - 1);
 	while (le_struct->buff[i] && k < size)
 		le_struct->buff[i++] = le_struct->buff[le_struct->copy_off + k++];
-	ft_strclr(&le_struct->buff[i]);
+	ft_strclr(le_struct->buff + i);
 	return (LE_SUCCESS);
 }
 
