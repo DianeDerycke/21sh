@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/23 13:11:33 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/06 13:37:52 by mrandou          ###   ########.fr        #
+#    Updated: 2019/03/06 16:17:19 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,13 @@ $(NAME): $(OBJ)
 	@ar rc $(NAME) $(OBJ)
 
 %.o: %.c
-	@gcc -c -Wall -Werror -Wextra -I . -o $@ $< 
+	@gcc -c -Wall -Werror -Wextra -I . -o $@ $<
+	@printf "LIBSH -> \033[32m"
+	@printf $<
+	@printf "\033[0m\r\n"
+	@printf "\033[K\r"
+	@printf "\033[A"
+	@printf "\033[K\r"
 
 clean: 
 	@rm -f $(OBJ)

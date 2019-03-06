@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/06 15:46:02 by mrandou          ###   ########.fr        #
+#    Updated: 2019/03/06 16:28:09 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -161,17 +161,23 @@ $(NAME): $(MAKEFILE) $(OBJ) $(OBJ_DEPEND) $(LIBFT) $(LIBMS) $(LIBSH)
 	$(LEX_PARSE_OBJ) $(BUILTINS_OBJ)  $(LIBNAME) $(TFLAGS) \
 
 compile: 
-	@printf "LIBFT -> "
-	@make -C $(LIBFT) 1> /dev/null || true
-	@printf "\033[32mDone ✓\033[0m\n"
-	@printf "LIBSH -> "
-	@make -C $(LIBSH) 1> /dev/null || true
-	@printf "\033[32mDone ✓\033[0m\n"
-	@printf "LIBMS -> "
-	@make -C $(LIBMS) 1> /dev/null || true
-	@printf "\033[32mDone ✓\033[0m\n"
-	@make $(NAME)
+	@make -C $(LIBFT)
+	@printf "\n\033[K\r"
+	@printf "\033[A"
 	@printf "\033[K\r"
+	@printf "LIBFT -> \033[32mDone ✓\033[0m\n"
+	@make -C $(LIBSH)
+	@printf "\n\033[K\r"
+	@printf "\033[A"
+	@printf "\033[K\r"
+	@printf "LIBSH -> \033[32mDone ✓\033[0m\n"
+	@make -C $(LIBMS)
+	@printf "\n\033[K\r"
+	@printf "\033[A"
+	@printf "\033[K\r"
+	@printf "LIBMS -> \033[32mDone ✓\033[0m\n"
+	@make $(NAME)
+	@printf "\n\033[K\r"
 	@printf "\033[A"
 	@printf "\033[K\r"
 	@printf "21sh --> \033[32mDone ✓\033[0m\r"

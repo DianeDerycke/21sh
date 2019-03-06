@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/25 02:53:05 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/06 14:50:20 by mrandou          ###   ########.fr        #
+#    Updated: 2019/03/06 16:20:00 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,12 @@ $(NAME): $(OBJ)
 
 %.o: %.c
 	@gcc -c -Wall -Werror -Wextra -I . -o $@ $<
+	@printf "LIBFT -> \033[32m"
+	@printf $<
+	@printf "\033[0m\r\n"
+	@printf "\033[K\r"
+	@printf "\033[A"
+	@printf "\033[K\r"
 
 clean: 
 	@rm -f $(OBJ)
