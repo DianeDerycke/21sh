@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/06 15:34:20 by mrandou          ###   ########.fr        #
+#    Updated: 2019/03/06 15:46:02 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -162,7 +162,7 @@ $(NAME): $(MAKEFILE) $(OBJ) $(OBJ_DEPEND) $(LIBFT) $(LIBMS) $(LIBSH)
 
 compile: 
 	@printf "LIBFT -> "
-	@make -C $(LIBFT) 1> echo
+	@make -C $(LIBFT) 1> /dev/null || true
 	@printf "\033[32mDone ✓\033[0m\n"
 	@printf "LIBSH -> "
 	@make -C $(LIBSH) 1> /dev/null || true
@@ -170,7 +170,10 @@ compile:
 	@printf "LIBMS -> "
 	@make -C $(LIBMS) 1> /dev/null || true
 	@printf "\033[32mDone ✓\033[0m\n"
-	@make $(NAME) 
+	@make $(NAME)
+	@printf "\033[K\r"
+	@printf "\033[A"
+	@printf "\033[K\r"
 	@printf "21sh --> \033[32mDone ✓\033[0m\r"
 	@printf "\n\nCompilation\033[32m Done ✓\\033[0m\n"
 	
