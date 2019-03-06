@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
+#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/23 13:11:33 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/02/20 15:00:14 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/03/06 13:38:02 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,15 +25,15 @@ OBJ = $(addsuffix .o, $(FILES))
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	ar rc $(NAME) $(OBJ)
+	@ar rc $(NAME) $(OBJ)
 
 %.o: %.c
-	gcc -c -Wall -Werror -Wextra -I . -o $@ $< 
+	@gcc -c -Wall -Werror -Wextra -I . -o $@ $< 
 
 clean: 
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 
 fclean: clean
-	rm -rf libms.a
+	@rm -rf libms.a
 
 re: fclean all

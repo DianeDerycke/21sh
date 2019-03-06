@@ -3,12 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
+#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/04 17:33:37 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/03/06 15:01:16 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+.PHONY: all, clean, fclean, re
 
 NAME = 21sh
 LIBFT = ./libft/
@@ -16,6 +18,19 @@ LIBSH = ./libsh/
 LIBMS = ./libms/
 LIBNAME = ./libft/libft.a ./libsh/libsh.a ./libms/libms.a
 HISTORY = ~/.21sh_history
+
+INC_DIR				=	./includes/
+INC_NAME_HISTORY	=	history.h
+INC_NAME_LEXER		=	lexer.h
+INC_NAME_LINEEDITON	=	lineedition.h
+INC_NAME_SH21		=	sh21.h
+
+INC_HISTORY		=	$(addprefix $(INC_DIR), $(INC_NAME_HISTORY))
+INC_LEXER		=	$(addprefix $(INC_DIR), $(INC_NAME_LEXER))
+INC_LINEEDITON	=	$(addprefix $(INC_DIR), $(INC_NAME_LINEEDITON))
+INC_SH21		=	$(addprefix $(INC_DIR), $(INC_NAME_SH21))
+
+INC_DEPEND			= 	$(INC_HISTORY) $(INC_LEXER) $(INC_LINEEDITON) $(INC_SH21)
 
 LINE_EDITION_NAME = line_edition.c \
 					le_termcap.c \
@@ -86,54 +101,92 @@ HISTORY_OBJ = $(addprefix $(OBJ_HISTORY_PATH), $(HISTORY_NAME:.c=.o))
 BUILTINS_OBJ = $(addprefix $(OBJ_BUILTINS_PATH), $(BUILTINS_NAME:.c=.o))
 LEX_PARSE_OBJ = $(addprefix $(OBJ_LEX_PARSE_PATH), $(LEX_PARSE_NAME:.c=.o))
 
-CPPFLAGS = -Iincludes
-LDFLAGS = -Llibft -Llibsh -Llibms
-LDLIBS = -lft -lsh -lms
-CC = gcc
-CFLAGS = -Werror -Wextra -Wall -g3
-TFLAGS = -ltermcap
+OBJ_DEPEND =	$(LINE_EDITION_OBJ) $(HISTORY_OBJ) $(BUILTINS_OBJ) $(LEX_PARSE_OBJ)
+
+CPPFLAGS		= -Iincludes
+LDFLAGS			= -Llibft -Llibsh -Llibms
+LDLIBS			= -lft -lsh -lms
+CC				= gcc
+CFLAGS			= -Werror -Wextra -Wall -g3
+TFLAGS			= -ltermcap
+MAKEFILE		= ./Makefile
 
 all: compile
 
 $(OBJ):
 	@mkdir -p $@
-	mkdir $(OBJ_LINE_EDITION_PATH)
-	mkdir $(OBJ_HISTORY_PATH)
-	mkdir $(OBJ_BUILTINS_PATH)
-	mkdir $(OBJ_LEX_PARSE_PATH)
+	@mkdir -p $(OBJ_LINE_EDITION_PATH)
+	@mkdir -p $(OBJ_HISTORY_PATH)
+	@mkdir -p $(OBJ_BUILTINS_PATH)
+	@mkdir -p $(OBJ_LEX_PARSE_PATH) 
 
-$(OBJ_LINE_EDITION_PATH)%.o: $(LINE_EDITION_PATH)%.c
-	$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
+$(OBJ_LINE_EDITION_PATH)%.o: $(LINE_EDITION_PATH)%.c $(INC_DEPEND)
+	@$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
+	@printf "21sh --> \033[32m"
+	@printf $<
+	@printf "\033[0m\r\n"
+	@printf "\033[K\r"
+	@printf "\033[A"
+	@printf "\033[K\r"
 
-$(OBJ_HISTORY_PATH)%.o: $(HISTORY_PATH)%.c
-	$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
+$(OBJ_HISTORY_PATH)%.o: $(HISTORY_PATH)%.c $(INC_DEPEND)
+	@$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
+	@printf "21sh --> \033[32m"
+	@printf $<
+	@printf "\033[0m\r\n"
+	@printf "\033[K\r"
+	@printf "\033[A"
+	@printf "\033[K\r"
 
-$(OBJ_BUILTINS_PATH)%.o: $(BUILTINS_PATH)%.c
-	$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
+$(OBJ_BUILTINS_PATH)%.o: $(BUILTINS_PATH)%.c $(INC_DEPEND)
+	@$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
+	@printf "21sh --> \033[32m"
+	@printf $<
+	@printf "\033[0m\r\n"
+	@printf "\033[K\r"
+	@printf "\033[A"
+	@printf "\033[K\r"
 
-$(OBJ_LEX_PARSE_PATH)%.o: $(LEX_PARSE_PATH)%.c
-	$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
+$(OBJ_LEX_PARSE_PATH)%.o: $(LEX_PARSE_PATH)%.c $(INC_DEPEND)
+	@$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
+	@printf "21sh --> \033[32m"
+	@printf $<
+	@printf "\033[0m\r\n"
+	@printf "\033[K\r"
+	@printf "\033[A"
+	@printf "\033[K\r"
 
-$(NAME): $(OBJ) $(LINE_EDITION_OBJ) $(HISTORY_OBJ) $(BUILTINS_OBJ) $(LEX_PARSE_OBJ)
-	$(CC) $(CFLAGS) -o $@ $(LINE_EDITION_OBJ) $(HISTORY_OBJ) \
-	$(LEX_PARSE_OBJ) $(BUILTINS_OBJ)  $(LIBNAME) $(TFLAGS)
+$(NAME): $(MAKEFILE) $(OBJ) $(OBJ_DEPEND)
+	@$(CC) $(CFLAGS) -o $@ $(LINE_EDITION_OBJ) $(HISTORY_OBJ) \
+	$(LEX_PARSE_OBJ) $(BUILTINS_OBJ)  $(LIBNAME) $(TFLAGS) \
 
 compile: 
-	make -C $(LIBFT)
-	make -C $(LIBSH)
-	make -C $(LIBMS)
-	make $(NAME)
+	@printf "LIBFT -> "
+	@make -C $(LIBFT)
+	@printf "\033[32mDone ✓\033[0m\n"
+	@printf "LIBSH -> "
+	@make -C $(LIBSH)
+	@printf "\033[32mDone ✓\033[0m\n"
+	@printf "LIBMS -> "
+	@make -C $(LIBMS)
+	@printf "\033[32mDone ✓\033[0m\n"
+	@printf "21sh --> "
+	@make $(NAME)
+	@printf "21sh --> \033[32mDone ✓\033[0m\r"
+	@printf "\n\nCompilation\033[32m Done ✓\\033[0m\n"
 	
 clean:
-	rm -rf	$(OBJ)
-	rm -f	$(HISTORY)
-	rmdir	$(OBJ) 2> /dev/null || true
-	make -C $(LIBFT) clean
-	make -C $(LIBSH) clean
-	make -C $(LIBMS) clean
+	@rm -rf	$(OBJ)
+	@rm -f	$(HISTORY)
+	@rmdir	$(OBJ) 2> /dev/null || true
+	@make -C $(LIBFT) clean
+	@make -C $(LIBSH) clean
+	@make -C $(LIBMS) clean
+	@printf "All ---> \033[31mclean Done ✓\n\033[0m"
 
 fclean: clean
-	rm -f $(NAME)
-	rm -f $(LIBNAME)
+	@rm -f $(NAME)
+	@rm -f $(LIBNAME)
+	@printf "All ---> \033[31mfclean Done ✓\n\033[0m"
 
 re: fclean all
