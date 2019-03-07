@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 13:20:39 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/07 15:20:06 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,12 @@ int     exec_cmd(t_ast *ast, t_sh *shell)
     if (treat_command(shell, ast) == FAILURE)
         return (FAILURE);
     if (is_command(shell) == FAILURE)
+    {
+        ft_free_array(shell->cmd);
+        free(shell->cmd);
+        shell->cmd = NULL;
         return (FAILURE);
+    }
     if (!shell->path)
         ret = exec_builtin(shell);
     else 
