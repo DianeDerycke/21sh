@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 23:46:15 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/07 03:52:06 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,59 +14,59 @@
 
 int     redir_great(t_ast *redir, t_ast *ast)
 {
-    int     fd;
-
     (void)ast;
-    if (redir->left && ((redir->left->token >= SEPARATOR && redir->left->token <=
-    PIPE) || (redir->left->token >= GREAT && redir->left->token <= GREATAND)))
+    redir->std = 1;
+    if ((redir->from = open(redir->left->value,  O_RDWR | O_CREAT |
+         O_TRUNC, 0677)) >= 0)
     {
-        syntax_error(redir->left->value);
-        exit(1);
+        redir->to = dup(STDOUT_FILENO);
+        dup2(redir->from, STDOUT_FILENO);
     }
-    if ((fd = open(redir->left->value,  O_RDWR | O_CREAT | O_TRUNC, 0677)))
-        dup2(fd, STDOUT_FILENO);
+    if (redir->from == ERROR)
+        return (ms_no_such_file_or_dir("21sh", redir->left->value));
     if (ast == redir)
-        exit (1);
+        return (FAILURE);
     return (SUCCESS);
 }
 
 int     redir_dgreat(t_ast *redir, t_ast *ast)
 {
-    int     fd;
-    
     (void)ast;
-    if ((fd = open(redir->left->value, O_RDWR | O_CREAT | O_APPEND, 0677)))
-        dup2(fd, 1);
-    else if (fd == -1)
+    redir->std = 1;
+    if ((redir->from = open(redir->left->value, O_RDWR | O_CREAT 
+        | O_APPEND, 0677)))
     {
-        ms_no_such_file_or_dir("21sh", redir->left->value);
-        exit(1);
+        redir->to = dup(STDOUT_FILENO);
+        dup2(redir->from, STDOUT_FILENO);
     }
+    else if (redir->from == ERROR)
+        return (ms_no_such_file_or_dir("21sh", redir->left->value));
     return (SUCCESS);
 }
 
 int     redir_less(t_ast *redir, t_ast *ast)
 {
-    int     fd;
-    
     (void)ast;
-    if ((fd = open(redir->left->value, O_RDWR)) >= 0)
-        dup2(fd, 0);
-    else if (fd == ERROR)
+    redir->std = 0;
+    if ((redir->from = open(redir->left->value, O_RDWR)) >= 0)
     {
-        ms_no_such_file_or_dir("21sh",redir->left->value);
-        exit(1);
+        redir->to = dup(STDIN_FILENO);
+        dup2(redir->from, STDIN_FILENO);
     }
+    else if (redir->from == ERROR)
+        return (ms_no_such_file_or_dir("21sh",redir->left->value));
     return (SUCCESS);
 }
 
 int     redir_dless(t_ast *redir, t_ast *ast)
 {
-    int     fd;
-    
     (void)ast;
-    if ((fd = open(redir->left->value, O_RDWR | O_APPEND, 0777)))
-        dup2(fd, 0);
+    redir->std = 0;
+    if ((redir->from = open(redir->left->value, O_RDWR | O_APPEND, 0777)))
+    {
+        redir->to = dup(STDIN_FILENO);
+        dup2(redir->from, STDIN_FILENO);
+    }
     return (SUCCESS);
 }
 
@@ -107,25 +107,17 @@ static int     get_dest_fd(char *arg, int *is_close)
 
 int     redir_greatand(t_ast *redir, t_ast *ast)
 {
-    int     io_nb;
-    int     output;
     int     is_close;
 
     if (!redir->left)
-    {
-        syntax_error(NULL);
+        return (syntax_error(NULL));
+    if ((redir->from = get_dest_fd(redir->left->value, &is_close)) == ERROR)
+        return (ambiguous_redirect(redir->left->value));
+    if ((redir->to = get_io_number(ast, redir, GREATAND)) == ERROR)
         exit (1);
-    }
-    if ((output = get_dest_fd(redir->left->value, &is_close)) == ERROR)
-    {
-        ambiguous_redirect(redir->left->value);
-        exit (1);
-    }
-    if ((io_nb = get_io_number(ast, redir, GREATAND)) == ERROR)
-        exit (1);
-    dup2(output, io_nb);
-    if (is_close == 1)
-        close(io_nb);
+    redir->to = dup(redir->to);
+    dup2(redir->from, redir->to);
+    redir->std = 1;
     return (SUCCESS);
 }
 
@@ -137,17 +129,11 @@ int     redir_lessand(t_ast *redir, t_ast *ast)
 
     io_nb = 0;
     if (!redir->left)
-    {
-        syntax_error(NULL);
-        exit (1);
-    }
+        return (syntax_error(NULL));
     if ((output = get_dest_fd(redir->left->value, &is_close)) == ERROR)
-    {
-        ambiguous_redirect(redir->left->value);
-        exit (1);
-    }
+        return (ambiguous_redirect(redir->left->value));
     if ((io_nb = get_io_number(ast, redir, LESSAND)) == ERROR)
-        exit (1);
+        return (FAILURE);
     dup2(io_nb, output);
     if (is_close == 1)
         close(output);

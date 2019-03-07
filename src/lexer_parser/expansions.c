@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:18:40 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/28 14:04:59 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/06 22:09:47 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static ssize_t		tilde_expansion(char **arg, char **env)
 	return (SUCCESS);
 }
 
-static void			concat_d_expansion(char *ptr, char *arg, t_expansion *st,
+static int			concat_d_expansion(char *ptr, char *arg, t_expansion *st,
 					char **env)
 {
 	if (!(st->sub = (ptr != arg ? ft_strsub(arg, 0, (size_t)(ptr - arg)) :
@@ -61,9 +61,12 @@ static void			concat_d_expansion(char *ptr, char *arg, t_expansion *st,
 			ms_malloc_error();
 		ft_strdel(&st->v_value);
 	}
+	else
+		return (FAILURE);
+	return (SUCCESS);
 }
 
-static void			dollar_expansion(char **cmdline, char **env, char *arg,
+static int			dollar_expansion(char **cmdline, char **env, char *arg,
 										char *ptr)
 {
 	t_expansion	st;
@@ -72,32 +75,41 @@ static void			dollar_expansion(char **cmdline, char **env, char *arg,
 	st.join = NULL;
 	while (ptr)
 	{
-		concat_d_expansion(ptr, arg, &st, env);
+		if (concat_d_expansion(ptr, arg, &st, env) == FAILURE)
+			return (FAILURE);
 		ft_strdel(&st.sub);
 		arg = ptr + st.index;
 		ptr = ft_strchr(ptr + st.index + 1, VAL_DOLLAR);
 	}
 	ft_strdel(cmdline);
 	*cmdline = st.join;
+	return (SUCCESS);
 }
 
-ssize_t				apply_expansions(t_sh *shell)
+ssize_t				apply_expansions(t_sh *shell, t_ast *ast)
 {
-	size_t		i;
 	char		*ptr;
+	int			ret;
 
+	ret = 0;
 	ptr = NULL;
-	i = 0;
-	while (shell->cmd[i])
+	while (ast)
 	{
-		if ((ptr = ft_strchr(shell->cmd[i], VAL_DOLLAR))
-		&& ft_strlen(shell->cmd[i]) > 1)
-			dollar_expansion(shell->cmd + i, shell->env, shell->cmd[i], ptr);
-		else if ((ft_strcmp(shell->cmd[i], "~") == SUCCESS)
-		|| ft_strchr(shell->cmd[i], VAL_TILDE))
-			if (tilde_expansion(shell->cmd + i, shell->env) == FAILURE)
-				return (FAILURE);
-		i++;
+		if (ast->token != SQUOTE)
+		{
+			if (ast->value && (ptr = ft_strchr(ast->value, VAL_DOLLAR))
+			&& ft_strlen(ast->value) > 1)
+				ret = dollar_expansion(&(ast->value), shell->env, ast->value, ptr);
+			else if (ast->value && ((ft_strcmp(ast->value, "~") == SUCCESS)
+			|| ft_strchr(ast->value, VAL_TILDE)))
+				ret = tilde_expansion(&(ast->value), shell->env);
+		}
+		if (ret == FAILURE)
+		{
+			getter_error_var(ast->value);
+			return (FAILURE);
+		}
+		ast = ast->left;
 	}
 	return (SUCCESS);
 }

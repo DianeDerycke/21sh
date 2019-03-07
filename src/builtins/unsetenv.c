@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:03:32 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/13 12:51:28 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/06 23:36:01 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ ssize_t		ms_unsetenv(char **split_cmd, char ***ms_env, int ret)
 		while (split_cmd[i])
 		{
 			if (ms_find_variable(split_cmd[i], *ms_env, &index) == -1)
-				return (FAILURE);
+				return (ms_undefined_variable(split_cmd[i]));
 			else
 				*ms_env = delete_variable(*ms_env, index);
 			i++;

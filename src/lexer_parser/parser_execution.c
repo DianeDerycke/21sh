@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_execution.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:41:10 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/05 12:56:27 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/07 02:58:24 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,17 @@ int    parser_execution(t_ast *ast, t_sh *shell)
 
     ret = 0;
     if (!ast)
-        return (0);
+        return (SUCCESS);
     if (ast->token == SEPARATOR && ast->right)
         ret = parser_execution(ast->right, shell);
     else if (ast->token == PIPE)
-    {
-        ret = recurse_pipe(shell, ast, NULL, NULL);
-        sh_freepidlist(&shell->l_pid);
-        shell->l_pid = NULL;
-    }
+        return (do_pipe(shell, ast));
+    else if (find_next_redir(ast))
+        return (exec_redirection(ast, shell));
     else if (ast->token >= WORD)
     {
-        if (find_next_redir(ast))
-            ret = exec_redirection(ast, shell);
-        else
-            ret = exec_cmd(ast, shell);
+        shell->fork = 1;
+        return (exec_cmd(ast, shell));
     }
     if (ast->token == SEPARATOR && ast->left)
         ret = parser_execution(ast->left, shell);

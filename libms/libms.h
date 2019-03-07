@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/23 13:09:16 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/20 14:59:40 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/06 23:50:20 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ ssize_t		ms_error_perm_denied(char *utility, char *cmd);
 ssize_t		ms_undefined_variable(char *var);
 ssize_t		ms_too_few_args(char *utility);
 int			ms_is_env_var_name(char *str);
-int		ms_simple_exec(char *utility, char **split_cmd, char **env, char **tmp);
+int			ms_simple_exec(char *utility, char **split_cmd, char **env, char **tmp);
 
 
 #endif

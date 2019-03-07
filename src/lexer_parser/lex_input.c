@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 18:08:56 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/06 21:48:36 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int     lex_input(t_param *param)
 			return (FAILURE);
 		if (getter_type_input(param->input[param->index], i, param))
 			if ((ret = getter_action(param, i)) != SUCCESS)
-				return (get_error_lex(ret, param->input + param->index));
+				return (get_error(ret, param->input + param->index));
 		i = 0;
 	}
 	return (SUCCESS);

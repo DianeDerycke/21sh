@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 18:28:45 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/06 21:43:26 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static int 	process_input(t_param *param, t_sh *shell)
 	t_ast *ast;
 
 	ast = NULL;
-	// display_list(param->l_tokens);
 	// display_tree(ast, 0, 0);
+	// display_list(param->l_tokens);
 	if (lex_input(param) != SUCCESS)
 		return (FAILURE);
 	else if (!(ast = create_ast(param->l_tokens, param->l_tokens, NULL)))

@@ -3,60 +3,64 @@
 /*                                                        :::      ::::::::   */
 /*   exec_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/06 18:05:37 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/07 03:04:20 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-int     just_exec(t_ast *ast, t_sh *shell)
+int    treat_command(t_sh *shell, t_ast *ast)
 {
-    char    *path;
-    int     ret;
-    
-    path = NULL;
-    ret = 0;
+    if (!ast)
+        return (FAILURE);
+    if (apply_expansions(shell, ast) == FAILURE)
+    {
+        ft_free_array(shell->cmd);
+        free(shell->cmd);
+        return (get_error(UNDEFVAR, getter_error_var(NULL)));
+    }
     if (!(shell->cmd = sh_rtree_to_array(ast)))
         return (FAILURE);
-	apply_expansions(shell);
-    if (!shell->cmd)
-        return (FAILURE);
-	if ((ret = exec_builtin(shell)) == ERROR)
-    {
-        if ((path = ms_get_valid_cmd(shell->cmd[0], shell->env))
-            && access(path, X_OK) == SUCCESS)
-            ret = execve(path, shell->cmd, shell->env);
-        else
-            ret = error_execution(shell->cmd[0]);
-    }
+    return (SUCCESS);
+}
+
+int      is_command(t_sh *shell)
+{
+    struct stat f_stat;
+    if (find_builtin(shell->cmd[0]) >= 0)
+        return (SUCCESS);
+    if ((shell->path = ms_get_valid_cmd(shell->cmd[0], shell->env)) && 
+        access(shell->path, X_OK) == SUCCESS)
+        return (SUCCESS);
     else
-        exit(ret);
-    ft_strdel(&path);
-    ft_free_array(shell->cmd);
-    free(shell->cmd);
-    return (ret);
+    {
+        ft_strdel(&(shell->path));
+        if (ms_file_exist(shell->cmd[0]) && lstat(shell->cmd[0], &f_stat) == 0 &&
+            !(f_stat.st_mode & S_IXUSR))
+            return (get_error(PERMDENIED, shell->cmd[0]));
+    }
+    return (get_error(CNOTFOUND, shell->cmd[0]));
 }
 
 int     exec_cmd(t_ast *ast, t_sh *shell)
 {
     int ret;
-    int i;
 
 	ret = 0;
-    i = 0;
-    if (!(shell->cmd = sh_rtree_to_array(ast)))
+    if (treat_command(shell, ast) == FAILURE)
         return (FAILURE);
-    apply_expansions(shell);
-    if (!shell->cmd)
+    if (is_command(shell) == FAILURE)
         return (FAILURE);
-    if ((ret = exec_builtin(shell)) == ERROR)
-        if ((ret = ms_exec_binary(shell->cmd[0], shell->cmd, shell->env, shell->env)) == -1)
-            ret = error_execution(shell->cmd[0]);
+    if (!shell->path)
+        ret = exec_builtin(shell);
+    else 
+        ret = sh_exec_binary(shell);
     ft_free_array(shell->cmd);
     free(shell->cmd);
+    shell->cmd = NULL;
     return (ret);
 }
 
@@ -66,8 +70,5 @@ int     exec_pipe_cmd(t_sh *shell, t_ast *ast)
 		return (FAILURE);
 	if (find_next_redir(ast))
 		return (exec_redirection(ast, shell));
-	if (just_exec(ast, shell) == FAILURE)
-        return (FAILURE);
-	return (SUCCESS);
+    return (exec_cmd(ast, shell));
 }
-

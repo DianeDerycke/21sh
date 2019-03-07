@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:07:12 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/04 18:15:12 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/06 23:42:35 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,6 @@
 ssize_t     error_arg(void)
 {
     ft_putendl("Number args or args unvalid");
-    return (FAILURE);
-}
-
-int     error_execution(char *cmd_name)
-{
-    struct stat f_stat;
-
-    if (ms_file_exist(cmd_name) == FAILURE)
-        ms_command_not_found(cmd_name);
-    else if (lstat(cmd_name, &f_stat) == 0 && 
-                    !(f_stat.st_mode & S_IXUSR))
-        ms_perm_denied(cmd_name);
     return (FAILURE);
 }
 

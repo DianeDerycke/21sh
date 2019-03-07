@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libsh.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/05 10:34:29 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/07 03:43:07 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,26 +72,32 @@ typedef struct      s_pid
     struct s_pid    *next;
 }                   t_pid;
 
-
-typedef struct      s_sh {
-    char            **env;
-    char            **cmd;
-    struct s_pid    *l_pid;
-}                   t_sh;
-
 typedef struct      s_ast {
     char            *value;
     int             token;
     int             io_number;
+    int             from;
+    int             to;
+    int             std;
     struct s_ast  *next;
     struct s_ast  *right;
     struct s_ast  *left;
 }                   t_ast;
 
+typedef struct      s_sh {
+    char            **env;
+    char            **cmd;
+    char            *path;
+    int             fork;
+    struct s_pid    *l_pid;
+}                   t_sh;
+
+
 /*
 ** list functions
 */
 
+int         sh_exec_binary(t_sh *shell);
 int			sh_strfpos(char *str, char oc);
 char		**sh_strsplit(const char *s, int(*ft)(char));
 char		*sh_getvalue(t_env *env, char *key);

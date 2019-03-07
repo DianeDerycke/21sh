@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/05 18:27:42 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/07 02:58:55 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int		end_recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *newfd)
 	return(exec_pipe_cmd(shell, ast));
 }
 
-int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
+static int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
 {
 	int		newfd[2];
 	pid_t	child_pid;
@@ -66,4 +66,15 @@ int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
 		waitpid(child_pid, &status, 0);
 	}
 	return (SUCCESS);
+}
+
+int 	do_pipe(t_sh *shell, t_ast *ast)
+{
+	int		ret;
+
+	shell->fork = 0;
+	ret = recurse_pipe(shell, ast, NULL, NULL);
+	sh_freepidlist(&(shell->l_pid));
+	shell->l_pid = NULL;
+	return (ret);
 }

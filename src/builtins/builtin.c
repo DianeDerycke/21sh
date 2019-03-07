@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:12:17 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/25 14:01:52 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/06 22:43:33 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int		find_builtin(char *cmd)
 			return (i);
 		i++;
 	}
-	return (-1);
+	return (ERROR);
 }
 
 int     exec_builtin(t_sh *shell)
@@ -46,8 +46,6 @@ int     exec_builtin(t_sh *shell)
     ret = 0;
     if ((index = find_builtin(shell->cmd[0])) >= 0)
         ret = builtin_array[index].function(shell->cmd, &(shell->env), ret);
-    else
-        return (ERROR);
     return (ret);
 }
 //create array erro

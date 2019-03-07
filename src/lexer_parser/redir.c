@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/06 18:07:39 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/07 03:57:26 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,29 +25,6 @@ t_ast     *find_next_redir(t_ast *ast)
     return (NULL);
 }
 
-static int      do_redirection(int token, t_ast *redir, t_ast *ast)
-{
-    static int(*redir_array[REDIR_SIZE])(t_ast *, t_ast *) = {
-        NULL,
-        NULL,
-        NULL,
-        &redir_great,
-        &redir_dgreat,
-        &redir_less,
-        &redir_dless,
-        NULL,
-        &redir_lessand,
-        &redir_greatand,
-    };
-    if (!redir->left || (redir->left && 
-    ((redir->left->token >= SEPARATOR && redir->left->token <= PIPE) 
-    || (redir->left->token >= GREAT && redir->left->token <= GREATAND))))
-    {
-        syntax_error(redir->left->value);
-        exit(1);
-    }
-    return(redir_array[token](redir, ast));
-}
 static t_ast    *get_next_argument(t_ast *ast)
 {
     if ((ast = find_next_redir(ast)) && ast->left && ast->left->left)
@@ -90,29 +67,51 @@ static t_ast    *add_argument_to_cmd(t_ast *ast)
     return (cmd);
 }
 
+static int      do_redirection(t_ast *redir, t_ast *ast)
+{
+    static int(*redir_array[REDIR_SIZE])(t_ast *, t_ast *) = {
+        NULL,
+        NULL,
+        NULL,
+        &redir_great,
+        &redir_dgreat,
+        &redir_less,
+        &redir_dless,
+        NULL,
+        &redir_lessand,
+        &redir_greatand,
+    };
+
+    return(redir_array[redir->token](redir, ast));
+}
+
 int     exec_redirection(t_ast *ast, t_sh *shell)
 {
-    pid_t   pid;
     t_ast   *redir;
-    int     status;
     t_ast   *tmp;
-    t_ast   *cmd;
+    int     ret;
 
+    ret = 0;
     tmp = ast;
-    cmd = add_argument_to_cmd(ast);
-    pid = fork();
-    if (pid == 0)
+    while ((redir = find_next_redir(tmp)))
     {
-        while ((redir = find_next_redir(tmp)))
-        {
-            do_redirection(redir->token, redir, ast);
-            tmp = redir->left;
-        }
-        if (just_exec(cmd, shell) == FAILURE)
-            exit (1);
+        if (do_redirection(redir, ast) == FAILURE)
+            return (FAILURE);
+        tmp = redir->left;
     }
-    else
-        waitpid(pid, &status, 0);
-    free_ast(&cmd);
-    return (SUCCESS) ;
+    if (!(tmp = add_argument_to_cmd(ast)))
+        return (FAILURE);
+    shell->fork = 1;
+    ret = exec_cmd(tmp, shell);
+    redir = find_next_redir(ast);
+    while (redir)
+    {
+        dup2(redir->to, redir->std);
+        close(redir->to);
+        close(redir->from);
+        ast = ast->next;
+        redir = find_next_redir(ast);
+    }
+    free_ast(&tmp);
+    return (ret);
 }

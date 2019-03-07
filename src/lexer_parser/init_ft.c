@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_ft.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 00:15:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/06 18:00:44 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/07 03:43:42 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,9 @@ t_ast     *create_elem(void)
         ft_malloc_error();
     new->value = NULL;
     new->token = 0;
+    new->from = 0;
+    new->to = 0;
+    new->std = 0;
     new->next = NULL;
     new->right = NULL;
     new->left = NULL;

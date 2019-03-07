@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ms_exec_binary.c                                   :+:      :+:    :+:   */
+/*   sh_exec_binary.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/27 14:26:30 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/06 23:07:29 by DERYCKE          ###   ########.fr       */
+/*   Created: 2019/03/06 23:05:19 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/03/07 03:22:52 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libms.h"
+#include "libsh.h"
 
 static pid_t		getter_pid(pid_t val)
 {
@@ -31,32 +31,30 @@ static void		sig_handler(int sig)
 	}
 }
 
-int		ms_exec_binary(char *utility, char **split_cmd, char **env, char **tmp)
+int		sh_exec_binary(t_sh *shell)
 {
-	char	*path;
 	pid_t	pid;
 	int		status;
 	int		ret;
 
 	ret = 0;
 	status = 0;
-	if ((path = ms_get_valid_cmd(utility, env))
-		&& access(path, X_OK) == SUCCESS)
-	{
-		pid = fork();
-		if (pid == 0)
-			ret = execve(path, split_cmd, tmp);
-		else
-		{
-			getter_pid(pid);
-			signal(SIGINT, sig_handler);
-			waitpid(-1, &status, 0);
-		}
-		if (status)
-			ret = FAILURE;
-	}
-	else
-		ret = ERROR;
-	ft_strdel(&path);
+    if (shell->fork == 0)
+        ret = execve(shell->path, shell->cmd, shell->env);
+    else
+    {
+        pid = fork();
+        if (pid < 0)
+            exit(1);
+        if (pid == 0)
+            ret = execve(shell->path, shell->cmd, shell->env);
+        else
+        {
+            getter_pid(pid);
+            signal(SIGINT, sig_handler);
+            waitpid(pid, &status, 0);
+        }
+    }
+	ft_strdel(&(shell->path));
 	return (ret);
 }

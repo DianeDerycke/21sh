@@ -50,7 +50,10 @@ typedef struct		s_opt
 
 typedef enum    e_lex 
 {
-    UNEXPTOKEN = 4,
+    UNEXPTOKEN,
+	UNDEFVAR,
+	CNOTFOUND,
+	PERMDENIED
 }               t_lex;
 
 //LEX_INIT
@@ -88,15 +91,17 @@ int     	lex_input(t_param *param);
 char 		*get_valid_input(char **env, int ret);
 
 //LEX_ERROR
-int         get_error_lex(int error_nb, char *str);
+char 		*getter_error_var(char *str);
+int         get_error(int error_nb, char *str);
 
 //EXEC FUNCTION
-int     	just_exec(t_ast *ast, t_sh *shell);
+int      	is_command(t_sh *shell);
+int    		treat_command(t_sh *shell, t_ast *ast);
 int     	exec_cmd(t_ast *ast, t_sh *shell);
 int     	exec_pipe_cmd(t_sh *shell, t_ast *ast);
 
 //EXPANSIONS
-ssize_t		apply_expansions(t_sh *shell);
+ssize_t		apply_expansions(t_sh *shell, t_ast *ast);
 
 //PARSE EXECUTION
 int    		parser_execution(t_ast *ast, t_sh *shell);
@@ -105,7 +110,7 @@ int    		parser_execution(t_ast *ast, t_sh *shell);
 t_ast     *create_ast(t_ast *curr_node, t_ast *start, t_ast *end);
 
 //PIPE
-int 	    recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd);
+int 		do_pipe(t_sh *shell, t_ast *ast);
 
 //PIPE_UTILS
 t_pid 	    *get_pid_list(t_pid *new_list);

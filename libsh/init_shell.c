@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:07:37 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/06 16:53:17 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/07 03:19:07 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_sh     *init_shell(void)
     if (!(new->env = ms_get_env()))
         new->env = NULL;
     new->cmd = NULL;
+    new->path = NULL;
     new->l_pid = NULL;
+    new->fork = 0;
     return (new);
 }

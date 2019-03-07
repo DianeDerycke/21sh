@@ -6,11 +6,20 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 17:33:44 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 18:15:16 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/06 22:38:36 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
+
+char 	*getter_error_var(char *str)
+{
+	static char *error_var = NULL;
+	
+	if (str)
+		error_var = str;
+	return (error_var);
+}
 
 int			syntax_error(char *str)
 {
@@ -26,9 +35,15 @@ int			syntax_error(char *str)
 	return (FAILURE);
 }
 
-int     get_error_lex(int error_nb, char *str)
+int     get_error(int error_nb, char *str)
 {
     if (error_nb == UNEXPTOKEN)
         return (syntax_error(str));
+	if (error_nb == UNDEFVAR)
+		return(ms_undefined_variable(str));
+	if (error_nb == CNOTFOUND)
+		return(ms_command_not_found(str));
+	if (error_nb == PERMDENIED)
+		return(ms_perm_denied(str));
     return (FAILURE);
 }

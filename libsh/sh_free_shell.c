@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh_free_shell.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:05:57 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/05 18:16:34 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/06 22:52:23 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void		sh_free_shell(t_sh *shell)
         return ;
     if (shell->cmd)
         ft_free_array(shell->cmd);
+    if (shell->path)
+        ft_strdel(&(shell->path));
     if (shell->env)
         ft_free_array(shell->env);
     free(shell);
