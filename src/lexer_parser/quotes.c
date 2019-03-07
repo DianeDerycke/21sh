@@ -3,14 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/27 15:47:41 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/08 00:53:23 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
+
+static int     is_valid_pipe(char *str)
+{
+    int     i;
+
+    i = 0;
+    while (str[i])
+    {
+        while (str[i] && ft_is_whitespace(str[i]))
+            i++;
+        if (str[i] == '|')
+        {
+            if (!str[i + 1])
+                return (DQUOTE);
+            while (str[i] && ft_is_whitespace(str[i]))
+                i++;
+            if (!str[i])
+                return (DQUOTE);
+        }
+        i++;
+    }
+    return (SUCCESS);
+}
 
 void		handle_quotes(char **input)
 {
@@ -19,7 +42,7 @@ void		handle_quotes(char **input)
 
 	tmp = NULL;
 	ret = 0;
-	while (!tmp && (ret = is_valid_quotes(*input)))
+	while (!tmp && (ret = is_valid_quotes(*input) || (ret = is_valid_pipe(*input))))
 	{
 		if (!(tmp = line_edition(ret , NULL))) //to edit when feature \n line edition is add : if ft_strcmp(\n, tmp)
 			continue;
