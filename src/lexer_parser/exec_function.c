@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 15:20:06 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/07 22:19:20 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int      is_command(t_sh *shell)
     return (get_error(CNOTFOUND, shell->cmd[0]));
 }
 
+
+
 int     exec_cmd(t_ast *ast, t_sh *shell)
 {
     int ret;
@@ -60,7 +62,11 @@ int     exec_cmd(t_ast *ast, t_sh *shell)
         return (FAILURE);
     }
     if (!shell->path)
+    {
         ret = exec_builtin(shell);
+        if (shell->fork == 0)
+            exit (ret);
+    }
     else 
         ret = sh_exec_binary(shell);
     ft_free_array(shell->cmd);
