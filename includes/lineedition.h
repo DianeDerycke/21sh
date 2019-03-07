@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/06 14:56:56 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/07 16:26:12 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,11 @@
 # define LE_FAILURE_CLR		"\033[1m\033[31m"
 # define LE_GIT_CLR			"\033[1m\033[34m"
 # define LE_PROMPT 			LE_PROMPT_CLR"$> \033[0m"
-# define LE_PROMPT_QUOTE	"\033[1m\033[30m\\> \033[0m"
+# define LE_PROMPT_DQUOTE	"\033[1m\033[30mdquote \\> \033[0m"
+# define LE_PROMPT_SQUOTE	"\033[1m\033[30msquote \\> \033[0m"
 # define LE_PROMPT_SIMPLE	3
 # define LE_PROMPT_DEF_SIZE	4
+# define LE_PROMPT_QTE_SIZE	11
 # define LE_ESCAPE			'\033'
 # define LE_ESCAPEBRK		"\033["
 # define LE_ENDL			'\n'

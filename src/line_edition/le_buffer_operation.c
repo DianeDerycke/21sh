@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/05 17:32:26 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/07 19:45:38 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,22 +68,23 @@ int		le_buff_remove(struct s_le *le_struct, int i)
 int		le_buff_add(struct s_le *le_struct, int i, char c)
 {
 	char	*tmp;
+	int		len;
 
+	if (!c)
+		return (LE_FAILURE);
 	if (i == le_struct->nb_char)
 	{
 		le_struct->buff[i] = c;
 		return (LE_SUCCESS);
 	}
-	if (!(tmp = ft_strnew(ft_strlen(le_struct->buff + i) + 1)))
+	if (!(len = ft_strlen(le_struct->buff + i)))
+		return (LE_SUCCESS);
+	if (!(tmp = ft_strnew(len + 1)))
 		return (LE_FAILURE);
 	tmp[0] = c;
-	ft_strcpy(&tmp[1], &le_struct->buff[i]);
-	ft_strclr(&le_struct->buff[i]);
-	if (!(le_struct->buff = ft_strjoin(le_struct->buff, tmp)))
-	{
-		ft_strdel(&tmp);
-		return (LE_FAILURE);
-	}
+	ft_strcpy(tmp + 1, le_struct->buff + i);
+	le_struct->buff[i] = '\0';
+	le_struct->buff = ft_strcat(le_struct->buff, tmp);
 	ft_strdel(&tmp);
 	return (LE_SUCCESS);
 }

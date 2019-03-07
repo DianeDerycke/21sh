@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 16:44:04 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/05 19:53:50 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/07 16:24:59 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,16 @@ int		le_prompt_home(struct s_le *le_struct, char **env, char *pwd)
 
 int		le_prompt_quote(struct s_le *le_struct)
 {
-	if (!(le_struct->prompt = ft_strdup(LE_PROMPT_QUOTE)))
-		return (LE_FAILURE);
+	if (le_struct->prompt_type == DQUOTE)
+	{
+		if (!(le_struct->prompt = ft_strdup(LE_PROMPT_DQUOTE)))
+			return (LE_FAILURE);
+	}
+	else if (le_struct->prompt_type == SQUOTE)
+		if (!(le_struct->prompt = ft_strdup(LE_PROMPT_SQUOTE)))
+			return (LE_FAILURE);
+	le_struct->prompt_size = LE_PROMPT_QTE_SIZE;
 	le_prompt_print(le_struct);
-	le_struct->prompt_size = LE_PROMPT_DEF_SIZE;
 	return (LE_SUCCESS);
 }
 
