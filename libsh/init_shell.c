@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:07:37 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 03:19:07 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/07 12:31:04 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,6 @@ t_sh     *init_shell(void)
     new->cmd = NULL;
     new->path = NULL;
     new->l_pid = NULL;
-    new->fork = 0;
+    new->fork = 1;
     return (new);
 }

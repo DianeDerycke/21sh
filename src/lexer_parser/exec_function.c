@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 03:04:20 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/07 13:20:39 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int     exec_pipe_cmd(t_sh *shell, t_ast *ast)
 {	
 	if (!ast)
 		return (FAILURE);
+    shell->fork = 0;
 	if (find_next_redir(ast))
 		return (exec_redirection(ast, shell));
     return (exec_cmd(ast, shell));

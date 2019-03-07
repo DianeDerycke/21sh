@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 02:58:55 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/07 13:59:16 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,7 @@ static int		handle_right_command(t_sh *shell, t_ast *ast, int *oldfd, int *newfd
 		close_dup(oldfd, STDIN_FILENO);
 	close_dup(newfd, STDOUT_FILENO);
 	if ((exec_pipe_cmd(shell, ast)) == FAILURE)
-	{
-		close_pipe(newfd);
 		return (ERROR);
-	}
 	return (SUCCESS);
 }
 
@@ -48,21 +45,21 @@ static int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
 	if (child_pid == 0)
 	{
 		if (fd)
-			return (end_recurse_pipe(shell, ast, oldfd, fd));
+			end_recurse_pipe(shell, ast, oldfd, fd);
 		else
-			return (handle_right_command(shell, ast->right, oldfd, newfd));
+			handle_right_command(shell, ast->right, oldfd, newfd);
 	}
 	else
 	{
 		close_pipe(fd);
 		close_pipe(oldfd);
+		sh_push_pidnew(child_pid, &(shell->l_pid));
+		get_pid_list(shell->l_pid);
+		signal(SIGINT, signal_handler);
 		if (ast->left && ast->left->token == PIPE)
 			recurse_pipe(shell, ast->left, newfd, NULL);
 		else if (ast->left && ast->token == PIPE)
 			recurse_pipe(shell, ast->left, oldfd, newfd);
-		get_pid_list(shell->l_pid);
-		sh_push_pidnew(child_pid, &(shell->l_pid));
-		signal(SIGINT, signal_handler);
 		waitpid(child_pid, &status, 0);
 	}
 	return (SUCCESS);

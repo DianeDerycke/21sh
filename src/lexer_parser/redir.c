@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 03:57:26 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/07 13:20:33 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,11 @@ static t_ast    *add_argument_to_cmd(t_ast *ast)
             cmd->value = ft_strdup(ast->value);
             cmd->token = ast->token;
             ast = ast->left;
-            cmd->left = create_elem();
-            cmd = cmd->left;
+            if (ast)
+            {
+                cmd->left = create_elem();
+                cmd = cmd->left;
+            }
         }
         ast = get_next_argument(ast);
     }
@@ -89,20 +92,20 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
 {
     t_ast   *redir;
     t_ast   *tmp;
+    t_ast   *tmp1;
     int     ret;
 
     ret = 0;
     tmp = ast;
+    if (!(tmp1 = add_argument_to_cmd(ast)))
+        return (FAILURE);
     while ((redir = find_next_redir(tmp)))
     {
         if (do_redirection(redir, ast) == FAILURE)
             return (FAILURE);
         tmp = redir->left;
     }
-    if (!(tmp = add_argument_to_cmd(ast)))
-        return (FAILURE);
-    shell->fork = 1;
-    ret = exec_cmd(tmp, shell);
+    ret = exec_cmd(tmp1, shell);
     redir = find_next_redir(ast);
     while (redir)
     {
@@ -112,6 +115,6 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
         ast = ast->next;
         redir = find_next_redir(ast);
     }
-    free_ast(&tmp);
+    free_ast(&tmp1);
     return (ret);
 }

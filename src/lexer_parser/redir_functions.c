@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 03:52:06 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/07 12:13:35 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int     redir_great(t_ast *redir, t_ast *ast)
 {
     (void)ast;
-    redir->std = 1;
+    redir->std = STDOUT_FILENO;
     if ((redir->from = open(redir->left->value,  O_RDWR | O_CREAT |
          O_TRUNC, 0677)) >= 0)
     {

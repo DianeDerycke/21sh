@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/06 21:43:26 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/07 12:46:47 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int     main(void)
 		hy_history_write(param->input, shell->env);
 		ret = process_input(param, shell);
 		free_param(param);
+		param = NULL;
 		if (!isatty(0))
 			break;
 	}
