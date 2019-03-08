@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/08 11:41:02 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/08 12:27:07 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ static int     is_valid_pipe(char *str)
         if (str[i] == '|')
         {
             if (!str[i + 1])
-                return (DQUOTE);
+                return (IS_PIPE);
             i++;
                 while (str[i] && ft_is_whitespace(str[i]))
                     i++;
                 if (!str[i])
-                    return (DQUOTE);
+                    return (IS_PIPE);
         }
         i++;
     }
@@ -60,7 +60,7 @@ int 		handle_quotes(char **input)
 
 	tmp = NULL;
 	ret = 0;
-	while (!tmp && ((ret = is_valid_quotes(*input) || (ret = is_valid_pipe(*input)))))
+	while (!tmp && (((ret = is_valid_quotes(*input)) || (ret = is_valid_pipe(*input)))))
 	{
 		if (!(tmp = line_edition(ret , NULL)))
 			continue;

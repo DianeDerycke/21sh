@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 13:59:16 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/07 15:42:14 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,13 @@ static int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
 	{
 		close_pipe(fd);
 		close_pipe(oldfd);
-		sh_push_pidnew(child_pid, &(shell->l_pid));
-		get_pid_list(shell->l_pid);
-		signal(SIGINT, signal_handler);
 		if (ast->left && ast->left->token == PIPE)
 			recurse_pipe(shell, ast->left, newfd, NULL);
 		else if (ast->left && ast->token == PIPE)
 			recurse_pipe(shell, ast->left, oldfd, newfd);
+		sh_push_pidnew(child_pid, &(shell->l_pid));
+		get_pid_list(shell->l_pid);
+		signal(SIGINT, signal_handler);
 		waitpid(child_pid, &status, 0);
 	}
 	return (SUCCESS);
