@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/08 12:26:52 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/08 15:40:43 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 # define C_EQUAL '='
 # define IS_PIPE '|'
+# define HEREDOC 42
 # define BUFF_SIZE 4096
 # define REDIR_SIZE 15
 # define SUCCESS 0
