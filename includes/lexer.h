@@ -53,7 +53,8 @@ typedef enum    e_lex
     UNEXPTOKEN,
 	UNDEFVAR,
 	CNOTFOUND,
-	PERMDENIED
+	PERMDENIED,
+	UNEXPEOF
 }               t_lex;
 
 //LEX_INIT
@@ -88,7 +89,7 @@ int     	identifier_action(t_param *param);
 
 //LEX INPUT
 int     	lex_input(t_param *param);
-char 		*get_valid_input(char **env, int ret);
+int			get_valid_input(t_param *param, char **env, int ret);
 
 //LEX_ERROR
 char 		*getter_error_var(char *str);
@@ -118,7 +119,7 @@ void		close_pipe(int *fd);
 void		close_dup(int *fd, int std);
 
 //QUOTES
-void		handle_quotes(char **input);
+int			handle_quotes(char **input);
 int     	is_valid_quotes(char *str);
 
 //REDIR_FUNCTIONS
