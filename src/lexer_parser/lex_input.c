@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/06 21:48:36 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/08 02:17:49 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,22 +62,4 @@ int     lex_input(t_param *param)
 		i = 0;
 	}
 	return (SUCCESS);
-}
-
-char 	*get_valid_input(char **env, int ret)
-{
-	char	*input;
-
-	while (21)
-	{
-		if (!(input = line_edition(ret, env)))
-		{
-			ret = SUCCESS;
-			continue;
-		}
-		handle_quotes(&input);
-		if (input)
-			break ;
-	}
-	return (input);
 }
