@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 12:46:47 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/08 02:34:07 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int     main(void)
 	while (21)
 	{
 		param = init_param();
-		param->input = get_valid_input(shell->env, ret);
+		get_valid_input(param, shell->env, ret);
 		hy_history_write(param->input, shell->env);
 		ret = process_input(param, shell);
 		free_param(param);
