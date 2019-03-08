@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 16:44:04 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/08 12:29:55 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/08 15:46:13 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		le_prompt_init(struct s_le *le_struct, char **env)
 {
 	if (le_struct->prompt_type != DQUOTE && le_struct->prompt_type != SQUOTE
-	&& le_struct->prompt_type != IS_PIPE)
+	&& le_struct->prompt_type != IS_PIPE && le_struct->prompt_type != HEREDOC)
 	{
 		if (le_prompt_pwd(le_struct, env))
 		{
@@ -109,12 +109,18 @@ int		le_prompt_quote(struct s_le *le_struct)
 	if (le_struct->prompt_type == SQUOTE)
 		if (!(le_struct->prompt = ft_strdup(LE_PROMPT_SQUOTE)))
 			return (LE_FAILURE);
-	le_struct->prompt_size = LE_PROMPT_QTE_SIZE;	
+	le_struct->prompt_size = LE_PROMPT_QTE_SIZE;
 	if (le_struct->prompt_type == IS_PIPE)
 	{
 		if (!(le_struct->prompt = ft_strdup(LE_PROMPT_PIPE)))
 			return (LE_FAILURE);
 		le_struct->prompt_size = LE_PROMPT_QTE_SIZE - 1;
+	}
+	if (le_struct->prompt_type == HEREDOC)
+	{
+		if (!(le_struct->prompt = ft_strdup(LE_PROMPT_HEREDOC)))
+			return (LE_FAILURE);
+		le_struct->prompt_size = LE_PROMPT_HER_SIZE;
 	}
 	le_prompt_print(le_struct);
 	return (LE_SUCCESS);
