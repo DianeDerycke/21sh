@@ -6,7 +6,11 @@
 #    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2019/03/08 17:07:07 by DERYCKE          ###   ########.fr        #
+=======
+#    Updated: 2019/03/08 16:21:22 by mrandou          ###   ########.fr        #
+>>>>>>> a9765baaaa3c81aa53ba2f3b689d6c1f232383f3
 #                                                                              #
 # **************************************************************************** #
 
@@ -126,37 +130,25 @@ $(OBJ_LINE_EDITION_PATH)%.o: $(LINE_EDITION_PATH)%.c $(INC_DEPEND)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
 	@printf "21sh --> \033[32m"
 	@printf $<
-	@printf "\033[0m\r\n"
-	@printf "\033[K\r"
-	@printf "\033[A"
-	@printf "\033[K\r"
+	@printf "\r\033[0m\n\033[K\033[A\033[K"
 
 $(OBJ_HISTORY_PATH)%.o: $(HISTORY_PATH)%.c $(INC_DEPEND)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
 	@printf "21sh --> \033[32m"
 	@printf $<
-	@printf "\033[0m\r\n"
-	@printf "\033[K\r"
-	@printf "\033[A"
-	@printf "\033[K\r"
+	@printf "\r\033[0m\n\033[K\033[A\033[K"
 
 $(OBJ_BUILTINS_PATH)%.o: $(BUILTINS_PATH)%.c $(INC_DEPEND)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
 	@printf "21sh --> \033[32m"
 	@printf $<
-	@printf "\033[0m\r\n"
-	@printf "\033[K\r"
-	@printf "\033[A"
-	@printf "\033[K\r"
+	@printf "\r\033[0m\n\033[K\033[A\033[K"
 
 $(OBJ_LEX_PARSE_PATH)%.o: $(LEX_PARSE_PATH)%.c $(INC_DEPEND)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
 	@printf "21sh --> \033[32m"
 	@printf $<
-	@printf "\033[0m\r\n"
-	@printf "\033[K\r"
-	@printf "\033[A"
-	@printf "\033[K\r"
+	@printf "\r\033[0m\n\033[K\033[A\033[K"
 
 $(NAME): $(MAKEFILE) $(OBJ) $(OBJ_DEPEND) $(LIBFT) $(LIBMS) $(LIBSH)
 	@$(CC) $(CFLAGS) -o $@ $(LINE_EDITION_OBJ) $(HISTORY_OBJ) \
@@ -165,26 +157,18 @@ $(NAME): $(MAKEFILE) $(OBJ) $(OBJ_DEPEND) $(LIBFT) $(LIBMS) $(LIBSH)
 compile:
 	@printf "\033[1m\033[32m\n> 21sh Make <\n\n\033[0m"
 	@make -C $(LIBFT)
-	@printf "\n\033[K\r"
-	@printf "\033[A"
-	@printf "\033[K\r"
-	@printf "LIBFT -> \033[32mDone ✓\033[0m\n"
+	@printf "\n\033[K\033[A\033[K"
+	@printf "\rLIBFT -> \033[32mDone ✓\033[0m\n"
 	@make -C $(LIBSH)
-	@printf "\n\033[K\r"
-	@printf "\033[A"
-	@printf "\033[K\r"
-	@printf "LIBSH -> \033[32mDone ✓\033[0m\n"
+	@printf "\n\033[K\033[A\033[K"
+	@printf "\rLIBSH -> \033[32mDone ✓\033[0m\n"
 	@make -C $(LIBMS)
-	@printf "\n\033[K\r"
-	@printf "\033[A"
-	@printf "\033[K\r"
-	@printf "LIBMS -> \033[32mDone ✓\033[0m\n"
+	@printf "\n\033[K\033[A\033[K"
+	@printf "\rLIBMS -> \033[32mDone ✓\033[0m\n"
 	@make $(NAME)
-	@printf "\n\033[K\r"
-	@printf "\033[A"
-	@printf "\033[K\r"
-	@printf "21sh --> \033[32mDone ✓\033[0m\r"
-	@printf "\n\nCompilation\033[32m Done ✓\\033[0m\n"
+	@printf "\n\033[K\033[A\033[K"
+	@printf "21sh --> \033[32mDone ✓\033[0m"
+	@printf "\r\n\nCompilation\033[32m Done ✓\\033[0m\n"
 	
 clean:
 	@printf "\033[1m\033[31m\n> 21sh Make Clean <\n\n\033[0m"
