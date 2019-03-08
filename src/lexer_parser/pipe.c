@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/08 12:49:43 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/08 12:51:08 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int		end_recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *newfd)
 {
 	close_dup(newfd, STDIN_FILENO);
 	close_pipe(oldfd);
-	return (exec_pipe_cmd(shell, ast))
+	return (exec_pipe_cmd(shell, ast));
 }
 
 static int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
