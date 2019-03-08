@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/08 00:53:23 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/08 11:41:02 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,55 @@ static int     is_valid_pipe(char *str)
         {
             if (!str[i + 1])
                 return (DQUOTE);
-            while (str[i] && ft_is_whitespace(str[i]))
-                i++;
-            if (!str[i])
-                return (DQUOTE);
+            i++;
+                while (str[i] && ft_is_whitespace(str[i]))
+                    i++;
+                if (!str[i])
+                    return (DQUOTE);
         }
         i++;
     }
     return (SUCCESS);
 }
 
-void		handle_quotes(char **input)
+int     get_valid_input(t_param *param, char **env, int ret)
+{
+	while (21)
+	{
+		if (!(param->input = line_edition(ret, env)))
+		{
+			ret = SUCCESS;
+			continue;
+		}
+		if (handle_quotes(&param->input) == FAILURE)
+            return (get_error(UNEXPEOF, NULL));
+		if (param->input)
+			break ;
+	}
+	return (SUCCESS);
+}
+
+int 		handle_quotes(char **input)
 {
 	char	*tmp;
 	int		ret;
 
 	tmp = NULL;
 	ret = 0;
-	while (!tmp && (ret = is_valid_quotes(*input) || (ret = is_valid_pipe(*input))))
+	while (!tmp && ((ret = is_valid_quotes(*input) || (ret = is_valid_pipe(*input)))))
 	{
-		if (!(tmp = line_edition(ret , NULL))) //to edit when feature \n line edition is add : if ft_strcmp(\n, tmp)
+		if (!(tmp = line_edition(ret , NULL)))
 			continue;
+        if (tmp && ft_strcmp(tmp, "\n\004") == 0)
+        {
+            ft_strdel(&tmp);
+            ft_strdel(input);
+            return (FAILURE);
+        }
 		*input = ft_strjoin_free(*input, tmp);
 		ft_strdel(&tmp);
 	}
+    return (SUCCESS);
 }
 
 int     is_valid_quotes(char *str)
