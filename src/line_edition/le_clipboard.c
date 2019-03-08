@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/31 13:09:48 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/07 19:44:40 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/08 17:36:45 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int		le_clipboard_cut(struct s_le *le_struct)
 	if (le_clipboard_copy(le_struct))
 		return (LE_FAILURE);
 	i = le_struct->copy_on;
-	size = ft_strlen(le_struct->buff + le_struct->copy_off) - 1;
+	size = ft_strlen((le_struct->buff + le_struct->copy_off) - 1);
 	while (le_struct->buff[i] && k < size)
 		le_struct->buff[i++] = le_struct->buff[le_struct->copy_off + k++];
 	ft_strclr(le_struct->buff + i);
@@ -125,18 +125,18 @@ int		le_clipboard_exec_cut(struct s_le *le_struct)
 	&& (le_struct->copy_on != LE_START && le_struct->cursor_buff
 	<= le_struct->nb_char))
 	{
-		// printf("BEFORE > NBChar ==> %d/ Curseur ==> %d\n", le_struct->nb_char,le_struct->cursor_buff);
 		if (le_clipboard_cut(le_struct))
 			return (LE_FAILURE);
+		if (le_cursor_beggin(le_struct, le_struct->cursor_buff))
+			return (LE_FAILURE);
 		if (le_struct->cursor_buff > le_struct->copy_on)
-			le_struct->cursor_x -= ft_strlen(le_struct->clipboard) - 1;
-		le_struct->nb_char -= ft_strlen(le_struct->clipboard);
+			le_struct->cursor_x = le_struct->copy_on + le_struct->prompt_size;
+		le_struct->nb_char -= (ft_strlen(le_struct->clipboard));
 		le_struct->cursor_buff = le_struct->cursor_x - le_struct->prompt_size;
 		le_struct->copy_on = LE_START;
 		le_struct->copy_off = LE_START;
 		if (le_window_clear_restore(le_struct))
 			return (LE_FAILURE);
-		// printf("AFTER > NBChar ==> %d/ Curseur ==> %d\n", le_struct->nb_char, le_struct->cursor_buff);
 	}
 	return (LE_SUCCESS);
 }
