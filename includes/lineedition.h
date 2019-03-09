@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/08 15:46:09 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/09 15:38:53 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,8 @@ typedef	enum		e_termnum
 	LE_SHIFT_DOWN,
 	LE_END,
 	LE_HOME,
-	LE_EOF
+	LE_EOF,
+	LE_ETX
 }					t_termnum;
 
 typedef	struct		s_dlist

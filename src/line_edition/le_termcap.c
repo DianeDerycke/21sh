@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 18:35:30 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/05 19:20:54 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/09 15:37:23 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,15 @@ int		le_termcap_check(struct s_le *le_struct)
 		le_struct->term = LE_DEL;
 	else if (le_struct->tmp[0] == LE_EOT)
 		le_struct->term = LE_EOF;
+	else if (le_struct->tmp[0] == LE_EXIT)
+		le_struct->term = LE_ETX;
 	else if (le_struct->tmp[0] == LE_ESCAPE)
 	{
 		if (read(STDIN_FILENO, &le_struct->tmp[1], LE_TMP_BUFF_SIZE - 1) == -1)
 			return (LE_FAILURE);
 		le_termcap_type(le_struct);
 	}
-	else
-		return (0);
-	if (le_struct->term)
-		return (LE_SUCCESS);
-	return (LE_FAILURE);
+	return (le_struct->term ? LE_SUCCESS : LE_FAILURE);
 }
 
 /*
