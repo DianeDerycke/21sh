@@ -6,115 +6,71 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 13:20:33 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/08 19:16:29 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-t_ast     *find_next_redir(t_ast *ast)
+int         *getter_std(int init)
 {
-    if (!ast)
-        return (NULL);
-    while (ast)
+    static int      std[2];
+
+    if (init == 1)
     {
-        if (ast->token >= GREAT && ast->token <= GREATAND)
-            return (ast);
-        ast = ast->left;
+        std[0] = dup(STDIN_FILENO);
+        std[1] = dup(STDOUT_FILENO);
     }
-    return (NULL);
+
+    return (std);
 }
 
-static t_ast    *get_next_argument(t_ast *ast)
+static void    reset_std(int *fd)
 {
-    if ((ast = find_next_redir(ast)) && ast->left && ast->left->left)
-        ast = ast->left->left;
-    else
-    {
-        while (ast)
-        {
-            ast = ast->left;
-            ast = find_next_redir(ast);
-        }
-        if (ast)
-            ast = ast->left->left;
-    }
-    return (ast);
+	dup2(fd[OUTPUT_END], STDIN_FILENO);
+	close(fd[0]);
+	dup2(fd[INPUT_END], STDOUT_FILENO);
+	close(fd[INPUT_END]);
 }
 
-static t_ast    *add_argument_to_cmd(t_ast *ast)
+int     open_file(t_ope token, char *file)
 {
-    t_ast   *cmd;
-    t_ast   *tmp;
-    
-    cmd = create_elem();
-    tmp = cmd;
-    while (ast)
-    {
-        while (ast && ((ast->token == WORD && ast->io_number == 0) || 
-        ast->token == DQUOTE || ast->token == SQUOTE || 
-        (ast->token == DIGIT && ast->io_number == 0)))
-        {
-            cmd->value = ft_strdup(ast->value);
-            cmd->token = ast->token;
-            ast = ast->left;
-            if (ast)
-            {
-                cmd->left = create_elem();
-                cmd = cmd->left;
-            }
-        }
-        ast = get_next_argument(ast);
-    }
-    cmd = tmp;
-    return (cmd);
-}
-
-static int      do_redirection(t_ast *redir, t_ast *ast)
-{
-    static int(*redir_array[REDIR_SIZE])(t_ast *, t_ast *) = {
-        NULL,
-        NULL,
-        NULL,
-        &redir_great,
-        &redir_dgreat,
-        &redir_less,
-        &redir_dless,
-        NULL,
-        &redir_lessand,
-        &redir_greatand,
-    };
-
-    return(redir_array[redir->token](redir, ast));
+    if (token == GREAT || token == LESS)
+        return (open(file, O_RDWR | O_CREAT | O_TRUNC, PERM));
+    if (token == DGREAT)
+        return (open(file, O_RDWR | O_CREAT | O_APPEND, PERM));
+    if (token == DLESS)
+        return (handle_heredoc(file));
+    return (ERROR);
 }
 
 int     exec_redirection(t_ast *ast, t_sh *shell)
 {
+    int     fd;
+    t_ast    *cmd;
     t_ast   *redir;
     t_ast   *tmp;
-    t_ast   *tmp1;
     int     ret;
 
     ret = 0;
     tmp = ast;
-    if (!(tmp1 = add_argument_to_cmd(ast)))
-        return (FAILURE);
     while ((redir = find_next_redir(tmp)))
     {
-        if (do_redirection(redir, ast) == FAILURE)
-            return (FAILURE);
+        if ((fd = open_file(redir->token, redir->left->value)) < 0)
+        {
+            reset_std(getter_std(0));
+            return (get_error(NOFILEDIR, redir->left->value));
+        }
+        else
+        {
+            dup2(fd, STDIN_FILENO);
+            close(fd);
+        }
         tmp = redir->left;
     }
-    ret = exec_cmd(tmp1, shell);
-    redir = find_next_redir(ast);
-    while (redir)
-    {
-        dup2(redir->to, redir->std);
-        close(redir->to);
-        close(redir->from);
-        ast = ast->next;
-        redir = find_next_redir(ast);
-    }
-    free_ast(&tmp1);
+    if ((cmd = add_argument_to_cmd(ast)))
+        ret = exec_cmd(cmd, shell);
+    reset_std(getter_std(0));
+    free_ast(&cmd);
     return (ret);
 }
