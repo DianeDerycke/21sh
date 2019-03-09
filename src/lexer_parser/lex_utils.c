@@ -6,13 +6,29 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/02/19 11:01:11 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/09 23:42:46 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-
+char    *get_operator(int index)
+{
+    static char     operators[20][20] = {
+        {";"},
+        {"|"},
+        {"\n"},
+        {">"},
+        {">>"},
+        {"<"},
+        {"<<"},
+        {"&"},
+        {"<&"},
+        {">&"},
+        {"\0"},
+    };
+    return(operators[index]);
+}
 int         lex_is_special_char(int c)
 {
     if (!c)
@@ -33,10 +49,16 @@ int         ft_isallowedsymb(int c)
 int     ft_is_operator(int c)
 {
     int     i;
+    char    *tmp;
 
     i = 0;
-    while (i < 10 && c != operators[i][0])
+    while (i < 10)
+    {  
+        tmp = get_operator(i);
+         if (c == tmp[0])
+            break;
         i++;
+    }
     return (i == 10 ? 0 : 1);
 }
 
@@ -62,12 +84,19 @@ int     ft_is_double_quote(int c)
 int     get_ast_op(char *c, int length)
 {
     int     i;
+    char    *tmp;
 
     i = 0;
+    tmp = NULL;
     if (!c)
         return (FAILURE);
-    while (i < 10 && ft_strncmp(c, operators[i], length) != 0)
+    while (i < 10)
+    {
+        tmp = get_operator(i);
+         if (ft_strncmp(c, tmp, length) == 0)
+            break;
         i++;
+    }
     return (i == 10 ? -1 : i);
 }
 
