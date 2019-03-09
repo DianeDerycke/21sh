@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/09 14:28:43 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/09 15:46:22 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
         if ((fd = open_file(redir->token, redir->left->value)) < 0)
         {
             reset_std(getter_std(0));
+            if (fd == -2)
+                return (FAILURE);
             return (get_error(NOFILEDIR, redir->left->value));
         }
         else
