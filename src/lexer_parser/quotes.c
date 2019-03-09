@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/08 12:27:07 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/09 16:07:53 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,33 @@ int     get_valid_input(t_param *param, char **env, int ret)
 			continue;
 		}
 		if (handle_quotes(&param->input) == FAILURE)
-            return (get_error(UNEXPEOF, NULL));
+            return (FAILURE);
 		if (param->input)
 			break ;
 	}
 	return (SUCCESS);
+}
+
+static int     handle_signal_pipe_edition(char *buffer)
+{
+    if (buffer && ((ft_strcmp(buffer, "\004") == 0) || ft_strcmp(buffer, "\003") == 0))
+    {
+        if (ft_strcmp(buffer, "\004") == 0)
+            get_error(UNEXPEOF, buffer);
+        return (SUCCESS);
+    }
+    return (FAILURE);
+}
+
+static int     handle_signal_quote_edition(char *buffer)
+{
+    if (buffer && ((ft_strcmp(buffer, "\n\004") == 0) || ft_strcmp(buffer, "\n\003") == 0))
+    {
+        if (ft_strcmp(buffer, "\n\004") == 0)
+            get_error(UNEXPEOF, buffer);
+        return (SUCCESS);
+    }
+    return (FAILURE);
 }
 
 int 		handle_quotes(char **input)
@@ -64,7 +86,8 @@ int 		handle_quotes(char **input)
 	{
 		if (!(tmp = line_edition(ret , NULL)))
 			continue;
-        if (tmp && ft_strcmp(tmp, "\n\004") == 0)
+        if (tmp && (handle_signal_pipe_edition(tmp) == SUCCESS 
+            || handle_signal_quote_edition(tmp) == SUCCESS))
         {
             ft_strdel(&tmp);
             ft_strdel(input);
