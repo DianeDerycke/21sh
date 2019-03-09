@@ -14,6 +14,7 @@
 #define INPUT_END 1
 #define OUTPUT_END 0
 #define ERRLEX_SIZE 5  
+#define PERM 0677
 
 typedef struct      s_param {
     char            *input;
@@ -54,7 +55,8 @@ typedef enum    e_lex
 	UNDEFVAR,
 	CNOTFOUND,
 	PERMDENIED,
-	UNEXPEOF
+	UNEXPEOF,
+	NOFILEDIR,
 }               t_lex;
 
 //LEX_INIT
@@ -131,9 +133,20 @@ int     redir_and(t_ast *redir, t_ast *ast);
 int     redir_greatand(t_ast *redir, t_ast *ast);
 int     redir_lessand(t_ast *redir, t_ast *ast);
 
-//REDIR FILE
-t_ast  *find_next_redir(t_ast *ast);
+//REDIR
+int    *getter_std(int init);
+int     open_file(t_ope token, char *file);
 int    exec_redirection(t_ast *ast, t_sh *shell);
+
+//HEREDOC
+int     handle_heredoc(char *file);
+char    *prompt_heredoc(char *end_word);
+
+
+//REDIR UTILS
+t_ast  *find_next_redir(t_ast *ast);
+t_ast    *add_argument_to_cmd(t_ast *ast);
+
 
 
 //ERROR CASE

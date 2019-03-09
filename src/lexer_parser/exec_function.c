@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 22:19:20 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:32:09 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int     exec_cmd(t_ast *ast, t_sh *shell)
     int ret;
 
 	ret = 0;
+    if (!ast)
+        return (FAILURE);
     if (treat_command(shell, ast) == FAILURE)
         return (FAILURE);
     if (is_command(shell) == FAILURE)

@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 17:33:44 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/08 02:29:10 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:50:45 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,5 +53,7 @@ int     get_error(int error_nb, char *str)
 		return(ms_perm_denied(str));
 	if (error_nb == UNEXPEOF)
 		return (unexpected_eof());
+	if (error_nb == NOFILEDIR)
+		return(ms_no_such_file_or_dir("21sh", str));
     return (FAILURE);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 15:42:14 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/08 12:51:08 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,14 @@ static int		handle_right_command(t_sh *shell, t_ast *ast, int *oldfd, int *newfd
 	if (oldfd)
 		close_dup(oldfd, STDIN_FILENO);
 	close_dup(newfd, STDOUT_FILENO);
-	if ((exec_pipe_cmd(shell, ast)) == FAILURE)
-		return (ERROR);
-	return (SUCCESS);
+	return (exec_pipe_cmd(shell, ast));
 }
 
 static int		end_recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *newfd)
 {
 	close_dup(newfd, STDIN_FILENO);
 	close_pipe(oldfd);
-	return(exec_pipe_cmd(shell, ast));
+	return (exec_pipe_cmd(shell, ast));
 }
 
 static int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
@@ -34,8 +32,10 @@ static int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
 	int		newfd[2];
 	pid_t	child_pid;
 	int		status;
+	int		ret;
 
 	status = 0;
+	ret = 0;
 	if (!fd)
 		if (pipe(newfd) == ERROR)
 			return (ERROR);
@@ -54,9 +54,9 @@ static int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
 		close_pipe(fd);
 		close_pipe(oldfd);
 		if (ast->left && ast->left->token == PIPE)
-			recurse_pipe(shell, ast->left, newfd, NULL);
+			ret = recurse_pipe(shell, ast->left, newfd, NULL);
 		else if (ast->left && ast->token == PIPE)
-			recurse_pipe(shell, ast->left, oldfd, newfd);
+			ret = recurse_pipe(shell, ast->left, oldfd, newfd);
 		sh_push_pidnew(child_pid, &(shell->l_pid));
 		get_pid_list(shell->l_pid);
 		signal(SIGINT, signal_handler);

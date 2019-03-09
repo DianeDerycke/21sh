@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:41:10 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/07 13:20:27 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/08 16:44:41 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ int    parser_execution(t_ast *ast, t_sh *shell)
     else if (find_next_redir(ast))
     {
         shell->fork = 1;
+        getter_std(1);
         ret = exec_redirection(ast, shell);
     }
     else if (ast->token >= WORD)
