@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 16:48:36 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/09 15:41:41 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/09 15:51:40 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		le_exit(struct s_le *le_struct)
 		ft_strclr(le_struct->buff);
 	if ((le_struct->term == LE_EOF || le_struct->term == LE_ETX)
 	&& (le_struct->prompt_type == SQUOTE || le_struct->prompt_type == DQUOTE
-	|| le_struct->prompt_type == HEREDOC))
+	|| le_struct->prompt_type == HEREDOC || le_struct->prompt_type == IS_PIPE))
 	{
 		le_struct->buff = ft_strcpy(le_struct->buff, 
 		le_struct->term == LE_EOF ? "\004" : "\003");
