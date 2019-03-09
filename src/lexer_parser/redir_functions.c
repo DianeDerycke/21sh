@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 12:13:35 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/08 13:19:40 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int     redir_great(t_ast *redir, t_ast *ast)
 int     redir_dgreat(t_ast *redir, t_ast *ast)
 {
     (void)ast;
-    redir->std = 1;
+    redir->std = STDOUT_FILENO;
     if ((redir->from = open(redir->left->value, O_RDWR | O_CREAT 
         | O_APPEND, 0677)))
     {
@@ -47,7 +47,7 @@ int     redir_dgreat(t_ast *redir, t_ast *ast)
 int     redir_less(t_ast *redir, t_ast *ast)
 {
     (void)ast;
-    redir->std = 0;
+    redir->std = STDIN_FILENO;
     if ((redir->from = open(redir->left->value, O_RDWR)) >= 0)
     {
         redir->to = dup(STDIN_FILENO);
@@ -61,12 +61,23 @@ int     redir_less(t_ast *redir, t_ast *ast)
 int     redir_dless(t_ast *redir, t_ast *ast)
 {
     (void)ast;
-    redir->std = 0;
-    if ((redir->from = open(redir->left->value, O_RDWR | O_APPEND, 0777)))
+    char *tmp;
+    char *buffer;
+
+    tmp = NULL;
+    buffer = ft_strdup("");
+    redir->std = STDIN_FILENO;
+    while (get_next_line(0, &tmp))
     {
-        redir->to = dup(STDIN_FILENO);
-        dup2(redir->from, STDIN_FILENO);
+        if (ft_strcmp(tmp, redir->left->value) == 0)
+            break;
+        buffer = ft_strjoin_free(buffer, tmp);
+        ft_strdel(&tmp);
+        buffer = ft_strjoin_free(buffer, "\n");
     }
+    write(0, buffer, ft_strlen(buffer));
+    ft_strdel(&buffer);
+    ft_strdel(&tmp);
     return (SUCCESS);
 }
 
@@ -114,7 +125,7 @@ int     redir_greatand(t_ast *redir, t_ast *ast)
     if ((redir->from = get_dest_fd(redir->left->value, &is_close)) == ERROR)
         return (ambiguous_redirect(redir->left->value));
     if ((redir->to = get_io_number(ast, redir, GREATAND)) == ERROR)
-        exit (1);
+        return (FAILURE);
     redir->to = dup(redir->to);
     dup2(redir->from, redir->to);
     redir->std = 1;
