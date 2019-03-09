@@ -3,14 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:11:30 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/08 16:30:33 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/09 14:24:18 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
+
+int     get_str_redir(t_ope token)
+{
+    if (token == GREAT || token == DGREAT)
+        return (STDOUT_FILENO);
+    if (token == LESS || token == DLESS)
+        return (STDIN_FILENO);
+    return (0);
+}
 
 t_ast     *find_next_redir(t_ast *ast)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:47:01 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/08 19:31:17 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/09 14:41:08 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@ char    *prompt_heredoc(char *end_word)
     while (ret)
     {
         tmp = line_edition(HEREDOC, NULL);
-        ret = ft_strcmp(end_word, tmp + 1);
+        if (tmp)
+            ret = ft_strcmp(end_word, tmp);
         if (ret)
+        {
             input = ft_strjoin_free(input, tmp);
-        else
             input = ft_strjoin_free(input, "\n");
+        }
         ft_strdel(&tmp);
     }
     ft_strdel(&tmp);

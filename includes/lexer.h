@@ -146,6 +146,7 @@ char    *prompt_heredoc(char *end_word);
 //REDIR UTILS
 t_ast  *find_next_redir(t_ast *ast);
 t_ast    *add_argument_to_cmd(t_ast *ast);
+int     get_str_redir(t_ope token);
 
 
 
