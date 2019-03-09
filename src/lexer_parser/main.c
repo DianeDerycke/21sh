@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/08 02:34:07 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/09 15:57:57 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ int     main(void)
 	while (21)
 	{
 		param = init_param();
-		get_valid_input(param, shell->env, ret);
-		hy_history_write(param->input, shell->env);
-		ret = process_input(param, shell);
+		if (get_valid_input(param, shell->env, ret) == SUCCESS)
+		{
+			hy_history_write(param->input, shell->env);
+			ret = process_input(param, shell);
+		}
 		free_param(param);
 		param = NULL;
 		if (!isatty(0))
