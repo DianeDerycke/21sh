@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_ft.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 00:15:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 03:43:42 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/09 14:20:59 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int    push_node(char *value, int token, t_ast **node, int io_nb)
             return (FAILURE);
         (*node)->token = token;
         (*node)->io_number = io_nb;
+        (*node)->std = get_str_redir(token);
     }
     else
     {
@@ -106,6 +107,7 @@ int    push_node(char *value, int token, t_ast **node, int io_nb)
             return (FAILURE);
         (*node)->next->token = token;
         (*node)->next->io_number = io_nb;
+        (*node)->std = get_str_redir(token);
         *node = tmp;
     }
     return (SUCCESS);
