@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/08 19:16:29 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/09 14:28:43 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,14 @@ static void    reset_std(int *fd)
 
 int     open_file(t_ope token, char *file)
 {
-    if (token == GREAT || token == LESS)
+    if (token == GREAT)
         return (open(file, O_RDWR | O_CREAT | O_TRUNC, PERM));
-    if (token == DGREAT)
+    else if (token == DGREAT)
         return (open(file, O_RDWR | O_CREAT | O_APPEND, PERM));
-    if (token == DLESS)
+    else if (token == DLESS)
         return (handle_heredoc(file));
-    return (ERROR);
+    else
+        return (open(file, O_RDWR));
 }
 
 int     exec_redirection(t_ast *ast, t_sh *shell)
@@ -63,7 +64,7 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
         }
         else
         {
-            dup2(fd, STDIN_FILENO);
+            dup2(fd, get_str_redir(redir->token));
             close(fd);
         }
         tmp = redir->left;
