@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:12:17 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 22:12:31 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/08 15:00:30 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,3 @@ int     exec_builtin(t_sh *shell)
     shell->cmd = NULL;
     return (SUCCESS);
 }
-//create array erro
