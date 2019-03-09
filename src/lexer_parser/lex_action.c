@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_action.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 23:48:24 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 18:14:47 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/09 15:09:38 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,7 @@ int     double_quote_action(t_param *param)
     {
         length++;
         if (param->input[i] == BACKSLASH && lex_is_special_char(param->input[i + 1]))
-        {
             ft_memmove(&(param->input[i]), &(param->input[i + 1]), ft_strlen(param->input + i));
-        }
         else if (ft_is_double_quote(param->input[i])) // if the char is a double quote : Copy the content between the Doubles quotes
         {
             if (!(tmp = ft_strndup(param->input + param->index, length)))
