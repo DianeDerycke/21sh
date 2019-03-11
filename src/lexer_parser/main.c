@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/09 15:57:57 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:11:11 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int 	process_input(t_param *param, t_sh *shell)
 	ast = NULL;
 	// display_tree(ast, 0, 0);
 	// display_list(param->l_tokens);
-	if (lex_input(param) != SUCCESS)
+	if (lex_input(param) != SUCCESS || verify_lexer(param->l_tokens) == FAILURE)
 		return (FAILURE);
 	else if (!(ast = create_ast(param->l_tokens, param->l_tokens, NULL)))
 		return (FAILURE);

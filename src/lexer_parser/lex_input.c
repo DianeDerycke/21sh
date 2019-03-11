@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/08 02:17:49 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/11 18:10:38 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,25 @@ int     lex_input(t_param *param)
 			if ((ret = getter_action(param, i)) != SUCCESS)
 				return (get_error(ret, param->input + param->index));
 		i = 0;
+	}
+	return (SUCCESS);
+}
+
+static int		is_token_operator(t_ope token)
+{
+	if (token >= SEPARATOR && token <= GREATAND && token != WORD)
+		return (1);
+	return (0);
+}
+
+int		verify_lexer(t_ast *ast)
+{
+	while (ast->next)
+	{
+		if (is_token_operator(ast->token) == FAILURE && 
+			is_token_operator(ast->next->token) == FAILURE)
+			return (get_error(UNEXPTOKEN, ast->next->value));
+		ast = ast->next;
 	}
 	return (SUCCESS);
 }

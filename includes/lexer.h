@@ -51,7 +51,7 @@ typedef struct		s_opt
 
 typedef enum    e_lex 
 {
-    UNEXPTOKEN,
+    UNEXPTOKEN = 5,
 	UNDEFVAR,
 	CNOTFOUND,
 	PERMDENIED,
@@ -92,6 +92,7 @@ int     	identifier_action(t_param *param);
 //LEX INPUT
 int     	lex_input(t_param *param);
 int			get_valid_input(t_param *param, char **env, int ret);
+int		verify_lexer(t_ast *ast);
 
 //LEX_ERROR
 char 		*getter_error_var(char *str);
