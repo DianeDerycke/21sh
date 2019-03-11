@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_action.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 23:48:24 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/09 15:09:38 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/11 18:08:34 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int     operator_action(t_param *param)
         ret = push_node(tmp, param->token, &(param->l_tokens), 0);
     else
     {
-        param->index = size;
+        param->index = size + 1;
         ft_strdel(&tmp);
         return (UNEXPTOKEN);
     }
