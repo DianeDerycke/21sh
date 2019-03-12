@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/09 23:36:31 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/12 00:19:49 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct      s_sh {
     char            **cmd;
     char            *path;
     int             fork;
+    int             exec;
     struct s_pid    *l_pid;
 }                   t_sh;
 
