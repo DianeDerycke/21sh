@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 14:33:43 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/02 15:46:13 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/09 20:26:29 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	le_buff_print(struct s_le *le_struct, int pos)
 		return ;
 	le_struct->cursor_buff = le_struct->cursor_x - le_struct->prompt_size;
 	le_buff_truncate(le_struct, &le_struct->nb_char);
-	le_buff_print_select(le_struct,\
+	le_buff_print_select(le_struct,
 	pos, le_struct->copy_on, le_struct->copy_off);
 }
 
@@ -58,7 +58,7 @@ void	le_buff_truncate(struct s_le *le_struct, int *len)
 {
 	if (*len > le_struct->max_size)
 	{
-		ft_strclr(&le_struct->buff[le_struct->max_size]);
+		ft_strclr(le_struct->buff + le_struct->max_size);
 		*len = le_struct->max_size;
 		le_struct->cursor_x = le_struct->nb_char + le_struct->prompt_size;
 	}

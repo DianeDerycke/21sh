@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 16:44:04 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/08 15:46:13 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/12 17:04:10 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int		le_prompt_init(struct s_le *le_struct, char **env)
 	{
 		if (le_prompt_pwd(le_struct, env))
 		{
-			if (!(le_struct->prompt = ft_strdup(LE_PROMPT)))
-				return (LE_FAILURE);
+			ft_strcpy(le_struct->prompt, LE_PROMPT);
 			ft_putstr(le_struct->prompt);
 			le_struct->prompt_size = LE_PROMPT_DEF_SIZE;
 			le_struct->prompt_type = LE_PROMPT_SIMPLE;
@@ -52,11 +51,8 @@ int		le_prompt_pwd(struct s_le *le_struct, char **env)
 		return (LE_FAILURE);
 	if (le_prompt_home(le_struct, env, pwd))
 	{
-		if (!(le_struct->prompt = ft_strdup(pwd)))
-		{
-			ft_strdel(&pwd);
-			return (LE_FAILURE);
-		}
+		if (!le_prompt_shorten_path(le_struct, pwd))
+			ft_strncpy(le_struct->prompt, pwd, LE_PROMPT_BUFF);
 		le_struct->prompt_size += ft_strlen(le_struct->prompt) + 4;
 		ft_strdel(&pwd);
 	}
@@ -68,6 +64,34 @@ int		le_prompt_pwd(struct s_le *le_struct, char **env)
 **	Get the "PWD" value for print the current path in the prompt
 **	Print the prompt
 */
+
+int		le_prompt_shorten_path(struct s_le *le_struct, char *path)
+{
+	int	i;
+	int slash;
+
+	i = 0;
+	slash = 0;
+	while (path[i])
+	{
+		if (path[i] == '/')
+			slash++;
+		if (slash == 4)
+		{
+			if (le_struct->prompt[0] == '~')
+				ft_strncat(le_struct->prompt, "/../", LE_PROMPT_BUFF);
+			else
+				ft_strncat(le_struct->prompt, "../", LE_PROMPT_BUFF);
+			while (path[i])
+				if (path[i++] == '/')
+					slash = i;
+			ft_strncat(le_struct->prompt, path + slash, LE_PROMPT_BUFF);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
 
 int		le_prompt_home(struct s_le *le_struct, char **env, char *pwd)
 {
@@ -85,8 +109,9 @@ int		le_prompt_home(struct s_le *le_struct, char **env, char *pwd)
 		len = ft_strlen(home);
 		if (!ft_strncmp(home, pwd, len))
 		{
-			if (!(le_struct->prompt = ft_strjoin("~", pwd + len)))
-				return (le_free_return(home, NULL, NULL, LE_FAILURE));
+			ft_strcpy(le_struct->prompt, "~");
+			if (!le_prompt_shorten_path(le_struct, pwd))
+				ft_strlcat(le_struct->prompt, pwd + len, LE_PROMPT_BUFF);
 			le_struct->prompt_size += ft_strlen(le_struct->prompt) + 4;
 			return (le_free_return(home, pwd, NULL, LE_SUCCESS));
 		}
@@ -104,22 +129,18 @@ int		le_prompt_home(struct s_le *le_struct, char **env, char *pwd)
 int		le_prompt_quote(struct s_le *le_struct)
 {
 	if (le_struct->prompt_type == DQUOTE)
-		if (!(le_struct->prompt = ft_strdup(LE_PROMPT_DQUOTE)))
-			return (LE_FAILURE);
+		ft_strcpy(le_struct->prompt, LE_PROMPT_DQUOTE);
 	if (le_struct->prompt_type == SQUOTE)
-		if (!(le_struct->prompt = ft_strdup(LE_PROMPT_SQUOTE)))
-			return (LE_FAILURE);
+		ft_strcpy(le_struct->prompt, LE_PROMPT_SQUOTE);
 	le_struct->prompt_size = LE_PROMPT_QTE_SIZE;
 	if (le_struct->prompt_type == IS_PIPE)
 	{
-		if (!(le_struct->prompt = ft_strdup(LE_PROMPT_PIPE)))
-			return (LE_FAILURE);
+		ft_strcpy(le_struct->prompt, LE_PROMPT_PIPE);
 		le_struct->prompt_size = LE_PROMPT_QTE_SIZE - 1;
 	}
 	if (le_struct->prompt_type == HEREDOC)
 	{
-		if (!(le_struct->prompt = ft_strdup(LE_PROMPT_HEREDOC)))
-			return (LE_FAILURE);
+		ft_strcpy(le_struct->prompt, LE_PROMPT_HEREDOC);		
 		le_struct->prompt_size = LE_PROMPT_HER_SIZE;
 	}
 	le_prompt_print(le_struct);

@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:47:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/08 17:57:29 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/12 17:18:32 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ int		le_buff_realloc(struct s_le *le_struct, int nb)
 		return (LE_FAILURE);
 	ft_strdel(&le_struct->buff);
 	if (!(le_struct->buff = (char *)malloc(sizeof(char)
-	* (le_struct->buffer_size + 1))))
+	* (le_struct->buffer_size))))
 	{
 		ft_strdel(&tmp);
 		return (LE_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/07 14:07:07 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/12 16:43:24 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,20 +41,21 @@ int		le_init(struct s_le *le_struct, char **env)
 
 int		le_init_struct(struct s_le *le_struct, char **env)
 {
-	if (!(le_struct->buff = (char *)malloc(sizeof(char) * (LE_BUFF_SIZE + 1))))
+	le_struct->buffer_size = LE_BUFF_SIZE + 1;
+	if (!(le_struct->buff = (char *)malloc(sizeof(char)
+	* (le_struct->buffer_size))))
 		return (LE_FAILURE);
-	ft_bzero(le_struct->buff, LE_BUFF_SIZE + 1);
+	ft_bzero(le_struct->buff, le_struct->buffer_size);
 	ft_bzero(le_struct->tmp, LE_TMP_BUFF_SIZE);
+	ft_bzero(le_struct->prompt, LE_PROMPT_BUFF);
 	if (le_window_size(&le_struct->w_col, &le_struct->w_line))
 		return (LE_FAILURE);
 	le_struct->clipboard = NULL;
-	le_struct->prompt = NULL;
 	le_struct->nb_char = LE_START;
 	le_struct->prompt_size = 0;
 	le_struct->cursor_buff = 0;
 	le_struct->max_size = 0;
 	le_struct->cursor_x = le_struct->prompt_size;
-	le_struct->buffer_size = LE_BUFF_SIZE + 1;
 	le_struct->history_activ = 0;
 	if (hy_history(le_struct, env) || !le_struct->history)
 		le_struct->history_activ = -1;

@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/09 15:38:53 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/12 16:01:45 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # define LE_CONTINUE		2
 # define LE_INFINITE_LOOP	21
 # define LE_BUFF_SIZE		2048
+# define LE_PROMPT_BUFF		1024
 # define LE_TMP_BUFF_SIZE	16
 # define LE_PROMPT_CLR		"\033[1m\033[32m"
 # define LE_FAILURE_CLR		"\033[1m\033[31m"
@@ -126,7 +127,7 @@ typedef	struct		s_le
 	char			*buff;
 	char			*clipboard;
 	char			tmp[LE_TMP_BUFF_SIZE];
-	char			*prompt;
+	char			prompt[LE_PROMPT_BUFF];
 	int				prompt_size;
 	int				prompt_type;
 	int				buffer_size;
@@ -275,5 +276,6 @@ int					le_prompt_home(struct s_le *le_struct,\
 					char **env, char *pwd);
 int					le_prompt_quote(struct s_le *le_struct);
 void				le_prompt_print(struct s_le *le_struct);
+int					le_prompt_shorten_path(struct s_le *le_struct, char *path);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/06 14:08:30 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/12 18:57:20 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*line_edition(int prompt, char **env)
 	le_struct.prompt_type = prompt;
 	if (le_init_set_attribute(&backup))
 		return (NULL);
-	if (le_read_and_exec(&le_struct, env))
+	if (le_read_and_exec(&le_struct, env) == LE_FAILURE)
 	{
 		ft_strdel(&le_struct.buff);
 		le_free(&le_struct);

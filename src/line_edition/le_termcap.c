@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 18:35:30 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/09 15:37:23 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/09 20:28:08 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,19 @@ void	le_termcap_type(struct s_le	*le_struct)
 **	Check the termcaps type
 */
 
+// void	le_buff_print_select_char(struct s_le *le_struct)
+// {
+// 	le_struct->cursor_buff = le_struct->cursor_x - le_struct->prompt_size;
+// 	if (le_struct->copy_on != LE_START && le_struct->copy_off == LE_START
+// 	&& le_struct->cursor_buff + 1 < le_struct->nb_char)
+// 	{
+// 		ft_putstr(LE_SELECT_ON);
+// 		ft_putchar(le_struct->buff[le_struct->cursor_buff]);
+// 		ft_putstr(LE_TERM_OFF);
+// 		le_ansi_print(1, LE_LEFT);
+// 	}
+// }
+
 int		le_termcap_exec(struct s_le *le_struct)
 {
 	if (le_termcap_motion(le_struct))
@@ -94,6 +107,7 @@ int		le_termcap_exec(struct s_le *le_struct)
 	}
 	else if (le_struct->history_activ != -1)
 		le_struct->history_activ = 0;
+	// le_buff_print_select_char(le_struct);
 	if ((le_struct->copy_on != LE_START && le_struct->copy_off == LE_START))
 		if (le_window_clear_restore(le_struct))
 			return (LE_FAILURE);
