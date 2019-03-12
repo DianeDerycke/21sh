@@ -136,6 +136,7 @@ int     redir_lessand(t_ast *redir, t_ast *ast);
 
 //REDIR
 int    *getter_std(int init);
+void    reset_std(int *fd);
 int     open_file(t_ope token, char *file);
 int    exec_redirection(t_ast *ast, t_sh *shell);
 
