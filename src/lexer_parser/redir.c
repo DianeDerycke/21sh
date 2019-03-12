@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/09 15:46:22 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/12 11:48:41 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int         *getter_std(int init)
     return (std);
 }
 
-static void    reset_std(int *fd)
+void    reset_std(int *fd)
 {
 	dup2(fd[OUTPUT_END], STDIN_FILENO);
 	close(fd[0]);
@@ -71,7 +71,7 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
         }
         tmp = redir->left;
     }
-    if ((cmd = add_argument_to_cmd(ast)))
+    if (shell->exec == 1 && (cmd = add_argument_to_cmd(ast)))
         ret = exec_cmd(cmd, shell);
     reset_std(getter_std(0));
     free_ast(&cmd);
