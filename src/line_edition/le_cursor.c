@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/18 16:37:17 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/06 17:01:45 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/13 11:51:44 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ int		le_cursor_word_backward(struct s_le *le_struct)
 		== ' ' && i <= le_struct->nb_char && i >= le_struct->prompt_size)
 			i--;
 	else
-		while (le_struct->buff && le_struct->nb_char\
+		while (le_struct->buff && le_struct->nb_char && i >= 0
 		&& le_struct->buff[i] != ' ' && i <= le_struct->nb_char)
 			i--;
-	while (le_struct->buff && le_struct->nb_char\
+	while (le_struct->buff && le_struct->nb_char && i >= 0
 	&& le_struct->buff[i] == ' ' && i <= le_struct->nb_char)
 		i--;
 	if (i >= 0)

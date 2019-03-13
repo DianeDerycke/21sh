@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/12 16:01:45 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/13 12:01:18 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@
 # define LE_BUFF_SIZE		2048
 # define LE_PROMPT_BUFF		1024
 # define LE_TMP_BUFF_SIZE	16
-# define LE_PROMPT_CLR		"\033[1m\033[32m"
+# define LE_PROMPT_CLR		"\033[1m"BLUE
 # define LE_FAILURE_CLR		"\033[1m\033[31m"
-# define LE_GIT_CLR			"\033[1m\033[34m"
 # define LE_PROMPT 			LE_PROMPT_CLR"$> \033[0m"
 # define LE_PROMPT_DQUOTE	"\033[1m\033[30mdquote \\> \033[0m"
 # define LE_PROMPT_SQUOTE	"\033[1m\033[30msquote \\> \033[0m"

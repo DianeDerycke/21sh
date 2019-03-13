@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/05 19:06:20 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/13 16:54:57 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,7 @@ int		hy_history(struct s_le *le_struct, char **env)
 		return (FAILURE);
 	}
 	ft_strdel(&path);
-	if (hy_history_fill_list(le_struct, fd, ret))
-		return (FAILURE);
-	if (close(fd) == -1)
+	if (hy_history_fill_list(le_struct, fd, ret) || close(fd) == -1)
 		return (FAILURE);
 	return (SUCCESS);
 }
@@ -82,17 +80,17 @@ int		hy_history_fill_list(struct s_le *le_struct, int fd, int ret)
 	char	*line;
 	char	*tmp;
 
-	line = NULL;
 	tmp = NULL;
 	while (ret != -1 && ret)
 	{
+		line = NULL;
 		if ((ret = get_next_line(fd, &line)) == -1)
 			return (FAILURE);
 		while (ret != -1 && ret && is_valid_quotes(line))
 		{
 			if ((ret = get_next_line(fd, &tmp)) == -1)
 				return (FAILURE);
-			if (!ret)
+			if (!ret && !tmp)
 			{
 				ft_strdel(&line);
 				return (SUCCESS);
@@ -126,13 +124,8 @@ int		hy_history_write(char *command, char **env)
 		return (FAILURE);
 	}
 	ft_strdel(&path);
-	if ((write(fd, command, ft_strlen(command))) == -1\
-	|| write(fd, "\n", 1) == -1)
-	{
-		close(fd);
-		return (FAILURE);
-	}
-	if (close(fd) == -1)
+	if ((write(fd, command, ft_strlen(command))) == -1
+	|| write(fd, "\n", 1) == -1 || close(fd) == -1)
 		return (FAILURE);
 	return (SUCCESS);
 }
