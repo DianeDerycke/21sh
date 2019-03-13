@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/09 16:07:53 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/13 14:42:44 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ int     is_valid_quotes(char *str)
         return (-1);
     while (str[i])
     {
-        if (str[i] == DQUOTE)
+        if (str[i] == DQUOTE && str[i + i])
         {
             i++;
             j++;
@@ -129,7 +129,9 @@ int     is_valid_quotes(char *str)
             if (str[i] == DQUOTE)
                 j++;
         }
-        if (str[i] == SQUOTE)
+        else if (str[i] == DQUOTE)
+            return (DQUOTE);        
+        if (str[i] == SQUOTE && str[i + 1])
         {
 			j = 0;
 			i++;
@@ -138,6 +140,8 @@ int     is_valid_quotes(char *str)
             if (!str[i] || str[i] != SQUOTE)
                 return (SQUOTE);
         }
+        else if (str[i] == SQUOTE)
+            return (SQUOTE);
         i++;
     }
     if (j % 2 > 0)
