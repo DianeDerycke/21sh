@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/12 10:05:45 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/13 13:54:04 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,16 +31,17 @@ static int		handle_right_command(t_sh *shell, t_ast *ast, int *oldfd, int *newfd
 {
 	if (handle_heredoc_pipe(ast) == SUCCESS)
 	{
-		if (oldfd)
-			close_pipe(oldfd);
+		shell->heredoc = 1;
+		close_pipe(oldfd);
+		reset_std(getter_std(0));
+		if (exec_redirection(ast, shell) == FAILURE)
+			exit (1);
 		close_dup(newfd, STDOUT_FILENO);
+		return (exec_cmd(ast, shell));
 	}
-	else
-	{
-		if (oldfd)
-			close_dup(oldfd, STDIN_FILENO);
-		close_dup(newfd, STDOUT_FILENO);
-	}
+	if (oldfd)
+		close_dup(oldfd, STDIN_FILENO);
+	close_dup(newfd, STDOUT_FILENO);
 	return (exec_pipe_cmd(shell, ast));
 }
 
@@ -63,6 +64,7 @@ static int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
 
 	status = 0;
 	ret = 0;
+	getter_std(1);
 	if (!fd)
 		if (pipe(newfd) == ERROR)
 			return (ERROR);

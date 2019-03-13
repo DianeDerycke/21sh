@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/09 23:42:46 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/09 23:44:39 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ char    *get_operator(int index)
     };
     return(operators[index]);
 }
+
 int         lex_is_special_char(int c)
 {
     if (!c)

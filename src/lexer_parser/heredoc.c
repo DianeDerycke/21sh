@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:47:01 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/11 19:43:02 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/13 13:11:46 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char    *prompt_heredoc(char *end_word)
         tmp = line_edition(HEREDOC, NULL);
         if (tmp && ((ft_strcmp(tmp, "\004") == 0) || (ft_strcmp(tmp, "\003") == 0)))
         {
+            ft_strdel(&input);
             ft_strdel(&tmp);
             return (NULL);
         }
@@ -41,11 +42,12 @@ char    *prompt_heredoc(char *end_word)
     return(input);
 }
 
-int     handle_heredoc(char *file)
+int     handle_heredoc(char *file, t_sh *shell)
 {
     char    *content;
     int     fd[2];
 
+    (void)shell;
     if (!(content = prompt_heredoc(file)))
         return (-2);
     if (pipe(fd) < 0)

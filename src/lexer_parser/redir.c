@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/12 11:48:41 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/13 13:36:28 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,14 @@ void    reset_std(int *fd)
 	close(fd[INPUT_END]);
 }
 
-int     open_file(t_ope token, char *file)
+static int     open_file(t_ope token, char *file, t_sh *shell)
 {
     if (token == GREAT)
         return (open(file, O_RDWR | O_CREAT | O_TRUNC, PERM));
     else if (token == DGREAT)
         return (open(file, O_RDWR | O_CREAT | O_APPEND, PERM));
     else if (token == DLESS)
-        return (handle_heredoc(file));
+        return (handle_heredoc(file, shell));
     else
         return (open(file, O_RDWR));
 }
@@ -55,9 +55,10 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
 
     ret = 0;
     tmp = ast;
+    cmd = NULL;
     while ((redir = find_next_redir(tmp)))
     {
-        if ((fd = open_file(redir->token, redir->left->value)) < 0)
+        if ((fd = open_file(redir->token, redir->left->value, shell)) < 0)
         {
             reset_std(getter_std(0));
             if (fd == -2)
@@ -71,9 +72,10 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
         }
         tmp = redir->left;
     }
-    if (shell->exec == 1 && (cmd = add_argument_to_cmd(ast)))
+    if (!shell->heredoc && (cmd = add_argument_to_cmd(ast)))
         ret = exec_cmd(cmd, shell);
     reset_std(getter_std(0));
-    free_ast(&cmd);
+    if (cmd)
+        free_ast(&cmd);
     return (ret);
 }
