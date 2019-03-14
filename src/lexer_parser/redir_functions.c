@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir_functions.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/14 16:24:52 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/14 18:13:16 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ int     handle_agregation(t_ast *redir, t_ast *ast)
         return (-2);
     if (redir->token == LESSAND)
         dup2(io_nb, output);
-    else
+    else if (redir->token == GREATAND)
         dup2(output, io_nb);
     if (is_close == 1 && redir->token == GREATAND)
-        close(output);
+        close(io_nb);
     return (SUCCESS);
 }
