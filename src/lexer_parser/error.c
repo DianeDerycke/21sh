@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:07:12 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/06 23:42:35 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/14 16:16:00 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,5 @@ int			ambiguous_redirect(char *arg)
 	ft_putstr_fd("21sh: ", 2);
 	ft_putstr_fd(arg, 2);
 	ft_putendl_fd(": ambiguous redirect", 2);
-	return (FAILURE);
+	return (ERROR);
 }
