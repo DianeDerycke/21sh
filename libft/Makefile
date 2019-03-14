@@ -6,7 +6,7 @@
 #    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/25 02:53:05 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/06 16:20:00 by mrandou          ###   ########.fr        #
+#    Updated: 2019/03/14 17:41:02 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ FILES = ft_strlen 	ft_putchar 	ft_strstr 	ft_atoi 	ft_strncmp 	ft_putnbr 	ft_str
 		ft_sort_lst	ft_clear_lst	ft_putnbr_ld	ft_putnbr_u		ft_strjoin_free	\
 		ft_copy_array 	ft_print_array	ft_malloc_error ft_find_char ft_replace \
 		ft_trim_array ft_is_whitespace ft_replace_whitespaces ft_dup_until	ft_clear_screen \
-		free_lst ft_strmjoin ft_nblen get_next_line ft_str_isdigit
+		free_lst ft_strmjoin ft_nblen get_next_line ft_str_isdigit ft_strjoin_freesnd
 SRC = $(addsuffix .c, $(FILES))
 OBJ = $(addsuffix .o, $(FILES))
 
