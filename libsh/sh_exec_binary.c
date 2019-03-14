@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh_exec_binary.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 23:05:19 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 03:22:52 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/14 16:20:40 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int		sh_exec_binary(t_sh *shell)
             getter_pid(pid);
             signal(SIGINT, sig_handler);
             waitpid(pid, &status, 0);
+			if (status > 0)
+				ret = FAILURE;
         }
     }
 	ft_strdel(&(shell->path));
