@@ -1,0 +1,84 @@
+#!/bin/bash
+
+random=0
+echo "What color for the prompt do you want ?\n"
+printf "\x1b[1m\x1b[39mWhite\x1b[0m "
+printf "\x1b[1m\x1b[31mRed\x1b[0m "
+printf "\x1b[1m\x1b[32mGreen\x1b[0m "
+printf "\x1b[1m\x1b[33mYellow\x1b[0m "
+printf "\x1b[1m\x1b[34mBlue\x1b[0m "
+printf "\x1b[1m\x1b[35mMagenta\x1b[0m "
+printf "\x1b[1m\x1b[36mCyan\x1b[0m "
+printf "\x1b[1m\x1b[31mR\x1b[32ma\x1b[33mn\x1b[34md\x1b[35mo\x1b[36mm\x1b[0m"
+printf "\n\n"
+select i in "White" "Red" "Green" "Yellow" "Blue" "Magenta" "Cyan" "Random"; do
+		if [ "$i" = "White" ]; then
+			color="\x1b[1m\x1b[39m"
+			echo "prompt_color=white" > ~/.21shrc
+			break
+		elif [ "$i" = "Red" ]; then
+			color="\x1b[1m\x1b[31m"
+			echo "prompt_color=red" > ~/.21shrc
+			break
+		elif [ "$i" = "Green" ]; then
+			color="\x1b[1m\x1b[32m"
+			echo "prompt_color=green" > ~/.21shrc
+			break
+		elif [ "$i" = "Yellow" ]; then
+			color="\x1b[1m\x1b[33m"
+			echo "prompt_color=yellow" > ~/.21shrc
+			break
+		elif [ "$i" = "Blue" ]; then
+			color="\x1b[1m\x1b[34m"
+			echo "prompt_color=blue" > ~/.21shrc
+			break
+		elif [ "$i" = "Magenta" ]; then
+			color="\x1b[1m\x1b[35m"
+			echo "prompt_color=magenta" > ~/.21shrc
+			break
+		elif [ "$i" = "Cyan" ]; then
+			color="\x1b[1m\x1b[36m"
+			echo "prompt_color=cyan" > ~/.21shrc
+			break
+		elif [ "$i" = "Random" ]; then
+			random=$(( ( RANDOM % 6 )  + 1 ))
+			break;
+		else
+			echo "Wrong answer, please select 1, 2, 3, 4, 5, 6, 7 or 8"
+fi
+done
+
+if [ $random -eq 1 ]
+then
+	color="\x1b[1m\x1b[31m"
+	echo "prompt_color=red" > ~/.21shrc
+fi
+if [ $random -eq 2 ]
+then
+	color="\x1b[1m\x1b[32m"
+	echo "prompt_color=green" > ~/.21shrc
+fi
+if [ $random -eq 3 ]
+then
+	color="\x1b[1m\x1b[33m"
+	echo "prompt_color=yellow" > ~/.21shrc
+fi
+if [ $random -eq 4 ]
+then
+	color="\x1b[1m\x1b[34m"
+	echo "prompt_color=blue" > ~/.21shrc
+fi
+if [ $random -eq 5 ]
+then
+	color="\x1b[1m\x1b[35m"
+	echo "prompt_color=magenta" > ~/.21shrc
+fi
+if [ $random -eq 6 ]
+then
+	color="\x1b[1m\x1b[36m"
+		echo "prompt_color=cyan" > ~/.21shrc
+fi
+printf "\nYour new prompt : "
+printf $color
+printf "/Your/Path > "
+printf "\x1b[0m\n"

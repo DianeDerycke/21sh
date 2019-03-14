@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
+#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/09 00:44:55 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/03/14 11:43:09 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -180,5 +180,9 @@ fclean: clean
 	@rm -f $(NAME)
 	@rm -f $(LIBNAME)
 	@printf "All ---> \033[31mfclean Done ✓\n\033[0m"
+
+history:
+	@rm -f	$(HISTORY)
+	@printf "History -> \033[31mclean Done ✓\n\033[0m"
 
 re: fclean all

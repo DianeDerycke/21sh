@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/13 12:01:18 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/14 19:58:54 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,14 @@
 # define LE_BUFF_SIZE		2048
 # define LE_PROMPT_BUFF		1024
 # define LE_TMP_BUFF_SIZE	16
-# define LE_PROMPT_CLR		"\033[1m"BLUE
+# define LE_PROMPT_DFLT_CLR	BLUE
 # define LE_FAILURE_CLR		"\033[1m\033[31m"
-# define LE_PROMPT 			LE_PROMPT_CLR"$> \033[0m"
-# define LE_PROMPT_DQUOTE	"\033[1m\033[30mdquote \\> \033[0m"
-# define LE_PROMPT_SQUOTE	"\033[1m\033[30msquote \\> \033[0m"
-# define LE_PROMPT_PIPE		"\033[1m\033[30mpipe |> \033[0m"
-# define LE_PROMPT_HEREDOC	"\033[1m\033[30mheredoc \\> \033[0m"
+# define LE_PROMPT_DFLT		"$> "
+# define LE_PROMPT_BOLD		"\033[1m"
+# define LE_PROMPT_DQUOTE	"\033[30mdquote \\> \033[0m"
+# define LE_PROMPT_SQUOTE	"\033[30msquote \\> \033[0m"
+# define LE_PROMPT_PIPE		"\033[30mpipe |> \033[0m"
+# define LE_PROMPT_HEREDOC	"\033[30mheredoc \\> \033[0m"
 # define LE_PROMPT_SIMPLE	3
 # define LE_PROMPT_DEF_SIZE	4
 # define LE_PROMPT_QTE_SIZE	11
@@ -54,6 +55,7 @@
 # define LE_MOVE			"G"
 # define LE_START			-1
 # define LE_TERM			"xterm-256color"
+# define LE_SHRC			"/.21shrc"
 # define LE_CUT				21
 # define LE_PASTE			16
 # define LE_COPY			25
@@ -127,6 +129,7 @@ typedef	struct		s_le
 	char			*clipboard;
 	char			tmp[LE_TMP_BUFF_SIZE];
 	char			prompt[LE_PROMPT_BUFF];
+	char			prompt_color[16];
 	int				prompt_size;
 	int				prompt_type;
 	int				buffer_size;
@@ -205,7 +208,7 @@ int					le_rputchar(int c);
 */
 
 void				le_buff_print(struct s_le *le_struct, int pos);
-void				le_buff_print_select(struct s_le *le_struct,\
+void				le_buff_print_select(struct s_le *le_struct,
 					int pos, int on, int off);
 void				le_buff_truncate(struct s_le *le_struct, int *len);
 
@@ -242,7 +245,7 @@ int					le_cursor_down(struct s_le *le_struct);
 **	le_cursor_tool.c
 */
 
-int					le_cursor_goto(int expected, int current,\
+int					le_cursor_goto(int expected, int current,
 					struct s_le *le_struct);
 int					le_cursor_restore(struct s_le *le_struct);
 int					le_cursor_beggin(struct s_le *le_struct, int current);
@@ -271,10 +274,12 @@ int					le_clipboard_cut(struct s_le *le_struct);
 
 int					le_prompt_init(struct s_le *le_struct, char **env);
 int					le_prompt_pwd(struct s_le *le_struct, char **env);
-int					le_prompt_home(struct s_le *le_struct,\
+int					le_prompt_home(struct s_le *le_struct,
 					char **env, char *pwd);
 int					le_prompt_quote(struct s_le *le_struct);
 void				le_prompt_print(struct s_le *le_struct);
 int					le_prompt_shorten_path(struct s_le *le_struct, char *path);
+int					le_prompt_get_color(struct s_le *le_struct, char **env);
+int					le_prompt_check_color(struct s_le *le_struct, char *line);
 
 #endif
