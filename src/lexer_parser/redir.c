@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/14 16:36:14 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/14 16:53:27 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 
 int         *getter_std(int init)
 {
-    static int      std[2];
+    static int      std[3];
 
     if (init == 1)
     {
         std[0] = dup(STDIN_FILENO);
         std[1] = dup(STDOUT_FILENO);
+        std[2] = dup(STDERR_FILENO);
     }
 
     return (std);
@@ -27,10 +28,12 @@ int         *getter_std(int init)
 
 void    reset_std(int *fd)
 {
-	dup2(fd[OUTPUT_END], STDIN_FILENO);
+	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);
-	dup2(fd[INPUT_END], STDOUT_FILENO);
-	close(fd[INPUT_END]);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);
+    dup2(fd[2], STDERR_FILENO);
+    close(fd[2]);
 }
 
 static int     open_file(t_ope token, char *file, t_ast *redir, t_ast *ast)
