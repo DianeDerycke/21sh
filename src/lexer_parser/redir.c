@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/14 13:34:17 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/14 15:08:41 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,23 +33,24 @@ void    reset_std(int *fd)
 	close(fd[INPUT_END]);
 }
 
-static int     open_file(t_ope token, char *file)
+static int     open_file(t_ope token, char *file, t_ast *redir)
 {
+    (void)redir;
     if (token == GREAT)
         return (open(file, O_RDWR | O_CREAT | O_TRUNC, PERM));
     else if (token == DGREAT)
         return (open(file, O_RDWR | O_CREAT | O_APPEND, PERM));
     else if (token == DLESS)
-        return (handle_heredoc(file));
+        return (handle_heredoc(redir));
     else
         return (open(file, O_RDWR));
 }
 
 static int      do_redirection(t_ast *redir)
 {
-    int     fd;
+    int         fd;
 
-    if ((fd = open_file(redir->token, redir->left->value)) < 0)
+    if ((fd = open_file(redir->token, redir->left->value, redir)) < 0)
     {
         reset_std(getter_std(0));
         if (fd == -2)
@@ -77,7 +78,7 @@ int     exec_redirection(t_ast *ast, t_sh *shell)
             return (FAILURE);
         tmp = redir->left;
     }
-    if (!shell->heredoc && (cmd = add_argument_to_cmd(ast)))
+    if ((cmd = add_argument_to_cmd(ast)))
     {
         ret = exec_cmd(cmd, shell);
         free_ast(&cmd);

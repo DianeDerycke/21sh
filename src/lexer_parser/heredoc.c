@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:47:01 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/14 13:28:41 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/14 15:29:07 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,23 +42,52 @@ char    *prompt_heredoc(char *end_word)
     return(input);
 }
 
-int     handle_heredoc(char *file)
+int     handle_heredoc(t_ast *redir)
 {
-    char    *content;
     int     fd[2];
 
-    if (!(content = prompt_heredoc(file)))
-        return (-2);
     if (pipe(fd) < 0)
         return (ERROR);
     if (fork() == 0)
     {
         close(fd[OUTPUT_END]);
-        ft_putstr_fd(content, fd[INPUT_END]);
-        ft_strdel(&content);
+        ft_putstr_fd(redir->heredoc, fd[INPUT_END]);
         exit(0);
     }
         wait(NULL);
         close(fd[INPUT_END]);
     return (fd[OUTPUT_END]);
+}
+
+int     apply_heredoc(t_ast *ast)
+{
+    int     ret;
+    t_ast   *redir;
+    t_ast   *tmp;
+
+    redir = NULL;
+    ret = 0;
+    if (!ast)
+        return (SUCCESS);
+    if (ast->token == SEPARATOR && ast->right)
+        ret = apply_heredoc(ast->right);
+    else if (ast->token == PIPE)
+    {
+        ret = apply_heredoc(ast->right);
+        ret = apply_heredoc(ast->left);
+    }
+    else if (ast->token == WORD)
+    {
+        tmp = ast;
+        while ((redir = find_next_redir(tmp)))
+        {
+            if (redir->token == DLESS)
+                if (!(redir->heredoc = prompt_heredoc(redir->left->value)))
+                    return (FAILURE);
+            tmp = redir->left;
+        }
+    }
+    if (ast->token == SEPARATOR && ast->left)
+        ret = apply_heredoc(ast->left);
+    return (ret);
 }

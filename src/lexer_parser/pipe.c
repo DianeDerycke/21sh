@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/13 13:54:04 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/14 15:25:51 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,17 +31,15 @@ static int		handle_right_command(t_sh *shell, t_ast *ast, int *oldfd, int *newfd
 {
 	if (handle_heredoc_pipe(ast) == SUCCESS)
 	{
-		shell->heredoc = 1;
 		close_pipe(oldfd);
-		reset_std(getter_std(0));
-		if (exec_redirection(ast, shell) == FAILURE)
-			exit (1);
 		close_dup(newfd, STDOUT_FILENO);
-		return (exec_cmd(ast, shell));
 	}
-	if (oldfd)
-		close_dup(oldfd, STDIN_FILENO);
-	close_dup(newfd, STDOUT_FILENO);
+	else
+	{
+		if (oldfd)
+			close_dup(oldfd, STDIN_FILENO);
+		close_dup(newfd, STDOUT_FILENO);
+	}
 	return (exec_pipe_cmd(shell, ast));
 }
 

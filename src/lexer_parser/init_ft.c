@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 00:15:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/09 14:20:59 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/14 14:41:18 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void    free_lexer(t_ast **ast)
         tmp = *ast;
         (*ast) = (*ast)->next;
         ft_strdel(&(tmp->value));
+        ft_strdel(&(tmp->heredoc));
         tmp->token = 0;
         tmp->io_number = 0;
         tmp->next = NULL;
@@ -121,9 +122,8 @@ t_ast     *create_elem(void)
         ft_malloc_error();
     new->value = NULL;
     new->token = 0;
-    new->from = 0;
-    new->to = 0;
     new->std = 0;
+    new->heredoc = NULL;
     new->next = NULL;
     new->right = NULL;
     new->left = NULL;
