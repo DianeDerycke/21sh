@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/14 14:11:04 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/14 15:42:57 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,14 @@ int		verify_lexer(t_ast *ast)
 {
 	if (!ast)
 		return (FAILURE);
+	if (ast->token == SEPARATOR && !ast->next)
+		return (get_error(UNEXPTOKEN, ast->value));
 	while (ast)
 	{
-		if (ast->token == DLESS && !(ast->next))
-			return (get_error(UNEXPTOKEN, NULL));
-		if (is_token_operator(ast->token) == FAILURE && 
-			is_token_operator(ast->next->token) == FAILURE)
+		if (is_token_operator(ast->token) == 1 && !(ast->next))
+			return (get_error(UNEXPTOKEN, ast->value));
+		if (is_token_operator(ast->token) == 1 && ast->next &&
+			is_token_operator(ast->next->token) == 1)
 			return (get_error(UNEXPTOKEN, ast->next->value));
 		ast = ast->next;
 	}
