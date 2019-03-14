@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/14 16:29:55 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/14 16:36:14 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void    reset_std(int *fd)
 
 static int     open_file(t_ope token, char *file, t_ast *redir, t_ast *ast)
 {
-    (void)redir;
     if (token == GREAT)
         return (open(file, O_RDWR | O_CREAT | O_TRUNC, PERM));
     else if (token == DGREAT)
