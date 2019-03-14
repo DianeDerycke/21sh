@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libsh.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/12 19:14:06 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/14 14:36:54 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,8 @@ typedef struct      s_ast {
     char            *value;
     int             token;
     int             io_number;
-    int             from;
-    int             to;
     int             std;
+    char            *heredoc;
     struct s_ast  *next;
     struct s_ast  *right;
     struct s_ast  *left;
