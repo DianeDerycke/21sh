@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 00:07:37 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/12 19:17:25 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/14 16:36:06 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,5 @@ t_sh     *init_shell(void)
     new->path = NULL;
     new->l_pid = NULL;
     new->fork = 1;
-    new->heredoc = 0;
-    new->pipe_heredoc = NULL;
     return (new);
 }

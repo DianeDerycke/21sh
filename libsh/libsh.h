@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/14 14:36:54 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/14 16:36:15 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ typedef struct      s_sh {
     char            **cmd;
     char            *path;
     int             fork;
-    int             heredoc;
-    int             *pipe_heredoc;
     struct s_pid    *l_pid;
 }                   t_sh;
 
