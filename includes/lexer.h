@@ -140,7 +140,7 @@ void    reset_std(int *fd);
 int    exec_redirection(t_ast *ast, t_sh *shell);
 
 //HEREDOC
-int     handle_heredoc(char *file, t_sh *shell);
+int     handle_heredoc(char *file);
 char    *prompt_heredoc(char *end_word);
 
 
