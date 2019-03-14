@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:01:18 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/13 12:51:11 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/14 14:32:28 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ ssize_t		ms_cd(char **split_cmd, char ***ms_env, int ret)
 		ft_strdel(&buf);
 		return (error_chdir(ret, split_cmd[1], "cd"));
 	}
-	if (error == FAILURE || edit_oldpwd_var(ms_env, &buf) == FAILURE ||
-			ms_edit_pwd_var(ms_env) == FAILURE)
+	if (error == FAILURE || ms_edit_pwd_var(ms_env) == FAILURE || 
+	edit_oldpwd_var(ms_env, &buf) == FAILURE)
 		ret = FAILURE;
 	ft_strdel(&buf);
 	return (ret);
