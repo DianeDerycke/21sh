@@ -126,14 +126,7 @@ int			handle_quotes(char **input);
 int     	is_valid_quotes(char *str);
 
 //REDIR_FUNCTIONS
-int		redir_great(t_ast *redir, t_ast *ast);
-int		redir_dgreat(t_ast *redir, t_ast *ast);
-int     redir_less(t_ast *redir, t_ast *ast);
-int     redir_dless(t_ast *redir, t_ast *ast);
-int     redir_and(t_ast *redir, t_ast *ast);
-int     redir_greatand(t_ast *redir, t_ast *ast);
-int     redir_lessand(t_ast *redir, t_ast *ast);
-
+int 		handle_agregation(t_ast *redir, t_ast *ast);
 //REDIR
 int    *getter_std(int init);
 void    reset_std(int *fd);
