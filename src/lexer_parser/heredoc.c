@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:47:01 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/13 13:11:46 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/14 13:28:41 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,11 @@ char    *prompt_heredoc(char *end_word)
     return(input);
 }
 
-int     handle_heredoc(char *file, t_sh *shell)
+int     handle_heredoc(char *file)
 {
     char    *content;
     int     fd[2];
 
-    (void)shell;
     if (!(content = prompt_heredoc(file)))
         return (-2);
     if (pipe(fd) < 0)
