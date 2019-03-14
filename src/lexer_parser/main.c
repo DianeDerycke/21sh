@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/14 14:11:11 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/14 15:23:23 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ static int 	process_input(t_param *param, t_sh *shell)
 		return (FAILURE);
 	else if (!(ast = create_ast(param->l_tokens, param->l_tokens, NULL)))
 		return (FAILURE);
-	else if (ast && parser_execution(ast, shell) != 0)
+	else if (apply_heredoc(ast) == FAILURE)
+		return (FAILURE);
+	else if (parser_execution(ast, shell) != 0)
 		return (FAILURE);
 	return (SUCCESS);
 }
