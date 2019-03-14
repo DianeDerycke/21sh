@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:47:01 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/14 15:29:07 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/14 17:55:59 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,22 @@ char    *prompt_heredoc(char *end_word)
     input = ft_strdup("");
     while (ret)
     {
-        tmp = line_edition(HEREDOC, NULL);
-        if (tmp && ((ft_strcmp(tmp, "\004") == 0) || (ft_strcmp(tmp, "\003") == 0)))
+        if (!(tmp = line_edition(HEREDOC, NULL)))
+			tmp = ft_strdup("");
+        if (tmp && ft_strcmp(tmp, "\004") == 0)
         {
-            ft_strdel(&input);
             ft_strdel(&tmp);
-            return (NULL);
-        }
+            return (input);
+		}
+		if (tmp && ft_strcmp(tmp, "\003") == 0)
+		{
+			ft_strdel(&input);
+			ft_strdel(&tmp);
+			return (NULL);
+		}
         if (tmp)
             ret = ft_strcmp(end_word, tmp);
-        if (ret)
+        if (ret != 0)
         {
             input = ft_strjoin_free(input, tmp);
             input = ft_strjoin_free(input, "\n");
