@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/11 18:10:38 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/14 14:11:04 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,12 @@ static int		is_token_operator(t_ope token)
 
 int		verify_lexer(t_ast *ast)
 {
-	while (ast->next)
+	if (!ast)
+		return (FAILURE);
+	while (ast)
 	{
+		if (ast->token == DLESS && !(ast->next))
+			return (get_error(UNEXPTOKEN, NULL));
 		if (is_token_operator(ast->token) == FAILURE && 
 			is_token_operator(ast->next->token) == FAILURE)
 			return (get_error(UNEXPTOKEN, ast->next->value));
