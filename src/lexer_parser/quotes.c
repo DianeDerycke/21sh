@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/13 14:42:44 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/15 13:43:37 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ static int     is_valid_pipe(char *str)
             if (!str[i + 1])
                 return (IS_PIPE);
             i++;
-                while (str[i] && ft_is_whitespace(str[i]))
-                    i++;
-                if (!str[i])
-                    return (IS_PIPE);
+            while (str[i] && ft_is_whitespace(str[i]))
+                i++;
+            if (!str[i])
+                return (IS_PIPE);
         }
         i++;
     }
@@ -82,7 +82,7 @@ int 		handle_quotes(char **input)
 
 	tmp = NULL;
 	ret = 0;
-	while (!tmp && (((ret = is_valid_quotes(*input)) || (ret = is_valid_pipe(*input)))))
+	while (!tmp && ((ret = is_valid_quotes(*input)) || (ret = is_valid_pipe(*input))))
 	{
 		if (!(tmp = line_edition(ret , NULL)))
 			continue;
@@ -112,25 +112,22 @@ int     is_valid_quotes(char *str)
         return (-1);
     while (str[i])
     {
-        if (str[i] == DQUOTE && str[i + i])
+        if (str[i] == DQUOTE && str[i + 1])
         {
             i++;
             j++;
             while (str[i] && str[i] != DQUOTE)
-            {
-                if (str[i] && str[i] == BACKSLASH && str[i + 1])
-                    i++;
-                else if (!str[i + 1])
-                    return (DQUOTE);
                 i++;
-                if (!str[i])
-                    return (DQUOTE);
-            }
             if (str[i] == DQUOTE)
                 j++;
         }
-        else if (str[i] == DQUOTE)
-            return (DQUOTE);        
+        else if (str[i] == DQUOTE && !str[i + 1])
+            return (DQUOTE);
+        else
+        {
+            i++;
+            continue;
+        }
         if (str[i] == SQUOTE && str[i + 1])
         {
 			j = 0;
@@ -148,4 +145,3 @@ int     is_valid_quotes(char *str)
         return (DQUOTE);
     return (SUCCESS);
 }
-//to do : valid quote should return size_t
