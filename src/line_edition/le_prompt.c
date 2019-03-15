@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 16:44:04 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/14 19:59:28 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/15 11:53:18 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,11 @@ int		le_prompt_quote(struct s_le *le_struct)
 		ft_strcpy(le_struct->prompt, LE_PROMPT_HEREDOC);		
 		le_struct->prompt_size = LE_PROMPT_HER_SIZE;
 	}
+	if	(le_struct->prompt_type == BACKSLASH)
+	{
+		ft_strcpy(le_struct->prompt, LE_PROMPT_BSLASH);
+		le_struct->prompt_size = 3;
+	}
 	le_prompt_print(le_struct);
 	return (LE_SUCCESS);
 }
@@ -169,12 +174,7 @@ void	le_prompt_print(struct s_le *le_struct)
 		ft_putstr(LE_TERM_OFF);
 	}
 	else
-	{
-		ft_putstr(LE_PROMPT_BOLD);
-		ft_putstr(le_struct->prompt_color);
 		ft_putstr(le_struct->prompt);
-		ft_putstr(LE_TERM_OFF);
-	}
 }
 
 /*

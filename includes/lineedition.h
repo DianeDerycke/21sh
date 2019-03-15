@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/14 19:58:54 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/15 11:49:14 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,14 @@
 # define LE_PROMPT_BUFF		1024
 # define LE_TMP_BUFF_SIZE	16
 # define LE_PROMPT_DFLT_CLR	BLUE
-# define LE_FAILURE_CLR		"\033[1m\033[31m"
+# define LE_FAILURE_CLR		LE_PROMPT_BOLD"\033[31m"
 # define LE_PROMPT_DFLT		"$> "
 # define LE_PROMPT_BOLD		"\033[1m"
-# define LE_PROMPT_DQUOTE	"\033[30mdquote \\> \033[0m"
-# define LE_PROMPT_SQUOTE	"\033[30msquote \\> \033[0m"
-# define LE_PROMPT_PIPE		"\033[30mpipe |> \033[0m"
-# define LE_PROMPT_HEREDOC	"\033[30mheredoc \\> \033[0m"
+# define LE_PROMPT_DQUOTE	LE_PROMPT_BOLD"\033[30mdquote \\> \033[0m"
+# define LE_PROMPT_SQUOTE	LE_PROMPT_BOLD"\033[30msquote \\> \033[0m"
+# define LE_PROMPT_PIPE		LE_PROMPT_BOLD"\033[30mpipe |> \033[0m"
+# define LE_PROMPT_HEREDOC	LE_PROMPT_BOLD"\033[30mheredoc \\> \033[0m"
+# define LE_PROMPT_BSLASH	LE_PROMPT_BOLD"\033[30m\\> \033[0m"
 # define LE_PROMPT_SIMPLE	3
 # define LE_PROMPT_DEF_SIZE	4
 # define LE_PROMPT_QTE_SIZE	11
