@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/15 15:58:23 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/15 17:29:29 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,17 @@ static int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
 	int		newfd[2];
 	pid_t	child_pid;
 	int		status;
-	int		ret;
 
 	status = 0;
-	ret = 0;
 	if (!fd)
 		if (pipe(newfd) == ERROR)
-			return (ERROR);
-	child_pid = fork();
-	if (child_pid < 0)
-		return (ERROR);
+			return (get_error(ERRPIPE, NULL));
+	if ((child_pid = fork()) < 0)
+		return (get_error(ERRFORK, NULL));
 	if (child_pid == 0)
 	{
 		if (fd)
-			ret = end_recurse_pipe(shell, ast, oldfd, fd);
+			end_recurse_pipe(shell, ast, oldfd, fd);
 		else
 			handle_right_command(shell, ast->right, oldfd, newfd);
 	}
@@ -84,20 +81,25 @@ static int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
 		else if (ast->left && ast->token == PIPE)
 			recurse_pipe(shell, ast->left, oldfd, newfd);
 		sh_push_pidnew(child_pid, &(shell->l_pid));
-		get_pid_list(shell->l_pid);
 		signal(SIGINT, signal_handler);
 		waitpid(child_pid, &status, 0);
+		if (status != 0)
+			ast->std = FAILURE;
 	}
-	return (ret);
+	return (SUCCESS);
 }
 
 int 	do_pipe(t_sh *shell, t_ast *ast)
 {
-	int		ret;
+	t_ast	*tmp;
 
 	shell->fork = 0;
-	ret = recurse_pipe(shell, ast, NULL, NULL);
+	tmp = ast;
+	recurse_pipe(shell, ast, NULL, NULL);
+	get_pid_list(shell->l_pid);
 	sh_freepidlist(&(shell->l_pid));
 	shell->l_pid = NULL;
-	return (ret);
+	while(tmp->next)
+		tmp = tmp->next;
+	return (tmp->std);
 }
