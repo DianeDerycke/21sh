@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/15 11:49:14 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/15 13:27:50 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@
 # define LE_PROMPT_SQUOTE	LE_PROMPT_BOLD"\033[30msquote \\> \033[0m"
 # define LE_PROMPT_PIPE		LE_PROMPT_BOLD"\033[30mpipe |> \033[0m"
 # define LE_PROMPT_HEREDOC	LE_PROMPT_BOLD"\033[30mheredoc \\> \033[0m"
-# define LE_PROMPT_BSLASH	LE_PROMPT_BOLD"\033[30m\\> \033[0m"
 # define LE_PROMPT_SIMPLE	3
 # define LE_PROMPT_DEF_SIZE	4
 # define LE_PROMPT_QTE_SIZE	11
