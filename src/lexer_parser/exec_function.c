@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/15 14:39:47 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/15 15:53:53 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ int     exec_cmd(t_ast *ast, t_sh *shell)
         ft_free_array(shell->cmd);
         free(shell->cmd);
         shell->cmd = NULL;
+        if (shell->fork == 0)
+            exit (1);
         return (FAILURE);
     }
     if (!shell->path)
