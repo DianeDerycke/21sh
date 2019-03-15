@@ -6,17 +6,35 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/15 13:43:37 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/15 14:59:21 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
+
+static int      only_pipe(char *str)
+{
+    int     i;
+
+    i = 0;
+    while (str[i] && ft_is_whitespace(str[i]))
+        i++;
+    if (str[i] == '|')
+        i++;
+    while(str[i] && ft_is_whitespace(str[i]))
+        i++;
+    if (!str[i])
+        return (SUCCESS);
+    return (FAILURE);
+}
 
 static int     is_valid_pipe(char *str)
 {
     int     i;
 
     i = 0;
+    if (only_pipe(str) == SUCCESS)
+        return (SUCCESS);
     while (str[i])
     {
         while (str[i] && ft_is_whitespace(str[i]))
@@ -34,45 +52,6 @@ static int     is_valid_pipe(char *str)
         i++;
     }
     return (SUCCESS);
-}
-
-int     get_valid_input(t_param *param, char **env, int ret)
-{
-	while (21)
-	{
-		if (!(param->input = line_edition(ret, env)))
-		{
-			ret = SUCCESS;
-			continue;
-		}
-		if (handle_quotes(&param->input) == FAILURE)
-            return (FAILURE);
-		if (param->input)
-			break ;
-	}
-	return (SUCCESS);
-}
-
-static int     handle_signal_pipe_edition(char *buffer)
-{
-    if (buffer && ((ft_strcmp(buffer, "\004") == 0) || ft_strcmp(buffer, "\003") == 0))
-    {
-        if (ft_strcmp(buffer, "\004") == 0)
-            get_error(UNEXPEOF, buffer);
-        return (SUCCESS);
-    }
-    return (FAILURE);
-}
-
-static int     handle_signal_quote_edition(char *buffer)
-{
-    if (buffer && ((ft_strcmp(buffer, "\n\004") == 0) || ft_strcmp(buffer, "\n\003") == 0))
-    {
-        if (ft_strcmp(buffer, "\n\004") == 0)
-            get_error(UNEXPEOF, buffer);
-        return (SUCCESS);
-    }
-    return (FAILURE);
 }
 
 int 		handle_quotes(char **input)
@@ -144,4 +123,21 @@ int     is_valid_quotes(char *str)
     if (j % 2 > 0)
         return (DQUOTE);
     return (SUCCESS);
+}
+
+int     get_valid_input(t_param *param, char **env, int ret)
+{
+	while (21)
+	{
+		if (!(param->input = line_edition(ret, env)))
+		{
+			ret = SUCCESS;
+			continue;
+		}
+		if (handle_quotes(&param->input) == FAILURE)
+            return (FAILURE);
+		if (param->input)
+			break ;
+	}
+	return (SUCCESS);
 }
