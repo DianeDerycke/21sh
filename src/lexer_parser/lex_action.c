@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_action.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 23:48:24 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/11 18:08:34 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/15 13:59:48 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,20 +50,11 @@ int     double_quote_action(t_param *param)
     i = param->index + 1;
     length = 1;
     tmp = NULL;
-    while (param->input[i])
-    {
+    while (param->input[i++] && (!ft_is_double_quote(param->input[i]
+    && (!param->input[i + 1] || ft_is_whitespace(param->input[i + 1])))))
         length++;
-        if (param->input[i] == BACKSLASH && lex_is_special_char(param->input[i + 1]))
-            ft_memmove(&(param->input[i]), &(param->input[i + 1]), ft_strlen(param->input + i));
-        else if (ft_is_double_quote(param->input[i])) // if the char is a double quote : Copy the content between the Doubles quotes
-        {
-            if (!(tmp = ft_strndup(param->input + param->index, length)))
-                return (FAILURE);
-            else
-                break;
-        }
-        i++;
-    }
+    if (!(tmp = ft_strndup(param->input + param->index, length)))
+        return (FAILURE);
     if ((push_node(tmp, DQUOTE, &(param->l_tokens), 0)) == FAILURE)
     {
         ft_strdel(&tmp);
@@ -73,7 +64,6 @@ int     double_quote_action(t_param *param)
     param->index = i + 1;
     return (SUCCESS);
 }
-
 
 int     is_io_number(t_param *param)
 {
