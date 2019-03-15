@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:18:40 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 12:41:40 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:46:57 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static ssize_t		tilde_expansion(char **arg, char **env)
 	tmp = NULL;
 	if ((*arg)[0] == C_TILDE)
 	{
-		if (ft_strlen(*arg) > 1 && (*arg)[1] == C_SLASH)
+		if (ft_strlen(*arg) >= 1 && (*arg)[1] == C_SLASH)
 		{
 			if (!(tmp = ft_strdup((*arg) + 1)))
 				ms_malloc_error();
@@ -34,6 +34,8 @@ static ssize_t		tilde_expansion(char **arg, char **env)
 				ms_malloc_error();
 			ft_strdel(&tmp);
 		}
+		else if (ft_strlen(*arg) == 1)
+			*arg = home;
 		else
 			ft_strdel(arg);
 	}
