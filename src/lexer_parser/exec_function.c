@@ -6,22 +6,37 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/15 10:51:44 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/15 14:39:47 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
+
+int     treat_quotes(t_ast *ast)
+{
+    while (ast)
+    {
+        if (ast->token == DQUOTE)
+        {
+            if (ft_remove_char(ast->value, '\"') == FAILURE)
+                return (FAILURE);
+        }
+        else if (ast->token == SQUOTE)
+            if (ft_remove_char(ast->value, '\'') == FAILURE)
+                return (FAILURE);
+        ast = ast->left;
+    }
+    return (SUCCESS);
+}
 
 int    treat_command(t_sh *shell, t_ast *ast)
 {
     if (!ast)
         return (FAILURE);
     if (apply_expansions(shell, ast) == FAILURE)
-    {
-        ft_free_array(shell->cmd);
-        free(shell->cmd);
         return (get_error(UNDEFVAR, getter_error_var(NULL)));
-    }
+    if (treat_quotes(ast) == FAILURE)
+        return (FAILURE);
     if (!(shell->cmd = sh_rtree_to_array(ast)))
         return (FAILURE);
     return (SUCCESS);
