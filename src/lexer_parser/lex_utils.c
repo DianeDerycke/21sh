@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/09 23:44:39 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/15 13:48:30 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,6 @@ char    *get_operator(int index)
         {"\0"},
     };
     return(operators[index]);
-}
-
-int         lex_is_special_char(int c)
-{
-    if (!c)
-        return (0);
-    if (c == DOLLAR || c == BACKSLASH || c == DQUOTE)
-        return (1);
-    return (0);
 }
 
 int         ft_isallowedsymb(int c)

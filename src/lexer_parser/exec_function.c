@@ -3,25 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   exec_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/11 19:45:54 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:53:53 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
+
+int     treat_quotes(t_ast *ast)
+{
+    while (ast)
+    {
+        if (ast->token == DQUOTE)
+        {
+            if (ft_remove_char(ast->value, '\"') == FAILURE)
+                return (FAILURE);
+        }
+        else if (ast->token == SQUOTE)
+            if (ft_remove_char(ast->value, '\'') == FAILURE)
+                return (FAILURE);
+        ast = ast->left;
+    }
+    return (SUCCESS);
+}
 
 int    treat_command(t_sh *shell, t_ast *ast)
 {
     if (!ast)
         return (FAILURE);
     if (apply_expansions(shell, ast) == FAILURE)
-    {
-        ft_free_array(shell->cmd);
-        free(shell->cmd);
         return (get_error(UNDEFVAR, getter_error_var(NULL)));
-    }
+    if (treat_quotes(ast) == FAILURE)
+        return (FAILURE);
     if (!(shell->cmd = sh_rtree_to_array(ast)))
         return (FAILURE);
     return (SUCCESS);
@@ -45,8 +60,6 @@ int      is_command(t_sh *shell)
     return (get_error(CNOTFOUND, shell->cmd[0]));
 }
 
-
-
 int     exec_cmd(t_ast *ast, t_sh *shell)
 {
     int ret;
@@ -61,6 +74,8 @@ int     exec_cmd(t_ast *ast, t_sh *shell)
         ft_free_array(shell->cmd);
         free(shell->cmd);
         shell->cmd = NULL;
+        if (shell->fork == 0)
+            exit (1);
         return (FAILURE);
     }
     if (!shell->path)

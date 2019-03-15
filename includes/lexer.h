@@ -57,6 +57,8 @@ typedef enum    e_lex
 	PERMDENIED,
 	UNEXPEOF,
 	NOFILEDIR,
+	ERRFORK,
+	ERRPIPE
 }               t_lex;
 
 //LEX_INIT
@@ -70,7 +72,6 @@ void        display_list(t_ast *lst);
 void        display_tree(t_ast *tree, int lvl, int position);
 
 //LEX UTILS ==> def type char function
-int         lex_is_special_char(int c);
 int         ft_isallowedsymb(int c);
 int         ft_is_operator(int c);
 int         ft_isidentifier(int c);

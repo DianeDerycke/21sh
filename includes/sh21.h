@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh21.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:05:44 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/28 20:31:09 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/15 14:59:03 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,7 @@
 //signal.h
 void	signal_handler(int sig);
 pid_t	get_pid(pid_t val);
+int     handle_signal_pipe_edition(char *buffer);
+int     handle_signal_quote_edition(char *buffer);
 
 #endif

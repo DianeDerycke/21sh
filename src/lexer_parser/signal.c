@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 20:28:25 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 15:53:52 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/15 14:58:12 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,26 @@ pid_t	get_pid(pid_t val)
 	if (val != -1)
 		pid = val;
 	return (pid);
+}
+
+int     handle_signal_pipe_edition(char *buffer)
+{
+    if (buffer && ((ft_strcmp(buffer, "\004") == 0) || ft_strcmp(buffer, "\003") == 0))
+    {
+        if (ft_strcmp(buffer, "\004") == 0)
+            get_error(UNEXPEOF, buffer);
+        return (SUCCESS);
+    }
+    return (FAILURE);
+}
+
+int     handle_signal_quote_edition(char *buffer)
+{
+    if (buffer && ((ft_strcmp(buffer, "\n\004") == 0) || ft_strcmp(buffer, "\n\003") == 0))
+    {
+        if (ft_strcmp(buffer, "\n\004") == 0)
+            get_error(UNEXPEOF, buffer);
+        return (SUCCESS);
+    }
+    return (FAILURE);
 }

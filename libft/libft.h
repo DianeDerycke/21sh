@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 03:09:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/14 17:40:44 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/15 14:39:14 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ char				*ft_strmjoin(char const *s, char const *s2, char const *s3);
 int					ft_nblen(int nb);
 int					get_next_line(const int fd, char **line);
 int     			ft_str_isdigit(char *str);
+int     			ft_remove_char(char *str, char c);
 
 
 #endif

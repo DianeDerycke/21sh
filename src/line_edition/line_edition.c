@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/12 18:57:20 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/15 18:40:57 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,46 +79,45 @@ int		le_read_and_exec(struct s_le *le_struct, char **env)
 
 char	*le_interactif_disabled(void)
 {
-	char	*command;
 	char	*line;
+	char	*command;
+	char	*tmp;
 	int		ret;
+	int		valid;
 
+	ret = 1;
 	command = NULL;
 	line = NULL;
-	ret = 1;
-	if ((ret = get_next_line(0, &command)) == -1)
-		return (NULL);
-	while (ret != -1 && ret && is_valid_quotes(command))
+	tmp = NULL;
+	while (ret)
 	{
 		if ((ret = get_next_line(0, &line)) == -1)
-		{
-			ft_strdel(&command);
 			return (NULL);
-		}
-		if (!(command = ft_strmjoin(command, "\n", line)))
+		if ((valid = is_valid_quotes(line)))
 		{
-			ft_strdel(&line);
-			ft_strdel(&command);
-			return (NULL);
+			if (valid == -1)
+				return (le_free_return(line, NULL, NULL, command));
+			if ((ret = get_next_line(0, &tmp)) == -1)
+				return (le_free_return(line, NULL, NULL, NULL));
+			if (!(line = ft_strjoin_free(line, "\n")))
+				return (le_free_return(line, tmp, NULL, NULL));
+			if (!(line = ft_strjoin_free(line, tmp)))
+				return (le_free_return(line, tmp, NULL, NULL));
+			ft_strdel(&tmp);
 		}
-		ft_strdel(&line);
-	}
-	while (ret != -1 && ret)
-	{
-		if (line)
+		else if (line && !command)
 		{
-			if (!(command = ft_strmjoin(command, " ; ", line)))
-			{
-				ft_strdel(&line);
-				ft_strdel(&command);
-				return (NULL);
-			}
+			if (!(command = ft_strdup(line)))
+				return (le_free_return(line, NULL, NULL, NULL));
 			ft_strdel(&line);
 		}
-		if ((ret = get_next_line(0, &line)) == -1)
+		else if (line)
 		{
-			ft_strdel(&command);
-			return (NULL);
+			if (!(command = ft_strjoin_free(command, " ; ")))
+				return (le_free_return(command, line, NULL, NULL));
+			if (!(command = ft_strjoin_free(command, line)))
+				return (le_free_return(command, line, NULL, NULL));
+			ft_strdel(&line);
 		}
 	}
 	return (command);

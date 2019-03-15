@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:01:18 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/14 14:32:28 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/15 15:10:33 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ ssize_t		cd_to_env_var(char **ms_env, char *var_name)
 	if (error == -1)
 		return (FAILURE);
 	if ((chdir(ms_env[index] + (ft_strlen(var_name) + 1)) == SUCCESS))
+	{
+		ft_putendl(ms_env[index] + ft_strlen(var_name) + 1);
 		return (SUCCESS);
+	}
 	return (FAILURE);
 }
 
@@ -45,7 +48,6 @@ ssize_t		ms_cd(char **split_cmd, char ***ms_env, int ret)
 	int			error;
 	char		*buf;
 
-	// (void)ret;
 	buf = NULL;
 	len_cmd = ft_strlen_array(split_cmd);
 	error = ms_get_cwd(&buf);
