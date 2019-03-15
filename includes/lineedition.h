@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/15 13:27:50 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/15 17:12:40 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ int					le_init_set_attribute(struct termios *backup);
 
 int					le_exit(struct s_le *le_struct);
 void				le_free(struct s_le *le_struct);
-int					le_free_return(char *s1, char *s2, char *s3, int status);
+void				*le_free_return(char *s1, char *s2, char *s3, void *status);
 
 /*
 **	le_window.c

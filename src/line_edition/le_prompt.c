@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 16:44:04 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/15 13:27:46 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/15 17:12:56 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int		le_prompt_home(struct s_le *le_struct, char **env, char *pwd)
 			if (!le_prompt_shorten_path(le_struct, pwd))
 				ft_strlcat(le_struct->prompt, pwd + len, LE_PROMPT_BUFF);
 			le_struct->prompt_size += ft_strlen(le_struct->prompt) + 4;
-			return (le_free_return(home, pwd, NULL, LE_SUCCESS));
+			return ((int)le_free_return(home, pwd, NULL, LE_SUCCESS));
 		}
 		ft_strdel(&home);
 		return (LE_FAILURE);

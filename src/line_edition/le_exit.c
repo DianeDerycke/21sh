@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/23 16:48:36 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/15 13:28:15 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/15 17:13:09 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	le_free(struct s_le *le_struct)
 **	Free the allocated memory for the line edition structure
 */
 
-int		le_free_return(char *s1, char *s2, char *s3, int status)
+void	*le_free_return(char *s1, char *s2, char *s3, void *status)
 {
 	if (s1)
 		ft_strdel(&s1);
