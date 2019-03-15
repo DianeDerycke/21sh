@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/14 15:42:57 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/15 14:45:42 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		verify_lexer(t_ast *ast)
 {
 	if (!ast)
 		return (FAILURE);
-	if (ast->token == SEPARATOR && !ast->next)
+	if ((ast->token == SEPARATOR || ast->token == PIPE) && !ast->next)
 		return (get_error(UNEXPTOKEN, ast->value));
 	while (ast)
 	{
