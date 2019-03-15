@@ -57,6 +57,8 @@ typedef enum    e_lex
 	PERMDENIED,
 	UNEXPEOF,
 	NOFILEDIR,
+	ERRFORK,
+	ERRPIPE
 }               t_lex;
 
 //LEX_INIT

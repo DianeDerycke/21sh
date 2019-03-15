@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 17:33:44 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/08 16:50:45 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/15 17:28:28 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,17 @@ int 	unexpected_eof(void)
 	return (FAILURE);
 }
 
+int 	fork_error(void)
+{
+	ft_putendl_fd("21sh: error during process creation", 2);
+	return (FAILURE);
+}
+
+int 	pipe_error(void)
+{
+	ft_putendl_fd("21sh: error during pipe creation", 2);
+	return (FAILURE);
+}
 int     get_error(int error_nb, char *str)
 {
     if (error_nb == UNEXPTOKEN)
@@ -54,6 +65,10 @@ int     get_error(int error_nb, char *str)
 	if (error_nb == UNEXPEOF)
 		return (unexpected_eof());
 	if (error_nb == NOFILEDIR)
-		return(ms_no_such_file_or_dir("21sh", str));
+		return(error_chdir(ERROR, str, "21sh"));
+	if (error_nb == ERRFORK)
+		return (fork_error());
+	if (error_nb == ERRPIPE)
+		return (pipe_error());
     return (FAILURE);
 }
