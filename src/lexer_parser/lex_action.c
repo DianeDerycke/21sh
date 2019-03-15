@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 23:48:24 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/15 13:59:48 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/15 18:36:49 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,12 @@ int     double_quote_action(t_param *param)
     int     length;
     char    *tmp;
     
-    i = param->index + 1;
+    i = param->index;
     length = 1;
     tmp = NULL;
-    while (param->input[i++] && (!ft_is_double_quote(param->input[i]
-    && (!param->input[i + 1] || ft_is_whitespace(param->input[i + 1])))))
+    while (param->input[++i] && (!ft_is_double_quote(param->input[i])))
         length++;
-    if (!(tmp = ft_strndup(param->input + param->index, length)))
+    if (!(tmp = ft_strndup(param->input + param->index, length + 1)))
         return (FAILURE);
     if ((push_node(tmp, DQUOTE, &(param->l_tokens), 0)) == FAILURE)
     {
@@ -61,7 +60,7 @@ int     double_quote_action(t_param *param)
         return (FAILURE);
     }
     ft_strdel(&tmp);
-    param->index = i + 1;
+    param->index += length + 1;
     return (SUCCESS);
 }
 
