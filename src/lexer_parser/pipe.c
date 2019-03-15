@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/15 17:29:29 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/15 17:46:23 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int 	do_pipe(t_sh *shell, t_ast *ast)
 	get_pid_list(shell->l_pid);
 	sh_freepidlist(&(shell->l_pid));
 	shell->l_pid = NULL;
-	while(tmp->next)
-		tmp = tmp->next;
+	while(tmp && tmp->token == PIPE)
+		tmp = tmp->left;
 	return (tmp->std);
 }
