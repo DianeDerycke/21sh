@@ -1,7 +1,6 @@
 #ifndef LEXER_H
 #define LEXER_H
 
-// # include "../libsh/libsh.h"
 #define SUCCESS 0
 #define FAILURE 1
 #define ERROR -1
@@ -144,18 +143,6 @@ int     apply_heredoc(t_ast *ast);
 t_ast  *find_next_redir(t_ast *ast);
 t_ast    *add_argument_to_cmd(t_ast *ast);
 int     get_str_redir(t_ope token);
-
-
-
-//ERROR CASE
-ssize_t     error_arg(void);
-int     	error_execution(char *cmd_name);
-void		error_option(char c);
-ssize_t		too_many_args(char *cmd);
-ssize_t		unvalid_setenv_cmd(void);
-ssize_t		error_chdir(int error, char *path, char *cmd);
-int			syntax_error(char *str);
-int			ambiguous_redirect(char *arg);
 
 //==========================================================//
 

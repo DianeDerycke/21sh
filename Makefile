@@ -6,7 +6,7 @@
 #    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/16 12:43:02 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/03/16 13:45:04 by DERYCKE          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,13 +24,15 @@ INC_NAME_HISTORY	=	history.h
 INC_NAME_LEXER		=	lexer.h
 INC_NAME_LINEEDITON	=	lineedition.h
 INC_NAME_SH21		=	sh21.h
+INC_NAME_ERROR		= 	error.h
 
 INC_HISTORY		=	$(addprefix $(INC_DIR), $(INC_NAME_HISTORY))
 INC_LEXER		=	$(addprefix $(INC_DIR), $(INC_NAME_LEXER))
 INC_LINEEDITON	=	$(addprefix $(INC_DIR), $(INC_NAME_LINEEDITON))
 INC_SH21		=	$(addprefix $(INC_DIR), $(INC_NAME_SH21))
+INC_ERROR		=	$(addprefix $(INC_DIR), $(INC_NAME_ERROR))
 
-INC_DEPEND			= 	$(INC_HISTORY) $(INC_LEXER) $(INC_LINEEDITON) $(INC_SH21)
+INC_DEPEND		= 	$(INC_HISTORY) $(INC_LEXER) $(INC_LINEEDITON) $(INC_SH21) $(INC_ERROR) 
 
 LINE_EDITION_NAME = line_edition.c \
 					le_termcap.c \
@@ -48,7 +50,6 @@ LINE_EDITION_NAME = line_edition.c \
 					le_window.c
 
 HISTORY_NAME =		hy_history.c
-
 
 BUILTINS_NAME =		cd.c \
 					builtin.c \
