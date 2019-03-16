@@ -1,28 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_get_size_rtree.c                                :+:      :+:    :+:   */
+/*   sh_free_shell.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/05 00:26:26 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/07 13:13:40 by DERYCKE          ###   ########.fr       */
+/*   Created: 2019/02/05 00:05:57 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/03/16 14:13:08 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libsh.h"
+#include "libms.h"
 
-int     sh_get_size_rtree(t_ast *ast)
+void		sh_free_shell(t_sh *shell)
 {
-    int     i;
-
-    i = 0;
-    if (!ast)
-        return (ERROR);
-    while (ast && ast->token >= WORD)
-    {
-        i++;
-        ast = ast->left;
-    }
-    return (i);
+    if (!shell)
+        return ;
+    if (shell->cmd)
+        ft_free_array(shell->cmd);
+    if (shell->path)
+        ft_strdel(&(shell->path));
+    if (shell->env)
+        ft_free_array(shell->env);
+    free(shell);
+    shell = NULL;
 }

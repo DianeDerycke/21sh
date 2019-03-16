@@ -1,24 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_pidnew.c                                        :+:      :+:    :+:   */
+/*   sh_get_size_rtree.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/04 13:47:02 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 14:05:45 by DERYCKE          ###   ########.fr       */
+/*   Created: 2019/02/05 00:26:26 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/03/16 14:13:20 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libsh.h"
+#include "libms.h"
 
-t_pid   *sh_pidnew(int pid)
+int     sh_get_size_rtree(t_ast *ast)
 {
-    t_pid   *new;
-    
-    if (!(new = malloc(sizeof(t_pid))))
-        ft_malloc_error();
-    new->proc = pid;
-    new->next = NULL;
-    return (new);
+    int     i;
+
+    i = 0;
+    if (!ast)
+        return (ERROR);
+    while (ast && ast->token >= WORD)
+    {
+        i++;
+        ast = ast->left;
+    }
+    return (i);
 }

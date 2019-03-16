@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_free_shell.c                                    :+:      :+:    :+:   */
+/*   sh_strinsert.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/05 00:05:57 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/12 00:20:21 by DERYCKE          ###   ########.fr       */
+/*   Created: 2019/02/22 17:15:42 by mrandou           #+#    #+#             */
+/*   Updated: 2019/03/16 14:13:37 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libsh.h"
+#include "libms.h"
 
-void		sh_free_shell(t_sh *shell)
+char	*sh_strinsert(char *dst, char *src, int pos)
 {
-    if (!shell)
-        return ;
-    if (shell->cmd)
-        ft_free_array(shell->cmd);
-    if (shell->path)
-        ft_strdel(&(shell->path));
-    if (shell->env)
-        ft_free_array(shell->env);
-    free(shell);
-    shell = NULL;
+	char	*tmp;
+	int		i;
+
+	if (!dst || !src)
+		return (NULL);
+	i = 0;
+	if (!(tmp = ft_strdup(&dst[pos])))
+		return (NULL);
+	while (src[i])
+		dst[pos++] = src[i++];
+	i = 0;
+	while (tmp[i])
+		dst[pos++] = tmp[i++];
+	dst[pos] = '\0';
+	ft_strdel(&tmp);
+	return (dst);
 }

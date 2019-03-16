@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:05:44 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/16 13:31:01 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/16 14:10:38 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define SH21_H
 
 # include "../libft/libft.h"
-# include "../libsh/libsh.h"
 # include "../libms/libms.h"
 # include "error.h"
 # include "lexer.h"

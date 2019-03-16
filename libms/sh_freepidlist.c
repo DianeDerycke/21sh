@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sh_freepidlist.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 14:59:51 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/05 10:34:13 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/16 14:13:13 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libsh.h"
+#include "libms.h"
 
 void    sh_freepidlist(t_pid **list)
 {

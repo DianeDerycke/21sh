@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   sh_exec_binary.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 23:05:19 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/14 16:20:40 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/16 14:13:03 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libsh.h"
+#include "libms.h"
 
 static pid_t		getter_pid(pid_t val)
 {
