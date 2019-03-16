@@ -6,7 +6,7 @@
 #    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/16 14:14:20 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/03/16 14:42:39 by DERYCKE          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@
 
 NAME = 21sh
 LIBFT = ./libft/
-LIBMS = ./libms/
-LIBNAME = ./libft/libft.a ./libms/libms.a
+LIBSH = ./libsh/
+LIBNAME = ./libft/libft.a ./libsh/libsh.a
 HISTORY = ~/.21sh_history
 
 INC_DIR				=	./includes/
@@ -120,8 +120,8 @@ ERROR_OBJ = $(addprefix $(OBJ_ERROR_PATH), $(ERROR_NAME:.c=.o))
 OBJ_DEPEND =	$(LINE_EDITION_OBJ) $(HISTORY_OBJ) $(BUILTINS_OBJ) $(LEX_PARSE_OBJ) $(OPERATORS_OBJ) $(PROCESS_CMD_OBJ) $(ERROR_OBJ)
 
 CPPFLAGS		= -Iincludes
-LDFLAGS			= -Llibft -Llibms
-LDLIBS			= -lft -lsh -lms
+LDFLAGS			= -Llibft -Llibsh
+LDLIBS			= -lft -lsh
 CC				= gcc
 CFLAGS			= -Werror -Wextra -Wall -g3
 TFLAGS			= -ltermcap
@@ -183,7 +183,7 @@ $(OBJ_ERROR_PATH)%.o: $(ERROR_PATH)%.c $(INC_DEPEND)
 	@printf $<
 	@printf "\r\033[0m\n\033[K\033[A\033[K"
 
-$(NAME): $(MAKEFILE) $(OBJ) $(OBJ_DEPEND) $(LIBFT) $(LIBMS)
+$(NAME): $(MAKEFILE) $(OBJ) $(OBJ_DEPEND) $(LIBFT) $(LIBSH)
 	@$(CC) $(CFLAGS) -o $@ $(LINE_EDITION_OBJ) $(HISTORY_OBJ) \
 	$(LEX_PARSE_OBJ) $(BUILTINS_OBJ) $(OPERATORS_OBJ) $(PROCESS_CMD_OBJ) \
 	$(ERROR_OBJ) $(LIBNAME) $(TFLAGS) \
@@ -193,9 +193,9 @@ compile:
 	@make -C $(LIBFT)
 	@printf "\n\033[K\033[A\033[K"
 	@printf "\rLIBFT -> \033[32mDone ✓\033[0m\n"
-	@make -C $(LIBMS)
+	@make -C $(LIBSH)
 	@printf "\n\033[K\033[A\033[K"
-	@printf "\rLIBMS -> \033[32mDone ✓\033[0m\n"
+	@printf "\rLIBSH -> \033[32mDone ✓\033[0m\n"
 	@make $(NAME)
 	@printf "\n\033[K\033[A\033[K"
 	@printf "21sh --> \033[32mDone ✓\033[0m"
@@ -207,7 +207,7 @@ clean:
 	@rm -f	$(HISTORY)
 	@rmdir	$(OBJ) 2> /dev/null || true
 	@make -C $(LIBFT) clean
-	@make -C $(LIBMS) clean
+	@make -C $(LIBSH) clean
 	@printf "All ---> \033[31mclean Done ✓\n\033[0m"
 
 fclean: clean

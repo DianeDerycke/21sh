@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/16 13:22:13 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:38:28 by DERYCKE          ###   ########.fr       */
+/*   Created: 2019/02/05 00:07:37 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/03/16 14:40:00 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-#define ERROR_H
+#include "libsh.h"
 
-#include "../libft/libft.h"
-#include "../libsh/libsh.h"
+t_sh     *init_shell(void)
+{
+    t_sh *new;
 
-ssize_t		too_many_args(char *cmd);
-void		error_option(char c);
-int			syntax_error(char *str);
-ssize_t		unvalid_setenv_cmd(void);
-ssize_t		error_chdir(int error, char *path, char *cmd);
-int			ambiguous_redirect(char *arg);
-
-#endif
+    new = NULL;
+    if (!(new = malloc(sizeof(t_sh))))
+        sh_malloc_error();
+    if (!(new->env = sh_get_env()))
+        new->env = NULL;
+    new->cmd = NULL;
+    new->path = NULL;
+    new->l_pid = NULL;
+    new->fork = 1;
+    return (new);
+}

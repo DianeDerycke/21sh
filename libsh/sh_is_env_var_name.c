@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   sh_is_env_var_name.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/16 13:22:13 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:38:28 by DERYCKE          ###   ########.fr       */
+/*   Created: 2018/08/09 20:07:26 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/03/16 14:41:31 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-#define ERROR_H
+#include "libsh.h"
 
-#include "../libft/libft.h"
-#include "../libsh/libsh.h"
+int		sh_is_env_var_name(char *str)
+{
+	int		i;
 
-ssize_t		too_many_args(char *cmd);
-void		error_option(char c);
-int			syntax_error(char *str);
-ssize_t		unvalid_setenv_cmd(void);
-ssize_t		error_chdir(int error, char *path, char *cmd);
-int			ambiguous_redirect(char *arg);
-
-#endif
+	i = 0;
+	while (str[i])
+	{
+		if (ft_isalnum(str[i]) == 0 && str[i] != '_' && str[i] != '/'
+				&& str[i] != ':' && str[i] != 92 && str[i] != '.' &&
+				str[i] != ' ')
+			return (1);
+		i++;
+	}
+	return (0);
+}

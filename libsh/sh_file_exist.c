@@ -1,26 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   sh_file_exist.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/16 13:22:13 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:38:28 by DERYCKE          ###   ########.fr       */
+/*   Created: 2018/09/19 13:52:06 by dideryck          #+#    #+#             */
+/*   Updated: 2019/03/16 14:40:43 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-#define ERROR_H
+#include "libsh.h"
 
-#include "../libft/libft.h"
-#include "../libsh/libsh.h"
+ssize_t		sh_file_exist(const char *path)
+{
+	struct stat	buffer;
 
-ssize_t		too_many_args(char *cmd);
-void		error_option(char c);
-int			syntax_error(char *str);
-ssize_t		unvalid_setenv_cmd(void);
-ssize_t		error_chdir(int error, char *path, char *cmd);
-int			ambiguous_redirect(char *arg);
-
-#endif
+	if (!path)
+		return (FAILURE);
+	if (lstat(path, &buffer) == 0 || stat(path, &buffer) == 0)
+		return (SUCCESS);
+	return (FAILURE);
+}

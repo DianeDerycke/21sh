@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   sh_clean_input.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/16 13:22:13 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:38:28 by DERYCKE          ###   ########.fr       */
+/*   Created: 2018/08/23 13:20:38 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/03/16 14:40:09 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-#define ERROR_H
+#include "libsh.h"
 
-#include "../libft/libft.h"
-#include "../libsh/libsh.h"
+char	**sh_clean_input(char **input)
+{
+	char		**tmp;
 
-ssize_t		too_many_args(char *cmd);
-void		error_option(char c);
-int			syntax_error(char *str);
-ssize_t		unvalid_setenv_cmd(void);
-ssize_t		error_chdir(int error, char *path, char *cmd);
-int			ambiguous_redirect(char *arg);
-
-#endif
+	tmp = NULL;
+	if (!input || !*input)
+		return (NULL);
+	ft_replace(*input, C_DQUOTE, C_WHITESPACE);
+	ft_replace_whitespaces(*input, C_WHITESPACE);
+	if (!(tmp = ft_strsplit(*input, C_WHITESPACE)))
+	{
+		ft_strdel(input);
+		return (NULL);
+	}
+	ft_strdel(input);
+	return (tmp);
+}

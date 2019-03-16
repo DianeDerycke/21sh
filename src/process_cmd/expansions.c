@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:18:40 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/15 15:46:57 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/16 14:30:18 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static ssize_t		tilde_expansion(char **arg, char **env)
 	char	*home;
 	size_t	pos;
 
-	if ((!arg || !(*arg) || !env || ms_find_variable(HOME, env, &pos) == -1))
+	if ((!arg || !(*arg) || !env || sh_find_variable(HOME, env, &pos) == -1))
 		return (FAILURE);
-	if (!(home = ms_get_var_value(env[pos])))
+	if (!(home = sh_get_var_value(env[pos])))
 		return (FAILURE);
 	tmp = NULL;
 	if ((*arg)[0] == C_TILDE)
@@ -28,10 +28,10 @@ static ssize_t		tilde_expansion(char **arg, char **env)
 		if (ft_strlen(*arg) >= 1 && (*arg)[1] == C_SLASH)
 		{
 			if (!(tmp = ft_strdup((*arg) + 1)))
-				ms_malloc_error();
+				sh_malloc_error();
 			ft_strdel(arg);
 			if (!(*arg = ft_strjoin_free(home, tmp)))
-				ms_malloc_error();
+				sh_malloc_error();
 			ft_strdel(&tmp);
 		}
 		else if (ft_strlen(*arg) == 1)
@@ -47,8 +47,8 @@ static int			concat_d_expansion(char *ptr, char *arg, t_expansion *st,
 {
 	if (!(st->sub = (ptr != arg ? ft_strsub(arg, 0, (size_t)(ptr - arg)) :
 	ft_strdup(""))))
-		ms_malloc_error();
-	if ((st->v_value = ms_get_var_path(ptr + 1, env, &st->index)) != NULL)
+		sh_malloc_error();
+	if ((st->v_value = sh_get_var_path(ptr + 1, env, &st->index)) != NULL)
 	{
 		if (st->join && (st->join[0]))
 		{
@@ -60,7 +60,7 @@ static int			concat_d_expansion(char *ptr, char *arg, t_expansion *st,
 		if (!(st->join = ft_strjoin_free(st->sub, st->v_value)) ||
 		!(st->sub = ft_strsub(ptr + 1, st->index, ft_strlen(ptr + st->index)))
 		|| !(st->join = ft_strjoin_free(st->join, st->sub)))
-			ms_malloc_error();
+			sh_malloc_error();
 		ft_strdel(&st->v_value);
 	}
 	else

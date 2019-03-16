@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:01:18 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/15 15:10:33 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/16 14:28:42 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ ssize_t		cd_to_env_var(char **ms_env, char *var_name)
 	size_t		index;
 	ssize_t		error;
 
-	error = ms_find_variable(var_name, ms_env, &index);
+	error = sh_find_variable(var_name, ms_env, &index);
 	if (error == -1)
 		return (FAILURE);
 	if ((chdir(ms_env[index] + (ft_strlen(var_name) + 1)) == SUCCESS))
@@ -35,9 +35,9 @@ ssize_t		edit_oldpwd_var(char ***ms_env, char **buf)
 	index = 0;
 	if (!buf || !(*buf))
 		return (FAILURE);
-	if (ms_find_variable(OLDPWD, *ms_env, &index) == -1)
+	if (sh_find_variable(OLDPWD, *ms_env, &index) == -1)
 		return (FAILURE);
-	ms_edit_var(OLDPWD, *buf, ms_env, index);
+	sh_edit_var(OLDPWD, *buf, ms_env, index);
 	ft_strdel(buf);
 	return (SUCCESS);
 }
@@ -50,7 +50,7 @@ ssize_t		ms_cd(char **split_cmd, char ***ms_env, int ret)
 
 	buf = NULL;
 	len_cmd = ft_strlen_array(split_cmd);
-	error = ms_get_cwd(&buf);
+	error = sh_get_cwd(&buf);
 	if (len_cmd > 2)
 		too_many_args("cd");
 	else if (len_cmd == 1)
@@ -62,7 +62,7 @@ ssize_t		ms_cd(char **split_cmd, char ***ms_env, int ret)
 		ft_strdel(&buf);
 		return (error_chdir(ret, split_cmd[1], "cd"));
 	}
-	if (error == FAILURE || ms_edit_pwd_var(ms_env) == FAILURE || 
+	if (error == FAILURE || sh_edit_pwd_var(ms_env) == FAILURE || 
 	edit_oldpwd_var(ms_env, &buf) == FAILURE)
 		ret = FAILURE;
 	ft_strdel(&buf);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   le_prompt.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 16:44:04 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/15 17:12:56 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/16 14:29:43 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int		le_prompt_pwd(struct s_le *le_struct, char **env)
 	int		index;
 	size_t	pos;
 
-	index = ms_find_variable("PWD", env, &pos);
-	if (index == -1 || !(pwd = ms_get_var_value(env[pos])))
+	index = sh_find_variable("PWD", env, &pos);
+	if (index == -1 || !(pwd = sh_get_var_value(env[pos])))
 		return (LE_FAILURE);
 	if (le_prompt_home(le_struct, env, pwd))
 	{
@@ -102,10 +102,10 @@ int		le_prompt_home(struct s_le *le_struct, char **env, char *pwd)
 	size_t	pos;
 
 	home = NULL;
-	if (!env || ms_find_variable("HOME", env, &pos) == -1)
+	if (!env || sh_find_variable("HOME", env, &pos) == -1)
 		return (LE_FAILURE);
 	else if (env[pos])
-		home = ms_get_var_value(env[pos]);
+		home = sh_get_var_value(env[pos]);
 	if (home)
 	{
 		len = ft_strlen(home);
@@ -186,9 +186,9 @@ int		le_prompt_get_color(struct s_le *le_struct, char **env)
 
 	path = NULL;
 	line = NULL;
-	if (!env || ms_find_variable("HOME", env, &pos) == -1)
+	if (!env || sh_find_variable("HOME", env, &pos) == -1)
 		return (LE_FAILURE);
-	if (!(path = ms_get_var_value(env[pos])))
+	if (!(path = sh_get_var_value(env[pos])))
 		return (LE_FAILURE);
 	if (!(path = ft_strjoin_free(path, LE_SHRC)))
 		return (LE_FAILURE);

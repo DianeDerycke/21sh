@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   sh_get_var_value.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/16 13:22:13 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:38:28 by DERYCKE          ###   ########.fr       */
+/*   Created: 2019/02/20 14:58:31 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/03/16 14:41:19 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-#define ERROR_H
+#include "libsh.h"
 
-#include "../libft/libft.h"
-#include "../libsh/libsh.h"
+char		*sh_get_var_value(char *var)
+{
+	char	*path;
+	size_t	i;
 
-ssize_t		too_many_args(char *cmd);
-void		error_option(char c);
-int			syntax_error(char *str);
-ssize_t		unvalid_setenv_cmd(void);
-ssize_t		error_chdir(int error, char *path, char *cmd);
-int			ambiguous_redirect(char *arg);
-
-#endif
+	i = 0;
+	if (!var)
+		return (NULL);
+	while (var[i] != '=')
+		i++;
+	if (!(path = ft_strdup(var + i + 1)))
+		sh_malloc_error();
+	return (path);
+}

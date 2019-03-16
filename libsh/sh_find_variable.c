@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   sh_find_variable.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/16 13:22:13 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:38:28 by DERYCKE          ###   ########.fr       */
+/*   Created: 2018/09/19 12:36:27 by dideryck          #+#    #+#             */
+/*   Updated: 2019/03/16 14:40:50 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-#define ERROR_H
+#include "libsh.h"
 
-#include "../libft/libft.h"
-#include "../libsh/libsh.h"
+ssize_t		sh_find_variable(char *cmd, char **ms_env, size_t *index)
+{
+	size_t	i;
 
-ssize_t		too_many_args(char *cmd);
-void		error_option(char c);
-int			syntax_error(char *str);
-ssize_t		unvalid_setenv_cmd(void);
-ssize_t		error_chdir(int error, char *path, char *cmd);
-int			ambiguous_redirect(char *arg);
-
-#endif
+	i = 0;
+	*index = 0;
+	if (!cmd || !ms_env)
+		return (-1);
+	while (ms_env[*index])
+	{
+		while (ms_env[*index][i] == cmd[i] && ms_env[*index][i] != '=')
+			i++;
+		if (ms_env[*index][i] == '=' && (!cmd[i] || cmd[i] == VAL_BACKSPACE))
+			return (0);
+		(*index)++;
+		i = 0;
+	}
+	return (-1);
+}

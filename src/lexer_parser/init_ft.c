@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_ft.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 00:15:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/15 17:08:52 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/16 14:21:59 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ t_param    *init_param(void)
     t_param *new;
 
     if (!(new = malloc(sizeof(t_param))))
-	    ms_malloc_error();
+	    sh_malloc_error();
     new->input = NULL;
     new->index = 0;
     new->token = 0;

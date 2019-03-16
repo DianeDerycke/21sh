@@ -1,26 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   sh_find_path_variable.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/16 13:22:13 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:38:28 by DERYCKE          ###   ########.fr       */
+/*   Created: 2018/08/30 09:28:10 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/03/16 14:40:47 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-#define ERROR_H
+#include "libsh.h"
 
-#include "../libft/libft.h"
-#include "../libsh/libsh.h"
+char	*sh_find_path_variable(char **ms_env)
+{
+	int		i;
+	char	*value_path;
 
-ssize_t		too_many_args(char *cmd);
-void		error_option(char c);
-int			syntax_error(char *str);
-ssize_t		unvalid_setenv_cmd(void);
-ssize_t		error_chdir(int error, char *path, char *cmd);
-int			ambiguous_redirect(char *arg);
-
-#endif
+	value_path = NULL;
+	i = 0;
+	if (!ms_env)
+		return (NULL);
+	while (ms_env[i] && ft_strncmp("PATH=", ms_env[i], 5) != 0)
+		i++;
+	if (ms_env[i] == NULL)
+		return (NULL);
+	value_path = ft_strdup(ms_env[i] + 5);
+	return (value_path ? value_path : NULL);
+}

@@ -1,26 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.h                                            :+:      :+:    :+:   */
+/*   sh_create_variable.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/03/16 13:22:13 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:38:28 by DERYCKE          ###   ########.fr       */
+/*   Created: 2018/08/23 14:14:23 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/03/16 14:40:19 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ERROR_H
-#define ERROR_H
+#include "libsh.h"
 
-#include "../libft/libft.h"
-#include "../libsh/libsh.h"
+char	*sh_create_variable(char *var_name, char *var_value)
+{
+	size_t		i;
+	char		*tmp;
+	char		*tmp1;
 
-ssize_t		too_many_args(char *cmd);
-void		error_option(char c);
-int			syntax_error(char *str);
-ssize_t		unvalid_setenv_cmd(void);
-ssize_t		error_chdir(int error, char *path, char *cmd);
-int			ambiguous_redirect(char *arg);
-
-#endif
+	i = 1;
+	if (!(tmp = ft_strdup(var_name)))
+		sh_malloc_error();
+	if (!(tmp1 = ft_strjoin_free(tmp, STR_EQUAL)))
+		sh_malloc_error();
+	if (var_value)
+	{
+		if (!(tmp = ft_strjoin_free(tmp1, var_value)))
+			sh_malloc_error();
+		return (tmp);
+	}
+	return (tmp1);
+}

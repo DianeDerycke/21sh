@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/27 13:51:19 by dideryck          #+#    #+#             */
-/*   Updated: 2019/02/13 12:51:31 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/16 14:21:59 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void		copy_add_var_to_env(char ***env, char *name, char *value)
 
 	tmp = NULL;
 	if (!(tmp = ft_copy_array(*env, ft_strlen_array(*env))))
-		ms_malloc_error();
+		sh_malloc_error();
 	ft_free_array(*env);
 	*env = add_variable(name, value, tmp);
 	ft_free_array(tmp);

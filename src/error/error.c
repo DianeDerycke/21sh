@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:07:12 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/16 13:24:10 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/16 14:32:14 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ ssize_t		error_chdir(int error, char *path, char *cmd)
 {
 	struct stat		f_stat;
 
-	if (error == -1 && ms_file_exist(path) == SUCCESS)
+	if (error == -1 && sh_file_exist(path) == SUCCESS)
 	{
 		if (lstat(path, &f_stat) == 0 && !(f_stat.st_mode & S_IXUSR))
-			return (ms_error_perm_denied(cmd, path));
+			return (sh_error_perm_denied(cmd, path));
 	}
 	else
-		return (ms_no_such_file_or_dir(cmd, path));
+		return (sh_no_such_file_or_dir(cmd, path));
 	return (FAILURE);
 }
 

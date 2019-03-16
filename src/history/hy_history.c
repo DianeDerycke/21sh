@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hy_history.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/14 14:14:36 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/16 14:29:43 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int		hy_history(struct s_le *le_struct, char **env)
 	size_t	pos;
 
 	path = NULL;
-	if (!env || ms_find_variable("HOME", env, &pos) == -1)
+	if (!env || sh_find_variable("HOME", env, &pos) == -1)
 		return (FAILURE);
-	if (!(path = ms_get_var_value(env[pos])))
+	if (!(path = sh_get_var_value(env[pos])))
 		return (FAILURE);
 	if (!(path = ft_strjoin_free(path, HY_FILE)))
 		return (FAILURE);
@@ -116,9 +116,9 @@ int		hy_history_write(char *command, char **env)
 	size_t	pos;
 
 	path = NULL;
-	if (!env || ms_find_variable("HOME", env, &pos) == -1)
+	if (!env || sh_find_variable("HOME", env, &pos) == -1)
 		return (FAILURE);
-	if (!(path = ms_get_var_value(env[pos])))
+	if (!(path = sh_get_var_value(env[pos])))
 		return (FAILURE);
 	if (!(path = ft_strjoin_free(path, HY_FILE)))
 		return (FAILURE);

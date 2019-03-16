@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 17:33:44 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/15 17:28:28 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/16 14:32:37 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,11 @@ int     get_error(int error_nb, char *str)
     if (error_nb == UNEXPTOKEN)
         return (syntax_error(str));
 	if (error_nb == UNDEFVAR)
-		return(ms_undefined_variable(str));
+		return(sh_undefined_variable(str));
 	if (error_nb == CNOTFOUND)
-		return(ms_command_not_found(str));
+		return(sh_command_not_found(str));
 	if (error_nb == PERMDENIED)
-		return(ms_perm_denied(str));
+		return(sh_perm_denied(str));
 	if (error_nb == UNEXPEOF)
 		return (unexpected_eof());
 	if (error_nb == NOFILEDIR)

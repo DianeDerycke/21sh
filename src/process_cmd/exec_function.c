@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_function.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/15 15:53:53 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/16 14:29:03 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ int      is_command(t_sh *shell)
     struct stat f_stat;
     if (find_builtin(shell->cmd[0]) >= 0)
         return (SUCCESS);
-    if ((shell->path = ms_get_valid_cmd(shell->cmd[0], shell->env)) && 
+    if ((shell->path = sh_get_valid_cmd(shell->cmd[0], shell->env)) && 
         access(shell->path, X_OK) == SUCCESS)
         return (SUCCESS);
     else
     {
         ft_strdel(&(shell->path));
-        if (ms_file_exist(shell->cmd[0]) && lstat(shell->cmd[0], &f_stat) == 0 &&
+        if (sh_file_exist(shell->cmd[0]) && lstat(shell->cmd[0], &f_stat) == 0 &&
             !(f_stat.st_mode & S_IXUSR))
             return (get_error(PERMDENIED, shell->cmd[0]));
     }

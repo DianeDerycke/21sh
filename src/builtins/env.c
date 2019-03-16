@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:03:44 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/04 17:23:06 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/16 14:31:31 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,14 @@ ssize_t		exec_simple_env(char **cmd, char **s_bin, char **env)
 	add_argument_to_env(cmd, &tmp_env);
 	if (!(s_bin = find_first_bin(cmd, VAL_EQUAL)))
 		s_bin = cmd + 1;
-	if ((path = ms_find_path_variable(tmp_env)))
+	if ((path = sh_find_path_variable(tmp_env)))
 	{
-		if (ms_exec_binary(*s_bin, s_bin, tmp_env, tmp_env) == FAILURE)
-			ret = ms_no_such_file_or_dir(cmd[0], *s_bin);
+		if (sh_binary_ex_ms(*s_bin, s_bin, tmp_env, tmp_env) == FAILURE)
+			ret = sh_no_such_file_or_dir(cmd[0], *s_bin);
 		ft_strdel(&path);
 	}
-	else if (ms_exec_binary(*s_bin, s_bin, env, tmp_env) == FAILURE)
-		ret = ms_no_such_file_or_dir(cmd[0], *s_bin);
+	else if (sh_binary_ex_ms(*s_bin, s_bin, env, tmp_env) == FAILURE)
+		ret = sh_no_such_file_or_dir(cmd[0], *s_bin);
 	if (tmp_env)
 		ft_free_array(tmp_env);
 	return (ret);
@@ -54,10 +54,10 @@ void				add_argument_to_env(char **split_cmd, char ***env)
 	while (split_cmd[i] && ft_strchr(split_cmd[i], VAL_EQUAL))
 	{
 		ft_find_char(split_cmd[i], VAL_EQUAL, &index);
-		var_name = ms_get_var_name(split_cmd[i], index);
+		var_name = sh_get_var_name(split_cmd[i], index);
 		var_value = ft_strdup(split_cmd[i] + index + 1);
-		if (ms_find_variable(var_name, *env, &index) == SUCCESS)
-			ms_edit_var(var_name, var_value, env, index);
+		if (sh_find_variable(var_name, *env, &index) == SUCCESS)
+			sh_edit_var(var_name, var_value, env, index);
 		else
 			copy_add_var_to_env(env, var_name, var_value);
 		ft_strdel(&var_value);
@@ -81,11 +81,11 @@ static char			**create_tmp_env(char **split_cmd)
 	if (!(len = getnbr_args(split_cmd + i, VAL_EQUAL)))
 		return (NULL);
 	if (!(tmp_env = malloc(sizeof(char *) * (len + 1))))
-		ms_malloc_error();
+		sh_malloc_error();
 	while (split_cmd[i] && ft_strchr(split_cmd[i], VAL_EQUAL))
 	{
 		if (!(tmp_env[j] = ft_strdup(split_cmd[i])))
-			ms_malloc_error();
+			sh_malloc_error();
 		i++;
 		j++;
 	}
@@ -107,13 +107,13 @@ static ssize_t		exec_env_i_opt(char **cmd, char **s_bin, char **env)
 	if ((s_bin && *s_bin && ft_strchr(*s_bin, VAL_EQUAL)) ||
 			(!s_bin || !(*s_bin)))
 		ft_print_array(tmp_env);
-	else if ((path = ms_find_path_variable(tmp_env)))
+	else if ((path = sh_find_path_variable(tmp_env)))
 	{
-		if (ms_exec_binary(*s_bin, s_bin, tmp_env, tmp_env) == -1)
-			ret = ms_no_such_file_or_dir(cmd[0], *s_bin);
+		if (sh_binary_ex_ms(*s_bin, s_bin, tmp_env, tmp_env) == -1)
+			ret = sh_no_such_file_or_dir(cmd[0], *s_bin);
 		ft_strdel(&path);
 	}
-	else if (ms_exec_binary(*s_bin, s_bin, env, tmp_env) == -1)
+	else if (sh_binary_ex_ms(*s_bin, s_bin, env, tmp_env) == -1)
 		ret = error_chdir(ERR_INTR, *s_bin, "env");
 	ft_free_array(tmp_env);
 	return (ret);
