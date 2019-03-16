@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/15 13:48:30 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/17 00:27:11 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char    *get_operator(int index)
 
 int         ft_isallowedsymb(int c)
 {
-    if (((c > 32 && c < 49) || (c > 57 && c < 65) || (c > 90 && c < 97) || (c > 123 && c < 127)) 
+    if (((c > 32 && c < 49) || (c > 57 && c < 65) || (c > 90 && c < 97) || (c >= 123 && c < 127)) 
             && c != DQUOTE && c != SQUOTE)
         return (1);
     return (0);
