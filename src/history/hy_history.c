@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/17 11:42:59 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/16 16:17:02 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/16 17:28:03 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		hy_history(struct s_le *le_struct, char **env)
 	le_struct->history = NULL;
 	if ((fd = open(path, O_RDONLY | O_CREAT, S_IREAD | S_IWRITE)) == -1)
 		return ((int)sh_strmdel_return(path, NULL, NULL, (void *)FAILURE));
+	ft_strdel(&path);
 	if (hy_history_fill_list(le_struct, fd, ret))
 	{
 		close(fd);
