@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
+#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/16 14:42:39 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/03/16 16:18:45 by mrandou          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,9 @@ INC_ERROR		=	$(addprefix $(INC_DIR), $(INC_NAME_ERROR))
 INC_DEPEND		= 	$(INC_HISTORY) $(INC_LEXER) $(INC_LINEEDITON) $(INC_SH21) $(INC_ERROR) 
 
 LINE_EDITION_NAME = line_edition.c \
+					le_interactif_disabled.c \
 					le_termcap.c \
+					le_termcap_delete.c \
 					le_termcap_tool.c \
 					le_buffer_operation.c \
 					le_buffer_history.c \
@@ -46,6 +48,7 @@ LINE_EDITION_NAME = line_edition.c \
 					le_exit.c \
 					le_clipboard.c \
 					le_prompt.c \
+					le_prompt_tool.c \
 					le_window.c
 
 HISTORY_NAME =		hy_history.c

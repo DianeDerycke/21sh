@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/15 17:12:40 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/16 16:19:35 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,14 @@ typedef	struct		s_le
 
 char				*line_edition(int prompt, char **env);
 int					le_read_and_exec(struct s_le *le_struct, char **env);
+
+/*
+**	le_interactif_disabled.c
+*/
+
 char				*le_interactif_disabled(void);
+char				*le_interactif_disabled_quote(char *line, int *ret);
+char				*le_interactif_disabled_command(char *command, char *line);
 
 /*
 **	le_init.c
@@ -171,8 +178,8 @@ int					le_init_set_attribute(struct termios *backup);
 */
 
 int					le_exit(struct s_le *le_struct);
+void				le_exit_interupt(struct s_le *le_struct);
 void				le_free(struct s_le *le_struct);
-void				*le_free_return(char *s1, char *s2, char *s3, void *status);
 
 /*
 **	le_window.c
@@ -192,7 +199,13 @@ int					le_termcap_check(struct s_le *le_struct);
 void				le_termcap_type(struct s_le *le_struct);
 int					le_termcap_exec(struct s_le *le_struct);
 int					le_termcap_motion(struct s_le *le_struct);
+
+/*
+** le_termcap_delete.c
+*/
+
 int					le_termcap_delete(struct s_le *le_struct);
+int					le_termcap_del_cut(struct s_le *le_struct);
 
 /*
 **	le_termcap_tool.c
@@ -277,6 +290,11 @@ int					le_prompt_pwd(struct s_le *le_struct, char **env);
 int					le_prompt_home(struct s_le *le_struct,
 					char **env, char *pwd);
 int					le_prompt_quote(struct s_le *le_struct);
+
+/*
+**	le_prompt_tool.c
+*/
+
 void				le_prompt_print(struct s_le *le_struct);
 int					le_prompt_shorten_path(struct s_le *le_struct, char *path);
 int					le_prompt_get_color(struct s_le *le_struct, char **env);

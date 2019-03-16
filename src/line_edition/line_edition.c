@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/16 13:56:10 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/16 16:18:21 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ char	*line_edition(int prompt, char **env)
 **	Set the attribute for the shell and launch the read/execute function
 */
 
-
 int		le_read_and_exec(struct s_le *le_struct, char **env)
 {
 	int	ret;
@@ -76,51 +75,3 @@ int		le_read_and_exec(struct s_le *le_struct, char **env)
 **	Check if it's  a termcaps, if it's true, then launch the termcap function
 **	Else add the char to the buffer
 */
-
-char	*le_interactif_disabled(void)
-{
-	char	*line;
-	char	*command;
-	char	*tmp;
-	int		ret;
-	int		valid;
-
-	ret = 1;
-	command = NULL;
-	line = NULL;
-	tmp = NULL;
-	while (ret)
-	{
-		if ((ret = get_next_line(0, &line)) == -1)
-			return (NULL);
-		if (!ret && !line)
-			break;
-		while ((valid = is_valid_quotes(line)))
-		{
-			if (valid == -1)
-				return (le_free_return(line, NULL, NULL, command));
-			if ((ret = get_next_line(0, &tmp)) == -1)
-				return (le_free_return(line, NULL, NULL, NULL));
-			if (!ret && !tmp)
-				break;
-			if (!(line = ft_strjoin_free(line, tmp)))
-				return (le_free_return(line, tmp, NULL, NULL));
-			ft_strdel(&tmp);
-		}
-		if (line && !command)
-		{
-			if (!(command = ft_strdup(line)))
-				return (le_free_return(line, NULL, NULL, NULL));
-			ft_strdel(&line);
-		}
-		else if (line)
-		{
-			if (!(command = ft_strjoin_free(command, " ; ")))
-				return (le_free_return(command, line, NULL, NULL));
-			if (!(command = ft_strjoin_free(command, line)))
-				return (le_free_return(command, line, NULL, NULL));
-			ft_strdel(&line);
-		}
-	}
-	return (command);
-}
