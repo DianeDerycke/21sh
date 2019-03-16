@@ -3,20 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:07:12 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/14 16:16:00 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/16 13:24:10 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/sh21.h"
-
-ssize_t     error_arg(void)
-{
-    ft_putendl("Number args or args unvalid");
-    return (FAILURE);
-}
+#include "../../includes/error.h"
 
 void		error_option(char c)
 {
