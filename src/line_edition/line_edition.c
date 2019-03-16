@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:16:08 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/15 18:40:57 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/16 13:56:10 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,19 +93,21 @@ char	*le_interactif_disabled(void)
 	{
 		if ((ret = get_next_line(0, &line)) == -1)
 			return (NULL);
-		if ((valid = is_valid_quotes(line)))
+		if (!ret && !line)
+			break;
+		while ((valid = is_valid_quotes(line)))
 		{
 			if (valid == -1)
 				return (le_free_return(line, NULL, NULL, command));
 			if ((ret = get_next_line(0, &tmp)) == -1)
 				return (le_free_return(line, NULL, NULL, NULL));
-			if (!(line = ft_strjoin_free(line, "\n")))
-				return (le_free_return(line, tmp, NULL, NULL));
+			if (!ret && !tmp)
+				break;
 			if (!(line = ft_strjoin_free(line, tmp)))
 				return (le_free_return(line, tmp, NULL, NULL));
 			ft_strdel(&tmp);
 		}
-		else if (line && !command)
+		if (line && !command)
 		{
 			if (!(command = ft_strdup(line)))
 				return (le_free_return(line, NULL, NULL, NULL));
