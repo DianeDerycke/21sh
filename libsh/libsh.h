@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libsh.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:50:43 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/14 16:36:15 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/16 14:00:45 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,22 +84,11 @@ typedef struct      s_sh {
 */
 
 int         sh_exec_binary(t_sh *shell);
-int			sh_strfpos(char *str, char oc);
-char		**sh_strsplit(const char *s, int(*ft)(char));
-char		*sh_getvalue(t_env *env, char *key);
-char		*sh_get_env_value(char **env, char *key);
-char		**sh_add_field_array(char **tab, char *newfield);
-void		sh_remove_field_array(char **tab, int field);
-int			sh_find_env_key(char **env, char *key);
-void		sh_append_env_value(char **env, char *key, char *newvalue);
-char		*sh_get_env_key(char **env, int field);
-// void		sh_env_display(char **env);
 int			sh_get_size_rtree(t_ast *ast);
 char		**sh_rtree_to_array(t_ast *ast);
 t_sh 		*init_shell(void);
 void		sh_free_shell(t_sh *shell);
 char		*sh_strinsert(char *dst, char *src, int pos);
-
 t_pid       *sh_pidnew(int pid);
 int         sh_push_pidnew(int pid, t_pid **list);
 void        sh_freepidlist(t_pid **list);
