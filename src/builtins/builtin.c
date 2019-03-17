@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:12:17 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 02:17:11 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 03:47:01 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,7 @@ int     exec_builtin(t_sh *shell)
     ft_free_array(shell->cmd);
     free(shell->cmd);
     shell->cmd = NULL;
+    if (shell->fork == 0)
+        exit (ret);
     return (SUCCESS);
 }
