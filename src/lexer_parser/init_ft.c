@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 00:15:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 03:10:14 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 03:57:22 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int    push_node(char *value, int token, t_ast **node, int io_nb)
             return (FAILURE);
         (*node)->token = token;
         (*node)->io_number = io_nb;
-        (*node)->std = 0;
     }
     else
     {
@@ -108,7 +107,6 @@ int    push_node(char *value, int token, t_ast **node, int io_nb)
             return (FAILURE);
         (*node)->next->token = token;
         (*node)->next->io_number = io_nb;
-        (*node)->std = 0;
         *node = tmp;
     }
     return (SUCCESS);
