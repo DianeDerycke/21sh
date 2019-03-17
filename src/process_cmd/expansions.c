@@ -3,19 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   expansions.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:18:40 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 03:19:38 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 14:25:57 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/process_cmd.h"
 #include "../../includes/error.h"
 
+static void		join_tilde_expansion(char *home, char **arg)
+{
+	char 	*tmp;
+
+	tmp = NULL;
+	if (!(tmp = ft_strdup((*arg) + 1)))
+		sh_malloc_error();
+	ft_strdel(arg);
+	if (!(*arg = ft_strjoin_free(home, tmp)))
+		sh_malloc_error();
+	ft_strdel(&tmp);
+}
+
 static ssize_t		tilde_expansion(char **arg, char **env)
 {
-	char	*tmp;
 	char	*home;
 	size_t	pos;
 
@@ -23,20 +35,15 @@ static ssize_t		tilde_expansion(char **arg, char **env)
 		return (FAILURE);
 	if (!(home = sh_get_var_value(env[pos])))
 		return (FAILURE);
-	tmp = NULL;
 	if ((*arg)[0] == C_TILDE)
 	{
-		if (ft_strlen(*arg) >= 1 && (*arg)[1] == C_SLASH)
+		if (ft_strlen(*arg) == 1)
 		{
-			if (!(tmp = ft_strdup((*arg) + 1)))
-				sh_malloc_error();
 			ft_strdel(arg);
-			if (!(*arg = ft_strjoin_free(home, tmp)))
-				sh_malloc_error();
-			ft_strdel(&tmp);
-		}
-		else if (ft_strlen(*arg) == 1)
 			*arg = home;
+		}
+		else if (ft_strlen(*arg) >= 1 && (*arg)[1] == C_SLASH)
+			join_tilde_expansion(home, arg);
 		else
 			ft_strdel(arg);
 	}
