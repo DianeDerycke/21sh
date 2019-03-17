@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 03:09:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 15:48:52 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/17 16:31:03 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # define MAGENTA   "\x1B[35m"
 # define CYAN   "\x1B[96m"
 # define WHITE   "\x1B[37m"
+# define ORANGE			"\x1b[38;5;214m"
+# define PINK			"\x1b[38;5;212m"
+# define LIGHT_GREEN	"\x1b[38;5;118m"
 # define RESET "\x1B[0m"
 
 typedef struct		s_elem

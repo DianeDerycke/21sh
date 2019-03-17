@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 15:51:27 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/17 14:16:13 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 16:29:13 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,18 +76,24 @@ int		le_prompt_check_color(struct s_le *le_struct, char *line)
 	ft_bzero(le_struct->prompt_color, 16);
 	if (!ft_strcmp(ft_strchr(line, '=') + 1, "white"))
 		ft_strcpy(le_struct->prompt_color, WHITE);
-	if (!ft_strcmp(ft_strchr(line, '=') + 1, "red"))
+	else if (!ft_strcmp(ft_strchr(line, '=') + 1, "red"))
 		ft_strcpy(le_struct->prompt_color, RED);
-	if (!ft_strcmp(ft_strchr(line, '=') + 1, "green"))
+	else if (!ft_strcmp(ft_strchr(line, '=') + 1, "green"))
 		ft_strcpy(le_struct->prompt_color, GREEN);
-	if (!ft_strcmp(ft_strchr(line, '=') + 1, "yellow"))
+	else if (!ft_strcmp(ft_strchr(line, '=') + 1, "yellow"))
 		ft_strcpy(le_struct->prompt_color, YELLOW);
-	if (!ft_strcmp(ft_strchr(line, '=') + 1, "blue"))
+	else if (!ft_strcmp(ft_strchr(line, '=') + 1, "blue"))
 		ft_strcpy(le_struct->prompt_color, BLUE);
-	if (!ft_strcmp(ft_strchr(line, '=') + 1, "magenta"))
+	else if (!ft_strcmp(ft_strchr(line, '=') + 1, "magenta"))
 		ft_strcpy(le_struct->prompt_color, MAGENTA);
-	if (!ft_strcmp(ft_strchr(line, '=') + 1, "cyan"))
+	else if (!ft_strcmp(ft_strchr(line, '=') + 1, "cyan"))
 		ft_strcpy(le_struct->prompt_color, CYAN);
+	else if (!ft_strcmp(ft_strchr(line, '=') + 1, "orange"))
+		ft_strcpy(le_struct->prompt_color, ORANGE);
+	else if (!ft_strcmp(ft_strchr(line, '=') + 1, "pink"))
+		ft_strcpy(le_struct->prompt_color, PINK);
+	else if (!ft_strcmp(ft_strchr(line, '=') + 1, "lightgreen"))
+		ft_strcpy(le_struct->prompt_color, LIGHT_GREEN);
 	ft_strdel(&line);
 	if (le_struct->prompt_color[0])
 		return (LE_SUCCESS);

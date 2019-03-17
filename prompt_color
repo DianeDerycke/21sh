@@ -9,9 +9,13 @@ printf "\x1b[1m\x1b[33mYellow\x1b[0m "
 printf "\x1b[1m\x1b[34mBlue\x1b[0m "
 printf "\x1b[1m\x1b[35mMagenta\x1b[0m "
 printf "\x1b[1m\x1b[36mCyan\x1b[0m "
+printf "\x1b[1m\x1b[38;5;214mOrange\x1b[0m "
+printf "\x1b[1m\x1b[38;5;212mPink\x1b[0m "
+printf "\x1b[1m\x1b[38;5;118mLightGreen\x1b[0m "
 printf "\x1b[1m\x1b[31mR\x1b[32ma\x1b[33mn\x1b[34md\x1b[35mo\x1b[36mm\x1b[0m"
 printf "\n\n"
-select i in "White" "Red" "Green" "Yellow" "Blue" "Magenta" "Cyan" "Random"; do
+select i in "White" "Red" "Green" "Yellow" "Blue" "Magenta" "Cyan" "Orange" \
+"Pink" "LightGreen" "Random"; do
 		if [ "$i" = "White" ]; then
 			color="\x1b[1m\x1b[39m"
 			echo "prompt_color=white" > ~/.21shrc
@@ -40,11 +44,23 @@ select i in "White" "Red" "Green" "Yellow" "Blue" "Magenta" "Cyan" "Random"; do
 			color="\x1b[1m\x1b[36m"
 			echo "prompt_color=cyan" > ~/.21shrc
 			break
+		elif [ "$i" = "Orange" ]; then
+			color="\x1b[1m\x1b[38;5;214m"
+			echo "prompt_color=orange" > ~/.21shrc
+			break
+		elif [ "$i" = "Pink" ]; then
+			color="\x1b[1m\x1b[38;5;212m"
+			echo "prompt_color=pink" > ~/.21shrc
+			break
+		elif [ "$i" = "LightGreen" ]; then
+			color="\x1b[1m\x1b[38;5;118m"
+			echo "prompt_color=lightgreen" > ~/.21shrc
+			break
 		elif [ "$i" = "Random" ]; then
 			random=$(( ( RANDOM % 6 )  + 1 ))
 			break;
 		else
-			echo "Wrong answer, please select 1, 2, 3, 4, 5, 6, 7 or 8"
+			echo "Wrong answer, please select a value between 1 and 11"
 fi
 done
 
