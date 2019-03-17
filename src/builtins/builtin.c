@@ -6,11 +6,13 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:12:17 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 03:47:01 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 04:00:25 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
+
+//NORME
 
 t_builtin   builtin_array[20] = {
     {"echo", ms_echo},

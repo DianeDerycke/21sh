@@ -6,11 +6,13 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 03:17:57 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 03:59:01 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
+
+//NORME
 
 static int		handle_heredoc_pipe(t_ast *ast)
 {

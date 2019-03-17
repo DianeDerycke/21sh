@@ -6,11 +6,13 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 03:11:26 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 04:01:08 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer_parser.h"
+
+//NORME FILE
 
 char    *get_operator(int index)
 {

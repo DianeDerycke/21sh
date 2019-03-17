@@ -6,11 +6,13 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:47:01 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 03:16:36 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 03:58:47 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/sh21.h"
+
+//NORME
 
 char    *prompt_heredoc(char *end_word)
 {
