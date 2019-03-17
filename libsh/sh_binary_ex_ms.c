@@ -1,20 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sh_binary_ex_ms.c                                   :+:      :+:    :+:   */
+/*   sh_binary_ex_ms.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/27 14:26:30 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/06 23:07:29 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 17:28:41 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libsh.h"
 
-static pid_t		getter_pid(pid_t val)
+static pid_t	getter_pid(pid_t val)
 {
-	static int 		pid = 0;
+	static int		pid = 0;
+
 	if (val != -1)
 		pid = val;
 	return (pid);
@@ -31,7 +32,8 @@ static void		sig_handler(int sig)
 	}
 }
 
-int		sh_binary_ex_ms(char *utility, char **split_cmd, char **env, char **tmp)
+int				sh_binary_ex_ms(char *utility, char **split_cmd,
+char **env, char **tmp)
 {
 	char	*path;
 	pid_t	pid;
@@ -40,8 +42,7 @@ int		sh_binary_ex_ms(char *utility, char **split_cmd, char **env, char **tmp)
 
 	ret = 0;
 	status = 0;
-	if ((path = sh_get_valid_cmd(utility, env))
-		&& access(path, X_OK) == SUCCESS)
+	if ((path = sh_get_valid_cmd(utility, env)) && access(path, X_OK) == 0)
 	{
 		pid = fork();
 		if (pid == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh_exec_binary.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/06 23:05:19 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:40:40 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 17:15:56 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,14 @@
 
 static pid_t		getter_pid(pid_t val)
 {
-	static int 		pid = 0;
+	static int		pid = 0;
+
 	if (val != -1)
 		pid = val;
 	return (pid);
 }
 
-static void		sig_handler(int sig)
+static void			sig_handler(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -31,7 +32,7 @@ static void		sig_handler(int sig)
 	}
 }
 
-int		sh_exec_binary(t_sh *shell)
+int					sh_exec_binary(t_sh *shell)
 {
 	pid_t	pid;
 	int		status;
@@ -39,24 +40,23 @@ int		sh_exec_binary(t_sh *shell)
 
 	ret = 0;
 	status = 0;
-    if (shell->fork == 0)
-        ret = execve(shell->path, shell->cmd, shell->env);
-    else
-    {
-        pid = fork();
-        if (pid < 0)
-            exit(1);
-        if (pid == 0)
-            ret = execve(shell->path, shell->cmd, shell->env);
-        else
-        {
-            getter_pid(pid);
-            signal(SIGINT, sig_handler);
-            waitpid(pid, &status, 0);
+	if (shell->fork == 0)
+		ret = execve(shell->path, shell->cmd, shell->env);
+	else
+	{
+		if ((pid = fork()) < 0)
+			exit(1);
+		if (pid == 0)
+			ret = execve(shell->path, shell->cmd, shell->env);
+		else
+		{
+			getter_pid(pid);
+			signal(SIGINT, sig_handler);
+			waitpid(pid, &status, 0);
 			if (status > 0)
 				ret = FAILURE;
-        }
-    }
+		}
+	}
 	ft_strdel(&(shell->path));
 	return (ret);
 }

@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   sh_freepidlist.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 14:59:51 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:40:56 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 16:55:06 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libsh.h"
 
-void    sh_freepidlist(t_pid **list)
+void	sh_freepidlist(t_pid **list)
 {
-    t_pid   *tmp;
+	t_pid	*tmp;
 
-    tmp = NULL;
-    if (!list || !*list)
-        return ;
-    while (*list)
-    {
-        tmp = *list;
-        *list = (*list)->next;
-        free(tmp);
-        tmp = NULL;
-    }
-    free(*list);
-    *list = NULL;
-    list = NULL;
+	tmp = NULL;
+	if (!list || !*list)
+		return ;
+	while (*list)
+	{
+		tmp = *list;
+		*list = (*list)->next;
+		free(tmp);
+		tmp = NULL;
+	}
+	free(*list);
+	*list = NULL;
+	list = NULL;
 }
