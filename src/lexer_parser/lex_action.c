@@ -3,23 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   lex_action.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 23:48:24 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 04:01:19 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 15:57:50 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer_parser.h"
 #include "../../includes/error.h"
-
-//NORME FILE
-
-int     whitespace_action(t_param *param)
-{
-    param->index++;
-    return (SUCCESS);
-}
 
 int     single_quote_action(t_param *param)
 {

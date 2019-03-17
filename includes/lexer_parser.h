@@ -25,14 +25,16 @@ void        display_list(t_ast *lst);
 void        display_tree(t_ast *tree, int lvl, int position);
 
 //LEX UTILS ==> def type char function
+char        *get_operator(int index);
+int         get_ast_op(char *c, int length);
+char        *copy_until_array_ft(char *s, int *start, int(*array[2])(int));
+
+//LEX_GET_TYPE
 int         ft_isallowedsymb(int c);
 int         ft_is_operator(int c);
 int         ft_isidentifier(int c);
 int         ft_is_single_quote(int c);
 int         ft_is_double_quote(int c);
-int         get_ast_op(char *c, int length);
-char        *copy_until_ft(char *s, int *start, int(*f)(int c));
-char        *copy_until_array_ft(char *s, int *start, int(*array[2])(int));
 
 //LEX_ACTION
 int     	whitespace_action(t_param *param);

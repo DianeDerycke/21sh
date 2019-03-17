@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
+#    By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/17 03:24:30 by DERYCKE          ###   ########.fr        #
+#    Updated: 2019/03/17 15:55:17 by dideryck         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,6 +75,8 @@ BUILTINS_NAME =		cd.c \
 LEX_PARSE_NAME =	lex_input.c \
 					lex_utils.c \
 					lex_action.c \
+					verify_lexer.c \
+					lex_get_type.c \
 					init_ft.c \
 					parser.c
 
