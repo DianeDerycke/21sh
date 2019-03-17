@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operators.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 02:30:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 02:45:52 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 18:25:43 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int    		exec_redirection(t_ast *ast, t_sh *shell);
 //HEREDOC
 int     	handle_heredoc(t_ast *redir);
 char    	*prompt_heredoc(char *end_word);
-int     	apply_heredoc(t_ast *ast);
+int     	find_heredoc(t_ast *ast);
 
 //REDIR UTILS
 t_ast  		*find_next_redir(t_ast *ast);
