@@ -6,13 +6,13 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 03:18:15 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 03:49:10 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-int     treat_quotes(t_ast *ast)
+static int     treat_quotes(t_ast *ast)
 {
     while (ast)
     {
@@ -29,7 +29,7 @@ int     treat_quotes(t_ast *ast)
     return (SUCCESS);
 }
 
-int    treat_command(t_sh *shell, t_ast *ast)
+static int    treat_command(t_sh *shell, t_ast *ast)
 {
     if (!ast)
         return (FAILURE);
@@ -42,7 +42,7 @@ int    treat_command(t_sh *shell, t_ast *ast)
     return (SUCCESS);
 }
 
-int      is_command(t_sh *shell)
+static int     is_command(t_sh *shell)
 {
     struct stat f_stat;
     if (find_builtin(shell->cmd[0]) >= 0)
@@ -79,11 +79,7 @@ int     exec_cmd(t_ast *ast, t_sh *shell)
         return (FAILURE);
     }
     if (!shell->path)
-    {
         ret = exec_builtin(shell);
-        if (shell->fork == 0)
-            exit (ret);
-    }
     else 
         ret = sh_exec_binary(shell);
     ft_free_array(shell->cmd);
