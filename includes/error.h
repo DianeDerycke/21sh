@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 13:22:13 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 13:51:49 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 15:39:04 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ typedef enum    e_err
 	NOFILEDIR,
 	ERRFORK,
 	ERRPIPE,
-	NOTERM
+	NOTERM,
+	ERRSIZE
 }               t_err;
 
 int 	    unexpected_eof(void);

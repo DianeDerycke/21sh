@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 17:33:44 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 14:07:28 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 15:39:10 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ int		get_error(int error_nb, char *str)
 		return (pipe_error());
 	if (error_nb == NOTERM)
 		ft_putendl_fd("21sh: Variable TERM is unvalid.", 2);
+	if (error_nb == ERRSIZE)
+		ft_putendl_fd(str, 2);
 	return (FAILURE);
 }

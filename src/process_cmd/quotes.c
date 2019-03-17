@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 04:04:18 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 15:39:46 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,13 @@ int     is_valid_quotes(char *str)
 
 int     get_valid_input(t_param *param, char **env, int ret)
 {
+	if (LE_BUFF_SIZE <= 0)
+	{
+		if (!(param->input = ft_strdup("exit")))
+			sh_malloc_error();
+		get_error(ERRSIZE, "21sh: Unvalid buffer size.");
+		return (SUCCESS);
+	}
 	while (21)
 	{
 		if (!(param->input = line_edition(ret, env)))

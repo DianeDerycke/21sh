@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/17 14:03:19 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 15:41:36 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ int		le_init(struct s_le *le_struct, char **env)
 
 int		le_init_struct(struct s_le *le_struct, char **env)
 {
-	le_struct->buffer_size = LE_BUFF_SIZE + 1;
-	if (!(le_struct->buff = (char *)malloc(sizeof(char)
-	* (le_struct->buffer_size))))
+	le_struct->buffer_size = LE_BUFF_SIZE;
+	if (le_struct->buffer_size == 1)
+		le_struct->buffer_size++;
+	if (!(le_struct->buff = ft_memalloc(sizeof(char) * le_struct->buffer_size)))
 		return (LE_FAILURE);
-	ft_bzero(le_struct->buff, le_struct->buffer_size);
 	ft_bzero(le_struct->tmp, LE_TMP_BUFF_SIZE);
 	ft_bzero(le_struct->prompt, LE_PROMPT_BUFF);
+	ft_bzero(le_struct->prompt_color, 16);
 	le_struct->clipboard = NULL;
 	le_struct->nb_char = LE_START;
 	le_struct->prompt_size = 0;
