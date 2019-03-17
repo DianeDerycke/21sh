@@ -6,15 +6,15 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/21 15:32:12 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/05 18:53:47 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 13:34:01 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-int		le_window_size(int *col, int *line)
+int		le_window_size(struct s_le *le_struct, int *col, int *line)
 {
-	if (le_termcap_init())
+	if (le_termcap_init(le_struct))
 		return (LE_FAILURE);
 	if ((*col = tgetnum(TC_GET_COL)) == -1)
 		return (LE_FAILURE);
@@ -36,7 +36,7 @@ int		le_window_check(struct s_le *le_struct)
 
 	if (!le_struct->w_col || !le_struct->w_line)
 		return (LE_FAILURE);
-	if (le_window_size(&col_new, &line_new))
+	if (le_window_size(le_struct, &col_new, &line_new))
 		return (LE_FAILURE);
 	if (le_struct->w_col != col_new || le_struct->w_line != line_new)
 	{

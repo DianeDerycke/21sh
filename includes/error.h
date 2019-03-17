@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 13:22:13 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 02:11:00 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 13:51:49 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ typedef enum    e_err
 	UNEXPEOF,
 	NOFILEDIR,
 	ERRFORK,
-	ERRPIPE
+	ERRPIPE,
+	NOTERM
 }               t_err;
 
 int 	    unexpected_eof(void);

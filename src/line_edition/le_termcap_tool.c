@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:37:26 by mrandou           #+#    #+#             */
-/*   Updated: 2019/02/21 15:32:50 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 14:15:44 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,24 @@ int		le_ansi_print(int nb, char *s)
 **	Print a termcap in ansi format (ex: /033[12D), useful for print many termcap
 */
 
-int		le_termcap_init(void)
+int		le_termcap_init(struct s_le *le_struct)
 {
 	char	*term;
 
 	term = getenv("TERM");
 	if (!term)
 		term = LE_TERM;
-	if (tgetent(NULL, term) != 1)
-		return (LE_FAILURE);
+	if (tgetent(NULL, term) < 1)
+	{
+		ft_strcpy(le_struct->buff, "exit");
+		le_struct->term = -NOTERM;
+		return (get_error(NOTERM, NULL));
+	}
+	if (ft_strcmp(term, LE_TERM))
+	{
+		ft_bzero(le_struct->prompt_color, 16);
+		ft_strcpy(le_struct->prompt_color, "ER");
+	}
 	return (LE_SUCCESS);
 }
 

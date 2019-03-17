@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 17:33:44 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 02:10:11 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 14:07:28 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,11 @@ int 	pipe_error(void)
 	ft_putendl_fd("21sh: error during pipe creation", 2);
 	return (FAILURE);
 }
-int     get_error(int error_nb, char *str)
+
+int		get_error(int error_nb, char *str)
 {
-    if (error_nb == UNEXPTOKEN)
-        return (syntax_error(str));
+	if (error_nb == UNEXPTOKEN)
+		return (syntax_error(str));
 	if (error_nb == UNDEFVAR)
 		return(sh_undefined_variable(str));
 	if (error_nb == CNOTFOUND)
@@ -41,5 +42,7 @@ int     get_error(int error_nb, char *str)
 		return (fork_error());
 	if (error_nb == ERRPIPE)
 		return (pipe_error());
-    return (FAILURE);
+	if (error_nb == NOTERM)
+		ft_putendl_fd("21sh: Variable TERM is unvalid.", 2);
+	return (FAILURE);
 }

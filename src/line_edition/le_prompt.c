@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 16:44:04 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/16 15:58:46 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 14:15:38 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,9 +130,17 @@ int		le_prompt_home(struct s_le *le_struct, char **env, char *pwd)
 
 int		le_prompt_quote(struct s_le *le_struct)
 {
+	if (le_struct->prompt_color[0]
+	&& !ft_strcmp(le_struct->prompt_color, "ER"))
+	{
+		ft_strcpy(le_struct->prompt, "> ");
+		le_struct->prompt_size = 2;
+		le_prompt_print(le_struct);
+		return (LE_SUCCESS);
+	}
 	if (le_struct->prompt_type == DQUOTE)
 		ft_strcpy(le_struct->prompt, LE_PROMPT_DQUOTE);
-	if (le_struct->prompt_type == SQUOTE)
+	else if (le_struct->prompt_type == SQUOTE)
 		ft_strcpy(le_struct->prompt, LE_PROMPT_SQUOTE);
 	le_struct->prompt_size = LE_PROMPT_QTE_SIZE;
 	if (le_struct->prompt_type == IS_PIPE)
@@ -140,7 +148,7 @@ int		le_prompt_quote(struct s_le *le_struct)
 		ft_strcpy(le_struct->prompt, LE_PROMPT_PIPE);
 		le_struct->prompt_size = LE_PROMPT_QTE_SIZE - 1;
 	}
-	if (le_struct->prompt_type == HEREDOC)
+	else if (le_struct->prompt_type == HEREDOC)
 	{
 		ft_strcpy(le_struct->prompt, LE_PROMPT_HEREDOC);
 		le_struct->prompt_size = LE_PROMPT_HER_SIZE;

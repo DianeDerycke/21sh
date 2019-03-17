@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 15:51:27 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/17 12:53:11 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 14:16:13 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,12 @@ void	le_prompt_print(struct s_le *le_struct)
 {
 	if (le_struct->prompt_type == SUCCESS || le_struct->prompt_type == FAILURE)
 	{
+		if (le_struct->prompt_color[0]
+		&& !ft_strcmp(le_struct->prompt_color, "ER"))
+		{
+			ft_putstr(le_struct->prompt);
+			return ;
+		}
 		ft_putstr(LE_PROMPT_BOLD);
 		ft_putstr(le_struct->prompt_color);
 		ft_putstr(le_struct->prompt);
@@ -45,6 +51,8 @@ int		le_prompt_get_color(struct s_le *le_struct, char **env)
 
 	path = NULL;
 	line = NULL;
+	if (le_struct->prompt_color[0] && !ft_strcmp(le_struct->prompt_color, "ER"))
+		return (LE_SUCCESS);
 	if (!env || sh_find_variable("HOME", env, &pos) == -1)
 		return (LE_FAILURE);
 	if (!(path = sh_get_var_value(env[pos])))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lineedition.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/17 03:16:53 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 13:32:47 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ void				le_free(struct s_le *le_struct);
 **	le_window.c
 */
 
-int					le_window_size(int *col, int *line);
+int					le_window_size(struct s_le *le_struct, int *col, int *line);
 int					le_window_check(struct s_le *le_struct);
 int					le_window_clear(struct s_le *le_struct);
 int					le_window_clear_restore(struct s_le *le_struct);
@@ -211,7 +211,7 @@ int					le_termcap_del_cut(struct s_le *le_struct);
 
 int					le_termcap_print(char *str, int nb);
 int					le_ansi_print(int nb, char *s);
-int					le_termcap_init(void);
+int					le_termcap_init(struct s_le *le_struct);
 int					le_rputchar(int c);
 
 /*
