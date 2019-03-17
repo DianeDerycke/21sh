@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   quotes.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/09 11:17:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 15:39:46 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 17:30:43 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
-
-//NORME 1 FT
 
 static int      only_pipe(char *str)
 {
@@ -83,47 +81,30 @@ int 		handle_quotes(char **input)
 int     is_valid_quotes(char *str)
 {
     int     i;
-    int     len;
-    int     j;
+    int     in_quote;
+    int     in_squote;
 
     i = 0;
-    len = ft_strlen(str);
-    j = 0;
+    in_quote = 0;
+    in_squote = 0;
     if (!str)
         return (-1);
     while (str[i])
     {
-        if (str[i] == DQUOTE && str[i + 1])
-        {
-            i++;
-            j++;
-            while (str[i] && str[i] != DQUOTE)
-                i++;
-            if (str[i] == DQUOTE)
-                j++;
-        }
-        else if (str[i] == DQUOTE && !str[i + 1])
-            return (DQUOTE);
-        else
-        {
-            i++;
-            continue;
-        }
-        if (str[i] == SQUOTE && str[i + 1])
-        {
-			j = 0;
-			i++;
-            while (str[i] && str[i] != SQUOTE)
-                i++;
-            if (!str[i] || str[i] != SQUOTE)
-                return (SQUOTE);
-        }
-        else if (str[i] == SQUOTE)
-            return (SQUOTE);
+        if (str[i] == DQUOTE && in_quote != 0)
+            in_quote--;
+        else if (str[i] == DQUOTE && !in_quote)
+            in_quote++;
+        if (str[i] == SQUOTE && in_squote)
+            in_squote--;
+        else if (str[i] == SQUOTE && (!in_quote))
+            in_squote++;
         i++;
     }
-    if (j % 2 > 0)
+    if (in_quote)
         return (DQUOTE);
+    if (in_squote)
+        return (SQUOTE);
     return (SUCCESS);
 }
 
