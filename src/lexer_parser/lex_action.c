@@ -6,12 +6,14 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/16 23:48:24 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 03:11:01 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 04:01:19 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer_parser.h"
 #include "../../includes/error.h"
+
+//NORME FILE
 
 int     whitespace_action(t_param *param)
 {
@@ -19,19 +21,16 @@ int     whitespace_action(t_param *param)
     return (SUCCESS);
 }
 
-
 int     single_quote_action(t_param *param)
 {
     char    *tmp = NULL;
     size_t  len = 0;
     int     i = param->index;
 
-    //Find the next simple quote and copy all the content between the two simple quotes
     if (ft_find_char(param->input + i + 1, param->input[i], &len) == ERROR)
         return (FAILURE);
     if (!(tmp = ft_strndup(param->input + param->index, len + 2)))
         return (FAILURE);
-    //Add the token to the chained list
     if (push_node(tmp, SQUOTE, &(param->l_tokens), 0) == FAILURE)
     {
         ft_strdel(&tmp);
