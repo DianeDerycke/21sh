@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 15:51:27 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/17 16:29:13 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 16:42:45 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int		le_prompt_check_color(struct s_le *le_struct, char *line)
 	else if (!ft_strcmp(ft_strchr(line, '=') + 1, "pink"))
 		ft_strcpy(le_struct->prompt_color, PINK);
 	else if (!ft_strcmp(ft_strchr(line, '=') + 1, "lightgreen"))
-		ft_strcpy(le_struct->prompt_color, LIGHT_GREEN);
+		ft_strcpy(le_struct->prompt_color, L_GREEN);
 	ft_strdel(&line);
 	if (le_struct->prompt_color[0])
 		return (LE_SUCCESS);

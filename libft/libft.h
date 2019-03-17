@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 03:09:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 16:31:03 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 16:44:52 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,18 @@
 # include <stdio.h>
 # include <fcntl.h>
 
-# define RED   "\x1B[31m"
-# define GREEN   "\x1B[32m"
-# define YELLOW   "\x1B[33m"
-# define BLUE   "\x1B[34m"
-# define L_BLUE "\x1B[94m"
-# define MAGENTA   "\x1B[35m"
-# define CYAN   "\x1B[96m"
-# define WHITE   "\x1B[37m"
+# define RED			"\x1B[31m"
+# define GREEN			"\x1B[32m"
+# define YELLOW			"\x1B[33m"
+# define BLUE			"\x1B[34m"
+# define L_BLUE			"\x1B[94m"
+# define MAGENTA		"\x1B[35m"
+# define CYAN			"\x1B[96m"
+# define WHITE			"\x1B[37m"
 # define ORANGE			"\x1b[38;5;214m"
 # define PINK			"\x1b[38;5;212m"
-# define LIGHT_GREEN	"\x1b[38;5;118m"
-# define RESET "\x1B[0m"
+# define L_GREEN		"\x1b[38;5;118m"
+# define RESET 			"\x1B[0m"
 
 typedef struct		s_elem
 {
@@ -118,7 +118,7 @@ void				ft_bzero(void *s, size_t n);
 t_list				*ft_lstnew(void const *content, size_t content_size);
 void				ft_lstdelone(t_list **alst, void (*del)(void *, size_t));
 void				ft_lstdel(t_list **alst, void (*del)(void *, size_t));
-void    			free_lst(t_list *lst);
+void				free_lst(t_list *lst);
 void				ft_lstadd(t_list **alst, t_list *new);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
@@ -126,7 +126,6 @@ void				ft_push_back(t_dblist *lst, char *str);
 void				ft_init_dblist(t_dblist *lst);
 void				ft_sort_lst(t_dblist *lst);
 void				ft_clear_lst(t_dblist *lst);
-
 
 void				ft_pause(void);
 int					ft_is_space(char c);
@@ -147,10 +146,9 @@ void				ft_clear_screen(void);
 char				*ft_strmjoin(char const *s, char const *s2, char const *s3);
 int					ft_nblen(int nb);
 int					get_next_line(const int fd, char **line);
-int     			ft_str_isdigit(char *str);
-int     			ft_remove_char(char *str, char c);
+int					ft_str_isdigit(char *str);
+int					ft_remove_char(char *str, char c);
 int					ft_abs(int nb);
-char    			*copy_until_ft(char *s, int *start, int(*f)(int c));
-
+char				*copy_until_ft(char *s, int *start, int(*f)(int c));
 
 #endif

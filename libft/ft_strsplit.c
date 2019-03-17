@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 18:02:44 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/06 17:44:15 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/17 16:41:36 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ static char		**ft_fill_table(char **tab, char const *s, char c, int i)
 	while (s[i] && n < ft_count_words(s, c))
 	{
 		tab[n] = ft_strsub(s, i, ft_size_word(s, i, c));
-		// printf(" SIZE STRING ==> %zu\n", sizeof(char) * ft_strlen(tab[n]) + sizeof(char *));
 		if (!(tab[n]))
 		{
 			ft_free_array(tab);
