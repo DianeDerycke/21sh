@@ -6,11 +6,12 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/12 12:44:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/04 17:22:29 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 02:18:51 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/sh21.h"
+#include "../../includes/builtins.h"
+#include "../../includes/error.h"
 
 void		valid_option(char c, t_opt *env_opt)
 {

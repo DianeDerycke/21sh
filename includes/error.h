@@ -6,16 +6,28 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 13:22:13 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:38:28 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 02:11:00 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
 #define ERROR_H
-
-#include "../libft/libft.h"
 #include "../libsh/libsh.h"
 
+typedef enum    e_err 
+{
+    UNEXPTOKEN = 5,
+	UNDEFVAR,
+	CNOTFOUND,
+	PERMDENIED,
+	UNEXPEOF,
+	NOFILEDIR,
+	ERRFORK,
+	ERRPIPE
+}               t_err;
+
+int 	    unexpected_eof(void);
+int         get_error(int error_nb, char *str);
 ssize_t		too_many_args(char *cmd);
 void		error_option(char c);
 int			syntax_error(char *str);

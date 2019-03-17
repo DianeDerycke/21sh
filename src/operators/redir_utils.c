@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   redir_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:11:30 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/09 14:24:18 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/17 03:19:00 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/sh21.h"
+#include "../../includes/operators.h"
+#include "../../includes/lexer_parser.h"
 
 int     get_str_redir(t_ope token)
 {

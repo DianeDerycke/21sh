@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   lex_input.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/15 14:45:42 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/17 03:11:19 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/sh21.h"
-
+#include "../../includes/lexer_parser.h"
+#include "../../includes/error.h"
 
 static int		getter_type_input(int c, int index, t_param *param)
 {

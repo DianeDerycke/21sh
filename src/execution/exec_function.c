@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 11:50:04 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:29:03 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 03:18:15 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int    treat_command(t_sh *shell, t_ast *ast)
     if (!ast)
         return (FAILURE);
     if (apply_expansions(shell, ast) == FAILURE)
-        return (get_error(UNDEFVAR, getter_error_var(NULL)));
+        return (FAILURE);
     if (treat_quotes(ast) == FAILURE)
         return (FAILURE);
     if (!(shell->cmd = sh_rtree_to_array(ast)))

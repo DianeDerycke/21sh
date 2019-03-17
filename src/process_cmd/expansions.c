@@ -6,11 +6,12 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:18:40 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:30:18 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 03:19:38 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/sh21.h"
+#include "../../includes/process_cmd.h"
+#include "../../includes/error.h"
 
 static ssize_t		tilde_expansion(char **arg, char **env)
 {
@@ -107,10 +108,7 @@ ssize_t				apply_expansions(t_sh *shell, t_ast *ast)
 				ret = tilde_expansion(&(ast->value), shell->env);
 		}
 		if (ret == FAILURE)
-		{
-			getter_error_var(ast->value);
-			return (FAILURE);
-		}
+			return (get_error(UNDEFVAR, ast->value));
 		ast = ast->left;
 	}
 	return (SUCCESS);

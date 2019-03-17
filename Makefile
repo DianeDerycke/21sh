@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
+#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/16 16:18:45 by mrandou          ###   ########.fr        #
+#    Updated: 2019/03/17 03:05:50 by DERYCKE          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,20 +18,30 @@ LIBSH = ./libsh/
 LIBNAME = ./libft/libft.a ./libsh/libsh.a
 HISTORY = ~/.21sh_history
 
-INC_DIR				=	./includes/
-INC_NAME_HISTORY	=	history.h
-INC_NAME_LEXER		=	lexer.h
-INC_NAME_LINEEDITON	=	lineedition.h
-INC_NAME_SH21		=	sh21.h
-INC_NAME_ERROR		= 	error.h
+INC_DIR				  =	./includes/
+INC_NAME_HISTORY	  =	history.h
+INC_NAME_LEXER_PARSER =	lexer_parser.h
+INC_NAME_LINEEDITON	  =	lineedition.h
+INC_NAME_SH21		  =	sh21.h
+INC_NAME_ERROR		  = error.h
+INC_NAME_BUILTINS	  = builtins.h
+INC_NAME_OPERATORS 	  =	operators.h
+INC_NAME_EXECUTION	  =	execution.h
+INC_NAME_PROCESS_CMD  =	process_cmd.h
 
-INC_HISTORY		=	$(addprefix $(INC_DIR), $(INC_NAME_HISTORY))
-INC_LEXER		=	$(addprefix $(INC_DIR), $(INC_NAME_LEXER))
-INC_LINEEDITON	=	$(addprefix $(INC_DIR), $(INC_NAME_LINEEDITON))
-INC_SH21		=	$(addprefix $(INC_DIR), $(INC_NAME_SH21))
-INC_ERROR		=	$(addprefix $(INC_DIR), $(INC_NAME_ERROR))
+INC_HISTORY		 =	$(addprefix $(INC_DIR), $(INC_NAME_HISTORY))
+INC_LEXER_PARSER =	$(addprefix $(INC_DIR), $(INC_NAME_LEXER_PARSER))
+INC_LINEEDITON	 =	$(addprefix $(INC_DIR), $(INC_NAME_LINEEDITON))
+INC_SH21		 =	$(addprefix $(INC_DIR), $(INC_NAME_SH21))
+INC_ERROR		 =	$(addprefix $(INC_DIR), $(INC_NAME_ERROR))
+INC_BUILTINS	 =	$(addprefix $(INC_DIR), $(INC_NAME_BUILTINS))
+INC_OPERATORS 	 = 	$(addprefix $(INC_DIR), $(INC_NAME_OPERATORS))
+INC_EXECUTION 	 = 	$(addprefix $(INC_DIR), $(INC_NAME_EXECUTION))
+INC_PROCESS_CMD  = 	$(addprefix $(INC_DIR), $(INC_NAME_PROCESS_CMD))
 
-INC_DEPEND		= 	$(INC_HISTORY) $(INC_LEXER) $(INC_LINEEDITON) $(INC_SH21) $(INC_ERROR) 
+INC_DEPEND		= 	$(INC_HISTORY) $(INC_LEXER_PARSER) $(INC_LINEEDITON) \
+					$(INC_SH21) $(INC_ERROR) $(INC_BUITLINS) $(INC_OPERATORS) \
+					$(INC_EXECUTION) $(INC_PROCESS_CMD)
 
 LINE_EDITION_NAME = line_edition.c \
 					le_interactif_disabled.c \
@@ -68,8 +78,9 @@ LEX_PARSE_NAME =	main.c \
 					lex_action.c \
 					init_ft.c \
 					parser.c \
-					parser_execution.c \
-					signal.c
+
+PROCESS_CMD_NAME = 	expansions.c \
+					quotes.c
 
 OPERATORS_NAME =	pipe.c \
 					redir.c \
@@ -78,12 +89,14 @@ OPERATORS_NAME =	pipe.c \
 					heredoc.c \
 					pipe_utils.c
 
-PROCESS_CMD_NAME = 	exec_function.c \
-					expansions.c \
-					quotes.c
-
 ERROR_NAME =		error.c \
-					lex_error.c
+					get_error.c \
+					syntax_error.c
+
+SIGNAL_NAME    =	signal.c
+
+EXECUTION_NAME =	parser_execution.c \
+					exec_function.c
 
 LINE_EDITION_PATH = src/line_edition/
 HISTORY_PATH = src/history/
@@ -92,6 +105,8 @@ LEX_PARSE_PATH = src/lexer_parser/
 OPERATORS_PATH = src/operators/
 PROCESS_CMD_PATH = src/process_cmd/
 ERROR_PATH = src/error/
+SIGNAL_PATH = src/signal/
+EXECUTION_PATH = src/execution/
 
 OBJ_LINE_EDITION_PATH = obj/line_edition/
 OBJ_HISTORY_PATH = obj/history/
@@ -100,6 +115,8 @@ OBJ_LEX_PARSE_PATH = obj/lexer_parser/
 OBJ_OPERATORS_PATH = obj/operators/
 OBJ_PROCESS_CMD_PATH = obj/process_cmd/
 OBJ_ERROR_PATH = obj/error/
+OBJ_SIGNAL_PATH = obj/signal/
+OBJ_EXECUTION_PATH = obj/execution/
 
 SRC = ./src
 LINE_EDITION_SRC = $(addprefix $(LINE_EDITION_PATH), $(LINE_EDITION_NAME))
@@ -109,6 +126,8 @@ LEX_PARSE_SRC = $(addprefix $(LEX_PARSE_PATH), $(LEX_PARSE_NAME))
 OPERATORS_SRC = $(addprefix $(OPERATORS_PATH), $(OPERATORS_NAME))
 PROCESS_CMD_SRC = $(addprefix $(PROCESS_CMD_PATH), $(PROCESS_CMD_NAME))
 ERROR_SRC = $(addprefix $(ERROR_PATH), $(ERROR_NAME))
+SIGNAL_SRC = $(addprefix $(SIGNAL_PATH), $(SIGNAL_NAME))
+EXECUTION_SRC = $(addprefix $(EXECUTION_PATH), $(EXECUTION_NAME))
 
 
 OBJ = obj/
@@ -119,8 +138,11 @@ LEX_PARSE_OBJ = $(addprefix $(OBJ_LEX_PARSE_PATH), $(LEX_PARSE_NAME:.c=.o))
 OPERATORS_OBJ = $(addprefix $(OBJ_OPERATORS_PATH), $(OPERATORS_NAME:.c=.o))
 PROCESS_CMD_OBJ = $(addprefix $(OBJ_PROCESS_CMD_PATH), $(PROCESS_CMD_NAME:.c=.o))
 ERROR_OBJ = $(addprefix $(OBJ_ERROR_PATH), $(ERROR_NAME:.c=.o))
+SIGNAL_OBJ = $(addprefix $(OBJ_SIGNAL_PATH), $(SIGNAL_NAME:.c=.o))
+EXECUTION_OBJ = $(addprefix $(OBJ_EXECUTION_PATH), $(EXECUTION_NAME:.c=.o))
 
-OBJ_DEPEND =	$(LINE_EDITION_OBJ) $(HISTORY_OBJ) $(BUILTINS_OBJ) $(LEX_PARSE_OBJ) $(OPERATORS_OBJ) $(PROCESS_CMD_OBJ) $(ERROR_OBJ)
+OBJ_DEPEND =	$(LINE_EDITION_OBJ) $(HISTORY_OBJ) $(BUILTINS_OBJ) $(LEX_PARSE_OBJ) $(OPERATORS_OBJ) $(PROCESS_CMD_OBJ) $(ERROR_OBJ) \
+				$(SIGNAL_OBJ) $(EXECUTION_OBJ)
 
 CPPFLAGS		= -Iincludes
 LDFLAGS			= -Llibft -Llibsh
@@ -141,6 +163,8 @@ $(OBJ):
 	@mkdir -p $(OBJ_OPERATORS_PATH)
 	@mkdir -p $(OBJ_PROCESS_CMD_PATH)
 	@mkdir -p $(OBJ_ERROR_PATH)
+	@mkdir -p $(OBJ_SIGNAL_PATH)
+	@mkdir -p $(OBJ_EXECUTION_PATH)
 
 $(OBJ_LINE_EDITION_PATH)%.o: $(LINE_EDITION_PATH)%.c $(INC_DEPEND)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
@@ -186,10 +210,22 @@ $(OBJ_ERROR_PATH)%.o: $(ERROR_PATH)%.c $(INC_DEPEND)
 	@printf $<
 	@printf "\r\033[0m\n\033[K\033[A\033[K"
 
+$(OBJ_SIGNAL_PATH)%.o: $(SIGNAL_PATH)%.c $(INC_DEPEND)
+	@$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
+	@printf "21sh --> \033[32m"
+	@printf $<
+	@printf "\r\033[0m\n\033[K\033[A\033[K"
+
+$(OBJ_EXECUTION_PATH)%.o: $(EXECUTION_PATH)%.c $(INC_DEPEND)
+	@$(CC) $(CFLAGS) -o $@ -c $< $(CPPFLAGS)
+	@printf "21sh --> \033[32m"
+	@printf $<
+	@printf "\r\033[0m\n\033[K\033[A\033[K"
+
 $(NAME): $(MAKEFILE) $(OBJ) $(OBJ_DEPEND) $(LIBFT) $(LIBSH)
 	@$(CC) $(CFLAGS) -o $@ $(LINE_EDITION_OBJ) $(HISTORY_OBJ) \
 	$(LEX_PARSE_OBJ) $(BUILTINS_OBJ) $(OPERATORS_OBJ) $(PROCESS_CMD_OBJ) \
-	$(ERROR_OBJ) $(LIBNAME) $(TFLAGS) \
+	$(ERROR_OBJ) $(SIGNAL_OBJ) $(EXECUTION_OBJ) $(LIBNAME) $(TFLAGS) \
 
 compile:
 	@printf "\033[1m\033[32m\n> 21sh Make <\n\n\033[0m"

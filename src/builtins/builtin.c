@@ -6,11 +6,11 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:12:17 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/08 15:00:30 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 02:17:11 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/sh21.h"
+#include "../../includes/builtins.h"
 
 t_builtin   builtin_array[20] = {
     {"echo", ms_echo},

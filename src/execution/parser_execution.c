@@ -6,11 +6,13 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 13:41:10 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/08 16:44:41 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 03:09:42 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/sh21.h"
+#include "../../includes/lexer_parser.h"
+#include "../../includes/execution.h"
+#include "../../includes/operators.h"
 
 int    parser_execution(t_ast *ast, t_sh *shell)
 {

@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "lexer_parser.h": "c",
+        "lineedition.h": "c",
+        "operators.h": "c",
+        "libsh.h": "c"
+    }
+}

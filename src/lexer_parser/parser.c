@@ -6,11 +6,11 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/30 13:23:45 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/07 12:37:29 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 03:11:55 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/sh21.h"
+#include "../../includes/lexer_parser.h"
 
 static t_ast     *find_priority_token(t_ast *start, t_ast *end)
 {

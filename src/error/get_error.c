@@ -1,45 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lex_error.c                                        :+:      :+:    :+:   */
+/*   get_error.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 17:33:44 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/16 14:32:37 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 02:10:11 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/sh21.h"
-
-char 	*getter_error_var(char *str)
-{
-	static char *error_var = NULL;
-	
-	if (str)
-		error_var = str;
-	return (error_var);
-}
-
-int			syntax_error(char *str)
-{
-	ft_putstr_fd("21sh: syntax error near unexpected token ", 2);
-	if (!str)
-		ft_putendl_fd("'newline'", 2);
-	else
-	{
-		ft_putchar_fd('\'', 2);
-		ft_putstr_fd(str, 2);
-		ft_putendl_fd("\'", 2);
-	}
-	return (FAILURE);
-}
-
-int 	unexpected_eof(void)
-{
-	ft_putendl_fd("21sh: syntax error: unexpected end of file", 2);
-	return (FAILURE);
-}
+#include "../../includes/error.h"
 
 int 	fork_error(void)
 {

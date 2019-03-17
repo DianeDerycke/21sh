@@ -6,11 +6,12 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:03:03 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/16 14:33:22 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 02:19:05 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/sh21.h"
+#include "../../includes/builtins.h"
+#include "../../includes/error.h"
 
 static ssize_t		is_valid_set_cmd(char **split_cmd)
 {

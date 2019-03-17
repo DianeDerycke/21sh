@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lineedition.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/13 17:14:24 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/16 16:19:35 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 03:16:53 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@
 # include "sh21.h"
 # include <term.h>
 # include <termios.h>
-# include <stdlib.h>
 # include <sys/ioctl.h>
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <sys/stat.h>
-# include <fcntl.h>
 # include <limits.h>
 
 # define LE_SUCCESS			0

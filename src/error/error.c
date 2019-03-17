@@ -6,7 +6,7 @@
 /*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:07:12 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/16 14:32:14 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/17 00:59:41 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,4 @@ ssize_t		error_chdir(int error, char *path, char *cmd)
 	else
 		return (sh_no_such_file_or_dir(cmd, path));
 	return (FAILURE);
-}
-
-int			ambiguous_redirect(char *arg)
-{
-	ft_putstr_fd("21sh: ", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putendl_fd(": ambiguous redirect", 2);
-	return (ERROR);
 }
