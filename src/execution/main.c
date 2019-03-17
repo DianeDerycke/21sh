@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 17:45:44 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 18:25:43 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int 	process_input(t_param *param, t_sh *shell)
 		return (FAILURE);
 	else if (!(ast = create_ast(param->l_tokens, param->l_tokens, NULL)))
 		return (FAILURE);
-	else if (apply_heredoc(ast) == FAILURE)
+	else if (find_heredoc(ast) == FAILURE)
 		return (FAILURE);
 	else if (parser_execution(ast, shell) != 0)
 		return (FAILURE);
