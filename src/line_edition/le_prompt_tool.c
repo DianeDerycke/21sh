@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 15:51:27 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/16 15:51:47 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/17 12:53:11 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ int		le_prompt_get_color(struct s_le *le_struct, char **env)
 	if (!(path = sh_get_var_value(env[pos])))
 		return (LE_FAILURE);
 	if (!(path = ft_strjoin_free(path, LE_SHRC)))
-		return (LE_FAILURE);
+		return ((int)sh_strmdel_return(path, NULL, NULL, (void *)LE_FAILURE));
 	if ((fd = open(path, O_RDONLY)) == -1)
-		return (LE_FAILURE);
+		return ((int)sh_strmdel_return(path, NULL, NULL, (void *)LE_FAILURE));
 	ft_strdel(&path);
 	if (get_next_line(fd, &line) == -1)
 	{
