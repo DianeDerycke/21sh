@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setenv.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:03:03 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/17 02:19:05 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/18 18:24:14 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,16 +51,27 @@ char				**add_variable(char *v_name, char *v_value, char **ms_env)
 	return (tmp_env);
 }
 
+static void			get_new_env(char **split_cmd, char ***ms_env)
+{
+	char	**tmp;
+
+	if (!(tmp = ft_copy_array(*ms_env, ft_strlen_array(*ms_env))))
+		sh_malloc_error();
+	ft_free_array(*ms_env);
+	free(*ms_env);
+	*ms_env = add_variable(split_cmd[1], split_cmd[2], tmp);
+	ft_free_array(tmp);
+	free(tmp);
+}
+
 ssize_t				ms_setenv(char **split_cmd, char ***ms_env, int ret)
 {
 	size_t		index;
 	size_t		len_cmd;
-	char		**tmp;
 
 	(void)ret;
 	index = 1;
 	len_cmd = ft_strlen_array(split_cmd);
-	tmp = NULL;
 	if (len_cmd == 1)
 		ft_print_array(*ms_env);
 	else if (len_cmd > 3)
@@ -71,11 +82,6 @@ ssize_t				ms_setenv(char **split_cmd, char ***ms_env, int ret)
 			sh_find_variable(split_cmd[1], *ms_env, &index) == 0)
 		sh_edit_var(split_cmd[1], split_cmd[2], ms_env, index);
 	else
-	{
-		tmp = ft_copy_array(*ms_env, ft_strlen_array(*ms_env));
-		ft_free_array(*ms_env);
-		*ms_env = add_variable(split_cmd[1], split_cmd[2], tmp);
-		ft_free_array(tmp);
-	}
+		get_new_env(split_cmd, ms_env);
 	return (SUCCESS);
 }

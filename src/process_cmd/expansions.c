@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:18:40 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 15:32:08 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/18 17:30:40 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,14 +65,17 @@ static int			concat_d_expansion(char *ptr, char *arg, t_expansion *st,
 			ft_strdel(&st->join);
 			st->join = NULL;
 		}
-		if (!(st->join = ft_strjoin_free(st->sub, st->v_value)) ||
-		!(st->sub = ft_strsub(ptr + 1, st->index, ft_strlen(ptr + st->index)))
-		|| !(st->join = ft_strjoin_free(st->join, st->sub)))
+		if (!(st->join = ft_strjoin_free(st->sub, st->v_value))
+	|| !(st->sub = ft_strsub(ptr + 1, st->index, ft_strlen(ptr + st->index)))
+	|| !(st->join = ft_strjoin_free(st->join, st->sub)))
 			sh_malloc_error();
 		ft_strdel(&st->v_value);
 	}
 	else
+	{
+		ft_strdel(&st->sub);
 		return (FAILURE);
+	}
 	return (SUCCESS);
 }
 
