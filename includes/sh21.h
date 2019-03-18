@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh21.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:05:44 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/17 03:16:10 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/18 16:07:23 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,12 @@
 # include "execution.h"
 # include "process_cmd.h"
 
-//signal.h
+/*
+** signal.h
+*/
 void	signal_handler(int sig);
 pid_t	get_pid(pid_t val);
-int     handle_signal_pipe_edition(char *buffer);
-int     handle_signal_quote_edition(char *buffer);
+int		handle_signal_pipe_edition(char *buffer);
+int		handle_signal_quote_edition(char *buffer);
 
 #endif

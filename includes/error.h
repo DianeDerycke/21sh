@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   error.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 13:22:13 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 15:39:04 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/18 16:08:40 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ERROR_H
-#define ERROR_H
-#include "../libsh/libsh.h"
+# define ERROR_H
+# include "../libsh/libsh.h"
 
-typedef enum    e_err 
+typedef enum	e_err
 {
-    UNEXPTOKEN = 5,
+	UNEXPTOKEN = 5,
 	UNDEFVAR,
 	CNOTFOUND,
 	PERMDENIED,
@@ -26,10 +26,10 @@ typedef enum    e_err
 	ERRPIPE,
 	NOTERM,
 	ERRSIZE
-}               t_err;
+}				t_err;
 
-int 	    unexpected_eof(void);
-int         get_error(int error_nb, char *str);
+int			unexpected_eof(void);
+int			get_error(int error_nb, char *str);
 ssize_t		too_many_args(char *cmd);
 void		error_option(char c);
 int			syntax_error(char *str);
