@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:02:38 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/17 02:18:10 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/18 14:50:58 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,5 @@ ssize_t		ms_exit(char **split_cmd, char ***ms_env, int ret)
 {
 	(void)ms_env;
 	(void)split_cmd;
-	exit (ret);
+	exit(ret);
 }

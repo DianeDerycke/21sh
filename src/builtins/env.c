@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:03:44 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/17 02:18:33 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/18 14:53:46 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 #include "../../includes/error.h"
 
-ssize_t		exec_simple_env(char **cmd, char **s_bin, char **env)
+ssize_t				exec_simple_env(char **cmd, char **s_bin, char **env)
 {
 	char	**tmp_env;
 	char	*path;
@@ -36,35 +36,6 @@ ssize_t		exec_simple_env(char **cmd, char **s_bin, char **env)
 	if (tmp_env)
 		ft_free_array(tmp_env);
 	return (ret);
-}
-
-
-void				add_argument_to_env(char **split_cmd, char ***env)
-{
-	size_t	i;
-	size_t	index;
-	char	*var_name;
-	char	*var_value;
-
-	i = 1;
-	index = 0;
-	var_name = NULL;
-	var_value = NULL;
-	while (split_cmd[i] && !(ft_strchr(split_cmd[i], VAL_EQUAL)))
-		i++;
-	while (split_cmd[i] && ft_strchr(split_cmd[i], VAL_EQUAL))
-	{
-		ft_find_char(split_cmd[i], VAL_EQUAL, &index);
-		var_name = sh_get_var_name(split_cmd[i], index);
-		var_value = ft_strdup(split_cmd[i] + index + 1);
-		if (sh_find_variable(var_name, *env, &index) == SUCCESS)
-			sh_edit_var(var_name, var_value, env, index);
-		else
-			copy_add_var_to_env(env, var_name, var_value);
-		ft_strdel(&var_value);
-		ft_strdel(&var_name);
-		i++;
-	}
 }
 
 static char			**create_tmp_env(char **split_cmd)

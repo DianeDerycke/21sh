@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_builtins.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/07/12 12:44:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 02:18:51 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/18 14:54:51 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ void		init_env_options(char **split_cmd, t_opt *env_opt)
 	}
 }
 
-
-void	init_opt_struct(t_opt *env_opt)
+void		init_opt_struct(t_opt *env_opt)
 {
 	env_opt->i = 0;
 	env_opt->p = 0;

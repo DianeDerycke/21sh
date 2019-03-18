@@ -6,19 +6,19 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:12:17 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 18:48:08 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/18 14:49:11 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
 
-t_builtin   builtin_array[20] = {
-    {"echo", ms_echo},
-    {"cd", ms_cd},
-    {"setenv", ms_setenv},
-    {"unsetenv", ms_unsetenv},
-    {"env", ms_env},
-    {"exit", ms_exit},
+t_builtin	builtin_array[20] = {
+	{"echo", ms_echo},
+	{"cd", ms_cd},
+	{"setenv", ms_setenv},
+	{"unsetenv", ms_unsetenv},
+	{"env", ms_env},
+	{"exit", ms_exit},
 };
 
 int		find_builtin(char *cmd)
@@ -37,19 +37,19 @@ int		find_builtin(char *cmd)
 	return (ERROR);
 }
 
-int     exec_builtin(t_sh *shell)
+int		exec_builtin(t_sh *shell)
 {
-    int     index;
-    int     ret;
+	int		index;
+	int		ret;
 
-    ret = 0;
-    index = 0;
-    if ((index = find_builtin(shell->cmd[0])) >= 0)
-        ret = builtin_array[index].function(shell->cmd, &(shell->env), 0);
-    ft_free_array(shell->cmd);
-    free(shell->cmd);
-    shell->cmd = NULL;
-    if (shell->fork == 0)
-        exit (ret);
-    return (SUCCESS);
+	ret = 0;
+	index = 0;
+	if ((index = find_builtin(shell->cmd[0])) >= 0)
+		ret = builtin_array[index].function(shell->cmd, &(shell->env), 0);
+	ft_free_array(shell->cmd);
+	free(shell->cmd);
+	shell->cmd = NULL;
+	if (shell->fork == 0)
+		exit(ret);
+	return (SUCCESS);
 }
