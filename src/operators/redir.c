@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 15:29:52 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/18 15:34:41 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void			reset_std(int *fd)
 	close(fd[2]);
 }
 
-static int     open_file(t_ope token, char *file, t_ast *redir, t_ast *ast)
+static int		open_file(t_ope token, char *file, t_ast *redir, t_ast *ast)
 {
 	if (token == GREAT)
 		return (open(file, O_RDWR | O_CREAT | O_TRUNC, PERM));
