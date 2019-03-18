@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 15:57:19 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/18 15:20:24 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,34 @@
 
 static int		getter_type_input(int c, int index, t_param *param)
 {
-	static int(*def_type[ARRAY_SIZE])(int) = 
-	{
+	static int(*def_type[ARRAY_SIZE])(int) = {
 		&ft_is_whitespace,
 		&ft_is_single_quote,
 		&ft_is_double_quote,
 		&ft_is_operator,
 		&ft_isidentifier
 	};
+
 	param->ft = def_type[index];
 	return (def_type[index](c));
 }
 
 static int		getter_action(t_param *param, int index)
 {
-	static int	(*action[ARRAY_SIZE])(t_param *) = 
-	{
+	static int	(*action[ARRAY_SIZE])(t_param *) = {
 		&whitespace_action,
 		&single_quote_action,
 		&double_quote_action,
 		&operator_action,
 		&identifier_action
 	};
+
 	return (action[index](param));
 }
 
-int     lex_input(t_param *param)
+int				lex_input(t_param *param)
 {
-	int 	i;
+	int		i;
 	int		ret;
 
 	i = 0;
@@ -51,7 +51,7 @@ int     lex_input(t_param *param)
 		return (FAILURE);
 	while (param->input[param->index])
 	{
-		while (i < ARRAY_SIZE && 
+		while (i < ARRAY_SIZE &&
 			(getter_type_input(param->input[param->index], i, param)) == 0)
 			i++;
 		if (i == ARRAY_SIZE)

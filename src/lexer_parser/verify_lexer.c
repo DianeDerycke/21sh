@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:50:23 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/17 15:51:22 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/18 15:24:09 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int		is_token_operator(t_ope token)
 	return (0);
 }
 
-int		verify_lexer(t_ast *ast)
+int				verify_lexer(t_ast *ast)
 {
 	if (!ast)
 		return (FAILURE);
