@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 04:03:56 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/18 14:44:17 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-//NORME 1 FT
-
-static int		handle_heredoc_pipe(t_ast *ast)
+static int	handle_heredoc_pipe(t_ast *ast)
 {
-	t_ast 	*redir;
-	t_ast 	*tmp;
+	t_ast	*redir;
+	t_ast	*tmp;
 
 	tmp = ast;
 	while ((redir = find_next_redir(tmp)))
@@ -29,7 +27,7 @@ static int		handle_heredoc_pipe(t_ast *ast)
 	return (FAILURE);
 }
 
-static int		handle_right_command(t_sh *shell, t_ast *ast, int *oldfd, int *newfd)
+static int	handle_right_cmd(t_sh *shell, t_ast *ast, int *oldfd, int *newfd)
 {
 	if (handle_heredoc_pipe(ast) == SUCCESS)
 	{
@@ -45,7 +43,7 @@ static int		handle_right_command(t_sh *shell, t_ast *ast, int *oldfd, int *newfd
 	return (exec_pipe_cmd(shell, ast));
 }
 
-static int		end_recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *newfd)
+static int	end_recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *newfd)
 {
 	close_pipe(oldfd);
 	if (handle_heredoc_pipe(ast) == SUCCESS)
@@ -55,25 +53,20 @@ static int		end_recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *newfd)
 	return (exec_pipe_cmd(shell, ast));
 }
 
-static int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
+static void	recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
 {
 	int		newfd[2];
 	pid_t	child_pid;
 	int		status;
 
 	status = 0;
-	if (!fd)
-		if (pipe(newfd) == ERROR)
-			return (get_error(ERRPIPE, NULL));
+	if (!fd && pipe(newfd) == ERROR)
+		get_error(ERRPIPE, NULL);
 	if ((child_pid = fork()) < 0)
-		return (get_error(ERRFORK, NULL));
+		get_error(ERRFORK, NULL);
 	if (child_pid == 0)
-	{
-		if (fd)
-			end_recurse_pipe(shell, ast, oldfd, fd);
-		else
-			handle_right_command(shell, ast->right, oldfd, newfd);
-	}
+		fd ? end_recurse_pipe(shell, ast, oldfd, fd) :
+			handle_right_cmd(shell, ast->right, oldfd, newfd);
 	else
 	{
 		close_pipe(fd);
@@ -85,23 +78,18 @@ static int				recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
 		sh_push_pidnew(child_pid, &(shell->l_pid));
 		signal(SIGINT, signal_handler);
 		waitpid(child_pid, &status, 0);
-		if (status != 0)
-			ast->std = FAILURE;
+		status != 0 && (ast->std = FAILURE);
 	}
-	return (SUCCESS);
 }
 
-int 	do_pipe(t_sh *shell, t_ast *ast)
+int			do_pipe(t_sh *shell, t_ast *ast)
 {
-	t_ast	*tmp;
-
 	shell->fork = 0;
-	tmp = ast;
 	recurse_pipe(shell, ast, NULL, NULL);
 	get_pid_list(shell->l_pid);
 	sh_freepidlist(&(shell->l_pid));
 	shell->l_pid = NULL;
-	while(tmp && tmp->token == PIPE)
-		tmp = tmp->left;
-	return (tmp->std);
+	while (ast && ast->token == PIPE)
+		ast = ast->left;
+	return (ast->std);
 }
