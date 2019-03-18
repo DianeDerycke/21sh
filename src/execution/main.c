@@ -6,19 +6,17 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 18:25:43 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/18 15:06:31 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
 
-static int 	process_input(t_param *param, t_sh *shell)
+static int	process_input(t_param *param, t_sh *shell)
 {
 	t_ast *ast;
 
 	ast = NULL;
-	// display_tree(ast, 0, 0);
-	// display_list(param->l_tokens);
 	if (lex_input(param) != SUCCESS)
 		return (FAILURE);
 	else if (param->l_tokens && verify_lexer(param->l_tokens) == FAILURE)
@@ -32,7 +30,7 @@ static int 	process_input(t_param *param, t_sh *shell)
 	return (SUCCESS);
 }
 
-int     main(void)
+int			main(void)
 {
 	t_param *param;
 	t_sh	*shell;
@@ -51,7 +49,7 @@ int     main(void)
 		free_param(param);
 		param = NULL;
 		if (!isatty(0))
-			break;
+			break ;
 	}
 	sh_free_shell(shell);
 	return (ret);
