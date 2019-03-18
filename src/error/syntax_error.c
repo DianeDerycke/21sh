@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_lexer.c                                      :+:      :+:    :+:   */
+/*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 00:58:27 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 00:59:43 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/18 14:58:51 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/error.h"
 
-int 	unexpected_eof(void)
+int			unexpected_eof(void)
 {
 	ft_putendl_fd("21sh: syntax error: unexpected end of file", 2);
 	return (FAILURE);
