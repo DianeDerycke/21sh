@@ -6,16 +6,16 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/16 14:18:40 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 14:56:36 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/18 15:32:08 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/process_cmd.h"
 #include "../../includes/error.h"
 
-static void		join_tilde_expansion(char *home, char **arg)
+static void			join_tilde_expansion(char *home, char **arg)
 {
-	char 	*tmp;
+	char	*tmp;
 
 	tmp = NULL;
 	if (!(tmp = ft_strdup((*arg) + 1)))
@@ -98,8 +98,8 @@ static int			dollar_expansion(char **cmdline, char **env, char *arg,
 
 ssize_t				apply_expansions(t_sh *shell, t_ast *ast)
 {
-	char		*ptr;
-	int			ret;
+	char	*ptr;
+	int		ret;
 
 	ret = 0;
 	ptr = NULL;
@@ -109,7 +109,8 @@ ssize_t				apply_expansions(t_sh *shell, t_ast *ast)
 		{
 			if (ast->value && (ptr = ft_strchr(ast->value, VAL_DOLLAR))
 			&& ft_strlen(ast->value) > 1)
-				ret = dollar_expansion(&(ast->value), shell->env, ast->value, ptr);
+				ret = dollar_expansion(&(ast->value),
+				shell->env, ast->value, ptr);
 			else if (ast->value && ((ft_strcmp(ast->value, "~") == SUCCESS)
 			|| ft_strchr(ast->value, VAL_TILDE)))
 				ret = tilde_expansion(&(ast->value), shell->env);
