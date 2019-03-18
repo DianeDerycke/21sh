@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libsh.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/23 13:09:16 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 17:30:46 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/18 17:04:39 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void				sh_free_shell(t_sh *shell);
 char				*sh_strinsert(char *dst, char *src, int pos);
 t_pid				*sh_pidnew(int pid);
 int					sh_push_pidnew(int pid, t_pid **list);
-void				sh_freepidlist(t_pid **list);
+void				sh_freepidlist(t_pid *list);
 void				*sh_strmdel_return(char *s1, char *s2, char *s3,
 					void *status);
 
