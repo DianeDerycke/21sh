@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/28 20:28:25 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 15:35:26 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/18 18:42:30 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,11 @@ int		handle_signal_quote_edition(char *buffer)
 		return (SUCCESS);
 	}
 	return (FAILURE);
+}
+
+void	signal_pipe(pid_t child_pid, t_sh *shell)
+{
+	sh_push_pidnew(child_pid, &(shell->l_pid));
+	get_pid_list(shell->l_pid);
+	signal(SIGINT, signal_handler);
 }

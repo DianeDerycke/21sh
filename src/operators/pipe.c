@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:11:10 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 15:25:32 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/18 18:41:44 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,9 @@ static void	recurse_pipe(t_sh *shell, t_ast *ast, int *oldfd, int *fd)
 			recurse_pipe(shell, ast->left, newfd, NULL);
 		else if (ast->left && ast->token == PIPE)
 			recurse_pipe(shell, ast->left, oldfd, newfd);
-		sh_push_pidnew(child_pid, &(shell->l_pid));
-		signal(SIGINT, signal_handler);
+		signal_pipe(child_pid, shell);
 		waitpid(child_pid, &status, 0);
-		status != 0 && (ast->std = FAILURE);
+		status != 0 ? ast->std = FAILURE : 0;
 	}
 }
 
@@ -87,7 +86,7 @@ int			do_pipe(t_sh *shell, t_ast *ast)
 	shell->fork = 0;
 	recurse_pipe(shell, ast, NULL, NULL);
 	get_pid_list(shell->l_pid);
-	sh_freepidlist(&(shell->l_pid));
+	sh_freepidlist(shell->l_pid);
 	shell->l_pid = NULL;
 	while (ast && ast->token == PIPE)
 		ast = ast->left;
