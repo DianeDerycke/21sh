@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 13:00:37 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 03:17:09 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/18 15:25:24 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/operators.h"
 
-t_pid 	*get_pid_list(t_pid *new_list)
+t_pid		*get_pid_list(t_pid *new_list)
 {
 	static t_pid *pid_list = NULL;
 
@@ -37,5 +37,3 @@ void		close_dup(int *fd, int std)
 	dup2(fd[std == STDIN_FILENO ? OUTPUT_END : INPUT_END], std);
 	close(fd[std == STDIN_FILENO ? OUTPUT_END : INPUT_END]);
 }
-
-
