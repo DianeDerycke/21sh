@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/19 15:19:06 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/19 15:39:39 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/19 15:43:19 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	edit_shlvl(t_sh *shell)
 	return (exec_builtin(shell));
 }
 
-t_sh	*init_shell(void)
+t_sh		*init_shell(void)
 {
 	t_sh *new;
 

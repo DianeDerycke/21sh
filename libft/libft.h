@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 03:09:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/19 14:59:33 by DERYCKE          ###   ########.fr       */
+/*   Updated: 2019/03/19 15:46:25 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,7 +150,7 @@ int					ft_str_isdigit(char *str);
 int					ft_remove_char(char *str, char c);
 int					ft_abs(int nb);
 char				*copy_until_ft(char *s, int *start, int(*f)(int c));
-char				**ft_ndup_array(char *v1, char *v2, char *v3, int size_array);
-
+char				**ft_ndup_array(char *v1, char *v2, char *v3,
+					int size_array);
 
 #endif
