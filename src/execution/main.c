@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 15:06:31 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/19 13:40:45 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,18 @@ static int	process_input(t_param *param, t_sh *shell)
 	return (SUCCESS);
 }
 
+static int	edit_shlvl(char **env)
+{
+	size_t	pos;
+	char	*str;
+
+	if (!env || sh_find_variable("SHLVL", env, &pos) == -1)
+		return (FAILURE);
+	str = ft_strchr(env[pos], '=') + 1;
+	str[0] = str[0] + 1;
+	return (SUCCESS);
+}
+
 int			main(void)
 {
 	t_param *param;
@@ -38,6 +50,7 @@ int			main(void)
 
 	ret = 0;
 	shell = init_shell();
+	edit_shlvl(shell->env);
 	while (21)
 	{
 		param = init_param();
