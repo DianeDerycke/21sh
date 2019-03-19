@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/19 13:40:45 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/19 14:29:45 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,28 @@ static int	process_input(t_param *param, t_sh *shell)
 static int	edit_shlvl(char **env)
 {
 	size_t	pos;
-	char	*str;
+	char	*new;
+	char	*tmp;
+	int		value;
+	int		len;
 
 	if (!env || sh_find_variable("SHLVL", env, &pos) == -1)
 		return (FAILURE);
-	str = ft_strchr(env[pos], '=') + 1;
-	str[0] = str[0] + 1;
+	len = ft_strlen(env[pos]);
+	value = ft_atoi(ft_strchr(env[pos], '=') + 1);
+	value += 1;
+	if (!(new = ft_strnew(len + ft_nblen(value))))
+		return (FAILURE);
+	new = ft_strncpy(new, env[pos], len - ft_nblen(value - 1));
+	if (!(tmp = ft_itoa(value)))
+	{
+		ft_strdel(&new);
+		return (FAILURE);
+	}
+	new = ft_strcat(new, tmp);
+	ft_strdel(&tmp);
+	ft_strdel(&env[pos]);
+	env[pos] = new;
 	return (SUCCESS);
 }
 
