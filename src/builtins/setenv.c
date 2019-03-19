@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   setenv.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/24 18:03:03 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/18 18:24:14 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/19 13:51:38 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,7 @@ static void			get_new_env(char **split_cmd, char ***ms_env)
 {
 	char	**tmp;
 
-	if (!(tmp = ft_copy_array(*ms_env, ft_strlen_array(*ms_env))))
-		sh_malloc_error();
+	tmp = ft_copy_array(*ms_env, ft_strlen_array(*ms_env));
 	ft_free_array(*ms_env);
 	free(*ms_env);
 	*ms_env = add_variable(split_cmd[1], split_cmd[2], tmp);
