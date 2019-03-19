@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+         #
+#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/07/12 12:42:27 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/17 15:55:17 by dideryck         ###   ########.fr        #
+#    Updated: 2019/03/19 15:20:46 by DERYCKE          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -96,7 +96,8 @@ ERROR_NAME =		error.c \
 
 SIGNAL_NAME    =	signal.c
 
-EXECUTION_NAME =	main.c \
+EXECUTION_NAME =	init_shell.c \
+					main.c \
 					parser_execution.c \
 					exec_function.c
 

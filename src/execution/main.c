@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/19 14:29:45 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/19 15:21:23 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,34 +30,6 @@ static int	process_input(t_param *param, t_sh *shell)
 	return (SUCCESS);
 }
 
-static int	edit_shlvl(char **env)
-{
-	size_t	pos;
-	char	*new;
-	char	*tmp;
-	int		value;
-	int		len;
-
-	if (!env || sh_find_variable("SHLVL", env, &pos) == -1)
-		return (FAILURE);
-	len = ft_strlen(env[pos]);
-	value = ft_atoi(ft_strchr(env[pos], '=') + 1);
-	value += 1;
-	if (!(new = ft_strnew(len + ft_nblen(value))))
-		return (FAILURE);
-	new = ft_strncpy(new, env[pos], len - ft_nblen(value - 1));
-	if (!(tmp = ft_itoa(value)))
-	{
-		ft_strdel(&new);
-		return (FAILURE);
-	}
-	new = ft_strcat(new, tmp);
-	ft_strdel(&tmp);
-	ft_strdel(&env[pos]);
-	env[pos] = new;
-	return (SUCCESS);
-}
-
 int			main(void)
 {
 	t_param *param;
@@ -66,7 +38,6 @@ int			main(void)
 
 	ret = 0;
 	shell = init_shell();
-	edit_shlvl(shell->env);
 	while (21)
 	{
 		param = init_param();

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+         #
+#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/23 13:11:33 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/16 16:00:24 by mrandou          ###   ########.fr        #
+#    Updated: 2019/03/19 15:19:44 by DERYCKE          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ FILES = sh_clean_input sh_create_variable sh_malloc_error sh_read_input \
 		sh_edit_pwd_var sh_find_variable sh_edit_var sh_perm_denied \
 		sh_file_exist sh_error_perm_denied sh_undefined_variable sh_too_few_args \
 		sh_get_var_value sh_get_var_path sh_get_var_name	sh_is_env_var_name \
-		sh_simple_exec init_shell sh_free_shell sh_rtree_to_array sh_get_size_rtree sh_strinsert \
+		sh_simple_exec sh_free_shell sh_rtree_to_array sh_get_size_rtree sh_strinsert \
 		sh_pidnew sh_push_pidnew sh_freepidlist sh_exec_binary sh_strmdel_return
 SRC = $(addsuffix .c, $(FILES))
 OBJ = $(addsuffix .o, $(FILES))

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+         #
+#    By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/25 02:53:05 by DERYCKE           #+#    #+#              #
-#    Updated: 2019/03/17 15:49:15 by dideryck         ###   ########.fr        #
+#    Updated: 2019/03/19 14:59:49 by DERYCKE          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ FILES = ft_strlen 	ft_putchar 	ft_strstr 	ft_atoi 	ft_strncmp 	ft_putnbr 	ft_str
 		ft_copy_array 	ft_print_array	ft_malloc_error ft_find_char ft_replace \
 		ft_trim_array ft_is_whitespace ft_replace_whitespaces ft_dup_until	ft_clear_screen \
 		free_lst ft_strmjoin ft_nblen get_next_line ft_str_isdigit ft_strjoin_freesnd ft_remove_char \
-		ft_abs copy_until_ft
+		ft_abs copy_until_ft ft_ndup_array
 SRC = $(addsuffix .c, $(FILES))
 OBJ = $(addsuffix .o, $(FILES))
 

@@ -3,14 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   init_shell.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/05 00:07:37 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 16:46:59 by mrandou          ###   ########.fr       */
+/*   Created: 2019/03/19 15:19:06 by DERYCKE           #+#    #+#             */
+/*   Updated: 2019/03/19 15:39:39 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libsh.h"
+#include "../../includes/sh21.h"
+
+static int	edit_shlvl(t_sh *shell)
+{
+	size_t	index;
+	char	*var_value;
+	int		nb;
+
+	var_value = NULL;
+	index = 0;
+	if (!shell->env || sh_find_variable("SHLVL", shell->env, &index) == ERROR)
+		return (FAILURE);
+	if (!(var_value = sh_get_var_value(shell->env[index])))
+		return (FAILURE);
+	nb = ft_atoi(var_value);
+	ft_strdel(&var_value);
+	var_value = ft_itoa(nb + 1);
+	if (!(shell->cmd = ft_ndup_array("setenv", "SHLVL", var_value, 4)))
+		sh_malloc_error();
+	ft_strdel(&var_value);
+	return (exec_builtin(shell));
+}
 
 t_sh	*init_shell(void)
 {
@@ -25,5 +46,6 @@ t_sh	*init_shell(void)
 	new->path = NULL;
 	new->l_pid = NULL;
 	new->fork = 1;
+	edit_shlvl(new);
 	return (new);
 }

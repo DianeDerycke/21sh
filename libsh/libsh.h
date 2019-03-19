@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libsh.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/23 13:09:16 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 17:04:39 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/19 15:19:57 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,6 @@ int					sh_simple_exec(char *utility, char **split_cmd,
 int					sh_exec_binary(t_sh *shell);
 int					sh_get_size_rtree(t_ast *ast);
 char				**sh_rtree_to_array(t_ast *ast);
-t_sh				*init_shell(void);
 void				sh_free_shell(t_sh *shell);
 char				*sh_strinsert(char *dst, char *src, int pos);
 t_pid				*sh_pidnew(int pid);

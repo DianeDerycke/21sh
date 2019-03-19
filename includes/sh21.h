@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sh21.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
+/*   By: DERYCKE <DERYCKE@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/16 15:05:44 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/18 18:42:23 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/19 15:20:12 by DERYCKE          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include "execution.h"
 # include "process_cmd.h"
 
+
+t_sh				*init_shell(void);
 /*
 ** signal.h
 */
