@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/20 19:33:58 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/20 19:54:41 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int		redir_null(void)
 {
 	int		fd;
 
-	if ((fd = open("/dev/null", O_RDONLY)) == ERROR)
+	if ((fd = open("/dev/null", O_RDWR)) == ERROR)
 		return (-2);
 	return (fd);
 }

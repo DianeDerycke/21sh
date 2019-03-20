@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:11:30 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/20 19:48:02 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/20 19:56:47 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 int				get_std_redir(t_ast *ast)
 {
 	if (ast->token == LESS || ast->token == LESSAND)
-		return (ast->std);
+		return (ast->std == 0 ? STDIN_FILENO : ast->std);
 	if (ast->token == GREATAND)
-		return (ast->std);
+		return (ast->std == 0 ? STDOUT_FILENO : ast->std);
 	if (ast->token == GREAT || ast->token == DGREAT)
 		return (STDOUT_FILENO);
 	if (ast->token == LESS || ast->token == DLESS)
