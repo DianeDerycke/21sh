@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:12:17 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 16:21:37 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/20 16:26:24 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,5 @@ int				exec_builtin(t_sh *shell)
 	shell->cmd = NULL;
 	if (shell->fork == 0)
 		exit(ret);
-	return (SUCCESS);
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 15:34:41 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/20 19:49:10 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,18 @@ static int		open_file(t_ope token, char *file, t_ast *redir, t_ast *ast)
 
 static int		do_redirection(t_ast *redir, t_ast *ast)
 {
-	int		fd;
+	int		oldfd;
 
-	if ((fd = open_file(redir->token, redir->left->value, redir, ast)) < 0)
+	if ((oldfd = open_file(redir->token, redir->left->value, redir, ast)) < 0)
 	{
 		reset_std(getter_std(0));
-		if (fd == -2)
+		if (oldfd == -2)
 			return (FAILURE);
 		return (get_error(NOFILEDIR, redir->left->value));
 	}
-	if (redir->token != LESSAND && redir->token != GREATAND)
-	{
-		dup2(fd, get_str_redir(redir->token));
-		close(fd);
-	}
+	if (dup2(oldfd, get_std_redir(redir)) == ERROR)
+		return (get_error(BADFD, NULL));
+	close(oldfd);
 	return (SUCCESS);
 }
 

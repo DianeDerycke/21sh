@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 15:26:57 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/20 19:33:58 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,27 +47,29 @@ static int		get_dest_fd(char *arg, int *is_close)
 	return (dest);
 }
 
+static int		redir_null(void)
+{
+	int		fd;
+
+	if ((fd = open("/dev/null", O_RDONLY)) == ERROR)
+		return (-2);
+	return (fd);
+}
+
 int				handle_agregation(t_ast *redir, t_ast *ast)
 {
-	int		io_nb;
-	int		output;
+	int		fd;
 	int		is_close;
 
-	io_nb = 0;
-	output = 0;
+	fd = 0;
 	is_close = 0;
-	if ((output = get_dest_fd(redir->left->value, &is_close)) == ERROR)
+	(void)ast;
+	if ((fd = get_dest_fd(redir->left->value, &is_close)) == ERROR)
 	{
 		ambiguous_redirect(redir->left->value);
 		return (-2);
 	}
-	if ((io_nb = get_io_number(ast, redir, redir->token)) == ERROR)
-		return (-2);
-	if (redir->token == LESSAND)
-		dup2(io_nb, output);
-	else if (redir->token == GREATAND)
-		dup2(output, io_nb);
-	if (is_close == 1 && redir->token == GREATAND)
-		close(io_nb);
+	if (is_close == 1)
+		return (redir_null());
 	return (SUCCESS);
 }
