@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/21 15:06:52 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/21 18:04:10 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,30 @@ int				handle_agregation(t_ast *redir)
 	if (is_close == 1)
 		return (redir_null());
 	return (fd);
+}
+
+t_ast			*find_next_redir(t_ast *ast)
+{
+	if (!ast)
+		return (NULL);
+	while (ast)
+	{
+		if (ast->token >= GREAT && ast->token <= GREATAND)
+			return (ast);
+		ast = ast->left;
+	}
+	return (NULL);
+}
+
+int				get_std_redir(t_ast *ast)
+{
+	if (ast->token == LESS || ast->token == LESSAND)
+		return (ast->std == 0 ? STDIN_FILENO : ast->std);
+	if (ast->token == GREATAND)
+		return (ast->std == 0 ? STDOUT_FILENO : ast->std);
+	if (ast->token == GREAT || ast->token == DGREAT)
+		return (STDOUT_FILENO);
+	if (ast->token == LESS || ast->token == DLESS)
+		return (STDIN_FILENO);
+	return (0);
 }

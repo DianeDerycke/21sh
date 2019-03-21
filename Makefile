@@ -6,7 +6,7 @@
 #    By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/03/20 16:33:19 by dideryck          #+#    #+#              #
-#    Updated: 2019/03/20 18:04:10 by dideryck         ###   ########.fr        #
+#    Updated: 2019/03/21 18:01:50 by dideryck         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -85,7 +85,7 @@ PROCESS_CMD_NAME = 	expansions.c \
 
 OPERATORS_NAME =	pipe.c \
 					redir.c \
-					redir_utils.c \
+					redir_argument.c \
 					redir_functions.c \
 					heredoc.c \
 					pipe_utils.c
@@ -94,7 +94,8 @@ ERROR_NAME =		error.c \
 					get_error.c \
 					syntax_error.c
 
-SIGNAL_NAME    =	signal.c
+SIGNAL_NAME    =	signal.c \
+					signal_utils.c
 
 EXECUTION_NAME =	init_shell.c \
 					main.c \
