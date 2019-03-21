@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 15:50:23 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/18 15:24:09 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/20 19:46:49 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,23 @@ static int		is_token_operator(t_ope token)
 	return (0);
 }
 
+static void		add_io_number(t_ast *ast)
+{
+	if (ast->token == DIGIT
+	&& ast->next && (ast->next->token == LESS 
+	|| ast->next->token == LESSAND || ast->next->token == GREATAND))
+			ast->next->std = ft_atoi(ast->value);
+}
+
 int				verify_lexer(t_ast *ast)
 {
 	if (!ast)
 		return (FAILURE);
-	if ((ast->token == SEPARATOR || ast->token == PIPE) && !ast->next)
+	if ((ast->token == SEPARATOR || ast->token == PIPE))
 		return (get_error(UNEXPTOKEN, ast->value));
 	while (ast)
 	{
+		add_io_number(ast);
 		if (is_token_operator(ast->token) == 1 && !(ast->next))
 			return (get_error(UNEXPTOKEN, ast->value));
 		if (is_token_operator(ast->token) == 1 && ast->next &&

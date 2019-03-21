@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/04 17:33:44 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 14:58:34 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/20 17:29:54 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,7 @@ int		get_error(int error_nb, char *str)
 		ft_putendl_fd("21sh: Variable TERM is unvalid.", 2);
 	if (error_nb == ERRSIZE)
 		ft_putendl_fd(str, 2);
+	if (error_nb == BADFD)
+		ft_putendl_fd("21sh: stdin: Bad file descriptior", 2);
 	return (FAILURE);
 }

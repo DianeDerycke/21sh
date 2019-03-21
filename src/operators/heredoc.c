@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:47:01 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/17 18:44:31 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/20 16:24:08 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,11 @@ int				find_heredoc(t_ast *ast)
 		ret = find_heredoc(ast->right);
 		ret = find_heredoc(ast->left);
 	}
-	else if (ast->token == WORD)
+	else if (ast->token == WORD || ast->token == DIGIT)
+	{
 		if (apply_heredoc(ast) == FAILURE)
 			return (FAILURE);
+	}
 	if (ast->token == SEPARATOR && ast->left)
 		ret = find_heredoc(ast->left);
 	return (ret);

@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 02:30:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 16:06:00 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/20 16:57:58 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ int			find_heredoc(t_ast *ast);
 
 t_ast		*find_next_redir(t_ast *ast);
 t_ast		*add_argument_to_cmd(t_ast *ast);
-int			get_str_redir(t_ope token);
+int			get_std_redir(t_ast *redir);
 
 #endif

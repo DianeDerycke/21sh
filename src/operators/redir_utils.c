@@ -6,18 +6,22 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/08 15:11:30 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 15:28:58 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/20 19:56:47 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/operators.h"
 #include "../../includes/lexer_parser.h"
 
-int				get_str_redir(t_ope token)
+int				get_std_redir(t_ast *ast)
 {
-	if (token == GREAT || token == DGREAT)
+	if (ast->token == LESS || ast->token == LESSAND)
+		return (ast->std == 0 ? STDIN_FILENO : ast->std);
+	if (ast->token == GREATAND)
+		return (ast->std == 0 ? STDOUT_FILENO : ast->std);
+	if (ast->token == GREAT || ast->token == DGREAT)
 		return (STDOUT_FILENO);
-	if (token == LESS || token == DLESS)
+	if (ast->token == LESS || ast->token == DLESS)
 		return (STDIN_FILENO);
 	return (0);
 }
@@ -57,22 +61,27 @@ t_ast			*add_argument_to_cmd(t_ast *ast)
 	t_ast	*cmd;
 	t_ast	*tmp;
 
-	cmd = create_elem();
-	tmp = cmd;
+	cmd = NULL;
+	tmp = NULL;
 	while (ast)
 	{
-		while (ast && ((ast->token == WORD && ast->io_number == 0) ||
-		ast->token == DQUOTE || ast->token == SQUOTE ||
-		(ast->token == DIGIT && ast->io_number == 0)))
+		while (ast && ((ast->token == WORD && ast->io_number == 0)
+		|| ast->token == DQUOTE || ast->token == SQUOTE
+		|| (ast->token == DIGIT && ast->io_number == 0)))
 		{
-			cmd->value = ft_strdup(ast->value);
-			cmd->token = ast->token;
-			ast = ast->left;
-			if (ast)
+			if (!cmd)
+			{
+				cmd = create_elem();
+				tmp = cmd;
+			}
+			else if (cmd)
 			{
 				cmd->left = create_elem();
 				cmd = cmd->left;
 			}
+			cmd->token = ast->token;
+			cmd->value = ft_strdup(ast->value);
+			ast = ast->left;
 		}
 		ast = get_next_argument(ast);
 	}

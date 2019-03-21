@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/16 13:22:13 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 16:08:40 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/20 17:29:24 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ typedef enum	e_err
 	ERRFORK,
 	ERRPIPE,
 	NOTERM,
-	ERRSIZE
+	ERRSIZE,
+	BADFD
 }				t_err;
 
 int			unexpected_eof(void);
