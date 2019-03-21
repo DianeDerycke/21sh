@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/25 03:09:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/19 15:46:25 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/21 16:37:07 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,6 @@ int					ft_abs(int nb);
 char				*copy_until_ft(char *s, int *start, int(*f)(int c));
 char				**ft_ndup_array(char *v1, char *v2, char *v3,
 					int size_array);
+size_t				ft_delunprint(char *str, size_t n);
 
 #endif
