@@ -6,28 +6,11 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:58:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/20 19:43:38 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:08:52 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
-
-// void    display_list(t_ast *lst)
-// {
-//     if (!lst)
-//         printf("/!\\ LST IS NULL ERROR /!\\ \n");
-//     else
-//     {
-//         while (lst)
-//         {
-//             printf("----------\n");
-//             printf("TOKEN IS : %d\n", lst->token);
-//             printf("VALUE IS : %s\n", lst->value);
-//             printf("~~~~~~~~~~\n");
-//             lst = lst->next;
-//         }
-//     }
-// }
 
 static int	process_input(t_param *param, t_sh *shell)
 {
@@ -36,8 +19,7 @@ static int	process_input(t_param *param, t_sh *shell)
 	ast = NULL;
 	if (lex_input(param) != SUCCESS)
 		return (FAILURE);
-	// display_list(param->l_tokens);
-	if (param->l_tokens && verify_lexer(param->l_tokens) == FAILURE)
+	else if (param->l_tokens && verify_lexer(param->l_tokens) == FAILURE)
 		return (FAILURE);
 	else if (!(ast = create_ast(param->l_tokens, param->l_tokens, NULL)))
 		return (FAILURE);

@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/17 02:30:42 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/20 16:57:58 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:15:26 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_pid		*get_pid_list(t_pid *new_list);
 void		close_pipe(int *fd);
 void		close_dup(int *fd, int std);
 
-int			handle_agregation(t_ast *redir, t_ast *ast);
+int			handle_agregation(t_ast *redir);
 
 int			*getter_std(int init);
 void		reset_std(int *fd);

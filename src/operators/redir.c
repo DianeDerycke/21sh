@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/20 19:49:10 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:00:09 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void			reset_std(int *fd)
 	close(fd[2]);
 }
 
-static int		open_file(t_ope token, char *file, t_ast *redir, t_ast *ast)
+static int		open_file(t_ope token, char *file, t_ast *redir)
 {
 	if (token == GREAT)
 		return (open(file, O_RDWR | O_CREAT | O_TRUNC, PERM));
@@ -44,16 +44,16 @@ static int		open_file(t_ope token, char *file, t_ast *redir, t_ast *ast)
 	else if (token == DLESS)
 		return (handle_heredoc(redir));
 	else if (token == LESSAND || token == GREATAND)
-		return (handle_agregation(redir, ast));
+		return (handle_agregation(redir));
 	else
 		return (open(file, O_RDWR));
 }
 
-static int		do_redirection(t_ast *redir, t_ast *ast)
+static int		do_redirection(t_ast *redir)
 {
 	int		oldfd;
 
-	if ((oldfd = open_file(redir->token, redir->left->value, redir, ast)) < 0)
+	if ((oldfd = open_file(redir->token, redir->left->value, redir)) < 0)
 	{
 		reset_std(getter_std(0));
 		if (oldfd == -2)
@@ -78,7 +78,7 @@ int				exec_redirection(t_ast *ast, t_sh *shell)
 	ret = 0;
 	while ((redir = find_next_redir(tmp)))
 	{
-		if (do_redirection(redir, ast) == FAILURE)
+		if (do_redirection(redir) == FAILURE)
 			return (FAILURE);
 		tmp = redir->left;
 	}

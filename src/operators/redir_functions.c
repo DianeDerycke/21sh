@@ -6,24 +6,11 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/12 17:26:14 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/20 19:54:41 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/21 15:06:52 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/sh21.h"
-
-int				get_io_number(t_ast *ast, t_ast *redir, int token)
-{
-	if (!ast || !redir)
-		return (ERROR);
-	if (ast == redir)
-		return (token == GREATAND ? 1 : 0);
-	while (ast->left && ast->left != redir)
-		ast = ast->left;
-	if (ast && ast->token == DIGIT && ast->io_number == 1)
-		return (ft_atoi(ast->value));
-	return (ERROR);
-}
 
 static int		get_dest_fd(char *arg, int *is_close)
 {
@@ -56,14 +43,13 @@ static int		redir_null(void)
 	return (fd);
 }
 
-int				handle_agregation(t_ast *redir, t_ast *ast)
+int				handle_agregation(t_ast *redir)
 {
 	int		fd;
 	int		is_close;
 
 	fd = 0;
 	is_close = 0;
-	(void)ast;
 	if ((fd = get_dest_fd(redir->left->value, &is_close)) == ERROR)
 	{
 		ambiguous_redirect(redir->left->value);
@@ -71,5 +57,5 @@ int				handle_agregation(t_ast *redir, t_ast *ast)
 	}
 	if (is_close == 1)
 		return (redir_null());
-	return (SUCCESS);
+	return (fd);
 }
