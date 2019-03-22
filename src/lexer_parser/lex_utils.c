@@ -6,11 +6,20 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 15:22:55 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/22 15:19:11 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer_parser.h"
+
+t_param		*get_param(t_param *param)
+{
+	static t_param		*to_free;
+
+	if (param)
+		to_free = param;
+	return (to_free);
+}
 
 char	*get_operator(int index)
 {

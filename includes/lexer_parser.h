@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/03/18 16:00:15 by dideryck          #+#    #+#             */
-/*   Updated: 2019/03/18 16:03:29 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/22 15:19:29 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ int					get_valid_input(t_param *param, char **env, int ret);
 int					verify_lexer(t_ast *ast);
 
 t_ast				*create_ast(t_ast *curr_node, t_ast *start, t_ast *end);
+t_param				*get_param(t_param *param);
 
 #endif

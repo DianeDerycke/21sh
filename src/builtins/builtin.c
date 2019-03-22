@@ -6,11 +6,12 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:12:17 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/20 16:26:24 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/22 15:20:58 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/builtins.h"
+#include "../../includes/lexer_parser.h"
 
 t_builtin		getter_builtin(int index)
 {
@@ -54,6 +55,12 @@ int				exec_builtin(t_sh *shell)
 	index = 0;
 	if ((index = find_builtin(shell->cmd[0])) >= 0)
 	{
+		if (index == 5)
+		{
+			sh_free_shell(shell);
+			free_param(get_param(NULL));
+			exit(0);
+		}
 		builtin = getter_builtin(index);
 		ret = builtin.function(shell->cmd, &(shell->env), 0);
 	}

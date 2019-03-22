@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/17 00:15:46 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/20 17:35:58 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/22 15:20:00 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ t_param		*init_param(void)
 	new->token = 0;
 	new->ft = NULL;
 	new->l_tokens = NULL;
+	get_param(new);
 	return (new);
 }
 
