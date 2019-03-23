@@ -6,7 +6,7 @@
 /*   By: mrandou <mrandou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/18 14:07:54 by mrandou           #+#    #+#             */
-/*   Updated: 2019/03/17 15:41:36 by mrandou          ###   ########.fr       */
+/*   Updated: 2019/03/22 19:53:13 by mrandou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int		le_init_struct(struct s_le *le_struct, char **env)
 	le_struct->max_size = 0;
 	le_struct->cursor_x = le_struct->prompt_size;
 	le_struct->history_activ = 0;
+	le_struct->history = NULL;
 	if (hy_history(le_struct, env) || !le_struct->history)
 		le_struct->history_activ = -1;
 	le_struct->copy_on = LE_START;
