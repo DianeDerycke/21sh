@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 15:59:21 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/18 15:20:24 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/23 12:56:14 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,11 @@ int				lex_input(t_param *param)
 				return (get_error(ret, param->input + param->index));
 		i = 0;
 	}
+	return (SUCCESS);
+}
+
+int				whitespace_action(t_param *param)
+{
+	param->index++;
 	return (SUCCESS);
 }

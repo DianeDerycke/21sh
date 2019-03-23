@@ -6,7 +6,7 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/04 23:10:08 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/21 15:00:09 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/23 12:27:53 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,12 @@ static int		do_redirection(t_ast *redir)
 			return (FAILURE);
 		return (get_error(NOFILEDIR, redir->left->value));
 	}
-	if (dup2(oldfd, get_std_redir(redir)) == ERROR)
-		return (get_error(BADFD, NULL));
-	close(oldfd);
+	if (oldfd != get_std_redir(redir))
+	{
+		if (dup2(oldfd, get_std_redir(redir)) == ERROR)
+			return (get_error(BADFD, NULL));
+		close(oldfd);
+	}
 	return (SUCCESS);
 }
 

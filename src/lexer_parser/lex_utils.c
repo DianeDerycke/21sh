@@ -6,13 +6,13 @@
 /*   By: dideryck <dideryck@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/21 19:55:35 by DERYCKE           #+#    #+#             */
-/*   Updated: 2019/03/22 15:19:11 by dideryck         ###   ########.fr       */
+/*   Updated: 2019/03/23 12:54:43 by dideryck         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/lexer_parser.h"
 
-t_param		*get_param(t_param *param)
+t_param	*get_param(t_param *param)
 {
 	static t_param		*to_free;
 
@@ -83,12 +83,6 @@ char	*copy_until_array_ft(char *s, int *start, int (*array[2])(int))
 		return (NULL);
 	*start += length;
 	return (tmp);
-}
-
-int		whitespace_action(t_param *param)
-{
-	param->index++;
-	return (SUCCESS);
 }
 
 int		push_node(char *value, int token, t_ast **node, int io_nb)
