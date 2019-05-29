@@ -1,5 +1,5 @@
 #!/bin/bash
-
+sfdfbv
 random=0
 echo "What color for the prompt do you want ?\n"
 printf "\x1b[1m\x1b[39mWhite\x1b[0m "
